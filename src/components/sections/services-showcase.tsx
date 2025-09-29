@@ -64,16 +64,16 @@ const ServicesShowcase = () => {
             <div className="container mx-auto px-4">
                 <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
                     <h2 className="font-bold text-4xl md:text-5xl leading-tight text-foreground tracking-tight">
-                        Do your most important work, faster
+                        Urus kebutuhan merek Anda, lebih cepat
                     </h2>
                     <p className="mt-4 text-lg text-muted-foreground">
-                        From campaigns to operations and more, this is just the tip of the iceberg.
+                        Dari pendaftaran, perpanjangan, hingga surat keberatan—semua layanan disiapkan agar proses lebih ringkas dan aman.
                     </p>
                     <Link
-                        href="#"
+                        href="/layanan"
                         className="mt-6 inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                     >
-                        <span>See all use cases</span>
+                        <span>Lihat semua layanan</span>
                         <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
                 </div>

@@ -34,15 +34,18 @@ const FinalCta = () => {
             <h2 className="mt-2 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               Lindungi Merek Anda Sekarang
             </h2>
-            <p className="mt-6 text-xl text-muted-foreground">
-              Kelola semua merek dagang Anda, pantau status pendaftaran, dan terima notifikasi penting—semua dalam satu dasbor yang mudah digunakan.
+            <p className="mt-2 text-base font-semibold text-primary">
+              Jangan tunggu merekmu dicuri orang lain!
+            </p>
+            <p className="mt-4 text-xl text-muted-foreground">
+              Kelola pendaftaran, pantau status, perpanjangan, dan urus surat keberatan—semua dalam satu dasbor yang mudah digunakan dan resmi tercatat di Kemenkumham.
             </p>
             <div className="mt-8">
               <Link
-                href="#"
+                href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+konsultasi+pendaftaran+merek.&type=phone_number&app_absent=0"
                 className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-primary-foreground bg-primary shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-300"
               >
-                Mulai Sekarang
+                Konsultasi Sekarang
               </Link>
             </div>
           </div>

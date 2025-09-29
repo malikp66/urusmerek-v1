@@ -135,17 +135,17 @@ export default function FeaturesGrid() {
         <div className="mx-auto max-w-3xl text-center">
           <span className="text-base font-semibold text-primary">Fitur</span>
           <h2 className="mt-2 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Setiap fitur yang dibutuhkan tim Anda untuk bekerja lebih cepat
+            Fitur lengkap untuk pendaftaran, perpanjangan, dan perlindungan merek
           </h2>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            100+ fitur untuk membawa produktivitas ke level berikutnya.
+            Fitur lengkap untuk pemilik bisnis dan praktisi hukum.
           </p>
           <div className="mt-10">
             <Link
               href="#"
               className="inline-block rounded-full bg-gray-900 px-8 py-3.5 text-base font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
             >
-              Lihat Semua Fitur
+              Lihat semua fitur
             </Link>
           </div>
         </div>
