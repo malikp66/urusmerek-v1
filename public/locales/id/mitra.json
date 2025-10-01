@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "title": "Program Mitra Afiliasi - UrusMerek.id",
+    "description": "Bergabunglah dengan program afiliasi UrusMerek dan dapatkan komisi Rp100.000 untuk setiap penjualan terverifikasi."
+  },
+  "hero_title": "Program Mitra Afiliasi UrusMerek",
+  "hero_subtitle": "Dapatkan penghasilan tambahan dengan merekomendasikan layanan pendaftaran merek terpercaya",
+  "commission_highlight": "Komisi Rp100.000/Penjualan Terverifikasi",
+  "program_title": "Tentang Program Mitra",
+  "program_desc": "Program afiliasi UrusMerek dirancang untuk membantu Anda mendapatkan penghasilan tambahan dengan merekomendasikan layanan pendaftaran merek kami kepada kenalan, klien, atau audiens Anda. Setiap kali seseorang mendaftar melalui link referral Anda dan melakukan pembelian, Anda akan mendapatkan komisi.",
+  "benefits_title": "Keuntungan Menjadi Mitra",
+  "benefits": [
+    {
+      "title": "Komisi Menarik",
+      "description": "Rp100.000 untuk setiap penjualan yang terverifikasi dan dibayar"
+    },
+    {
+      "title": "Cookie 30 Hari",
+      "description": "Tracking berlaku hingga 30 hari setelah klik pertama"
+    },
+    {
+      "title": "Pembayaran Rutin",
+      "description": "Komisi dibayarkan setiap tanggal 20 setiap bulan"
+    },
+    {
+      "title": "Materi Promosi Gratis",
+      "description": "Banner, copywriting, dan aset promosi siap pakai"
+    },
+    {
+      "title": "Dashboard Lengkap",
+      "description": "Pantau klik, konversi, dan komisi real-time"
+    },
+    {
+      "title": "Dukungan Penuh",
+      "description": "Tim support siap membantu Anda sukses"
+    }
+  ],
+  "rules_title": "Syarat & Ketentuan",
+  "rules": [
+    "Komisi sebesar Rp100.000 diberikan untuk setiap penjualan layanan yang terverifikasi (klien sudah membayar)",
+    "Komisi dibayarkan setiap tanggal 20 setiap bulan untuk transaksi yang sudah terverifikasi bulan sebelumnya",
+    "Cookie tracking berlaku 30 hari sejak klik pertama pada link referral Anda",
+    "Minimal penarikan komisi adalah Rp500.000",
+    "Dilarang melakukan spam, black-hat marketing, atau praktik curang lainnya",
+    "Kami berhak membatalkan kemitraan jika ditemukan pelanggaran aturan"
+  ],
+  "how_it_works_title": "Cara Kerja Program Mitra",
+  "how_it_works": [
+    {
+      "step": "1",
+      "title": "Daftar Gratis",
+      "description": "Isi formulir pendaftaran dan buat akun mitra Anda"
+    },
+    {
+      "step": "2",
+      "title": "Dapatkan Link Referral",
+      "description": "Akses dashboard dan copy link referral unik Anda"
+    },
+    {
+      "step": "3",
+      "title": "Bagikan & Promosikan",
+      "description": "Share link di media sosial, website, atau ke kenalan Anda"
+    },
+    {
+      "step": "4",
+      "title": "Dapatkan Komisi",
+      "description": "Terima komisi Rp100.000 untuk setiap penjualan terverifikasi"
+    }
+  ],
+  "register_title": "Daftar Sebagai Mitra",
+  "register_subtitle": "Sudah punya akun?",
+  "register_login_link": "Login di sini",
+  "login_title": "Login Mitra",
+  "login_subtitle": "Belum punya akun?",
+  "login_register_link": "Daftar di sini",
+  "form": {
+    "name": "Nama Lengkap",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Konfirmasi Password",
+    "phone": "Nomor Telepon",
+    "bank_name": "Nama Bank",
+    "bank_account": "Nomor Rekening",
+    "account_holder": "Nama Pemilik Rekening",
+    "register_button": "Daftar Sekarang",
+    "login_button": "Login",
+    "register_success": "Pendaftaran berhasil! Silakan login untuk mengakses Mitra Panel.",
+    "login_success": "Login berhasil! Mengalihkan ke Mitra Panel..."
+  },
+  "faq_title": "FAQ Mitra",
+  "faq": [
+    {
+      "question": "Bagaimana cara saya mendapatkan komisi?",
+      "answer": "Anda akan mendapatkan komisi setiap kali seseorang mendaftar melalui link referral Anda dan melakukan pembayaran untuk layanan kami. Komisi dibayarkan setelah transaksi terverifikasi."
+    },
+    {
+      "question": "Kapan komisi dibayarkan?",
+      "answer": "Komisi dibayarkan setiap tanggal 20 setiap bulan untuk semua transaksi yang sudah terverifikasi bulan sebelumnya. Minimal penarikan adalah Rp500.000."
+    },
+    {
+      "question": "Berapa lama cookie tracking berlaku?",
+      "answer": "Cookie tracking berlaku selama 30 hari sejak klik pertama pada link referral Anda. Jika pengunjung melakukan pembelian dalam 30 hari tersebut, Anda tetap mendapat komisi."
+    }
+  ]
+}

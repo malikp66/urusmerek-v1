@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "pendaftaran_merek": {
+      "title": "Pendaftaran Merek - UrusMerek.id",
+      "description": "Layanan pendaftaran merek resmi dengan proses cepat dan mudah. Lindungi identitas brand Anda sekarang!"
+    },
+    "perpanjangan_merek": {
+      "title": "Perpanjangan Merek - UrusMerek.id",
+      "description": "Perpanjang masa berlaku merek Anda tepat waktu. Jangan biarkan perlindungan merek berakhir!"
+    },
+    "cetak_sertifikat": {
+      "title": "Cetak Sertifikat Merek - UrusMerek.id",
+      "description": "Cetak ulang sertifikat merek Anda yang hilang atau rusak dengan proses yang mudah."
+    },
+    "perubahan_nama": {
+      "title": "Perubahan Nama Merek - UrusMerek.id",
+      "description": "Ubah nama atau data merek terdaftar Anda sesuai kebutuhan bisnis."
+    },
+    "pengalihan_hak": {
+      "title": "Pengalihan Hak Merek - UrusMerek.id",
+      "description": "Proses legal untuk memindahkan kepemilikan merek dari satu pihak ke pihak lain."
+    },
+    "usul_tolak": {
+      "title": "Usul Tolak Merek - UrusMerek.id",
+      "description": "Tolak pendaftaran merek yang menyerupai merek Anda dengan argumentasi hukum yang kuat."
+    },
+    "surat_keberatan": {
+      "title": "Surat Keberatan - UrusMerek.id",
+      "description": "Ajukan keberatan atas penolakan pendaftaran merek Anda dengan bantuan konsultan ahli."
+    },
+    "perjanjian_lisensi": {
+      "title": "Perjanjian Lisensi Merek - UrusMerek.id",
+      "description": "Buat perjanjian lisensi merek yang sah dan melindungi hak Anda."
+    }
+  },
+  "pendaftaran_merek": {
+    "hero_title": "Pendaftaran Merek",
+    "hero_subtitle": "Amankan identitas brand Anda dengan pendaftaran merek resmi",
+    "price_label": "Mulai dari",
+    "benefits_title": "Manfaat Utama",
+    "benefits": [
+      {
+        "title": "Perlindungan Hukum Penuh",
+        "description": "Merek Anda dilindungi secara hukum dari pemalsuan dan penyalahgunaan"
+      },
+      {
+        "title": "Aset Bisnis Berharga",
+        "description": "Merek terdaftar meningkatkan nilai bisnis dan bisa dijual/dilisensikan"
+      },
+      {
+        "title": "Kredibilitas Tinggi",
+        "description": "Meningkatkan kepercayaan konsumen dan profesionalitas bisnis Anda"
+      }
+    ],
+    "process_title": "Proses Pendaftaran",
+    "process": [
+      {
+        "title": "Konsultasi & Pencarian Merek",
+        "description": "Kami cek ketersediaan nama merek dan berikan konsultasi strategi terbaik"
+      },
+      {
+        "title": "Persiapan Dokumen",
+        "description": "Tim kami siapkan semua dokumen pendaftaran sesuai persyaratan resmi"
+      },
+      {
+        "title": "Pengajuan ke DJKI",
+        "description": "Kami ajukan permohonan ke Direktorat Jenderal Kekayaan Intelektual"
+      },
+      {
+        "title": "Monitoring & Sertifikat",
+        "description": "Pantau progress dan terima sertifikat merek terdaftar"
+      }
+    ],
+    "faq_title": "FAQ Pendaftaran Merek",
+    "faq": [
+      {
+        "question": "Berapa lama proses pendaftaran merek?",
+        "answer": "Proses pendaftaran merek di Indonesia biasanya memakan waktu 12-24 bulan sejak pengajuan hingga sertifikat terbit. Namun, merek Anda sudah mendapat perlindungan sejak tanggal pengajuan (filing date)."
+      },
+      {
+        "question": "Apa saja dokumen yang diperlukan?",
+        "answer": "Dokumen yang diperlukan meliputi: KTP/ID pemohon, logo/nama merek yang ingin didaftarkan, deskripsi produk/jasa, dan surat kuasa (jika menggunakan konsultan). Kami akan membantu menyiapkan semua dokumen."
+      },
+      {
+        "question": "Apakah merek saya bisa ditolak?",
+        "answer": "Ya, merek bisa ditolak jika memiliki kemiripan dengan merek terdaftar lainnya, bertentangan dengan peraturan, atau tidak memenuhi syarat. Oleh karena itu, pencarian merek (trademark search) sangat penting sebelum mengajukan."
+      }
+    ]
+  },
+  "perpanjangan_merek": {
+    "hero_title": "Perpanjangan Merek",
+    "hero_subtitle": "Jaga keberlangsungan proteksi merek Anda yang akan berakhir",
+    "price_label": "Mulai dari",
+    "renewal_option_label": "Pilih Jangka Waktu",
+    "renewal_options": {
+      "under_6_months": "≤ 6 Bulan Sebelum Berakhir",
+      "over_6_months": "> 6 Bulan Setelah Berakhir (Denda)"
+    },
+    "benefits_title": "Manfaat Perpanjangan Tepat Waktu",
+    "benefits": [
+      {
+        "title": "Hindari Kehilangan Merek",
+        "description": "Merek yang tidak diperpanjang akan kehilangan perlindungan hukum"
+      },
+      {
+        "title": "Hemat Biaya Denda",
+        "description": "Perpanjang sebelum expired untuk menghindari biaya tambahan"
+      },
+      {
+        "title": "Proses Lebih Cepat",
+        "description": "Perpanjangan lebih mudah daripada pendaftaran baru"
+      }
+    ],
+    "process_title": "Proses Perpanjangan",
+    "process": [
+      {
+        "title": "Cek Status Merek",
+        "description": "Kami cek tanggal berakhir dan status merek Anda"
+      },
+      {
+        "title": "Persiapan Dokumen",
+        "description": "Siapkan dokumen perpanjangan dan bukti pembayaran"
+      },
+      {
+        "title": "Pengajuan Perpanjangan",
+        "description": "Ajukan permohonan perpanjangan ke DJKI"
+      },
+      {
+        "title": "Sertifikat Perpanjangan",
+        "description": "Terima sertifikat perpanjangan merek terdaftar"
+      }
+    ],
+    "faq_title": "FAQ Perpanjangan Merek",
+    "faq": [
+      {
+        "question": "Kapan harus memperpanjang merek?",
+        "answer": "Merek harus diperpanjang setiap 10 tahun. Sebaiknya perpanjang 6 bulan sebelum tanggal berakhir untuk menghindari denda. Jika terlambat, Anda masih bisa perpanjang hingga 6 bulan setelah expired dengan biaya tambahan."
+      },
+      {
+        "question": "Berapa biaya perpanjangan merek?",
+        "answer": "Biaya perpanjangan merek tergantung waktu pengajuan. Jika perpanjang sebelum expired, biayanya lebih murah. Jika terlambat (6 bulan setelah expired), ada tambahan biaya denda dari pemerintah."
+      },
+      {
+        "question": "Apa yang terjadi jika tidak diperpanjang?",
+        "answer": "Jika merek tidak diperpanjang hingga melewati masa tenggang (6 bulan setelah expired), merek Anda akan dihapus dari daftar merek terdaftar dan kehilangan perlindungan hukum. Orang lain bisa mendaftarkan merek yang sama."
+      }
+    ]
+  },
+  "cetak_sertifikat": {
+    "hero_title": "Cetak Ulang Sertifikat Merek",
+    "hero_subtitle": "Dapatkan salinan resmi sertifikat merek Anda yang hilang atau rusak",
+    "price_label": "Mulai dari",
+    "benefits_title": "Manfaat Cetak Ulang Sertifikat",
+    "benefits": [
+      {
+        "title": "Salinan Resmi",
+        "description": "Sertifikat yang diterbitkan ulang memiliki kekuatan hukum yang sama"
+      },
+      {
+        "title": "Proses Cepat",
+        "description": "Tidak perlu mendaftar ulang, cukup ajukan cetak ulang"
+      },
+      {
+        "title": "Untuk Keperluan Legal",
+        "description": "Diperlukan untuk lisensi, pengalihan hak, atau permohonan hukum lainnya"
+      }
+    ],
+    "process_title": "Proses Cetak Ulang",
+    "process": [
+      {
+        "title": "Verifikasi Data Merek",
+        "description": "Kami verifikasi nomor registrasi dan data merek Anda"
+      },
+      {
+        "title": "Ajukan Permohonan",
+        "description": "Mengajukan permohonan cetak ulang ke DJKI"
+      },
+      {
+        "title": "Proses & Cetak",
+        "description": "Tunggu proses cetak ulang sertifikat resmi"
+      }
+    ],
+    "faq_title": "FAQ Cetak Sertifikat",
+    "faq": [
+      {
+        "question": "Berapa lama proses cetak ulang sertifikat?",
+        "answer": "Proses cetak ulang sertifikat merek biasanya memakan waktu 1-2 minggu kerja sejak permohonan diajukan dan disetujui oleh DJKI."
+      },
+      {
+        "question": "Apakah sertifikat cetak ulang sama dengan aslinya?",
+        "answer": "Ya, sertifikat cetak ulang memiliki kekuatan hukum yang sama dengan sertifikat asli. Sertifikat akan memiliki cap 'Salinan Resmi' dari DJKI."
+      },
+      {
+        "question": "Apa saja syarat cetak ulang sertifikat?",
+        "answer": "Syarat cetak ulang: nomor registrasi merek, identitas pemilik merek, dan surat pernyataan kehilangan/kerusakan sertifikat (jika diperlukan)."
+      }
+    ]
+  }
+}

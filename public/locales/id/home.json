@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "title": "UrusMerek.id - Daftar Merek Tanpa Drama, 1 Hari Langsung Terlindungi",
+    "description": "Platform lengkap untuk pendaftaran merek, perpanjangan, dan konsultasi HKI. Proses mudah, cepat, dan terpercaya. Lindungi brand Anda sekarang!"
+  },
+  "hero": {
+    "title": "Daftar Merek Tanpa Drama, 1 Hari Langsung Terlindungi",
+    "subtitle": "Platform lengkap untuk pendaftaran merek, perpanjangan, dan konsultasi HKI. Proses mudah, cepat, dan terpercaya dengan harga transparan.",
+    "cta_primary": "Mulai Konsultasi",
+    "cta_secondary": "Lihat Semua Paket",
+    "services_header": "Layanan Utama Kami"
+  },
+  "trusted": {
+    "title": "Dipercaya oleh pelaku usaha di Indonesia",
+    "subtitle": "Lebih dari 1.000 merek telah kami bantu daftarkan dan lindungi"
+  },
+  "problem": {
+    "title": "Pendaftaran Merek itu Rumit?",
+    "description": "Banyak pengusaha kesulitan mendaftar merek karena proses yang berbelit, waktu yang lama, dan biaya yang tidak transparan.",
+    "cta": "Lihat Solusinya"
+  },
+  "solution": {
+    "title": "Kami Buat Semuanya Jadi Mudah",
+    "description": "Semua layanan HKI Anda dalam satu platform. Dari konsultasi, pendaftaran, hingga perpanjangan merek.",
+    "cta": "Mulai Sekarang"
+  },
+  "services": {
+    "title": "Layanan Lengkap untuk Melindungi Merek Anda",
+    "tabs": {
+      "registration": "Pendaftaran Merek",
+      "renewal": "Perpanjangan Merek",
+      "objection": "Surat Keberatan"
+    },
+    "registration_desc": "Daftarkan merek Anda dengan proses yang cepat dan mudah. Kami akan membantu dari konsultasi awal hingga sertifikat terbit.",
+    "renewal_desc": "Jangan biarkan perlindungan merek Anda berakhir. Perpanjang merek Anda tepat waktu dengan bantuan konsultan berpengalaman.",
+    "objection_desc": "Merek Anda ditolak atau ada yang menyerupai? Kami bantu ajukan keberatan dengan argumentasi hukum yang kuat."
+  },
+  "features": {
+    "title": "Semua Fitur untuk Mengurus Pendaftaran, Perpanjangan, dan Perlindungan Merek",
+    "subtitle": "Fitur lengkap untuk pemilik bisnis dan praktisi hukum",
+    "cta": "Lihat semua fitur",
+    "items": [
+      {
+        "title": "Pencarian Merek",
+        "description": "Cek ketersediaan nama merek sebelum daftar"
+      },
+      {
+        "title": "Pendaftaran Online",
+        "description": "Proses pendaftaran 100% online, cepat & mudah"
+      },
+      {
+        "title": "Monitoring Status",
+        "description": "Pantau progress pendaftaran real-time"
+      },
+      {
+        "title": "Perpanjangan Otomatis",
+        "description": "Reminder otomatis sebelum merek expired"
+      },
+      {
+        "title": "Konsultasi Expert",
+        "description": "Akses konsultan HKI berpengalaman 24/7"
+      },
+      {
+        "title": "Dokumen Lengkap",
+        "description": "Template dokumen hukum siap pakai"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Dipercaya oleh Ribuan Pemilik Bisnis",
+    "items": [
+      {
+        "quote": "Proses pendaftaran merek jadi sangat mudah. Tim UrusMerek sangat responsif dan profesional!",
+        "author": "Budi Santoso",
+        "role": "Founder, Kopi Nusantara",
+        "company": "Kopi Nusantara"
+      },
+      {
+        "quote": "Harga transparan, proses cepat. Dalam 2 hari merek saya sudah terdaftar. Highly recommended!",
+        "author": "Sarah Wijaya",
+        "role": "Owner, Fashion Brand",
+        "company": "Sarah Collection"
+      }
+    ]
+  },
+  "pricing_preview": {
+    "title": "Paket Harga Transparan",
+    "subtitle": "Pilih paket yang sesuai dengan kebutuhan bisnis Anda",
+    "cta": "Lihat Semua Harga"
+  },
+  "how_it_works": {
+    "title": "Cara Kerja yang Mudah",
+    "steps": [
+      {
+        "title": "Konsultasi Gratis",
+        "description": "Ceritakan kebutuhan Anda, kami akan berikan solusi terbaik"
+      },
+      {
+        "title": "Isi Dokumen",
+        "description": "Lengkapi formulir online dengan panduan dari tim kami"
+      },
+      {
+        "title": "Proses & Monitoring",
+        "description": "Kami urus semua proses, Anda bisa pantau statusnya kapan saja"
+      },
+      {
+        "title": "Merek Terdaftar",
+        "description": "Sertifikat merek terbit, bisnis Anda terlindungi!"
+      }
+    ]
+  },
+  "faq_preview": {
+    "title": "Pertanyaan yang Sering Diajukan",
+    "cta": "Lihat Semua FAQ"
+  },
+  "final_cta": {
+    "title": "Lindungi Merek Anda Sekarang",
+    "subtitle": "Jangan tunggu merekmu dicuri orang lain! Daftarkan sekarang dan dapatkan perlindungan hukum penuh.",
+    "cta": "Konsultasi Gratis Sekarang"
+  }
+}

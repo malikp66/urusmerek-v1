@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "title": "UrusMerek.id - Hassle-Free Trademark Registration, Protected in 1 Day",
+    "description": "Complete platform for trademark registration, renewal, and IP consultation. Easy, fast, and trusted process. Protect your brand now!"
+  },
+  "hero": {
+    "title": "Hassle-Free Trademark Registration, Protected in 1 Day",
+    "subtitle": "Complete platform for trademark registration, renewal, and IP consultation. Easy, fast, and trusted process with transparent pricing.",
+    "cta_primary": "Start Consultation",
+    "cta_secondary": "View All Packages",
+    "services_header": "Our Main Services"
+  },
+  "trusted": {
+    "title": "Trusted by businesses across Indonesia",
+    "subtitle": "We have helped register and protect over 1,000 trademarks"
+  },
+  "problem": {
+    "title": "Is Trademark Registration Complicated?",
+    "description": "Many entrepreneurs struggle with trademark registration due to complex processes, long waiting times, and unclear costs.",
+    "cta": "See The Solution"
+  },
+  "solution": {
+    "title": "We Make Everything Easy",
+    "description": "All your IP services in one platform. From consultation, registration, to trademark renewal.",
+    "cta": "Start Now"
+  },
+  "services": {
+    "title": "Complete Services to Protect Your Brand",
+    "tabs": {
+      "registration": "Trademark Registration",
+      "renewal": "Trademark Renewal",
+      "objection": "Objection Letter"
+    },
+    "registration_desc": "Register your trademark with a fast and easy process. We'll help from initial consultation to certificate issuance.",
+    "renewal_desc": "Don't let your trademark protection expire. Renew your trademark on time with experienced consultant assistance.",
+    "objection_desc": "Trademark rejected or someone infringes? We help file objections with strong legal arguments."
+  },
+  "features": {
+    "title": "All Features for Trademark Registration, Renewal, and Protection",
+    "subtitle": "Complete features for business owners and legal practitioners",
+    "cta": "View all features",
+    "items": [
+      {
+        "title": "Trademark Search",
+        "description": "Check brand name availability before registration"
+      },
+      {
+        "title": "Online Registration",
+        "description": "100% online registration process, fast & easy"
+      },
+      {
+        "title": "Status Monitoring",
+        "description": "Track registration progress in real-time"
+      },
+      {
+        "title": "Auto Renewal",
+        "description": "Automatic reminders before trademark expires"
+      },
+      {
+        "title": "Expert Consultation",
+        "description": "Access experienced IP consultants 24/7"
+      },
+      {
+        "title": "Complete Documents",
+        "description": "Ready-to-use legal document templates"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Trusted by Thousands of Business Owners",
+    "items": [
+      {
+        "quote": "The trademark registration process became very easy. The UrusMerek team is very responsive and professional!",
+        "author": "Budi Santoso",
+        "role": "Founder, Kopi Nusantara",
+        "company": "Kopi Nusantara"
+      },
+      {
+        "quote": "Transparent pricing, fast process. My trademark was registered in 2 days. Highly recommended!",
+        "author": "Sarah Wijaya",
+        "role": "Owner, Fashion Brand",
+        "company": "Sarah Collection"
+      }
+    ]
+  },
+  "pricing_preview": {
+    "title": "Transparent Pricing Packages",
+    "subtitle": "Choose the package that fits your business needs",
+    "cta": "View All Pricing"
+  },
+  "how_it_works": {
+    "title": "Easy Process",
+    "steps": [
+      {
+        "title": "Free Consultation",
+        "description": "Tell us your needs, we'll provide the best solution"
+      },
+      {
+        "title": "Fill Documents",
+        "description": "Complete online forms with guidance from our team"
+      },
+      {
+        "title": "Process & Monitoring",
+        "description": "We handle everything, you can monitor status anytime"
+      },
+      {
+        "title": "Trademark Registered",
+        "description": "Certificate issued, your business is protected!"
+      }
+    ]
+  },
+  "faq_preview": {
+    "title": "Frequently Asked Questions",
+    "cta": "View All FAQ"
+  },
+  "final_cta": {
+    "title": "Protect Your Trademark Now",
+    "subtitle": "Don't wait until someone steals your brand! Register now and get full legal protection.",
+    "cta": "Free Consultation Now"
+  }
+}
