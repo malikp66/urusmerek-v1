@@ -1,4 +1,6 @@
 "use client";
+"use client";
+
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -109,7 +111,7 @@ export default function HeroSection() {
                     className="service-card flex flex-col items-center justify-center space-y-2 rounded-lg border bg-gray-50/50 p-4 text-center"
                   >
                     <div className="relative h-8 w-8">
-                       <Image
+                      <Image
                         src={service.icon}
                         alt={`${service.name} icon`}
                         fill
