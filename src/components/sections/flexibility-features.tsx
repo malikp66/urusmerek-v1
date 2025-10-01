@@ -97,47 +97,6 @@ const FlexibilityFeatures = () => {
                         </div>
                     </div>
 
-                    <div className="relative rounded-xl bg-light-red p-8 md:p-12 lg:col-span-2">
-                        <div className="grid grid-cols-1 items-center gap-y-12 md:grid-cols-2 md:gap-x-16">
-                            <div className="text-center md:text-left">
-                                <h3 className="text-2xl font-semibold text-gray-900">Integration with Legal Systems</h3>
-                                <p className="mt-2 text-base text-gray-600">
-                                    Easily integrates with the legal systems and databases you already use.
-                                </p>
-                                <div className="mt-8 flex justify-center md:justify-start">
-                                    <Image
-                                        src="https://images.ctfassets.net/w8fc6tgspyjz/5eW6fJb73nNo4cjPCd45gT/737151fe3c8828de0aa775444040cd7e/clickup-integrations.svg"
-                                        alt="Integration with legal systems"
-                                        width={254}
-                                        height={121}
-                                        className="h-auto"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="text-center md:text-left">
-                                <h3 className="text-2xl font-semibold text-gray-900">Scalable Solutions</h3>
-                                <p className="mt-2 text-base text-gray-600">
-                                    Our scalable services eliminate the need for multiple providers, saving you time and money.
-                                </p>
-                                <div className="mt-8 flex justify-center md:justify-start">
-                                    <Image
-                                        src="https://images.ctfassets.net/w8fc6tgspyjz/4VWndoJsrVy4tMXAQWuUoP/de0a65d4385b8fcc51cdd217b537ac24/clickup-integration-replaces.svg"
-                                        alt="Scalable solutions for businesses"
-                                        width={252}
-                                        height={113}
-                                        className="h-auto"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                            <div className="hidden h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-gray-200 bg-white md:flex">
-                                <span className="text-xs font-bold uppercase text-gray-500">OR</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
