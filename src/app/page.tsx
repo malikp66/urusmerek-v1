@@ -19,7 +19,7 @@ export default function Page() {
       <main>
         <HeroSection />
         <TrustedCompanies />
-        <ProblemSolutionSection />
+        {/* <ProblemSolutionSection /> */}
         <ServicesShowcase />
         <AiFeatures />
         <FeaturesGrid />
