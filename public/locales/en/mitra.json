@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "title": "Affiliate Partner Program - UrusMerek.id",
+    "description": "Join UrusMerek's affiliate program and earn IDR 100,000 commission for each verified sale."
+  },
+  "hero_title": "UrusMerek Affiliate Partner Program",
+  "hero_subtitle": "Earn additional income by recommending our trusted trademark registration services",
+  "commission_highlight": "IDR 100,000 Commission/Verified Sale",
+  "program_title": "About Partner Program",
+  "program_desc": "UrusMerek's affiliate program is designed to help you earn additional income by recommending our trademark registration services to your contacts, clients, or audience. Every time someone registers through your referral link and makes a purchase, you will earn a commission.",
+  "benefits_title": "Benefits of Becoming a Partner",
+  "benefits": [
+    {
+      "title": "Attractive Commission",
+      "description": "IDR 100,000 for each verified and paid sale"
+    },
+    {
+      "title": "30-Day Cookie",
+      "description": "Tracking valid for 30 days after first click"
+    },
+    {
+      "title": "Regular Payments",
+      "description": "Commissions paid every 20th of each month"
+    },
+    {
+      "title": "Free Promotional Materials",
+      "description": "Ready-to-use banners, copywriting, and promotional assets"
+    },
+    {
+      "title": "Complete Dashboard",
+      "description": "Track clicks, conversions, and commissions in real-time"
+    },
+    {
+      "title": "Full Support",
+      "description": "Support team ready to help you succeed"
+    }
+  ],
+  "rules_title": "Terms & Conditions",
+  "rules": [
+    "IDR 100,000 commission given for each verified service sale (client has paid)",
+    "Commissions paid every 20th of each month for transactions verified the previous month",
+    "Cookie tracking valid for 30 days from first click on your referral link",
+    "Minimum commission withdrawal is IDR 500,000",
+    "Spamming, black-hat marketing, or other fraudulent practices are prohibited",
+    "We reserve the right to cancel partnerships if violations are found"
+  ],
+  "how_it_works_title": "How the Partner Program Works",
+  "how_it_works": [
+    {
+      "step": "1",
+      "title": "Free Registration",
+      "description": "Fill out registration form and create your partner account"
+    },
+    {
+      "step": "2",
+      "title": "Get Referral Link",
+      "description": "Access dashboard and copy your unique referral link"
+    },
+    {
+      "step": "3",
+      "title": "Share & Promote",
+      "description": "Share link on social media, website, or to your contacts"
+    },
+    {
+      "step": "4",
+      "title": "Earn Commission",
+      "description": "Receive IDR 100,000 commission for each verified sale"
+    }
+  ],
+  "register_title": "Register as Partner",
+  "register_subtitle": "Already have an account?",
+  "register_login_link": "Login here",
+  "login_title": "Partner Login",
+  "login_subtitle": "Don't have an account?",
+  "login_register_link": "Register here",
+  "form": {
+    "name": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "phone": "Phone Number",
+    "bank_name": "Bank Name",
+    "bank_account": "Account Number",
+    "account_holder": "Account Holder Name",
+    "register_button": "Register Now",
+    "login_button": "Login",
+    "register_success": "Registration successful! Please login to access Partner Panel.",
+    "login_success": "Login successful! Redirecting to Partner Panel..."
+  },
+  "faq_title": "Partner FAQ",
+  "faq": [
+    {
+      "question": "How do I earn commissions?",
+      "answer": "You will earn a commission every time someone registers through your referral link and makes a payment for our services. Commissions are paid after transactions are verified."
+    },
+    {
+      "question": "When are commissions paid?",
+      "answer": "Commissions are paid every 20th of each month for all transactions verified the previous month. Minimum withdrawal is IDR 500,000."
+    },
+    {
+      "question": "How long is cookie tracking valid?",
+      "answer": "Cookie tracking is valid for 30 days from the first click on your referral link. If visitors make a purchase within those 30 days, you still earn commission."
+    }
+  ]
+}

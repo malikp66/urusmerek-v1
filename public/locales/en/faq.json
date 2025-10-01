@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "title": "FAQ - Frequently Asked Questions | UrusMerek.id",
+    "description": "Find answers to common questions about trademark registration, renewal, and other IP services."
+  },
+  "title": "Frequently Asked Questions",
+  "subtitle": "Find answers to your questions about trademark registration and management",
+  "search_placeholder": "Search questions...",
+  "items": [
+    {
+      "question": "What is a trademark and why is it important?",
+      "answer": "A trademark is a sign that can distinguish goods or services produced by one company from another. Trademarks are important because they provide legal protection, increase business value, and build consumer trust."
+    },
+    {
+      "question": "How long does the trademark registration process take?",
+      "answer": "The trademark registration process in Indonesia usually takes 12-24 months from submission to certificate issuance. However, your trademark receives legal protection from the filing date."
+    },
+    {
+      "question": "How much does trademark registration cost?",
+      "answer": "Trademark registration costs vary depending on service type and goods/services class. Costs range from IDR 2,000,000 - IDR 5,000,000 including government fees and consultation services. Contact us for a more accurate price estimate."
+    },
+    {
+      "question": "What documents are required to register a trademark?",
+      "answer": "Required documents: applicant's ID/KTP, logo or trademark name to register, detailed product/service description using the trademark, and power of attorney (if using IP consultant)."
+    },
+    {
+      "question": "Can I register a trademark myself without a consultant?",
+      "answer": "Yes, you can register yourself through DJKI's online system. However, using IP consultant services is highly recommended as they understand procedures, can perform accurate trademark searches, and increase approval chances."
+    },
+    {
+      "question": "What happens if my trademark is rejected?",
+      "answer": "If rejected, you can file an objection letter within 30 days of rejection. We will help you prepare strong legal arguments to file an objection and increase acceptance chances."
+    },
+    {
+      "question": "How long is a registered trademark valid?",
+      "answer": "A registered trademark is valid for 10 years from the registration date. After that, it can be renewed every 10 years indefinitely as long as it continues to be used and renewed on time."
+    },
+    {
+      "question": "When should I renew my trademark?",
+      "answer": "Trademarks should be renewed 6-12 months before expiry to avoid penalties. If late, there's a 6-month grace period after expiry with additional government penalty fees."
+    },
+    {
+      "question": "Can I modify a registered trademark?",
+      "answer": "Minor changes to registered trademarks are not allowed as they can alter the trademark's essence. If you want to significantly modify the trademark, you must register a new trademark with the updated design."
+    },
+    {
+      "question": "How do I check trademark name availability?",
+      "answer": "You can check through DJKI's database at pdki-indonesia.dgip.go.id or use our trademark search service. We will conduct a comprehensive search and provide approval probability analysis."
+    },
+    {
+      "question": "Is my trademark valid outside Indonesia?",
+      "answer": "No. Trademark registration in Indonesia is only valid within Indonesian territory. For protection in other countries, you must register in those countries or through the Madrid Protocol system for international registration."
+    },
+    {
+      "question": "How do I become a UrusMerek affiliate partner?",
+      "answer": "You can register as an affiliate partner through our Partners page. Earn IDR 100,000 commission for each verified sale. We provide referral links, promotional materials, and full support for partners."
+    }
+  ]
+}

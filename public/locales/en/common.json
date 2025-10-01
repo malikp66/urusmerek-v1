@@ -1,0 +1,70 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "pricing": "Pricing",
+    "about": "About Us",
+    "partners": "Partners",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "cta": {
+    "free_consultation": "Free Consultation",
+    "start_consultation": "Start Consultation",
+    "view_all_packages": "View All Packages",
+    "fill_form_now": "Fill Form Now",
+    "contact_whatsapp": "Contact via WhatsApp",
+    "see_details": "See Details",
+    "learn_more": "Learn More"
+  },
+  "form": {
+    "labels": {
+      "name": "Full Name",
+      "email": "Email",
+      "whatsapp": "WhatsApp Number",
+      "brand_name": "Brand Name",
+      "service_type": "Service Type",
+      "price_estimate": "Price Estimate",
+      "message": "Message (Optional)"
+    },
+    "placeholders": {
+      "name": "Enter your full name",
+      "email": "name@email.com",
+      "whatsapp": "+628123456789",
+      "brand_name": "Brand name to register",
+      "service_type": "Select service type",
+      "message": "Tell us your needs..."
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalid_email": "Invalid email format",
+      "invalid_phone": "Invalid WhatsApp number format"
+    },
+    "success_message": "Thank you! We will contact you soon.",
+    "error_message": "An error occurred. Please try again.",
+    "submit_button": "Submit Consultation"
+  },
+  "services_list": {
+    "pendaftaran_merek": "Trademark Registration",
+    "perpanjangan_merek": "Trademark Renewal",
+    "cetak_sertifikat": "Certificate Printing",
+    "perubahan_nama": "Name Amendment",
+    "pengalihan_hak": "Rights Transfer",
+    "usul_tolak": "Rejection Proposal",
+    "surat_keberatan": "Objection Letter",
+    "perjanjian_lisensi": "License Agreement"
+  },
+  "footer": {
+    "tagline": "Complete platform for trademark registration and management",
+    "company": "Company",
+    "services": "Services",
+    "support": "Support",
+    "legal": "Legal",
+    "copyright": "© 2025 UrusMerek.id. All rights reserved.",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service"
+  },
+  "currency": {
+    "idr": "IDR"
+  }
+}

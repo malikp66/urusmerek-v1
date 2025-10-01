@@ -1,0 +1,70 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "services": "Layanan",
+    "pricing": "Harga",
+    "about": "Tentang Kami",
+    "partners": "Mitra",
+    "faq": "FAQ",
+    "contact": "Kontak"
+  },
+  "cta": {
+    "free_consultation": "Konsultasi Gratis",
+    "start_consultation": "Mulai Konsultasi",
+    "view_all_packages": "Lihat Semua Paket",
+    "fill_form_now": "Isi Form Sekarang",
+    "contact_whatsapp": "Hubungi via WhatsApp",
+    "see_details": "Lihat Detail",
+    "learn_more": "Pelajari Lebih Lanjut"
+  },
+  "form": {
+    "labels": {
+      "name": "Nama Lengkap",
+      "email": "Email",
+      "whatsapp": "Nomor WhatsApp",
+      "brand_name": "Nama Merek",
+      "service_type": "Jenis Layanan",
+      "price_estimate": "Estimasi Harga",
+      "message": "Pesan (Opsional)"
+    },
+    "placeholders": {
+      "name": "Masukkan nama lengkap Anda",
+      "email": "nama@email.com",
+      "whatsapp": "08123456789",
+      "brand_name": "Nama merek yang ingin didaftarkan",
+      "service_type": "Pilih jenis layanan",
+      "message": "Ceritakan kebutuhan Anda..."
+    },
+    "validation": {
+      "required": "Field ini wajib diisi",
+      "invalid_email": "Format email tidak valid",
+      "invalid_phone": "Format nomor WhatsApp tidak valid"
+    },
+    "success_message": "Terima kasih! Kami akan segera menghubungi Anda.",
+    "error_message": "Terjadi kesalahan. Silakan coba lagi.",
+    "submit_button": "Kirim Konsultasi"
+  },
+  "services_list": {
+    "pendaftaran_merek": "Pendaftaran Merek",
+    "perpanjangan_merek": "Perpanjangan Merek",
+    "cetak_sertifikat": "Cetak Sertifikat",
+    "perubahan_nama": "Perubahan Nama",
+    "pengalihan_hak": "Pengalihan Hak",
+    "usul_tolak": "Usul Tolak",
+    "surat_keberatan": "Surat Keberatan",
+    "perjanjian_lisensi": "Perjanjian Lisensi"
+  },
+  "footer": {
+    "tagline": "Platform lengkap untuk pendaftaran dan pengelolaan merek Anda",
+    "company": "Perusahaan",
+    "services": "Layanan",
+    "support": "Dukungan",
+    "legal": "Legal",
+    "copyright": "© 2025 UrusMerek.id. Hak cipta dilindungi.",
+    "privacy_policy": "Kebijakan Privasi",
+    "terms_of_service": "Syarat & Ketentuan"
+  },
+  "currency": {
+    "idr": "Rp"
+  }
+}

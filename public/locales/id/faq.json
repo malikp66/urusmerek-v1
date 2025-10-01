@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "title": "FAQ - Pertanyaan yang Sering Diajukan | UrusMerek.id",
+    "description": "Temukan jawaban untuk pertanyaan umum seputar pendaftaran merek, perpanjangan, dan layanan HKI lainnya."
+  },
+  "title": "Pertanyaan yang Sering Diajukan",
+  "subtitle": "Temukan jawaban untuk pertanyaan Anda seputar pendaftaran dan pengelolaan merek",
+  "search_placeholder": "Cari pertanyaan...",
+  "items": [
+    {
+      "question": "Apa itu merek dagang dan mengapa penting?",
+      "answer": "Merek dagang adalah tanda yang dapat membedakan barang atau jasa yang diproduksi oleh suatu perusahaan dengan yang lainnya. Merek penting karena memberikan perlindungan hukum, meningkatkan nilai bisnis, dan membangun kepercayaan konsumen."
+    },
+    {
+      "question": "Berapa lama proses pendaftaran merek?",
+      "answer": "Proses pendaftaran merek di Indonesia biasanya memakan waktu 12-24 bulan sejak pengajuan hingga sertifikat terbit. Namun, merek Anda sudah mendapat perlindungan hukum sejak tanggal pengajuan (filing date)."
+    },
+    {
+      "question": "Berapa biaya pendaftaran merek?",
+      "answer": "Biaya pendaftaran merek bervariasi tergantung jenis layanan dan kelas barang/jasa. Biaya berkisar antara Rp 2.000.000 - Rp 5.000.000 sudah termasuk biaya pemerintah dan jasa konsultasi. Hubungi kami untuk estimasi harga yang lebih akurat."
+    },
+    {
+      "question": "Dokumen apa saja yang diperlukan untuk mendaftar merek?",
+      "answer": "Dokumen yang diperlukan: KTP/ID pemohon, logo atau nama merek yang ingin didaftarkan, deskripsi detail produk/jasa yang akan menggunakan merek, dan surat kuasa (jika menggunakan konsultan HKI)."
+    },
+    {
+      "question": "Apakah saya bisa mendaftar merek sendiri tanpa konsultan?",
+      "answer": "Ya, Anda bisa mendaftar sendiri melalui sistem online DJKI. Namun, menggunakan jasa konsultan HKI sangat disarankan karena mereka memahami prosedur, dapat melakukan trademark search yang akurat, dan meningkatkan peluang approval."
+    },
+    {
+      "question": "Apa yang terjadi jika merek saya ditolak?",
+      "answer": "Jika merek ditolak, Anda bisa mengajukan surat keberatan dalam waktu 30 hari sejak penolakan. Kami akan membantu Anda menyusun argumentasi hukum yang kuat untuk mengajukan keberatan dan meningkatkan peluang diterima."
+    },
+    {
+      "question": "Berapa lama masa berlaku merek terdaftar?",
+      "answer": "Merek terdaftar berlaku selama 10 tahun sejak tanggal pendaftaran. Setelah itu, dapat diperpanjang setiap 10 tahun tanpa batas waktu selama terus digunakan dan diperpanjang tepat waktu."
+    },
+    {
+      "question": "Kapan harus memperpanjang merek?",
+      "answer": "Merek sebaiknya diperpanjang 6-12 bulan sebelum tanggal berakhir untuk menghindari denda. Jika terlambat, masih ada masa tenggang 6 bulan setelah expired dengan biaya tambahan denda pemerintah."
+    },
+    {
+      "question": "Apakah bisa mengubah merek yang sudah terdaftar?",
+      "answer": "Perubahan kecil pada merek terdaftar tidak diperbolehkan karena dapat mengubah esensi merek. Jika ingin mengubah merek secara signifikan, Anda harus mendaftar merek baru dengan desain yang diperbarui."
+    },
+    {
+      "question": "Bagaimana cara mengecek ketersediaan nama merek?",
+      "answer": "Anda bisa mengecek melalui database DJKI di pdki-indonesia.dgip.go.id atau menggunakan layanan trademark search kami. Kami akan melakukan pencarian menyeluruh dan memberikan analisis kemungkinan approval."
+    },
+    {
+      "question": "Apakah merek saya berlaku di luar negeri?",
+      "answer": "Tidak. Pendaftaran merek di Indonesia hanya berlaku di wilayah Indonesia. Jika ingin perlindungan di negara lain, Anda harus mendaftar di negara tersebut atau melalui sistem Madrid Protocol untuk pendaftaran internasional."
+    },
+    {
+      "question": "Bagaimana cara menjadi mitra afiliasi UrusMerek?",
+      "answer": "Anda bisa mendaftar sebagai mitra afiliasi melalui halaman Mitra kami. Dapatkan komisi Rp100.000 untuk setiap penjualan yang terverifikasi. Kami menyediakan link referral, materi promosi, dan dukungan penuh untuk mitra."
+    }
+  ]
+}

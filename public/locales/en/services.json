@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "pendaftaran_merek": {
+      "title": "Trademark Registration - UrusMerek.id",
+      "description": "Official trademark registration service with fast and easy process. Protect your brand identity now!"
+    },
+    "perpanjangan_merek": {
+      "title": "Trademark Renewal - UrusMerek.id",
+      "description": "Renew your trademark validity on time. Don't let your trademark protection expire!"
+    },
+    "cetak_sertifikat": {
+      "title": "Certificate Printing - UrusMerek.id",
+      "description": "Reprint your lost or damaged trademark certificate with an easy process."
+    },
+    "perubahan_nama": {
+      "title": "Name Amendment - UrusMerek.id",
+      "description": "Change the name or data of your registered trademark according to business needs."
+    },
+    "pengalihan_hak": {
+      "title": "Rights Transfer - UrusMerek.id",
+      "description": "Legal process to transfer trademark ownership from one party to another."
+    },
+    "usul_tolak": {
+      "title": "Rejection Proposal - UrusMerek.id",
+      "description": "Reject trademark applications similar to yours with strong legal arguments."
+    },
+    "surat_keberatan": {
+      "title": "Objection Letter - UrusMerek.id",
+      "description": "File an objection to your trademark registration rejection with expert consultant help."
+    },
+    "perjanjian_lisensi": {
+      "title": "License Agreement - UrusMerek.id",
+      "description": "Create a valid trademark license agreement that protects your rights."
+    }
+  },
+  "pendaftaran_merek": {
+    "hero_title": "Trademark Registration",
+    "hero_subtitle": "Secure your brand identity with official trademark registration",
+    "price_label": "Starting from",
+    "benefits_title": "Main Benefits",
+    "benefits": [
+      {
+        "title": "Full Legal Protection",
+        "description": "Your trademark is legally protected from counterfeiting and misuse"
+      },
+      {
+        "title": "Valuable Business Asset",
+        "description": "Registered trademarks increase business value and can be sold/licensed"
+      },
+      {
+        "title": "High Credibility",
+        "description": "Increases consumer trust and your business professionalism"
+      }
+    ],
+    "process_title": "Registration Process",
+    "process": [
+      {
+        "title": "Consultation & Trademark Search",
+        "description": "We check trademark name availability and provide best strategy consultation"
+      },
+      {
+        "title": "Document Preparation",
+        "description": "Our team prepares all registration documents according to official requirements"
+      },
+      {
+        "title": "Submission to DJKI",
+        "description": "We submit application to the Directorate General of Intellectual Property"
+      },
+      {
+        "title": "Monitoring & Certificate",
+        "description": "Track progress and receive registered trademark certificate"
+      }
+    ],
+    "faq_title": "Trademark Registration FAQ",
+    "faq": [
+      {
+        "question": "How long does the trademark registration process take?",
+        "answer": "The trademark registration process in Indonesia usually takes 12-24 months from submission to certificate issuance. However, your trademark receives protection from the filing date."
+      },
+      {
+        "question": "What documents are required?",
+        "answer": "Required documents include: applicant's ID/KTP, logo/trademark name to register, product/service description, and power of attorney (if using a consultant). We will help prepare all documents."
+      },
+      {
+        "question": "Can my trademark be rejected?",
+        "answer": "Yes, trademarks can be rejected if they're similar to other registered trademarks, violate regulations, or don't meet requirements. Therefore, trademark search is crucial before filing."
+      }
+    ]
+  },
+  "perpanjangan_merek": {
+    "hero_title": "Trademark Renewal",
+    "hero_subtitle": "Maintain the continuity of your expiring trademark protection",
+    "price_label": "Starting from",
+    "renewal_option_label": "Select Period",
+    "renewal_options": {
+      "under_6_months": "≤ 6 Months Before Expiry",
+      "over_6_months": "> 6 Months After Expiry (Penalty)"
+    },
+    "benefits_title": "Benefits of Timely Renewal",
+    "benefits": [
+      {
+        "title": "Avoid Losing Trademark",
+        "description": "Unrenewed trademarks will lose legal protection"
+      },
+      {
+        "title": "Save Penalty Costs",
+        "description": "Renew before expiry to avoid additional fees"
+      },
+      {
+        "title": "Faster Process",
+        "description": "Renewal is easier than new registration"
+      }
+    ],
+    "process_title": "Renewal Process",
+    "process": [
+      {
+        "title": "Check Trademark Status",
+        "description": "We check expiry date and your trademark status"
+      },
+      {
+        "title": "Document Preparation",
+        "description": "Prepare renewal documents and payment proof"
+      },
+      {
+        "title": "Submit Renewal",
+        "description": "Submit renewal application to DJKI"
+      },
+      {
+        "title": "Renewal Certificate",
+        "description": "Receive registered trademark renewal certificate"
+      }
+    ],
+    "faq_title": "Trademark Renewal FAQ",
+    "faq": [
+      {
+        "question": "When should I renew my trademark?",
+        "answer": "Trademarks must be renewed every 10 years. It's best to renew 6 months before expiry to avoid penalties. If late, you can still renew up to 6 months after expiry with additional costs."
+      },
+      {
+        "question": "How much does trademark renewal cost?",
+        "answer": "Trademark renewal costs depend on submission timing. If renewed before expiry, costs are lower. If late (6 months after expiry), there are additional government penalty fees."
+      },
+      {
+        "question": "What happens if not renewed?",
+        "answer": "If trademark is not renewed past the grace period (6 months after expiry), your trademark will be removed from the registered trademark list and lose legal protection. Others can register the same trademark."
+      }
+    ]
+  },
+  "cetak_sertifikat": {
+    "hero_title": "Trademark Certificate Reprint",
+    "hero_subtitle": "Get an official copy of your lost or damaged trademark certificate",
+    "price_label": "Starting from",
+    "benefits_title": "Certificate Reprint Benefits",
+    "benefits": [
+      {
+        "title": "Official Copy",
+        "description": "Reissued certificates have the same legal force"
+      },
+      {
+        "title": "Fast Process",
+        "description": "No need to re-register, just request reprint"
+      },
+      {
+        "title": "For Legal Purposes",
+        "description": "Required for licensing, rights transfer, or other legal applications"
+      }
+    ],
+    "process_title": "Reprint Process",
+    "process": [
+      {
+        "title": "Verify Trademark Data",
+        "description": "We verify registration number and your trademark data"
+      },
+      {
+        "title": "Submit Application",
+        "description": "Submit reprint application to DJKI"
+      },
+      {
+        "title": "Process & Print",
+        "description": "Wait for official certificate reprint process"
+      }
+    ],
+    "faq_title": "Certificate Printing FAQ",
+    "faq": [
+      {
+        "question": "How long does certificate reprint take?",
+        "answer": "Trademark certificate reprint process usually takes 1-2 working weeks from application submission and approval by DJKI."
+      },
+      {
+        "question": "Is the reprinted certificate the same as the original?",
+        "answer": "Yes, reprinted certificates have the same legal force as original certificates. Certificates will have 'Official Copy' stamp from DJKI."
+      },
+      {
+        "question": "What are the requirements for certificate reprint?",
+        "answer": "Reprint requirements: trademark registration number, trademark owner's identity, and loss/damage statement (if required)."
+      }
+    ]
+  }
+}
