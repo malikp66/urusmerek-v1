@@ -72,7 +72,7 @@ export default function HeroSection() {
       tl.from(".hero-badge", { y: 16, opacity: 0, duration: 0.4 })
         .from(".hero-title", { y: 32, opacity: 0, duration: 0.6 })
         .from(".hero-subtitle", { y: 24, opacity: 0, duration: 0.5 }, "-=0.2")
-        .from(".hero-highlight", { y: 20, opacity: 0, duration: 0.45, stagger: 0.08 }, "-=0.3")
+        .from(".hero-highlight-item", { y: 20, opacity: 0, duration: 0.45, stagger: 0.08 }, "-=0.3")
         .from(".hero-ctas > a", { y: 16, opacity: 0, duration: 0.4, stagger: 0.12 }, "-=0.25")
         .from(".hero-stats-item", { y: 20, opacity: 0, duration: 0.45, stagger: 0.08 }, "-=0.2")
         .from(interactivePanelRef.current, { x: 40, opacity: 0, duration: 0.6 }, "-=0.3")
@@ -120,11 +120,11 @@ export default function HeroSection() {
               <p className="hero-subtitle mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg">
                 Dari analisis awal, penyusunan dokumen, sampai pantau status di Kemenkumham—semua terhubung dalam satu alur interaktif dengan notifikasi real-time dan dukungan ahli berpengalaman.
               </p>
-              <ul className="hero-highlight mt-6 grid w-full gap-3 text-left text-sm text-muted-foreground sm:grid-cols-3">
+              <ul className="mt-6 grid w-full gap-3 text-left text-sm text-muted-foreground sm:grid-cols-3">
                 {highlightSteps.map((item) => (
                   <li
                     key={item}
-                    className="hero-highlight flex items-center gap-2 rounded-xl border border-border/70 bg-background/80 px-4 py-3 backdrop-blur"
+                    className="hero-highlight-item flex items-center gap-2 rounded-xl border border-border/70 bg-background/80 px-4 py-3 backdrop-blur"
                   >
                     <span className="flex h-2 w-2 rounded-full bg-primary" />
                     <span className="font-medium text-foreground/90">{item}</span>
