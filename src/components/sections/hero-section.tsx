@@ -190,6 +190,7 @@ export default function HeroSection() {
                               src={service.icon}
                               alt={`${service.name} icon`}
                               fill
+                              sizes="36px"
                               className="object-contain"
                             />
                           </div>
