@@ -14,7 +14,7 @@ const services = [
   {
     name: "Perpanjangan Merek",
     description: "Perpanjang perlindungan merek tanpa melewatkan tenggat.",
-    icon: "https://images.ctfassets.net/w8fc6tgspyjz/6o4c6qQmBkj73Aze7mxo97/d75cc705830bb23a68e82e51f111ce29/calendar.svg",
+    icon: "https://images.ctfassets.net/w8fc6tgspyjz/6o4c6qQmBkj73Aze7mxo97/d75cc705830bb23a68e82e51f111ce2b/calendar.svg",
   },
   {
     name: "Cetak Sertifikat",
