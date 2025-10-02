@@ -64,7 +64,6 @@ export default function HeroSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const leftColumnRef = useRef<HTMLDivElement | null>(null);
   const interactivePanelRef = useRef<HTMLDivElement | null>(null);
-  const floatingCardsRef = useRef<HTMLDivElement[]>([]);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
 
   useEffect(() => {
@@ -81,28 +80,23 @@ export default function HeroSection() {
         .from(".service-description", { y: 18, opacity: 0, duration: 0.45 }, "-=0.2")
         .from(".hero-floating-card", { y: 22, opacity: 0, duration: 0.45, stagger: 0.1 }, "-=0.25");
 
-      floatingCardsRef.current.forEach((card, index) => {
-        gsap.to(card, {
-          y: index % 2 === 0 ? 14 : -14,
-          duration: 3.2 + index * 0.4,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
+      gsap.utils
+        .toArray<HTMLDivElement>(".hero-floating-card")
+        .forEach((card, index) => {
+          gsap.to(card, {
+            y: index % 2 === 0 ? 14 : -14,
+            duration: 3.2 + index * 0.4,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
         });
-      });
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   const selectedService = services[activeServiceIndex] ?? services[0];
-
-  const registerFloatingCardRef = (element: HTMLDivElement | null) => {
-    if (!element) return;
-    if (!floatingCardsRef.current.includes(element)) {
-      floatingCardsRef.current.push(element);
-    }
-  };
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden bg-background py-20 md:py-24 lg:py-32">
@@ -223,10 +217,7 @@ export default function HeroSection() {
               </div>
 
               <div className="relative grid gap-4 sm:grid-cols-2">
-                <div
-                  ref={registerFloatingCardRef}
-                  className="hero-floating-card rounded-3xl border border-border/60 bg-gradient-to-br from-primary/20 via-primary/5 to-background px-5 py-6 shadow-lg"
-                >
+                <div className="hero-floating-card rounded-3xl border border-border/60 bg-gradient-to-br from-primary/20 via-primary/5 to-background px-5 py-6 shadow-lg">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-semibold text-primary-foreground/90">
                       Status Dashboard
@@ -250,10 +241,7 @@ export default function HeroSection() {
                   </div>
                 </div>
 
-                <div
-                  ref={registerFloatingCardRef}
-                  className="hero-floating-card rounded-3xl border border-border/60 bg-background/95 px-5 py-6 shadow-lg"
-                >
+                <div className="hero-floating-card rounded-3xl border border-border/60 bg-background/95 px-5 py-6 shadow-lg">
                   <p className="text-sm font-semibold text-muted-foreground">Ringkasan timeline</p>
                   <div className="mt-4 space-y-4">
                     <div className="flex items-start justify-between gap-4">
