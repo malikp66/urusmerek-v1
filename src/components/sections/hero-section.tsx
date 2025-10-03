@@ -153,7 +153,7 @@ export default function HeroSection() {
               </div>
 
               <h1 className="mt-6 text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-                Daftarkan merek —{" "}
+                Urus merek anda{" "}
                 <span aria-hidden className="inline-block w-[14ch]">
                   <span className="inline-block text-primary underline-decoration-2">{typed}</span>
                   <span className="inline-block blink ml-1" aria-hidden>▎</span>
