@@ -24,7 +24,7 @@ export default function Page() {
         <AiFeatures />
         <FeaturesGrid />
         <TestimonialsSection />
-        <FlexibilityFeatures />
+        {/* <FlexibilityFeatures /> */}
         <IndustryTemplates />
         <FinalCta />
       </main>
