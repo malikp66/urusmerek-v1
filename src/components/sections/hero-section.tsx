@@ -77,6 +77,11 @@ export default function HeroSection() {
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
 
   useEffect(() => {
+    const sectionEl = sectionRef.current;
+    if (!sectionEl) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
       tl.from(".hero-badge", { y: 16, opacity: 0, duration: 0.4 })
@@ -89,6 +94,8 @@ export default function HeroSection() {
         .from(".hero-service-option", { y: 12, opacity: 0, duration: 0.4, stagger: 0.05 }, "-=0.25")
         .from(".hero-preview-card", { y: 20, opacity: 0, duration: 0.5 }, "-=0.25")
         .from(".hero-status-chip", { y: 12, opacity: 0, duration: 0.35, stagger: 0.08 }, "-=0.25");
+
+      if (prefersReducedMotion) return;
 
       gsap.to(".hero-orbit-pulse", {
         scale: 1.08,
@@ -105,17 +112,9 @@ export default function HeroSection() {
         yoyo: true,
         ease: "sine.inOut",
       });
-    }, sectionRef);
+    }, sectionEl);
 
     return () => ctx.revert();
-  }, []);
-
-  useEffect(() => {
-    const rotation = setInterval(() => {
-      setActiveServiceIndex((prev) => (prev + 1) % services.length);
-    }, 6000);
-
-    return () => clearInterval(rotation);
   }, []);
 
   const selectedService = services[activeServiceIndex] ?? services[0];
