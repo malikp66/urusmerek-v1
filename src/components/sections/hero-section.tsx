@@ -59,9 +59,20 @@ const highlightSteps = [
   "Monitoring status real-time",
 ];
 
+const serviceDetailSteps = [
+  "Briefing kebutuhan tanpa tatap muka",
+  "Dokumen divalidasi dan disusun otomatis",
+  "Pengajuan resmi dipantau sampai selesai",
+];
+
+const serviceStatus = [
+  { label: "Respons tim", value: "< 5 menit" },
+  { label: "Keberhasilan", value: "98%" },
+  { label: "Monitoring", value: "Real-time" },
+];
+
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const leftColumnRef = useRef<HTMLDivElement | null>(null);
   const interactivePanelRef = useRef<HTMLDivElement | null>(null);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
 
@@ -75,24 +86,36 @@ export default function HeroSection() {
         .from(".hero-ctas > a", { y: 16, opacity: 0, duration: 0.4, stagger: 0.12 }, "-=0.25")
         .from(".hero-stats-item", { y: 20, opacity: 0, duration: 0.45, stagger: 0.08 }, "-=0.2")
         .from(interactivePanelRef.current, { x: 40, opacity: 0, duration: 0.6 }, "-=0.3")
-        .from(".service-option", { y: 14, opacity: 0, duration: 0.4, stagger: 0.05 }, "-=0.25")
-        .from(".service-description", { y: 18, opacity: 0, duration: 0.45 }, "-=0.2")
-        .from(".hero-floating-card", { y: 22, opacity: 0, duration: 0.45, stagger: 0.1 }, "-=0.25");
+        .from(".hero-service-option", { y: 12, opacity: 0, duration: 0.4, stagger: 0.05 }, "-=0.25")
+        .from(".hero-preview-card", { y: 20, opacity: 0, duration: 0.5 }, "-=0.25")
+        .from(".hero-status-chip", { y: 12, opacity: 0, duration: 0.35, stagger: 0.08 }, "-=0.25");
 
-      gsap.utils
-        .toArray<HTMLDivElement>(".hero-floating-card")
-        .forEach((card, index) => {
-          gsap.to(card, {
-            y: index % 2 === 0 ? 14 : -14,
-            duration: 3.2 + index * 0.4,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-          });
-        });
+      gsap.to(".hero-orbit-pulse", {
+        scale: 1.08,
+        duration: 2.6,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(".hero-orbit-ring", {
+        rotate: 8,
+        duration: 6,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
     }, sectionRef);
 
     return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    const rotation = setInterval(() => {
+      setActiveServiceIndex((prev) => (prev + 1) % services.length);
+    }, 6000);
+
+    return () => clearInterval(rotation);
   }, []);
 
   const selectedService = services[activeServiceIndex] ?? services[0];
@@ -105,10 +128,7 @@ export default function HeroSection() {
       <div className="container relative px-4 md:px-6">
         <div className="rounded-3xl border border-border/60 bg-card/70 p-8 shadow-lg backdrop-blur lg:p-12">
           <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-16">
-            <div
-              ref={leftColumnRef}
-              className="hero-content-column flex flex-col items-center text-center lg:items-start lg:text-left"
-            >
+            <div className="hero-content-column flex flex-col items-center text-center lg:items-start lg:text-left">
               <div className="hero-badge inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
                 <span className="inline-flex h-2 w-2 rounded-full bg-primary" />
                 UrusMerek.id ▸ Kecepatan Resmi
@@ -165,130 +185,87 @@ export default function HeroSection() {
             <div ref={interactivePanelRef} className="hero-interactive-panel flex w-full flex-col gap-6">
               <div className="rounded-3xl border border-border/70 bg-background/90 p-6 shadow-md backdrop-blur">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-primary">Pilih layanan</span>
-                  <span className="text-xs text-muted-foreground">Geser atau arahkan kursor</span>
+                  <span className="text-sm font-semibold text-primary">Pilih layanan utama</span>
+                  <span className="text-xs text-muted-foreground">Hover atau ketuk untuk melihat ringkasan</span>
                 </div>
-                <div className="mt-4 grid grid-cols-2 gap-3">
-                  {services.map((service, index) => {
-                    const isActive = index === activeServiceIndex;
-                    return (
-                      <button
-                        key={service.name}
-                        type="button"
-                        onMouseEnter={() => setActiveServiceIndex(index)}
-                        onFocus={() => setActiveServiceIndex(index)}
-                        className={`service-option group flex flex-col gap-2 rounded-2xl border px-4 py-3 text-left transition-all focus:outline-none focus:ring-2 focus:ring-primary/50 ${
-                          isActive
-                            ? "border-primary bg-primary/10 text-foreground shadow-sm"
-                            : "border-border/70 bg-background/70 hover:border-primary/70 hover:bg-primary/5"
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="relative h-9 w-9 rounded-xl bg-primary/10 p-1.5">
-                            <Image
-                              src={service.icon}
-                              alt={`${service.name} icon`}
-                              fill
-                              sizes="36px"
-                              className="object-contain"
-                            />
+                <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.85fr)]">
+                  <div className="grid grid-cols-2 gap-3">
+                    {services.map((service, index) => {
+                      const isActive = index === activeServiceIndex;
+                      return (
+                        <button
+                          key={service.name}
+                          type="button"
+                          onMouseEnter={() => setActiveServiceIndex(index)}
+                          onFocus={() => setActiveServiceIndex(index)}
+                          onClick={() => setActiveServiceIndex(index)}
+                          className={`hero-service-option group flex flex-col gap-2 rounded-2xl border px-4 py-3 text-left transition-all focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                            isActive
+                              ? "border-primary bg-primary/10 text-foreground shadow-sm"
+                              : "border-border/60 bg-background/70 hover:border-primary/60 hover:bg-primary/5"
+                          }`}
+                          aria-pressed={isActive}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="relative h-9 w-9 overflow-hidden rounded-xl bg-primary/10">
+                              <Image
+                                src={service.icon}
+                                alt={`${service.name} icon`}
+                                fill
+                                sizes="36px"
+                                className="object-contain"
+                              />
+                            </div>
+                            <span className="text-sm font-semibold">{service.name}</span>
                           </div>
-                          <span className="text-sm font-semibold">{service.name}</span>
+                          <span className="text-xs text-muted-foreground group-hover:text-foreground/80">
+                            {service.description}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="hero-preview-card relative overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-background p-6">
+                    <div className="absolute inset-x-10 -top-24 h-48 rounded-full bg-primary/20 blur-3xl" aria-hidden="true" />
+                    <div className="relative flex flex-col items-center gap-5 text-center">
+                      <div className="relative flex h-32 w-32 items-center justify-center">
+                        <div className="hero-orbit-blur absolute h-32 w-32 rounded-full bg-primary/30 blur-2xl" />
+                        <div className="hero-orbit-ring relative flex h-32 w-32 items-center justify-center rounded-full border border-primary/30 bg-background/60">
+                          <div className="hero-orbit-pulse h-20 w-20 rounded-full bg-primary/15" />
+                          <span className="text-sm font-semibold text-primary">#{activeServiceIndex + 1}</span>
                         </div>
-                        <span className="text-xs text-muted-foreground group-hover:text-foreground/80">
-                          {service.description}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="service-description mt-5 rounded-2xl border border-primary/40 bg-primary/5 p-5">
-                  <p className="text-sm font-semibold text-primary">Alur singkat layanan</p>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    {selectedService.description}
-                  </p>
-                  <a
-                    href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek.&type=phone_number&app_absent=0"
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80"
-                  >
-                    Konsultasi dengan ahli →
-                  </a>
-                </div>
-              </div>
-
-              <div className="relative grid gap-4 sm:grid-cols-2">
-                <div className="hero-floating-card rounded-3xl border border-border/60 bg-gradient-to-br from-primary/20 via-primary/5 to-background px-5 py-6 shadow-lg">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-primary-foreground/90">
-                      Status Dashboard
-                    </span>
-                    <span className="rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
-                      Live
-                    </span>
-                  </div>
-                  <div className="mt-5 space-y-3">
-                    <div className="flex items-center justify-between text-sm text-primary-foreground/90">
-                      <span>Pengajuan aktif</span>
-                      <span className="font-semibold">12</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm text-primary-foreground/90">
-                      <span>Butuh tindakan</span>
-                      <span className="font-semibold text-amber-300">3</span>
-                    </div>
-                    <div className="h-2 rounded-full bg-primary/20">
-                      <div className="h-full w-[72%] rounded-full bg-primary" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="hero-floating-card rounded-3xl border border-border/60 bg-background/95 px-5 py-6 shadow-lg">
-                  <p className="text-sm font-semibold text-muted-foreground">Ringkasan timeline</p>
-                  <div className="mt-4 space-y-4">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">Analisis merek</p>
-                        <p className="text-xs text-muted-foreground">Kecocokan 96% di database DJKI</p>
                       </div>
-                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                        Selesai
-                      </span>
-                    </div>
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">Dokumen lengkap</p>
-                        <p className="text-xs text-muted-foreground">Ditandatangani dan siap unggah</p>
+                      <div className="space-y-2">
+                        <p className="text-sm font-semibold text-primary">{selectedService.name}</p>
+                        <p className="text-sm text-muted-foreground">{selectedService.description}</p>
                       </div>
-                      <span className="rounded-full bg-amber-100/40 px-3 py-1 text-xs font-medium text-amber-500">
-                        Review
-                      </span>
-                    </div>
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">Pengajuan resmi</p>
-                        <p className="text-xs text-muted-foreground">Estimasi selesai 1 hari kerja</p>
-                      </div>
-                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                        Dalam proses
-                      </span>
+                      <ul className="w-full space-y-2 text-left text-xs text-muted-foreground">
+                        {serviceDetailSteps.map((step) => (
+                          <li key={step} className="flex items-start gap-2">
+                            <span className="mt-1 inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+                            <span>{step}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <a
+                        href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek.&type=phone_number&app_absent=0"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80"
+                      >
+                        Pelajari alur lengkap →
+                      </a>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="rounded-3xl border border-border/70 bg-background/80 p-6 backdrop-blur">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="text-sm font-semibold text-muted-foreground">Didukung teknologi dan pakar HKI</p>
-                    <p className="mt-1 text-base font-semibold text-foreground">
-                      Gabungkan otomatisasi AI dan tim manusia dalam satu dashboard.
-                    </p>
-                  </div>
-                  <a
-                    href="https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+mengetahui+alur+pendaftaran+merek.&type=phone_number&app_absent=0"
-                    className="inline-flex h-11 items-center justify-center rounded-full border border-primary/60 px-6 text-sm font-semibold text-primary transition-colors hover:bg-primary/10"
-                  >
-                    Pelajari alurnya
-                  </a>
+                <div className="hero-status-row mt-6 grid gap-3 sm:grid-cols-3">
+                  {serviceStatus.map((item) => (
+                    <div
+                      key={item.label}
+                      className="hero-status-chip rounded-2xl border border-border/60 bg-background/80 px-4 py-3 text-left"
+                    >
+                      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{item.label}</p>
+                      <p className="mt-1 text-sm font-semibold text-foreground">{item.value}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
