@@ -107,41 +107,41 @@ export default function HeroSection() {
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
-
+      
       // Staggered entrance animations
-      tl.from(badgeRef.current, {
-        y: -10,
-        opacity: 0,
-        duration: 0.5,
-        ease: "back.out(1.7)"
+      tl.from(badgeRef.current, { 
+        y: -10, 
+        opacity: 0, 
+        duration: 0.5, 
+        ease: "back.out(1.7)" 
       })
-        .from(titleRef.current, {
-          y: 30,
-          opacity: 0,
-          duration: 0.7,
-          ease: "power3.out"
-        }, "-=0.3")
-        .from(leftRef.current?.querySelectorAll("p, .btn-group") || [], {
-          y: 20,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: "power2.out"
-        }, "-=0.4")
-        .from(statsRef.current?.children || [], {
-          y: 20,
-          opacity: 0,
-          scale: 0.95,
-          stagger: 0.08,
-          duration: 0.5,
-          ease: "back.out(1.5)"
-        }, "-=0.4")
-        .from(rightRef.current, {
-          x: 40,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out"
-        }, "-=0.6");
+      .from(titleRef.current, { 
+        y: 30, 
+        opacity: 0, 
+        duration: 0.7, 
+        ease: "power3.out" 
+      }, "-=0.3")
+      .from(leftRef.current?.querySelectorAll("p, .btn-group") || [], { 
+        y: 20, 
+        opacity: 0, 
+        stagger: 0.1, 
+        duration: 0.6, 
+        ease: "power2.out" 
+      }, "-=0.4")
+      .from(statsRef.current?.children || [], { 
+        y: 20, 
+        opacity: 0, 
+        scale: 0.95,
+        stagger: 0.08, 
+        duration: 0.5, 
+        ease: "back.out(1.5)" 
+      }, "-=0.4")
+      .from(rightRef.current, { 
+        x: 40, 
+        opacity: 0, 
+        duration: 0.8, 
+        ease: "power3.out" 
+      }, "-=0.6");
 
       // Floating animation for video card
       gsap.to(rightRef.current, {
@@ -171,21 +171,21 @@ export default function HeroSection() {
             const r = card.getBoundingClientRect();
             const px = (e.clientX - (r.left + r.width / 2)) / r.width;
             const py = (e.clientY - (r.top + r.height / 2)) / r.height;
-            gsap.to(card, {
-              rotationY: px * 8,
-              rotationX: -py * 6,
-              transformPerspective: 1000,
-              transformOrigin: "center",
-              duration: 0.4,
-              ease: "power2.out"
+            gsap.to(card, { 
+              rotationY: px * 8, 
+              rotationX: -py * 6, 
+              transformPerspective: 1000, 
+              transformOrigin: "center", 
+              duration: 0.4, 
+              ease: "power2.out" 
             });
           };
           const reset = () => {
-            gsap.to(card, {
-              rotationX: 0,
-              rotationY: 0,
-              duration: 0.6,
-              ease: "power2.out"
+            gsap.to(card, { 
+              rotationX: 0, 
+              rotationY: 0, 
+              duration: 0.6, 
+              ease: "power2.out" 
             });
           };
           card.addEventListener("mousemove", handle);
@@ -204,9 +204,9 @@ export default function HeroSection() {
   const active = services[activeServiceIndex];
 
   return (
-    <section
-      ref={sectionRef}
-      aria-label="Hero — UrusMerek"
+    <section 
+      ref={sectionRef} 
+      aria-label="Hero — UrusMerek" 
       className="relative overflow-hidden bg-gradient-to-b from-background via-background/95 to-background py-20 sm:py-24 lg:py-32"
     >
       {/* Animated background elements */}
@@ -220,7 +220,7 @@ export default function HeroSection() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
             {/* LEFT */}
             <div ref={leftRef} className="prose max-w-xl space-y-6">
-              <div
+              <div 
                 ref={badgeRef}
                 className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-primary/5 px-4 py-2 text-sm font-semibold text-primary shadow-sm backdrop-blur-sm border border-primary/20"
               >
@@ -231,20 +231,18 @@ export default function HeroSection() {
                 UrusMerek.id — Profesional & Terverifikasi
               </div>
 
-              <div>
-                <h1
-                  ref={titleRef}
-                  className="text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl"
-                >
-                  Urus merek anda
-                </h1>
-
-                <div className="relative inline-block mt-1">
-                  <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#DC2626]">
-                    {typed}
-                  </span>
-                  <span className="blink ml-1 text-[#DC2626] text-3xl sm:text-4xl lg:text-5xl">▎</span>
-                </div>
+              <h1 
+                ref={titleRef}
+                className="text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+              >
+                Urus merek anda
+              </h1>
+              
+              <div className="relative inline-block mt-2">
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#DC2626]">
+                  {typed}
+                </span>
+                <span className="blink ml-1 text-[#DC2626] text-3xl sm:text-4xl lg:text-5xl">▎</span>
               </div>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
@@ -272,8 +270,8 @@ export default function HeroSection() {
 
               <ul ref={statsRef} className="grid grid-cols-3 gap-4 pt-4">
                 {heroStats.map((s) => (
-                  <li
-                    key={s.label}
+                  <li 
+                    key={s.label} 
                     className="group rounded-xl border border-border/60 bg-gradient-to-br from-background to-background/50 backdrop-blur-sm p-4 hover:border-primary/30 hover:shadow-lg hover:scale-105 transition-all duration-300"
                   >
                     <div className="text-2xl mb-1">{s.icon}</div>
@@ -286,14 +284,14 @@ export default function HeroSection() {
 
             {/* RIGHT */}
             <div ref={rightRef} className="relative lg:pl-8">
-              <div
-                ref={cardRef}
+              <div 
+                ref={cardRef} 
                 className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border-2 border-border/70 bg-black/5 shadow-2xl"
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {/* Glow effect */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/10 rounded-2xl blur-xl opacity-50" />
-
+                
                 <div className="relative z-10 h-full w-full rounded-2xl overflow-hidden">
                   <video
                     src={VIDEO_SRC}
@@ -306,27 +304,24 @@ export default function HeroSection() {
                     aria-label="Video ilustrasi layanan pendaftaran merek"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
-
+                  
                   {/* Layanan Populer Label */}
                   <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 z-20">
                     <div className="inline-flex items-center gap-2 rounded-lg bg-white/95 backdrop-blur-md px-3 py-1.5 shadow-lg border border-white/20">
                       <span className="text-xs font-semibold uppercase text-gray-700 tracking-wider">Layanan Populer</span>
                     </div>
                   </div>
-
-                  {/* Floating info card with transition */}
-                  <div
-                    key={activeServiceIndex}
-                    className="absolute left-4 bottom-16 right-4 sm:left-6 sm:bottom-20 sm:right-6 rounded-xl border border-white/20 bg-white/95 backdrop-blur-md p-5 shadow-2xl z-20 animate-slide-in"
-                  >
+                  
+                  {/* Floating info card */}
+                  <div className="absolute left-4 bottom-16 right-4 sm:left-6 sm:bottom-20 sm:right-auto sm:max-w-sm rounded-xl border border-white/20 bg-white/95 backdrop-blur-md p-5 shadow-2xl animate-float z-20">
                     <div className="flex items-start gap-4">
                       <div className="relative h-12 w-12 flex-shrink-0 rounded-xl bg-primary/10 p-2.5 ring-2 ring-primary/20">
-                        <Image
-                          src={active.icon}
-                          alt={`${active.name} icon`}
-                          fill
-                          sizes="48px"
-                          className="object-contain"
+                        <Image 
+                          src={active.icon} 
+                          alt={`${active.name} icon`} 
+                          fill 
+                          sizes="48px" 
+                          className="object-contain" 
                         />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -349,17 +344,18 @@ export default function HeroSection() {
                       </div>
                     </div>
                   </div>
-
+                  
                   {/* Dot Pagination */}
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
                     {services.map((_, idx) => (
                       <button
                         key={idx}
                         onClick={() => setActiveServiceIndex(idx)}
-                        className={`transition-all duration-300 rounded-full ${idx === activeServiceIndex
+                        className={`transition-all duration-300 rounded-full ${
+                          idx === activeServiceIndex
                             ? "w-8 h-2 bg-[#DC2626]"
                             : "w-2 h-2 bg-white/60 hover:bg-white/90"
-                          }`}
+                        }`}
                         aria-label={`Go to slide ${idx + 1}`}
                         aria-current={idx === activeServiceIndex}
                       />
@@ -397,19 +393,6 @@ export default function HeroSection() {
         @keyframes pulse-slow {
           0%, 100% { opacity: 0.3; }
           50% { opacity: 0.6; }
-        }
-        .animate-slide-in {
-          animation: slideIn 0.5s ease-out forwards;
-        }
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
         }
       `}</style>
     </section>
