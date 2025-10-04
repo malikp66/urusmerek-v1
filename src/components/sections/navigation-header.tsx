@@ -60,7 +60,7 @@ export default function NavigationHeader() {
           <NavigationMenu className="hidden lg:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link href="/beranda" legacyBehavior passHref>
+                <Link href="/beranda">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Beranda
                   </NavigationMenuLink>
@@ -83,35 +83,35 @@ export default function NavigationHeader() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/harga" legacyBehavior passHref>
+                <Link href="/harga">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Harga
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/profil-perusahaan" legacyBehavior passHref>
+                <Link href="/profil-perusahaan">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Profil Perusahaan
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/mitra" legacyBehavior passHref>
+                <Link href="/mitra">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Mitra
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/faq" legacyBehavior passHref>
+                <Link href="/faq">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     FAQ
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/hubungi-kami" legacyBehavior passHref>
+                <Link href="/hubungi-kami">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Hubungi Kami
                   </NavigationMenuLink>

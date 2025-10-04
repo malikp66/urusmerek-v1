@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ArrowRight } from "lucide-react";
