@@ -140,7 +140,8 @@ export default function HeroSection() {
     };
   }, [isHydrated]);
 
-  const activeService = services[isHydrated ? activeServiceIndex : 0];
+  const currentServiceIndex = isHydrated ? activeServiceIndex : 0;
+  const activeService = services[currentServiceIndex];
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden py-20 sm:py-24 lg:py-32 bg-gradient-to-b from-background to-background/90">
