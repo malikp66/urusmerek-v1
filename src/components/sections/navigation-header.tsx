@@ -2,11 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ChevronDown, Menu } from "lucide-react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,84 +10,98 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Menu, X } from "lucide-react";
+import gsap from "gsap";
 
-const layananItems = [
+const layananMenu = [
   {
     title: "Pendaftaran Merek",
-    href: "/layanan/pendaftaran-merek",
-    description: "Amankan identitas brand Anda dengan pendaftaran merek resmi.",
+    description: "Validasi dan pengajuan merek resmi hingga terbit sertifikat.",
+    href: "/layanan/pendaftaran",
   },
   {
     title: "Perpanjangan Merek",
-    href: "/layanan/perpanjangan-merek",
-    description: "Perpanjang perlindungan merek Anda sebelum habis masa berlakunya.",
+    description: "Pastikan merek Anda tetap aktif tanpa kehilangan hak hukum.",
+    href: "/layanan/perpanjangan",
   },
   {
-    title: "Pengalihan Hak Merek",
-    href: "/layanan/pengalihan-hak",
-    description: "Proses legal untuk memindahkan kepemilikan merek Anda.",
-  },
-  {
-    title: "Konsultasi HKI",
-    href: "/layanan/konsultasi-hki",
-    description: "Dapatkan panduan ahli strategi Hak Kekayaan Intelektual.",
+    title: "Konsultasi Hukum",
+    description: "Diskusikan kebutuhan hukum merek dan strategi perlindungannya.",
+    href: "/layanan/konsultasi",
   },
 ];
 
-export default function NavigationHeader() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [dropdownOpen, setDropdownOpen] = React.useState(false);
-
+// --------------------------
+// 🌐 DESKTOP NAVBAR
+// --------------------------
+export function NavbarMenu() {
   const dropdownRef = React.useRef<HTMLDivElement>(null);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const mobileMenuRef = React.useRef<HTMLDivElement>(null);
 
-  // 🌀 GSAP animasi dropdown
-  useGSAP(() => {
-    if (dropdownOpen && dropdownRef.current) {
+  // Animasi dropdown GSAP (desktop)
+  React.useEffect(() => {
+    if (!dropdownRef.current) return;
+    const el = dropdownRef.current;
+    const ctx = gsap.context(() => {
       gsap.fromTo(
-        dropdownRef.current,
+        el.querySelectorAll(".dropdown-item"),
         { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          ease: "power2.out",
+          stagger: 0.05,
+        }
       );
+    }, dropdownRef);
+    return () => ctx.revert();
+  }, []);
+
+  // Animasi slide-in mobile menu
+  React.useEffect(() => {
+    if (!mobileMenuRef.current) return;
+    const el = mobileMenuRef.current;
+
+    if (isMenuOpen) {
+      gsap.to(el, {
+        x: 0,
+        duration: 0.5,
+        ease: "power3.out",
+      });
+      gsap.fromTo(
+        el.querySelectorAll(".mobile-link"),
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, duration: 0.3, stagger: 0.05, ease: "power2.out" }
+      );
+    } else {
+      gsap.to(el, {
+        x: "100%",
+        duration: 0.5,
+        ease: "power3.inOut",
+      });
     }
-  }, [dropdownOpen]);
+  }, [isMenuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 max-w-7xl items-center justify-between">
-        {/* LOGO */}
-        <Link href="/" className="flex items-center space-x-1">
-          <span className="text-xl font-bold text-primary">UrusMerek</span>
-          <span className="text-xl font-bold text-foreground">.id</span>
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md">
+      <div className="container flex items-center justify-between h-16 px-4">
+        {/* Logo */}
+        <Link href="/" className="text-xl font-bold text-primary">
+          urusmerek.id
         </Link>
 
-        {/* DESKTOP NAVIGATION */}
-        <NavigationMenu className="hidden lg:flex">
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link href="/beranda" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Beranda
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem
-              onMouseEnter={() => setDropdownOpen(true)}
-              onMouseLeave={() => setDropdownOpen(false)}
-            >
-              <NavigationMenuTrigger>Layanan</NavigationMenuTrigger>
-              {dropdownOpen && (
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex items-center gap-6">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Layanan</NavigationMenuTrigger>
                 <NavigationMenuContent ref={dropdownRef}>
-                  <ul className="grid w-[550px] gap-4 p-4 md:grid-cols-2">
-                    {layananItems.map((item) => (
+                  <ul className="grid w-[320px] gap-3 p-4">
+                    {layananMenu.map((item) => (
                       <ListItem
                         key={item.title}
                         title={item.title}
@@ -101,180 +111,139 @@ export default function NavigationHeader() {
                     ))}
                   </ul>
                 </NavigationMenuContent>
-              )}
-            </NavigationMenuItem>
+              </NavigationMenuItem>
 
-            <NavigationMenuItem>
-              <Link href="/harga" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Harga
-                </NavigationMenuLink>
+              <NavigationMenuItem>
+                <Link href="/harga" legacyBehavior passHref>
+                  <NavigationMenuLink
+                    className="transition-colors hover:text-primary"
+                  >
+                    Harga
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/tentang" legacyBehavior passHref>
+                  <NavigationMenuLink
+                    className="transition-colors hover:text-primary"
+                  >
+                    Tentang Kami
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/kontak" legacyBehavior passHref>
+                  <NavigationMenuLink
+                    className="transition-colors hover:text-primary"
+                  >
+                    Kontak
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </nav>
+
+        {/* Mobile Toggle */}
+        <button
+          className="md:hidden text-foreground hover:text-primary transition"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        ref={mobileMenuRef}
+        className="fixed top-0 right-0 h-full w-3/4 sm:w-1/2 bg-background border-l border-border shadow-lg z-40 translate-x-full"
+      >
+        <div className="flex flex-col p-6 gap-6">
+          <Link
+            href="/"
+            className="text-lg font-semibold text-primary"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            urusmerek.id
+          </Link>
+
+          <div className="flex flex-col gap-4 mt-6">
+            <span className="mobile-link font-semibold">Layanan</span>
+            {layananMenu.map((item) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className="mobile-link text-sm text-muted-foreground hover:text-primary transition"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.title}
               </Link>
-            </NavigationMenuItem>
+            ))}
 
-            <NavigationMenuItem>
-              <Link href="/profil-perusahaan" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Profil Perusahaan
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
+            <Link
+              href="/harga"
+              className="mobile-link text-sm text-muted-foreground hover:text-primary transition"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Harga
+            </Link>
 
-            <NavigationMenuItem>
-              <Link href="/mitra" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Mitra
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
+            <Link
+              href="/tentang"
+              className="mobile-link text-sm text-muted-foreground hover:text-primary transition"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Tentang Kami
+            </Link>
 
-            <NavigationMenuItem>
-              <Link href="/faq" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  FAQ
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href="/hubungi-kami" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Hubungi Kami
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-
-        {/* LANGUAGE + BUTTON */}
-        <div className="flex items-center space-x-3">
-          {/* 🌐 Manual language switch */}
-          <LanguageSwitcher />
-
-          <Button className="hidden lg:inline-flex rounded-md bg-red-600 hover:bg-red-700 text-white">
-            Konsultasi Gratis
-          </Button>
-
-          {/* MOBILE MENU */}
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild className="lg:hidden">
-              <Button variant="outline" size="icon" className="rounded-md">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[350px]">
-              <SheetHeader>
-                <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-                  <span className="text-xl font-bold text-primary">
-                    UrusMerek
-                  </span>
-                  <span className="text-xl font-bold text-foreground">.id</span>
-                </Link>
-              </SheetHeader>
-              <div className="flex flex-col py-6 space-y-4 text-foreground">
-                <Link href="/beranda" onClick={() => setIsMobileMenuOpen(false)}>
-                  Beranda
-                </Link>
-                <MobileLayananDropdown onLinkClick={() => setIsMobileMenuOpen(false)} />
-                <Link href="/harga" onClick={() => setIsMobileMenuOpen(false)}>
-                  Harga
-                </Link>
-                <Link href="/profil-perusahaan" onClick={() => setIsMobileMenuOpen(false)}>
-                  Profil Perusahaan
-                </Link>
-                <Link href="/mitra" onClick={() => setIsMobileMenuOpen(false)}>
-                  Mitra
-                </Link>
-                <Link href="/faq" onClick={() => setIsMobileMenuOpen(false)}>
-                  FAQ
-                </Link>
-                <Link href="/hubungi-kami" onClick={() => setIsMobileMenuOpen(false)}>
-                  Hubungi Kami
-                </Link>
-
-                <div className="pt-4 border-t mt-auto">
-                  <LanguageSwitcher />
-                  <Button className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white">
-                    Konsultasi Gratis
-                  </Button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+            <Link
+              href="/kontak"
+              className="mobile-link text-sm text-muted-foreground hover:text-primary transition"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Kontak
+            </Link>
+          </div>
         </div>
       </div>
     </header>
   );
 }
 
-/* 🌐 Simple language switcher 🇮🇩 / 🇬🇧 */
-function LanguageSwitcher() {
-  const [lang, setLang] = React.useState<"id" | "en">("id");
-
+// --------------------------
+// 🔗 LIST ITEM COMPONENT
+// --------------------------
+const ListItem = React.forwardRef<
+  React.ElementRef<typeof Link>,
+  React.ComponentPropsWithoutRef<typeof Link> & {
+    title: string;
+    description?: string;
+  }
+>(({ className, title, description, ...props }, ref) => {
   return (
-    <button
-      onClick={() => setLang(lang === "id" ? "en" : "id")}
-      className="flex items-center gap-2 border rounded-md px-2 py-1 hover:bg-accent transition"
-    >
-      <span className="text-sm">{lang === "id" ? "🇮🇩" : "🇬🇧"}</span>
-      <span className="text-xs font-medium">{lang === "id" ? "ID" : "EN"}</span>
-    </button>
+    <li className="dropdown-item">
+      <NavigationMenuLink asChild>
+        <Link
+          ref={ref as any}
+          className={cn(
+            "block select-none space-y-1 rounded-lg border border-transparent p-3 leading-none no-underline outline-none transition-all duration-200 hover:border-accent hover:bg-accent/10 hover:shadow-sm hover:scale-[1.02] focus:bg-accent/20 focus:shadow focus:scale-[1.02]",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-semibold leading-none text-foreground">
+            {title}
+          </div>
+          {description && (
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+              {description}
+            </p>
+          )}
+        </Link>
+      </NavigationMenuLink>
+    </li>
   );
-}
-
-/* 📱 Mobile dropdown */
-const MobileLayananDropdown = ({ onLinkClick }: { onLinkClick: () => void }) => {
-  const [open, setOpen] = React.useState(false);
-  return (
-    <div className="flex flex-col space-y-2">
-      <button
-        className="flex items-center justify-between w-full font-medium"
-        onClick={() => setOpen(!open)}
-      >
-        <span>Layanan</span>
-        <ChevronDown
-          className={cn("h-4 w-4 transition-transform", open && "rotate-180")}
-        />
-      </button>
-      {open && (
-        <div className="flex flex-col pl-4 space-y-2 border-l ml-1">
-          {layananItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={onLinkClick}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              {item.title}
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
-/* 🧩 Item Dropdown (GSAP + hover effect) */
-const ListItem = ({
-  title,
-  href,
-  description,
-}: {
-  title: string;
-  href: string;
-  description: string;
-}) => {
-  return (
-    <Link
-      href={href}
-      className="group block rounded-lg border border-transparent p-4 transition-all duration-200 hover:bg-accent/10 hover:shadow-sm hover:-translate-y-1"
-    >
-      <div className="text-sm font-semibold text-foreground group-hover:text-primary">
-        {title}
-      </div>
-      <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-        {description}
-      </p>
-    </Link>
-  );
-};
+});
+ListItem.displayName = "ListItem";
