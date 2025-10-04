@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { ChevronDown, Menu } from "lucide-react";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import { useGSAP } from "@gsap";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
