@@ -55,7 +55,7 @@ export default function HeroSection() {
     setIsHydrated(true);
   }, []);
 
-  // 🌀 Auto carousel
+  // 🌀 Auto carousel (only after hydration)
   useEffect(() => {
     if (!isHydrated) return;
 
@@ -65,7 +65,7 @@ export default function HeroSection() {
     return () => window.clearInterval(interval);
   }, [isHydrated]);
 
-  // ⌨️ Typewriter effect
+  // ⌨️ Typewriter effect (only after hydration)
   useEffect(() => {
     if (!isHydrated) return;
 
@@ -93,15 +93,12 @@ export default function HeroSection() {
     };
 
     timer = window.setTimeout(type, TYPE_SPEED);
-
     return () => {
-      if (timer) {
-        window.clearTimeout(timer);
-      }
+      window.clearTimeout(timer);
     };
   }, [isHydrated]);
 
-  // 🎬 GSAP Animations
+  // 🎬 GSAP Animations (entrance + floating)
   useEffect(() => {
     if (!isHydrated || typeof window === "undefined") return;
 
@@ -140,6 +137,7 @@ export default function HeroSection() {
     };
   }, [isHydrated]);
 
+  // Use this index to render safely both SSR and after hydration
   const currentServiceIndex = isHydrated ? activeServiceIndex : 0;
   const activeService = services[currentServiceIndex];
 
@@ -156,7 +154,7 @@ export default function HeroSection() {
           {/* LEFT */}
           <div ref={leftRef} className="max-w-xl space-y-6">
             <div ref={badgeRef} className="inline-flex items-center gap-2.5 rounded-full bg-[#DC2626]/10 px-4 py-2 text-sm font-semibold text-[#DC2626] border border-[#DC2626]/30">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#DC2626] animate-pulse"></span>
+              <span className="h-2.5 w-2.5 rounded-full bg-[#DC2626] animate-pulse" />
               UrusMerek.id — Profesional & Terverifikasi
             </div>
 
@@ -174,11 +172,16 @@ export default function HeroSection() {
             </p>
 
             <div className="btn-group flex gap-4 pt-2">
-              <a href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek."
-                className="rounded-lg bg-[#DC2626] text-white px-6 py-3.5 font-semibold hover:scale-[1.02] shadow-md shadow-[#DC2626]/30 transition-transform">
+              <a
+                href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek."
+                className="rounded-lg bg-[#DC2626] text-white px-6 py-3.5 font-semibold hover:scale-[1.02] shadow-md shadow-[#DC2626]/30 transition-transform"
+              >
                 Mulai Konsultasi →
               </a>
-              <a href="#layanan" className="rounded-lg border-2 border-[#DC2626]/30 px-6 py-3.5 font-semibold hover:bg-[#DC2626]/5 transition-all">
+              <a
+                href="#layanan"
+                className="rounded-lg border-2 border-[#DC2626]/30 px-6 py-3.5 font-semibold hover:bg-[#DC2626]/5 transition-all"
+              >
                 Lihat Layanan
               </a>
             </div>
@@ -200,22 +203,25 @@ export default function HeroSection() {
               <video src={VIDEO_SRC} poster={VIDEO_POSTER} autoPlay muted loop playsInline className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 
-              {/* Overlay Info */}
+              {/* Overlay Info — USE activeService (fixed) */}
               <div className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md border border-white/20 rounded-xl p-5 shadow-2xl max-w-xs">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 relative flex-shrink-0">
-                    <Image src={active.icon} alt={active.name} fill className="object-contain" />
+                    <Image src={activeService.icon} alt={activeService.name} fill className="object-contain" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900">{active.name}</h3>
-                    <p className="text-sm text-gray-600 mt-1">{active.description}</p>
+                    <h3 className="font-bold text-gray-900">{activeService.name}</h3>
+                    <p className="text-sm text-gray-600 mt-1">{activeService.description}</p>
                   </div>
                 </div>
 
-                {/* Pagination dots */}
+                {/* Pagination dots -> use currentServiceIndex (safe for SSR/hydration) */}
                 <div className="flex justify-center gap-2 mt-4">
                   {services.map((_, i) => (
-                    <span key={i} className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${i === activeServiceIndex ? "bg-[#DC2626]" : "bg-gray-300"}`} />
+                    <span
+                      key={i}
+                      className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${i === currentServiceIndex ? "bg-[#DC2626]" : "bg-gray-300"}`}
+                    />
                   ))}
                 </div>
               </div>
@@ -223,6 +229,12 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+
+      {/* Inline styles (blinking, float, pulse) */}
+      <style jsx>{`
+        .animate-pulse-slow { animation: pulse-slow 4s cubic-bezier(0.4,0,0.6,1) infinite; }
+        @keyframes pulse-slow { 0%,100%{opacity:.3} 50%{opacity:.6} }
+      `}</style>
     </section>
   );
 }
