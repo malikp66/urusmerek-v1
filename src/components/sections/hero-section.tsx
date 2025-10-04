@@ -269,7 +269,9 @@ export default function HeroSection() {
                       </p>
                     </div>
                     <a
-                      href="https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+mengetahui+alur+{selectedService.name}.&type=phone_number&app_absent=0"
+                      href={`https://api.whatsapp.com/send/?phone=6282267890152&text=${encodeURIComponent(
+                        `Halo, saya ingin mengetahui alur ${selectedService.name}.`
+                      )}&type=phone_number&app_absent=0`}
                       className="inline-flex h-11 items-center justify-center rounded-full border border-primary/60 px-6 text-sm font-semibold text-primary transition-colors hover:bg-primary/10"
                     >
                       Diskusi dengan ahli
