@@ -48,6 +48,15 @@ export default function HeroSection() {
   const statsRef = useRef<HTMLUListElement | null>(null);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
 
+  // Auto carousel for services
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveServiceIndex((prev) => (prev + 1) % services.length);
+    }, 4000); // Change slide every 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   // typewriter state
   const [typed, setTyped] = useState("");
   const wordIndexRef = useRef(0);
@@ -226,15 +235,15 @@ export default function HeroSection() {
                 ref={titleRef}
                 className="text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl"
               >
-                Urus merek anda{" "}
-                <span className="relative inline-block">
-                  <span className="relative z-10 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                    {typed}
-                  </span>
-                  <span className="blink ml-1 text-primary">▎</span>
-                  <span className="absolute bottom-1 left-0 h-3 w-full bg-primary/20 -z-10 blur-sm" />
-                </span>
+                Urus merek anda
               </h1>
+              
+              <div className="relative inline-block mt-2">
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#DC2626]">
+                  {typed}
+                </span>
+                <span className="blink ml-1 text-[#DC2626] text-3xl sm:text-4xl lg:text-5xl">▎</span>
+              </div>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Dari analisis kesesuaian hingga penerbitan sertifikat — alur yang ramping, dokumen terstruktur, dan dukungan ahli kapan saja.
@@ -271,65 +280,6 @@ export default function HeroSection() {
                   </li>
                 ))}
               </ul>
-
-              <div className="space-y-4 pt-4">
-                <div className="flex items-center gap-2">
-                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-                  <span className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">Layanan Populer</span>
-                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-                </div>
-                
-                <div className="grid gap-3">
-                  {services.map((srv, idx) => {
-                    const isActive = idx === activeServiceIndex;
-                    return (
-                      <button
-                        key={srv.id}
-                        onClick={() => setActiveServiceIndex(idx)}
-                        onFocus={() => setActiveServiceIndex(idx)}
-                        className={`group flex items-start gap-4 rounded-xl border-2 p-4 text-left transition-all duration-300 ${
-                          isActive
-                            ? "border-primary/50 bg-gradient-to-r from-primary/10 to-primary/5 shadow-lg scale-[1.02]"
-                            : "border-border/60 bg-background/70 hover:border-primary/30 hover:bg-primary/5"
-                        }`}
-                        aria-pressed={isActive}
-                      >
-                        <div className={`relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-300 ${
-                          isActive ? "bg-primary/20 scale-110" : "bg-primary/5 group-hover:bg-primary/10"
-                        }`}>
-                          <Image 
-                            src={srv.icon} 
-                            alt={`${srv.name} icon`} 
-                            fill 
-                            sizes="48px" 
-                            className="object-contain p-2" 
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className={`text-base font-semibold transition-colors ${
-                            isActive ? "text-primary" : "text-foreground group-hover:text-primary"
-                          }`}>
-                            {srv.name}
-                          </div>
-                          <div className="mt-1 text-sm text-muted-foreground leading-snug">
-                            {srv.description}
-                          </div>
-                        </div>
-                        <svg 
-                          className={`w-5 h-5 flex-shrink-0 transition-all duration-300 ${
-                            isActive ? "text-primary rotate-90" : "text-muted-foreground group-hover:text-primary group-hover:translate-x-1"
-                          }`} 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
             </div>
 
             {/* RIGHT */}
@@ -355,8 +305,15 @@ export default function HeroSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                   
+                  {/* Layanan Populer Label */}
+                  <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-6 sm:right-6 z-20">
+                    <div className="inline-flex items-center gap-2 rounded-lg bg-white/95 backdrop-blur-md px-3 py-1.5 shadow-lg border border-white/20">
+                      <span className="text-xs font-semibold uppercase text-gray-700 tracking-wider">Layanan Populer</span>
+                    </div>
+                  </div>
+                  
                   {/* Floating info card */}
-                  <div className="absolute left-4 bottom-4 right-4 sm:left-6 sm:bottom-6 sm:right-auto sm:max-w-sm rounded-xl border border-white/20 bg-white/95 backdrop-blur-md p-5 shadow-2xl animate-float">
+                  <div className="absolute left-4 bottom-16 right-4 sm:left-6 sm:bottom-20 sm:right-auto sm:max-w-sm rounded-xl border border-white/20 bg-white/95 backdrop-blur-md p-5 shadow-2xl animate-float z-20">
                     <div className="flex items-start gap-4">
                       <div className="relative h-12 w-12 flex-shrink-0 rounded-xl bg-primary/10 p-2.5 ring-2 ring-primary/20">
                         <Image 
@@ -386,6 +343,23 @@ export default function HeroSection() {
                         </div>
                       </div>
                     </div>
+                  </div>
+                  
+                  {/* Dot Pagination */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+                    {services.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveServiceIndex(idx)}
+                        className={`transition-all duration-300 rounded-full ${
+                          idx === activeServiceIndex
+                            ? "w-8 h-2 bg-[#DC2626]"
+                            : "w-2 h-2 bg-white/60 hover:bg-white/90"
+                        }`}
+                        aria-label={`Go to slide ${idx + 1}`}
+                        aria-current={idx === activeServiceIndex}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
