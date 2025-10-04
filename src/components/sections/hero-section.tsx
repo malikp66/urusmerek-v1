@@ -3,241 +3,184 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const VIDEO_SRC = "/videos/brand-hero.mp4";
 const VIDEO_POSTER = "/images/brand-hero-poster.jpg";
 
 const services = [
   {
+    id: "pendaftaran",
     name: "Pendaftaran Merek",
     description: "Validasi & pengajuan resmi sampai terbit sertifikat.",
     icon: "https://images.ctfassets.net/w8fc6tgspyjz/1kLoj8UkXEaJzqpbLhnGQK/78a22bec17ad80746b1b649cbfa7c1b6/tasks.svg",
   },
   {
+    id: "perpanjangan",
     name: "Perpanjangan Merek",
-    description: "Perpanjang perlindungan tanpa melewatkan tenggat.",
+    description: "Perpanjang perlindungan merk tanpa melewatkan tenggat.",
     icon: "https://images.ctfassets.net/w8fc6tgspyjz/6o4c6qQmBkj73Aze7mxo97/d75cc705830bb23a68e82e51f111ce2b/calendar.svg",
   },
   {
+    id: "sertifikat",
     name: "Cetak Sertifikat",
-    description: "Sertifikat digital & fisik siap dikirim.",
+    description: "Sertifikat digital & fisik, siap dikirim.",
     icon: "https://images.ctfassets.net/w8fc6tgspyjz/3GU8BuwIs7zQ2gq6DODK0E/c0833c2a402a37fc4eb9588275dde294/chat.svg",
   },
 ];
 
+const heroStats = [
+  { label: "Bisnis terbantu", value: "850+", icon: "🏢" },
+  { label: "Mentor HKI", value: "30", icon: "👨‍💼" },
+  { label: "Rata-rata proses", value: "24 jam", icon: "⚡" },
+];
+
 const typeWords = ["lebih cepat", "lebih aman", "lebih transparan", "lebih hemat biaya"];
+const TYPE_SPEED = 70;
+const PAUSE_AFTER = 1400;
 
 export default function HeroSection() {
-  const [active, setActive] = useState(0);
-  const [typed, setTyped] = useState("");
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const videoRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
   const leftRef = useRef<HTMLDivElement | null>(null);
-  const heroTextRef = useRef<HTMLDivElement | null>(null);
+  const rightRef = useRef<HTMLDivElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const badgeRef = useRef<HTMLDivElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const statsRef = useRef<HTMLUListElement | null>(null);
 
-  // Auto-loop service cards
+  const [activeServiceIndex, setActiveServiceIndex] = useState(0);
+  const [typed, setTyped] = useState("");
+
+  // 🌀 Auto carousel
   useEffect(() => {
     const interval = setInterval(() => {
-      setActive((prev) => (prev + 1) % services.length);
+      setActiveServiceIndex((prev) => (prev + 1) % services.length);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
 
-  // Typewriter effect
+  // ⌨️ Typewriter effect
   useEffect(() => {
-    let i = 0, j = 0, deleting = false;
-    const loop = () => {
-      const word = typeWords[i % typeWords.length];
-      if (!deleting) {
-        if (j <= word.length) {
-          setTyped(word.slice(0, j++));
-          setTimeout(loop, 80);
-        } else {
-          deleting = true;
-          setTimeout(loop, 1000);
-        }
-      } else {
-        if (j > 0) {
-          setTyped(word.slice(0, j--));
-          setTimeout(loop, 40);
-        } else {
-          deleting = false;
-          i++;
-          setTimeout(loop, 400);
-        }
-      }
+    let wordIndex = 0, charIndex = 0, deleting = false, timer: number;
+
+    const type = () => {
+      const word = typeWords[wordIndex];
+      setTyped(word.slice(0, charIndex));
+
+      if (!deleting && charIndex < word.length) charIndex++;
+      else if (deleting && charIndex > 0) charIndex--;
+      else if (!deleting && charIndex === word.length)
+        deleting = true, timer = window.setTimeout(type, PAUSE_AFTER);
+      else deleting = false, wordIndex = (wordIndex + 1) % typeWords.length;
+
+      timer = window.setTimeout(type, deleting ? TYPE_SPEED / 1.8 : TYPE_SPEED);
     };
-    loop();
+
+    type();
+    return () => clearTimeout(timer);
   }, []);
 
-  // GSAP animations (cinematic)
+  // 🎬 GSAP Animations
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: "power3.out", duration: 1 },
-      });
+      const tl = gsap.timeline();
+      tl.from(badgeRef.current, { y: -10, opacity: 0, duration: 0.5, ease: "back.out(1.7)" })
+        .from(titleRef.current, { y: 30, opacity: 0, duration: 0.7, ease: "power3.out" }, "-=0.3")
+        .from(leftRef.current?.querySelectorAll("p, .btn-group") || [], {
+          y: 20, opacity: 0, stagger: 0.1, duration: 0.6, ease: "power2.out"
+        }, "-=0.4")
+        .from(statsRef.current?.children || [], {
+          y: 20, opacity: 0, scale: 0.95, stagger: 0.08, duration: 0.5, ease: "back.out(1.5)"
+        }, "-=0.4")
+        .from(rightRef.current, { x: 40, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.6");
 
-      // Cinematic entrance (delayed layers)
-      tl.from(".badge", { y: -20, opacity: 0 })
-        .from(".hero-title", { y: 50, opacity: 0, duration: 1.2 }, "-=0.3")
-        .from(".typewriter", { y: 20, opacity: 0 }, "-=0.8")
-        .from(".hero-desc", { y: 30, opacity: 0 }, "-=0.6")
-        .from(".btn-group", { y: 30, opacity: 0, stagger: 0.1 }, "-=0.6")
-        .from(".hero-stats li", { y: 20, opacity: 0, stagger: 0.08 }, "-=0.8")
-        .from(videoRef.current, { x: 100, opacity: 0, duration: 1.4 }, "-=1");
-
-      // ScrollTrigger Parallax
-      gsap.to(leftRef.current, {
-        yPercent: -15,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1.2,
-        },
-      });
-
-      gsap.to(videoRef.current, {
-        yPercent: -25,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.4,
-        },
-      });
-
-      // Slow float and zoom for video
-      gsap.to(videoRef.current, {
-        y: -12,
-        scale: 1.04,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      // Optional pin for cinematic “hold” moment
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: "bottom+=200 top",
-        pin: true,
-        pinSpacing: false,
-      });
+      // Floating animation
+      gsap.to(rightRef.current, { y: -8, duration: 3.5, repeat: -1, yoyo: true, ease: "sine.inOut" });
     }, section);
 
     return () => ctx.revert();
   }, []);
 
+  const active = services[activeServiceIndex];
+
   return (
-    <section
-      ref={sectionRef}
-      className="relative overflow-hidden bg-gradient-to-b from-white via-white/95 to-white py-20 sm:py-28 lg:py-32"
-    >
-      {/* Background glow */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 h-[24rem] w-[24rem] rounded-full bg-[#DC2626]/10 blur-3xl" />
-        <div className="absolute bottom-0 right-1/3 h-[20rem] w-[20rem] rounded-full bg-[#DC2626]/5 blur-3xl" />
+    <section ref={sectionRef} className="relative overflow-hidden py-20 sm:py-24 lg:py-32 bg-gradient-to-b from-background to-background/90">
+      {/* Decorative Background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-[#DC2626]/10 blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-[#DC2626]/5 blur-3xl animate-pulse-slow" style={{ animationDelay: "1s" }} />
       </div>
 
-      <div className="container px-6 mx-auto max-w-7xl grid lg:grid-cols-2 items-center gap-16">
-        {/* LEFT TEXT */}
-        <div ref={leftRef} className="space-y-6">
-          <div className="badge inline-flex items-center gap-2 bg-[#DC2626]/10 border border-[#DC2626]/20 text-[#DC2626] px-4 py-2 rounded-full text-sm font-semibold">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DC2626] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#DC2626]"></span>
-            </span>
-            UrusMerek.id — Profesional & Terverifikasi
-          </div>
-
-          <h1 className="hero-title text-5xl sm:text-6xl font-bold text-gray-900 leading-tight">
-            Urus merek anda
-          </h1>
-
-          <div className="typewriter relative inline-block text-[#DC2626] text-4xl sm:text-5xl font-bold -mt-2">
-            {typed}
-            <span className="ml-1 animate-pulse">▎</span>
-          </div>
-
-          <p className="hero-desc text-lg text-gray-600 max-w-lg">
-            Dari analisis kesesuaian hingga penerbitan sertifikat — alur yang ramping, dokumen terstruktur, dan dukungan ahli kapan saja.
-          </p>
-
-          <div className="btn-group flex flex-col sm:flex-row gap-4">
-            <a
-              href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek."
-              className="bg-[#DC2626] text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:scale-[1.03] transition-transform"
-            >
-              Mulai Konsultasi
-            </a>
-            <a
-              href="#layanan"
-              className="border border-[#DC2626]/40 text-[#DC2626] px-6 py-3 rounded-lg font-semibold hover:bg-[#DC2626]/10 transition"
-            >
-              Lihat Layanan
-            </a>
-          </div>
-
-          <ul className="hero-stats grid grid-cols-3 gap-4 pt-6">
-            {["850+ Bisnis", "30 Mentor", "24 Jam"].map((stat, i) => (
-              <li
-                key={i}
-                className="rounded-xl border border-gray-200 p-4 text-center bg-white/60 backdrop-blur-sm shadow-sm hover:shadow-lg transition"
-              >
-                <div className="text-lg font-bold text-[#DC2626]">{stat.split(" ")[0]}</div>
-                <div className="text-xs text-gray-500">{stat.split(" ")[1]}</div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* RIGHT VIDEO */}
-        <div ref={videoRef} className="relative aspect-[16/10] rounded-2xl overflow-hidden border border-gray-200 shadow-2xl">
-          <video
-            src={VIDEO_SRC}
-            poster={VIDEO_POSTER}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="object-cover h-full w-full"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-
-          <div className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-md p-4 rounded-xl max-w-xs shadow-xl border border-white/40">
-            <div className="flex gap-3 items-start">
-              <Image
-                src={services[active].icon}
-                alt=""
-                width={40}
-                height={40}
-                className="object-contain"
-              />
-              <div>
-                <h4 className="font-bold text-gray-900">{services[active].name}</h4>
-                <p className="text-sm text-gray-600">{services[active].description}</p>
-              </div>
+      <div className="container px-4 md:px-6">
+        <div className="mx-auto max-w-7xl grid gap-12 lg:grid-cols-2 lg:items-center">
+          {/* LEFT */}
+          <div ref={leftRef} className="max-w-xl space-y-6">
+            <div ref={badgeRef} className="inline-flex items-center gap-2.5 rounded-full bg-[#DC2626]/10 px-4 py-2 text-sm font-semibold text-[#DC2626] border border-[#DC2626]/30">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#DC2626] animate-pulse"></span>
+              UrusMerek.id — Profesional & Terverifikasi
             </div>
 
-            {/* Dots pagination */}
-            <div className="flex gap-1 mt-3">
-              {services.map((_, i) => (
-                <span
-                  key={i}
-                  className={`h-2 w-2 rounded-full ${i === active ? "bg-[#DC2626]" : "bg-gray-300"
-                    } transition-all`}
-                ></span>
+            <h1 ref={titleRef} className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+              Urus merek anda
+            </h1>
+
+            <div className="relative mt-1">
+              <span className="text-[#DC2626] text-3xl sm:text-4xl lg:text-5xl font-bold">{typed}</span>
+              <span className="ml-1 text-[#DC2626] text-3xl sm:text-4xl lg:text-5xl animate-pulse">▎</span>
+            </div>
+
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Dari analisis kesesuaian hingga penerbitan sertifikat — alur yang ramping, dokumen terstruktur, dan dukungan ahli kapan saja.
+            </p>
+
+            <div className="btn-group flex gap-4 pt-2">
+              <a href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek."
+                className="rounded-lg bg-[#DC2626] text-white px-6 py-3.5 font-semibold hover:scale-[1.02] shadow-md shadow-[#DC2626]/30 transition-transform">
+                Mulai Konsultasi →
+              </a>
+              <a href="#layanan" className="rounded-lg border-2 border-[#DC2626]/30 px-6 py-3.5 font-semibold hover:bg-[#DC2626]/5 transition-all">
+                Lihat Layanan
+              </a>
+            </div>
+
+            <ul ref={statsRef} className="grid grid-cols-3 gap-4 pt-4">
+              {heroStats.map((s) => (
+                <li key={s.label} className="rounded-xl border border-border/60 bg-white/60 backdrop-blur-sm p-4 hover:border-[#DC2626]/40 transition-all">
+                  <div className="text-2xl mb-1">{s.icon}</div>
+                  <div className="text-2xl font-bold text-foreground">{s.value}</div>
+                  <div className="mt-1 text-xs font-medium text-muted-foreground uppercase tracking-wide">{s.label}</div>
+                </li>
               ))}
+            </ul>
+          </div>
+
+          {/* RIGHT */}
+          <div ref={rightRef} className="relative">
+            <div ref={cardRef} className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/70 shadow-xl bg-black/5">
+              <video src={VIDEO_SRC} poster={VIDEO_POSTER} autoPlay muted loop playsInline className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
+              {/* Overlay Info */}
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md border border-white/20 rounded-xl p-5 shadow-2xl max-w-xs">
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 relative flex-shrink-0">
+                    <Image src={active.icon} alt={active.name} fill className="object-contain" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900">{active.name}</h3>
+                    <p className="text-sm text-gray-600 mt-1">{active.description}</p>
+                  </div>
+                </div>
+
+                {/* Pagination dots */}
+                <div className="flex justify-center gap-2 mt-4">
+                  {services.map((_, i) => (
+                    <span key={i} className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${i === activeServiceIndex ? "bg-[#DC2626]" : "bg-gray-300"}`} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
