@@ -35,7 +35,7 @@ const layananMenu = [
 // --------------------------
 // 🌐 DESKTOP NAVBAR
 // --------------------------
-export function NavbarMenu() {
+export default function NavbarMenu() {
   const dropdownRef = React.useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const mobileMenuRef = React.useRef<HTMLDivElement>(null);
