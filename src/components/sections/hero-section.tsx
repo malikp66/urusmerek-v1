@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
-const VIDEO_SRC = "/videos/brand-hero.mp4"; // <- ganti
-const VIDEO_POSTER = "/images/brand-hero-poster.jpg"; // <- ganti
+const VIDEO_SRC = "/videos/brand-hero.mp4";
+const VIDEO_POSTER = "/images/brand-hero-poster.jpg";
 
 const services = [
   {
@@ -29,21 +29,23 @@ const services = [
 ];
 
 const heroStats = [
-  { label: "Bisnis terbantu", value: "850+" },
-  { label: "Mentor HKI", value: "30" },
-  { label: "Rata-rata proses", value: "24 jam" },
+  { label: "Bisnis terbantu", value: "850+", icon: "🏢" },
+  { label: "Mentor HKI", value: "30", icon: "👨‍💼" },
+  { label: "Rata-rata proses", value: "24 jam", icon: "⚡" },
 ];
 
-// WORDS TO CYCLE in typewriter (customize)
 const typeWords = ["lebih cepat", "lebih aman", "lebih transparan", "lebih hemat biaya"];
-const TYPE_SPEED = 60; // ms per char
-const PAUSE_AFTER = 1100; // ms pause after a word completes
+const TYPE_SPEED = 70;
+const PAUSE_AFTER = 1400;
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const leftRef = useRef<HTMLDivElement | null>(null);
   const rightRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const badgeRef = useRef<HTMLDivElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const statsRef = useRef<HTMLUListElement | null>(null);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
 
   // typewriter state
@@ -54,17 +56,14 @@ export default function HeroSection() {
   const deletingRef = useRef(false);
 
   useEffect(() => {
-    // TYPEWRITER IMPLEMENTATION (plain JS + timers)
     const run = () => {
       const current = typeWords[wordIndexRef.current % typeWords.length];
       if (!deletingRef.current) {
-        // typing
         if (charIndexRef.current <= current.length) {
           setTyped(current.slice(0, charIndexRef.current));
           charIndexRef.current += 1;
           typingTimerRef.current = window.setTimeout(run, TYPE_SPEED);
         } else {
-          // pause then start deleting
           typingTimerRef.current = window.setTimeout(() => {
             deletingRef.current = true;
             charIndexRef.current = current.length - 1;
@@ -72,17 +71,15 @@ export default function HeroSection() {
           }, PAUSE_AFTER);
         }
       } else {
-        // deleting
         if (charIndexRef.current >= 0) {
           setTyped(current.slice(0, charIndexRef.current));
           charIndexRef.current -= 1;
-          typingTimerRef.current = window.setTimeout(run, TYPE_SPEED / 1.6);
+          typingTimerRef.current = window.setTimeout(run, TYPE_SPEED / 1.8);
         } else {
-          // move to next word
           deletingRef.current = false;
           wordIndexRef.current = (wordIndexRef.current + 1) % typeWords.length;
           charIndexRef.current = 0;
-          typingTimerRef.current = window.setTimeout(run, 200);
+          typingTimerRef.current = window.setTimeout(run, 300);
         }
       }
     };
@@ -100,22 +97,63 @@ export default function HeroSection() {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      // basic entrance
       const tl = gsap.timeline();
-      tl.from(leftRef.current, { y: 20, opacity: 0, duration: 0.6, ease: "power2.out" })
-        .from(rightRef.current, { y: 20, opacity: 0, duration: 0.6, ease: "power2.out" }, "-=0.45");
+      
+      // Staggered entrance animations
+      tl.from(badgeRef.current, { 
+        y: -10, 
+        opacity: 0, 
+        duration: 0.5, 
+        ease: "back.out(1.7)" 
+      })
+      .from(titleRef.current, { 
+        y: 30, 
+        opacity: 0, 
+        duration: 0.7, 
+        ease: "power3.out" 
+      }, "-=0.3")
+      .from(leftRef.current?.querySelectorAll("p, .btn-group") || [], { 
+        y: 20, 
+        opacity: 0, 
+        stagger: 0.1, 
+        duration: 0.6, 
+        ease: "power2.out" 
+      }, "-=0.4")
+      .from(statsRef.current?.children || [], { 
+        y: 20, 
+        opacity: 0, 
+        scale: 0.95,
+        stagger: 0.08, 
+        duration: 0.5, 
+        ease: "back.out(1.5)" 
+      }, "-=0.4")
+      .from(rightRef.current, { 
+        x: 40, 
+        opacity: 0, 
+        duration: 0.8, 
+        ease: "power3.out" 
+      }, "-=0.6");
 
-      // floating subtle on right hero card (infinite)
+      // Floating animation for video card
       gsap.to(rightRef.current, {
-        y: 6,
-        duration: 4,
+        y: -8,
+        duration: 3.5,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        delay: 0.2,
       });
 
-      // micro parallax on mouse move over card
+      // Pulse animation for badge dot
+      gsap.to(badgeRef.current?.querySelector(".pulse-dot"), {
+        scale: 1.3,
+        opacity: 0.7,
+        duration: 1.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      // 3D tilt effect on video card
       const card = cardRef.current;
       if (card) {
         const mm = gsap.matchMedia();
@@ -124,12 +162,28 @@ export default function HeroSection() {
             const r = card.getBoundingClientRect();
             const px = (e.clientX - (r.left + r.width / 2)) / r.width;
             const py = (e.clientY - (r.top + r.height / 2)) / r.height;
-            gsap.to(card, { rotationY: px * 6, rotationX: -py * 4, transformPerspective: 800, transformOrigin: "center", duration: 0.5, ease: "power3.out" });
+            gsap.to(card, { 
+              rotationY: px * 8, 
+              rotationX: -py * 6, 
+              transformPerspective: 1000, 
+              transformOrigin: "center", 
+              duration: 0.4, 
+              ease: "power2.out" 
+            });
+          };
+          const reset = () => {
+            gsap.to(card, { 
+              rotationX: 0, 
+              rotationY: 0, 
+              duration: 0.6, 
+              ease: "power2.out" 
+            });
           };
           card.addEventListener("mousemove", handle);
-          card.addEventListener("mouseleave", () => gsap.to(card, { rotationX: 0, rotationY: 0, duration: 0.5, ease: "power3.out" }));
+          card.addEventListener("mouseleave", reset);
           return () => {
             card.removeEventListener("mousemove", handle);
+            card.removeEventListener("mouseleave", reset);
           };
         });
       }
@@ -141,74 +195,136 @@ export default function HeroSection() {
   const active = services[activeServiceIndex];
 
   return (
-    <section ref={sectionRef} aria-label="Hero — UrusMerek" className="bg-background/60 py-16 sm:py-20 lg:py-28">
+    <section 
+      ref={sectionRef} 
+      aria-label="Hero — UrusMerek" 
+      className="relative overflow-hidden bg-gradient-to-b from-background via-background/95 to-background py-20 sm:py-24 lg:py-32"
+    >
+      {/* Animated background elements */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-primary/5 blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-primary/3 blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
+      </div>
+
       <div className="container px-4 md:px-6">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
             {/* LEFT */}
-            <div ref={leftRef} className="prose max-w-xl">
-              <div className="inline-flex items-center gap-3 rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary/90">
-                <span className="h-2 w-2 rounded-full bg-primary" aria-hidden />
+            <div ref={leftRef} className="prose max-w-xl space-y-6">
+              <div 
+                ref={badgeRef}
+                className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-primary/10 to-primary/5 px-4 py-2 text-sm font-semibold text-primary shadow-sm backdrop-blur-sm border border-primary/20"
+              >
+                <span className="pulse-dot relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+                </span>
                 UrusMerek.id — Profesional & Terverifikasi
               </div>
 
-              <h1 className="mt-6 text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              <h1 
+                ref={titleRef}
+                className="text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+              >
                 Urus merek anda{" "}
-                <span aria-hidden className="inline-block w-[14ch]">
-                  <span className="inline-block text-primary underline-decoration-2">{typed}</span>
-                  <span className="inline-block blink ml-1" aria-hidden>▎</span>
+                <span className="relative inline-block">
+                  <span className="relative z-10 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    {typed}
+                  </span>
+                  <span className="blink ml-1 text-primary">▎</span>
+                  <span className="absolute bottom-1 left-0 h-3 w-full bg-primary/20 -z-10 blur-sm" />
                 </span>
               </h1>
 
-              <p className="mt-4 text-base text-muted-foreground">
+              <p className="text-lg text-muted-foreground leading-relaxed">
                 Dari analisis kesesuaian hingga penerbitan sertifikat — alur yang ramping, dokumen terstruktur, dan dukungan ahli kapan saja.
               </p>
 
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="btn-group flex flex-col gap-4 sm:flex-row sm:items-center pt-2">
                 <a
                   href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek.&type=phone_number&app_absent=0"
-                  className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-semibold text-white shadow-sm hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="group inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:ring-offset-2"
                 >
-                  Mulai Konsultasi
+                  <span>Mulai Konsultasi</span>
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </a>
 
                 <a
                   href="#layanan"
-                  className="inline-flex items-center justify-center rounded-md border border-border/60 bg-transparent px-5 py-3 text-sm font-medium text-foreground/90 hover:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary/30 bg-transparent px-6 py-3.5 text-base font-semibold text-foreground hover:bg-primary/5 hover:border-primary/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2"
                 >
                   Lihat Layanan
                 </a>
               </div>
 
-              <ul className="mt-6 grid grid-cols-3 gap-3">
+              <ul ref={statsRef} className="grid grid-cols-3 gap-4 pt-4">
                 {heroStats.map((s) => (
-                  <li key={s.label} className="rounded-lg border border-border/60 bg-background/60 px-4 py-3">
-                    <div className="text-lg font-semibold text-foreground">{s.value}</div>
-                    <div className="mt-1 text-xs font-medium uppercase text-muted-foreground">{s.label}</div>
+                  <li 
+                    key={s.label} 
+                    className="group rounded-xl border border-border/60 bg-gradient-to-br from-background to-background/50 backdrop-blur-sm p-4 hover:border-primary/30 hover:shadow-lg hover:scale-105 transition-all duration-300"
+                  >
+                    <div className="text-2xl mb-1">{s.icon}</div>
+                    <div className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">{s.value}</div>
+                    <div className="mt-1 text-xs font-medium text-muted-foreground uppercase tracking-wide">{s.label}</div>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-8">
-                <div className="text-xs font-medium uppercase text-muted-foreground">Layanan populer</div>
-                <div className="mt-3 flex w-full max-w-lg gap-3">
+              <div className="space-y-4 pt-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+                  <span className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">Layanan Populer</span>
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+                </div>
+                
+                <div className="grid gap-3">
                   {services.map((srv, idx) => {
-                    const activeClass = idx === activeServiceIndex ? "ring-2 ring-primary/30" : "hover:ring-1 hover:ring-primary/20";
+                    const isActive = idx === activeServiceIndex;
                     return (
                       <button
                         key={srv.id}
                         onClick={() => setActiveServiceIndex(idx)}
                         onFocus={() => setActiveServiceIndex(idx)}
-                        className={`flex w-full items-center gap-3 rounded-md border border-border/60 bg-background/70 px-3 py-2 text-left transition ${activeClass} focus:outline-none`}
-                        aria-pressed={idx === activeServiceIndex}
+                        className={`group flex items-start gap-4 rounded-xl border-2 p-4 text-left transition-all duration-300 ${
+                          isActive
+                            ? "border-primary/50 bg-gradient-to-r from-primary/10 to-primary/5 shadow-lg scale-[1.02]"
+                            : "border-border/60 bg-background/70 hover:border-primary/30 hover:bg-primary/5"
+                        }`}
+                        aria-pressed={isActive}
                       >
-                        <div className="relative h-8 w-8 flex-shrink-0 overflow-hidden rounded-md bg-primary/5">
-                          <Image src={srv.icon} alt={`${srv.name} icon`} fill sizes="32px" className="object-contain p-[6px]" />
+                        <div className={`relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-300 ${
+                          isActive ? "bg-primary/20 scale-110" : "bg-primary/5 group-hover:bg-primary/10"
+                        }`}>
+                          <Image 
+                            src={srv.icon} 
+                            alt={`${srv.name} icon`} 
+                            fill 
+                            sizes="48px" 
+                            className="object-contain p-2" 
+                          />
                         </div>
-                        <div className="flex-1">
-                          <div className="text-sm font-medium text-foreground">{srv.name}</div>
-                          <div className="text-xs text-muted-foreground">{srv.description}</div>
+                        <div className="flex-1 min-w-0">
+                          <div className={`text-base font-semibold transition-colors ${
+                            isActive ? "text-primary" : "text-foreground group-hover:text-primary"
+                          }`}>
+                            {srv.name}
+                          </div>
+                          <div className="mt-1 text-sm text-muted-foreground leading-snug">
+                            {srv.description}
+                          </div>
                         </div>
+                        <svg 
+                          className={`w-5 h-5 flex-shrink-0 transition-all duration-300 ${
+                            isActive ? "text-primary rotate-90" : "text-muted-foreground group-hover:text-primary group-hover:translate-x-1"
+                          }`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
                       </button>
                     );
                   })}
@@ -217,51 +333,92 @@ export default function HeroSection() {
             </div>
 
             {/* RIGHT */}
-            <div ref={rightRef} className="relative">
-              <div ref={cardRef} className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/70 bg-black/5 shadow-xl">
-                <video
-                  src={VIDEO_SRC}
-                  poster={VIDEO_POSTER}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="h-full w-full object-cover"
-                  aria-label="Video ilustrasi layanan pendaftaran merek"
-                />
-                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/28 via-transparent to-transparent pointer-events-none" />
-                {/* overlay card inside video area */}
-                <div className="absolute left-6 bottom-6 max-w-xs rounded-xl border border-border/60 bg-background/95 p-4 shadow-lg">
-                  <div className="flex items-start gap-3">
-                    <div className="relative h-10 w-10 flex-shrink-0 rounded-lg bg-primary/5 p-2">
-                      <Image src={active.icon} alt={`${active.name} icon`} fill sizes="40px" className="object-contain" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold text-foreground">{active.name}</div>
-                      <div className="mt-1 text-xs text-muted-foreground">{active.description}</div>
-                      <div className="mt-3 flex gap-2 text-xs">
-                        <span className="rounded-md border border-border/60 px-2 py-1">Analisis otomatis</span>
-                        <span className="rounded-md border border-border/60 px-2 py-1">Pendampingan ahli</span>
+            <div ref={rightRef} className="relative lg:pl-8">
+              <div 
+                ref={cardRef} 
+                className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border-2 border-border/70 bg-black/5 shadow-2xl"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                {/* Glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/10 rounded-2xl blur-xl opacity-50" />
+                
+                <div className="relative z-10 h-full w-full rounded-2xl overflow-hidden">
+                  <video
+                    src={VIDEO_SRC}
+                    poster={VIDEO_POSTER}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="h-full w-full object-cover"
+                    aria-label="Video ilustrasi layanan pendaftaran merek"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                  
+                  {/* Floating info card */}
+                  <div className="absolute left-4 bottom-4 right-4 sm:left-6 sm:bottom-6 sm:right-auto sm:max-w-sm rounded-xl border border-white/20 bg-white/95 backdrop-blur-md p-5 shadow-2xl animate-float">
+                    <div className="flex items-start gap-4">
+                      <div className="relative h-12 w-12 flex-shrink-0 rounded-xl bg-primary/10 p-2.5 ring-2 ring-primary/20">
+                        <Image 
+                          src={active.icon} 
+                          alt={`${active.name} icon`} 
+                          fill 
+                          sizes="48px" 
+                          className="object-contain" 
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-base font-bold text-gray-900">{active.name}</div>
+                        <div className="mt-1 text-sm text-gray-600 leading-snug">{active.description}</div>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-primary/10 border border-primary/20 px-2.5 py-1 text-xs font-medium text-primary">
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            Analisis otomatis
+                          </span>
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-primary/10 border border-primary/20 px-2.5 py-1 text-xs font-medium text-primary">
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            Pendampingan ahli
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-primary/20 blur-2xl animate-pulse-slow" />
+              <div className="absolute -bottom-4 -left-4 h-32 w-32 rounded-full bg-primary/10 blur-2xl animate-pulse-slow" style={{ animationDelay: '1.5s' }} />
             </div>
-            {/* end right */}
           </div>
         </div>
       </div>
 
-      {/* small style tweaks */}
       <style jsx>{`
         .blink {
           animation: blink 1s steps(2, start) infinite;
         }
         @keyframes blink {
-          0% { opacity: 1 }
-          50% { opacity: 0 }
-          100% { opacity: 1 }
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.6; }
         }
       `}</style>
     </section>
