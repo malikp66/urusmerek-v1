@@ -108,6 +108,8 @@ export default function HeroSection() {
     const section = sectionRef.current;
     if (!section) return;
 
+    let floatingTween: gsap.core.Tween | null = null;
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
       tl.from(badgeRef.current, { y: -10, opacity: 0, duration: 0.5, ease: "back.out(1.7)" })
@@ -120,14 +122,25 @@ export default function HeroSection() {
         }, "-=0.4")
         .from(rightRef.current, { x: 40, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.6");
 
-      // Floating animation
-      gsap.to(rightRef.current, { y: -8, duration: 3.5, repeat: -1, yoyo: true, ease: "sine.inOut" });
+      const floatingTarget = rightRef.current;
+      if (floatingTarget) {
+        floatingTween = gsap.to(floatingTarget, {
+          y: -8,
+          duration: 3.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
     }, section);
 
-    return () => ctx.revert();
-  }, []);
+    return () => {
+      ctx.revert();
+      floatingTween?.kill();
+    };
+  }, [isHydrated]);
 
-  const active = services[activeServiceIndex];
+  const activeService = services[isHydrated ? activeServiceIndex : 0];
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden py-20 sm:py-24 lg:py-32 bg-gradient-to-b from-background to-background/90">
