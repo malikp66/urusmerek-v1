@@ -49,18 +49,30 @@ export default function HeroSection() {
 
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const [typed, setTyped] = useState("");
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   // 🌀 Auto carousel
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (!isHydrated) return;
+
+    const interval = window.setInterval(() => {
       setActiveServiceIndex((prev) => (prev + 1) % services.length);
     }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+    return () => window.clearInterval(interval);
+  }, [isHydrated]);
 
   // ⌨️ Typewriter effect
   useEffect(() => {
-    let wordIndex = 0, charIndex = 0, deleting = false, timer: number;
+    if (!isHydrated) return;
+
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    let timer: ReturnType<typeof window.setTimeout>;
 
     const type = () => {
       const word = typeWords[wordIndex];
@@ -68,19 +80,31 @@ export default function HeroSection() {
 
       if (!deleting && charIndex < word.length) charIndex++;
       else if (deleting && charIndex > 0) charIndex--;
-      else if (!deleting && charIndex === word.length)
-        deleting = true, timer = window.setTimeout(type, PAUSE_AFTER);
-      else deleting = false, wordIndex = (wordIndex + 1) % typeWords.length;
+      else if (!deleting && charIndex === word.length) {
+        deleting = true;
+        timer = window.setTimeout(type, PAUSE_AFTER);
+        return;
+      } else {
+        deleting = false;
+        wordIndex = (wordIndex + 1) % typeWords.length;
+      }
 
       timer = window.setTimeout(type, deleting ? TYPE_SPEED / 1.8 : TYPE_SPEED);
     };
 
-    type();
-    return () => clearTimeout(timer);
-  }, []);
+    timer = window.setTimeout(type, TYPE_SPEED);
+
+    return () => {
+      if (timer) {
+        window.clearTimeout(timer);
+      }
+    };
+  }, [isHydrated]);
 
   // 🎬 GSAP Animations
   useEffect(() => {
+    if (!isHydrated || typeof window === "undefined") return;
+
     const section = sectionRef.current;
     if (!section) return;
 
