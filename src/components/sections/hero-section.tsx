@@ -247,7 +247,7 @@ export default function HeroSection() {
 
                   <p className="text-sm text-muted-foreground">{selectedService.description}</p>
 
-                  <div className="hero-carousel-highlight grid gap-2">
+                  <div className="hero-carousel-highlight-list grid gap-2">
                     {selectedService.highlights.map((highlight) => (
                       <div
                         key={highlight}
