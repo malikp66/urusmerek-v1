@@ -1,7 +1,13 @@
+// next.config.ts
 import type { NextConfig } from "next";
 import path from "node:path";
 
-const LOADER = path.resolve(__dirname, "src/visual-edits/component-tagger-loader.js");
+const LOADER = path.resolve(
+  __dirname,
+  "src/visual-edits/component-tagger-loader.js"
+);
+
+const isVercel = process.env.VERCEL === "1";
 
 const nextConfig: NextConfig = {
   images: {
@@ -10,16 +16,16 @@ const nextConfig: NextConfig = {
       { protocol: "http", hostname: "**" },
     ],
   },
-  outputFileTracingRoot: path.resolve(__dirname, "../../"),
 
-  // ✅ Disable ESLint during build
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // ✅ Only use outputFileTracingRoot locally (or when you really need it)
+  ...(isVercel
+    ? {}
+    : {
+        outputFileTracingRoot: path.resolve(__dirname, "../../"),
+      }),
 
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true }, // (optional) you enabled “Skipping types” anyway
 
   turbopack: {
     rules: {
