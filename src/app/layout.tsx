@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "UrusMerek.id - Mitra Terpercaya untuk Perlindungan Merek",
   description:
     "Jasa pendaftaran, perpanjangan, dan perlindungan merek resmi di Indonesia.",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
