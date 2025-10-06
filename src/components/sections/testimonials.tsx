@@ -92,7 +92,7 @@ const TestimonialsSection = () => {
           ))}
         </div>
 
-        <div className="mt-20 grid grid-cols-1 gap-y-12 gap-x-8 sm:grid-cols-3">
+        {/* <div className="mt-20 grid grid-cols-1 gap-y-12 gap-x-8 sm:grid-cols-3">
           {awards.map((award, index) => (
             <div key={index} className="text-center">
               <h3 className="text-lg font-semibold text-foreground">{award.title}</h3>
@@ -109,7 +109,7 @@ const TestimonialsSection = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </section>
   );

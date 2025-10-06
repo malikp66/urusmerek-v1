@@ -49,115 +49,185 @@ const layananItems: { title: string; href: string; description: string }[] = [
 export default function NavigationHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 max-w-7xl items-center justify-between">
-        <div className="flex items-center">
-          <Link href="/" className="mr-6 flex items-center space-x-1" onClick={() => setIsMobileMenuOpen(false)}>
-            <span className="text-xl font-bold text-primary">UrusMerek</span>
-            <span className="text-xl font-bold text-foreground">.id</span>
-          </Link>
-          <NavigationMenu className="hidden lg:flex">
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <Link href="/beranda">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Beranda
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Layanan</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                    {layananItems.map((item) => (
-                      <ListItem
-                        key={item.title}
-                        title={item.title}
-                        href={item.href}
-                      >
-                        {item.description}
-                      </ListItem>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/harga">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Harga
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/profil-perusahaan">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Profil Perusahaan
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/mitra">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Mitra
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/faq">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    FAQ
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/hubungi-kami">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Hubungi Kami
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
+  const capsuleClass =
+    "rounded-full border border-black/10 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 " +
+    "[box-shadow:0_1px_0_0_rgba(0,0,0,.03),0_4px_14px_-6px_rgba(17,24,39,.10)]";
 
-        <div className="flex items-center space-x-2">
-          <Button className="hidden lg:inline-flex rounded-md">
-            Konsultasi Gratis
-          </Button>
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild className="lg:hidden">
-              <Button variant="outline" size="icon" className="rounded-md">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Buka menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[350px]">
-              <SheetHeader>
-                <Link href="/" className="flex items-center space-x-1" onClick={() => setIsMobileMenuOpen(false)}>
-                  <span className="text-xl font-bold text-primary">UrusMerek</span>
-                  <span className="text-xl font-bold text-foreground">.id</span>
-                </Link>
-              </SheetHeader>
-              <div className="flex h-full flex-col py-6">
-                <nav className="flex flex-col space-y-4 text-sm font-medium text-foreground">
-                  <Link href="/beranda" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
-                  <MobileLayananDropdown onLinkClick={() => setIsMobileMenuOpen(false)} />
-                  <Link href="/harga" onClick={() => setIsMobileMenuOpen(false)}>Harga</Link>
-                  <Link href="/profil-perusahaan" onClick={() => setIsMobileMenuOpen(false)}>Profil Perusahaan</Link>
-                  <Link href="/mitra" onClick={() => setIsMobileMenuOpen(false)}>Mitra</Link>
-                  <Link href="/faq" onClick={() => setIsMobileMenuOpen(false)}>FAQ</Link>
-                  <Link href="/hubungi-kami" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
-                </nav>
-                <Button className="mt-auto rounded-md">Konsultasi Gratis</Button>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+  return (
+  <header className="sticky top-0 z-50 w-full">
+    <div className="container flex h-20 max-w-7xl items-center justify-between gap-4">
+      {/* Left: Logo */}
+      <div className={cn(capsuleClass, "px-5 py-2 h-12 flex items-center")}>
+        <Link href="/" className="flex items-center gap-1">
+          <span className="text-xl font-bold text-primary">UrusMerek</span>
+          <span className="text-xl font-bold text-foreground">.id</span>
+        </Link>
       </div>
-    </header>
+
+      {/* Middle: Nav */}
+      <div className={cn("hidden lg:flex", capsuleClass, "px-3 py-2 h-12")}>
+        <NavigationMenu>
+          <NavigationMenuList className="flex items-center gap-1">
+            <NavigationMenuItem>
+              <Link href="/beranda">
+                <NavigationMenuLink
+                  className="px-4 h-8 inline-flex items-center rounded-full text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                >
+                  Beranda
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuTrigger
+                className={cn(
+                  "px-4 h-8 rounded-full text-sm font-medium text-foreground/80",
+                  "hover:text-foreground data-[state=open]:bg-muted/60"
+                )}
+              >
+                Layanan
+              </NavigationMenuTrigger>
+              <NavigationMenuContent className="shadow-lg">
+                <ul className="grid w-[420px] gap-3 p-4 md:w-[520px] md:grid-cols-2 lg:w-[620px]">
+                  {layananItems.map((item) => (
+                    <ListItem key={item.title} title={item.title} href={item.href}>
+                      {item.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link href="/harga">
+                <NavigationMenuLink className="px-4 h-8 inline-flex items-center rounded-full text-sm font-medium text-foreground/80 hover:text-foreground">
+                  Harga
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link href="/profil-perusahaan">
+                <NavigationMenuLink className="px-4 h-8 inline-flex items-center rounded-full text-sm font-medium text-foreground/80 hover:text-foreground">
+                  Profil Perusahaan
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link href="/faq">
+                <NavigationMenuLink className="px-4 h-8 inline-flex items-center rounded-full text-sm font-medium text-foreground/80 hover:text-foreground">
+                  FAQ
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link href="/hubungi-kami">
+                <NavigationMenuLink className="px-4 h-8 inline-flex items-center rounded-full text-sm font-medium text-foreground/80 hover:text-foreground">
+                  Hubungi Kami
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+
+      {/* Right: CTA */}
+      <div className={cn("hidden lg:flex items-center h-12", capsuleClass, "px-2")}>
+        <CtaSegmented />
+      </div>
+
+      {/* Mobile trigger */}
+      <div className="lg:hidden">
+        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Buka menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[300px] sm:w-[350px]">
+            <SheetHeader>
+              <Link
+                href="/"
+                className="flex items-center gap-1"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="text-xl font-bold text-primary">UrusMerek</span>
+                <span className="text-xl font-bold text-foreground">.id</span>
+              </Link>
+            </SheetHeader>
+            <div className="flex h-full flex-col py-6">
+              <nav className="flex flex-col space-y-4 text-sm font-medium text-foreground">
+                <Link href="/beranda" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
+                <MobileLayananDropdown onLinkClick={() => setIsMobileMenuOpen(false)} />
+                <Link href="/harga" onClick={() => setIsMobileMenuOpen(false)}>Harga</Link>
+                <Link href="/profil-perusahaan" onClick={() => setIsMobileMenuOpen(false)}>Profil Perusahaan</Link>
+                <Link href="/faq" onClick={() => setIsMobileMenuOpen(false)}>FAQ</Link>
+                <Link href="/hubungi-kami" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
+              </nav>
+              <div className="mt-auto">
+                <CtaSegmented
+                  className={cn(capsuleClass, "w-full justify-between p-1")}
+                  onClickItem={() => setIsMobileMenuOpen(false)}
+                />
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </div>
+  </header>
+
   );
 }
+
+// --- Segmented CTA (desktop + mobile reuse) ---
+const CtaSegmented = ({
+  className = "",
+  onClickItem,
+}: { className?: string; onClickItem?: () => void }) => {
+  return (
+    <div
+      className={cn(
+        "inline-flex items-center gap-1 p-1 rounded-full",
+        "[box-shadow:inset_0_1px_0_0_rgba(255,255,255,.8),0_1px_0_rgba(0,0,0,.03)]",
+        className
+      )}
+    >
+      {/* Mitra */}
+      <Link
+        href="/mitra"
+        onClick={onClickItem}
+        className={cn(
+          "h-9 px-4 inline-flex items-center rounded-full text-sm font-medium",
+          "text-foreground/80 hover:text-foreground hover:bg-muted/60"
+        )}
+      >
+        Mitra
+      </Link>
+
+      {/* Konsultasi */}
+      <Link
+        href="/hubungi-kami"
+        onClick={onClickItem}
+        className={cn(
+          "h-9 px-4 inline-flex items-center rounded-full text-sm font-semibold text-white",
+          // glossy gradient merah
+          "bg-[linear-gradient(135deg,#ff4d4d_0%,#dc2626_45%,#a10000_100%)]",
+          // border & inner shadow tipis supaya menempel seperti ClickUp
+          "border border-white/20 shadow-[inset_0_-1px_0_rgba(0,0,0,.08),0_6px_14px_-6px_rgba(220,38,38,.45)]",
+          "hover:shadow-[inset_0_-1px_0_rgba(0,0,0,.12),0_10px_18px_-8px_rgba(220,38,38,.55)]",
+          "active:translate-y-px transition"
+        )}
+      >
+        Konsultasi
+      </Link>
+    </div>
+  );
+};
+
 
 const MobileLayananDropdown = ({ onLinkClick }: { onLinkClick: () => void }) => {
   const [isOpen, setIsOpen] = React.useState(false);

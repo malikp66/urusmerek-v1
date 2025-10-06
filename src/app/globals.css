@@ -158,6 +158,12 @@
     line-height: 1.5;
   }
 
+  @keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+
   h1 {
     font-size: 64px;
     line-height: 72px;
