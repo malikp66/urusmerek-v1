@@ -72,7 +72,7 @@ export default function HeroSection() {
     let wordIndex = 0;
     let charIndex = 0;
     let deleting = false;
-    let timer: ReturnType<typeof window.setTimeout>;
+    let timer: number | undefined;
 
     const type = () => {
       const word = typeWords[wordIndex];
@@ -94,7 +94,7 @@ export default function HeroSection() {
 
     timer = window.setTimeout(type, TYPE_SPEED);
     return () => {
-      window.clearTimeout(timer);
+      if (timer) window.clearTimeout(timer);
     };
   }, [isHydrated]);
 
