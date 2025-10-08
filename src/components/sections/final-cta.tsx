@@ -53,24 +53,20 @@ const FinalCta = () => {
               Resmi DJKI Kemenkumham • Harga flat & transparan • Update progres berkala
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+konsultasi+pendaftaran+merek.&type=phone_number&app_absent=0"
-                className="inline-flex items-center justify-center px-6 sm:px-8 py-4 text-base sm:text-lg font-medium
-                           rounded-lg text-primary-foreground bg-primary shadow-lg hover:bg-primary/90
-                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
-              >
-                Konsultasi Sekarang
-              </Link>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+konsultasi+pendaftaran+merek.&type=phone_number&app_absent=0"
+              className="btn-brand sm:px-8 sm:text-lg"
+            >
+              Konsultasi Sekarang
+            </Link>
 
-              <Link
-                href="#harga"
-                className="inline-flex items-center justify-center px-6 sm:px-8 py-4 text-base sm:text-lg font-semibold
-                           rounded-lg border border-primary/30 text-primary bg-white/70 backdrop-blur
-                           hover:bg-white hover:border-primary transition-colors"
-              >
-                Lihat Paket & Harga
-              </Link>
+            <Link
+              href="#harga"
+              className="btn-outline-brand sm:px-8 sm:text-lg"
+            >
+              Lihat Paket & Harga
+            </Link>
             </div>
           </div>
 
