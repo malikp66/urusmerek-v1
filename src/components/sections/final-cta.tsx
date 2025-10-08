@@ -1,7 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "@/lib/i18n/context";
 
 const FinalCta = () => {
+  const t = useTranslations("finalCta");
+  const eyebrow = t<string>("eyebrow");
+  const heading = t<string>("heading");
+  const subheading = t<string>("subheading");
+  const body = t<string>("body");
+  const note = t<string>("note");
+  const primaryCta = t<string>("primaryCta");
+  const secondaryCta = t<string>("secondaryCta");
+  const imageSrc = t<string>("imageSrc");
+  const imageAlt = t<string>("imageAlt");
   return (
     <section className="relative overflow-hidden bg-white">
       {/* Background: red theme */}
@@ -27,30 +40,22 @@ const FinalCta = () => {
           {/* Copy */}
           <div className="relative z-10">
             <span className="text-sm font-semibold tracking-wide text-primary uppercase">
-              UrusMerek.id
+              {eyebrow}
             </span>
             <h2 className="mt-2 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Lindungi Merek Anda, Mulai Hari Ini
+              {heading}
             </h2>
 
             <p className="mt-3 text-base font-semibold text-primary">
-              Jangan tunggu namamu dipakai orang lain.
+              {subheading}
             </p>
 
             <p className="mt-4 text-lg text-muted-foreground">
-              Kami bantu <span className="font-medium text-foreground">pendaftaran</span> dan{" "}
-              <span className="font-medium text-foreground">perpanjangan merek</span> secara resmi di
-              DJKI—mulai dari penelusuran, pengajuan, hingga terbit sertifikat. Tersedia juga{" "}
-              <span className="font-medium text-foreground">keberatan/oposisi</span>,{" "}
-              <span className="font-medium text-foreground">tanggapan usul/tolak</span>,{" "}
-              <span className="font-medium text-foreground">perubahan data</span>,{" "}
-              <span className="font-medium text-foreground">pengalihan hak</span>,{" "}
-              <span className="font-medium text-foreground">lisensi</span>, dan{" "}
-              <span className="font-medium text-foreground">cetak sertifikat</span>.
+              {body}
             </p>
 
             <p className="mt-3 text-sm text-muted-foreground">
-              Resmi DJKI Kemenkumham • Harga flat & transparan • Update progres berkala
+              {note}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -60,7 +65,7 @@ const FinalCta = () => {
                            rounded-lg text-primary-foreground bg-primary shadow-lg hover:bg-primary/90
                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
               >
-                Konsultasi Sekarang
+                {primaryCta}
               </Link>
 
               <Link
@@ -69,7 +74,7 @@ const FinalCta = () => {
                            rounded-lg border border-primary/30 text-primary bg-white/70 backdrop-blur
                            hover:bg-white hover:border-primary transition-colors"
               >
-                Lihat Paket & Harga
+                {secondaryCta}
               </Link>
             </div>
           </div>
@@ -78,8 +83,8 @@ const FinalCta = () => {
           <div className="mt-12 lg:mt-0">
             <div className="relative mx-auto w-full rounded-xl shadow-2xl">
               <Image
-                src="https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
-                alt="Dasbor pengurusan merek UrusMerek.id — kelola pendaftaran, perpanjangan, dan status DJKI"
+                src={imageSrc}
+                alt={imageAlt}
                 width={1200}
                 height={760}
                 className="rounded-xl w-full h-auto"

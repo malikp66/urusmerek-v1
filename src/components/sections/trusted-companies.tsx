@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import React from 'react';
+import { useTranslations } from "@/lib/i18n/context";
 
 // Per instruction to adapt for an Indonesian audience, this component uses the provided logos
 // with a translated title. The original site's logos are used as no Indonesian assets were supplied.
@@ -20,14 +21,14 @@ const logos = [
 ];
 
 const TrustedCompanies = () => {
+  const t = useTranslations("trustedCompanies");
+  const tagline = t<string>("tagline");
   const extended = [...logos, ...logos];
 
   return (
     <section className="bg-background py-6 sm:py-10">
       <div className="container mx-auto px-4">
-        <p className="mb-8 text-center text-sm font-medium text-muted-foreground">
-          Dipercaya oleh berbagai perusahaan terkemuka di Indonesia
-        </p>
+        <p className="mb-8 text-center text-sm font-medium text-muted-foreground">{tagline}</p>
 
         {/* Mask gradient kanan-kiri agar fade in/out */}
         <div className="group relative mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
