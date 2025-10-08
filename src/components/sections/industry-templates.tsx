@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "@/lib/i18n/context";
 
 /* Lucide icons */
 import {
@@ -25,189 +26,78 @@ import {
 type PriceVariant = { id: string; name: string; price: number; note?: string };
 type Service = {
   id: string;
-  label: string;                   // pendek untuk tab
-  title: string;                   // judul di panel
-  description: string;             // copy pendek
-  icon: React.ComponentType<any>;  // lucide icon
-  image: string;                   // ilustrasi/cover
-  features: string[];              // bullet utama
-  benefits: string[];              // bullet tambahan
-  prices: PriceVariant[];          // 1 atau lebih varian
-  ctaLink?: string;                // WA / link lainnya
+  label: string;
+  title: string;
+  description: string;
+  icon: React.ComponentType<any>;
+  image: string;
+  features: string[];
+  benefits: string[];
+  prices: PriceVariant[];
+  ctaLink?: string;
 };
 
 const IDR = (n: number) =>
   new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 
-/* ===== Data (disalin dari PDF harga & deskripsi layanan) ===== */
-const SERVICES: Service[] = [
-  {
-    id: "pendaftaran",
-    label: "Pendaftaran",
-    title: "Jasa Pendaftaran Merek",
-    description:
-      "Bebas antri & terima beres—analisis ketersediaan nama lalu ajukan resmi ke DJKI hingga terbit sertifikat.",
-    icon: BadgeCheck,
-    image:
-      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
-    features: [
-      "Analisis awal nama/kelas merek",
-      "One-day submission (dokumen lengkap)",
-      "Pendampingan penuh sampai sertifikat",
-    ],
-    benefits: [
-      "Tanpa drama birokrasi",
-      "Progress update & bukti permohonan resmi",
-    ],
-    prices: [{ id: "std", name: "Paket Lengkap", price: 4_500_000 }],
-    ctaLink:
-      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+daftar+merek+di+UrusMerek.",
-  },
-  {
-    id: "perpanjangan",
-    label: "Perpanjangan",
-    title: "Perpanjangan Merek 10 Tahun",
-    description:
-      "Cek masa berlaku & ajukan perpanjangan online—sekali proses, perlindungan lanjut 10 tahun.",
-    icon: CalendarClock,
-    image:
-      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
-    features: [
-      "Audit dokumen & tenggat masa berlaku",
-      "Pengajuan cepat oleh tim ahli",
-      "Notifikasi status perpanjangan",
-    ],
-    benefits: [
-      "Minim risiko lewat pengecekan awal",
-      "Proses ringkas & transparan",
-    ],
-    prices: [
-      { id: "early", name: "< 6 bulan sebelum habis", price: 3_500_000 },
-      { id: "late", name: "≥ 6 bulan/grace period", price: 6_000_000 },
-    ],
-    ctaLink:
-      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+perpanjang+merek.",
-  },
-  {
-    id: "sertifikat",
-    label: "Cetak Sertifikat",
-    title: "Cetak Sertifikat Merek Terdaftar",
-    description:
-      "Cetak fisik sertifikat yang sudah terbit & kirim ke alamat Anda—bukti kepemilikan sah.",
-    icon: Stamp,
-    image:
-      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
-    features: [
-      "Validasi data & nomor sertifikat",
-      "Proses percetakan resmi",
-      "Pengemasan & pengiriman",
-    ],
-    benefits: [
-      "Dokumen otentik yang rapi",
-      "Tracking pengiriman",
-    ],
-    prices: [{ id: "print", name: "Cetak Sertifikat", price: 1_000_000 }],
-    ctaLink:
-      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+cetak+sertifikat+merek.",
-  },
-  {
-    id: "perubahan",
-    label: "Perubahan Data",
-    title: "Permohonan Perubahan Nama/Alamat",
-    description:
-      "Koreksi data pemilik merek (nama/alamat) secara resmi dan terdokumentasi.",
-    icon: FileEdit,
-    image:
-      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
-    features: ["Penyusunan berkas", "Pengajuan pencatatan perubahan", "Pelaporan hasil resmi"],
-    benefits: ["Akurat & tuntas", "Minim revisi dokumen"],
-    prices: [{ id: "chg", name: "Perubahan Data", price: 3_500_000 }],
-    ctaLink:
-      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+ubah+data+merek.",
-  },
-  {
-    id: "pengalihan",
-    label: "Pengalihan Hak",
-    title: "Pengalihan Hak Atas Merek",
-    description:
-      "Transfer kepemilikan merek yang aman sesuai kesepakatan—didampingi ahli berpengalaman.",
-    icon: ArrowLeftRight,
-    image:
-      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
-    features: ["Review perjanjian pengalihan", "Pengajuan pencatatan resmi", "Dokumentasi lengkap"],
-    benefits: ["Kepastian legal", "Alur tertib & jelas"],
-    prices: [{ id: "assign", name: "Pengalihan Hak", price: 6_000_000 }],
-    ctaLink:
-      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+pengalihan+hak+merek.",
-  },
-  {
-    id: "usul-tolak",
-    label: "Usul/Tolak",
-    title: "Tanggapan Substantif Usul/Tolak",
-    description:
-      "Analisis dasar penolakan lalu susun argumen & bukti agar peluang pendaftaran tetap terbuka.",
-    icon: FileWarning,
-    image:
-      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
-    features: ["Analisis kemiripan/pasal terkait", "Perumusan argumen hukum", "Pengajuan tanggapan"],
-    benefits: ["Strategi anti-tolak", "Dikerjakan tim ahli HKI"],
-    prices: [{ id: "resp", name: "Tanggapan Substantif", price: 2_500_000 }],
-    ctaLink:
-      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+butuh+tanggapan+usul%2Ftolak.",
-  },
-  {
-    id: "keberatan",
-    label: "Keberatan",
-    title: "Surat Keberatan (Oposisi)",
-    description:
-      "Hadang merek tiruan saat masa publikasi dengan surat keberatan berbasis riset pembanding.",
-    icon: Gavel,
-    image:
-      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
-    features: ["Riset pembanding & bukti", "Penyusunan legal letter", "Pengajuan resmi"],
-    benefits: ["Lindungi ruang merekmu", "Cepat & terstruktur"],
-    prices: [{ id: "opp", name: "Oposisi/Keberatan", price: 2_500_000 }],
-    ctaLink:
-      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+ajukan+keberatan+merek.",
-  },
-  {
-    id: "lisensi",
-    label: "Lisensi",
-    title: "Perjanjian Lisensi Merek",
-    description:
-      "Rancang perjanjian lisensi yang jelas & menguntungkan—siap untuk kolaborasi komersial.",
-    icon: Handshake,
-    image:
-      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
-    features: ["Draft perjanjian komprehensif", "Penyesuaian klausul bisnis", "Review risiko & kepatuhan"],
-    benefits: ["Protect IP & revenue", "Dokumen siap tanda tangan"],
-    prices: [{ id: "lic", name: "Penyusunan Lisensi", price: 3_500_000 }],
-    ctaLink:
-      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+butuh+perjanjian+lisensi+merek.",
-  },
-];
+const serviceIconMap: Record<string, React.ComponentType<any>> = {
+  BadgeCheck,
+  CalendarClock,
+  Stamp,
+  FileEdit,
+  ArrowLeftRight,
+  FileWarning,
+  Gavel,
+  Handshake,
+};
 
 /* ===== Component ===== */
 export default function IndustryTemplates() {
-  const [activeId, setActiveId] = useState<Service["id"]>("pendaftaran");
+  const t = useTranslations("industryTemplates");
+  const heading = t<string>("heading");
+  const description = t<string>("description");
+  const seeAll = t<string>("seeAll");
+  const close = t<string>("close");
+  const priceLabel = t<string>("priceLabel");
+  const priceDisclaimer = t<string>("priceDisclaimer");
+  const optionsHeading = t<string>("optionsHeading");
+  const cta = t<string>("cta");
+  const servicesCopy = t<(Service & { icon: string })[]>("services") ?? [];
+  const services = useMemo<Service[]>(
+    () =>
+      servicesCopy.map(({ icon, ...service }) => ({
+        ...service,
+        icon: serviceIconMap[icon] ?? BadgeCheck,
+      })),
+    [servicesCopy]
+  );
+  const [activeId, setActiveId] = useState<string>(servicesCopy[0]?.id ?? "");
   const [expanded, setExpanded] = useState(false);
   const [pickedVariantByService, setPickedVariantByService] = useState<Record<string, string>>({});
 
-  const active = useMemo(() => SERVICES.find((s) => s.id === activeId)!, [activeId]);
-  const visibleServices = expanded ? SERVICES : SERVICES.slice(0, 4);
+  useEffect(() => {
+    if (!services.some((service) => service.id === activeId)) {
+      setActiveId(services[0]?.id ?? "");
+    }
+  }, [services, activeId]);
 
-  const currentVariantId = pickedVariantByService[active.id] ?? active.prices[0].id;
-  const currentVariant = active.prices.find((p) => p.id === currentVariantId) ?? active.prices[0];
+  const active = useMemo(() => services.find((s) => s.id === activeId) ?? services[0], [services, activeId]);
+  const visibleServices = expanded ? services : services.slice(0, 4);
+
+  const currentVariantId = active ? pickedVariantByService[active.id] ?? active.prices[0]?.id : undefined;
+  const currentVariant = active?.prices.find((p) => p.id === currentVariantId) ?? active?.prices[0];
+
+  if (!active) {
+    return null;
+  }
 
   return (
     <section className="py-20 bg-white">
       <div className="container">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">Harga Layanan</h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Pilih layanan yang Anda butuhkan—detail, manfaat, dan harga akan tampil di panel.
-          </p>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">{heading}</h2>
+          <p className="mt-4 text-lg text-muted-foreground">{description}</p>
         </div>
 
         {/* Selector + toggle */}
@@ -239,12 +129,12 @@ export default function IndustryTemplates() {
               className="flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium text-foreground bg-white shadow-sm hover:bg-gray-100 transition-colors"
             >
               <LayoutGrid className="w-4 h-4" />
-              <span>Lihat semua</span>
+              <span>{seeAll}</span>
             </button>
           ) : (
             <button
               onClick={() => setExpanded(false)}
-              aria-label="Tutup daftar"
+              aria-label={close}
               className="flex items-center justify-center h-10 w-10 rounded-lg text-foreground bg-white shadow-sm hover:bg-gray-100 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -280,7 +170,7 @@ export default function IndustryTemplates() {
             <div className="lg:col-span-2 flex flex-col justify-between">
               {/* Variants */}
               <div>
-                <h4 className="text-lg font-semibold">Opsi & Harga</h4>
+                <h4 className="text-lg font-semibold">{optionsHeading}</h4>
 
                 <div className="mt-3 flex flex-wrap gap-2">
                   {active.prices.map((p) => {
@@ -304,9 +194,9 @@ export default function IndustryTemplates() {
 
                 {/* Price */}
                 <div className="mt-5">
-                  <div className="text-sm text-muted-foreground">Harga</div>
-                  <div className="text-3xl font-semibold">{IDR(currentVariant.price)}</div>
-                  {currentVariant.note && (
+                  <div className="text-sm text-muted-foreground">{priceLabel}</div>
+                  <div className="text-3xl font-semibold">{currentVariant ? IDR(currentVariant.price) : "-"}</div>
+                  {currentVariant?.note && (
                     <div className="text-sm text-muted-foreground mt-1">{currentVariant.note}</div>
                   )}
                 </div>
@@ -321,14 +211,12 @@ export default function IndustryTemplates() {
                   ))}
                 </div>
 
-                <p className="mt-4 text-xs text-muted-foreground">
-                  Pendaftaran mencakup biaya resmi; untuk layanan lain PNBP mengikuti ketentuan DJKI (jika berlaku).
-                </p>
+                <p className="mt-4 text-xs text-muted-foreground">{priceDisclaimer}</p>
               </div>
 
               <Button asChild size="lg" className="mt-6 w-full btn-brand justify-center">
                 <a href={active.ctaLink ?? "#"} target="_blank" rel="noopener noreferrer">
-                  Konsultasi & Pesan
+                  {cta}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
