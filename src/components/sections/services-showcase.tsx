@@ -73,7 +73,7 @@ const ServicesShowcase = () => {
           <p className="mt-4 text-lg text-muted-foreground">{description}</p>
           <Link
             href="/layanan"
-            className="mt-6 inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            className="mt-6 btn-secondary"
           >
             <span>{cta}</span>
             <ArrowRight className="ml-2 h-5 w-5" />

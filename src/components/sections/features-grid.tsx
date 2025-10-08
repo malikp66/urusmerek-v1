@@ -150,12 +150,7 @@ export default function FeaturesGrid() {
           <h2 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">{heading}</h2>
           <p className="mt-6 text-lg text-muted-foreground">{description}</p>
           <div className="mt-10">
-            <Link
-              href="/konsultasi"
-              className="inline-block rounded-full bg-gray-900 px-8 py-3.5 text-base font-semibold text-white
-                         shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2
-                         focus-visible:outline-offset-2 focus-visible:outline-gray-900"
-            >
+            <Link href="/konsultasi" className="btn-brand rounded-full">
               {cta}
             </Link>
           </div>

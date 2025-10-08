@@ -214,7 +214,7 @@ export default function IndustryTemplates() {
                 <p className="mt-4 text-xs text-muted-foreground">{priceDisclaimer}</p>
               </div>
 
-              <Button asChild size="lg" className="mt-6 w-full">
+              <Button asChild size="lg" className="mt-6 w-full btn-brand justify-center">
                 <a href={active.ctaLink ?? "#"} target="_blank" rel="noopener noreferrer">
                   {cta}
                   <ArrowRight className="ml-2 h-4 w-4" />
