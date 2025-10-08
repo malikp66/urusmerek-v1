@@ -48,7 +48,7 @@ export default function RootLayout({
           data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
         />
         <NavigationHeader />
-        <main className="relative">
+        <main className="relative mt-20">
           {children}
         </main>
         <Footer />

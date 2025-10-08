@@ -1,14 +1,20 @@
 /* Updated: 2025-09-29T09:55:19.420Z */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* 🔹 aktifkan Tailwind v4 */
 @import "tailwindcss";
+
+/* 🔹 muat plugin dengan @plugin (BUKAN @import) */
+@plugin "tailwindcss-animate";
 @import "tw-animate-css";
+
+/* 🔹 varian gelap opsional */
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   /* Shadcn/UI colors */
   --color-background: #ffffff;
-  --color-foreground: #1F2937; /* Dark Gray */
+  --color-foreground: #1F2937;
 
   --color-card: #ffffff;
   --color-card-foreground: #1F2937;
@@ -16,8 +22,8 @@
   --color-popover: #ffffff;
   --color-popover-foreground: #1F2937;
 
-  --color-primary: #DC2626; /* Primary Red */
-  --color-primary-foreground: #ffffff; /* Pure White */
+  --color-primary: #DC2626;
+  --color-primary-foreground: #ffffff;
 
   --color-secondary: #F9FAFB; /* Light Gray */
   --color-secondary-foreground: #1F2937;
@@ -31,9 +37,9 @@
   --color-destructive: #DC2626; /* Primary Red */
   --color-destructive-foreground: #ffffff;
 
-  --color-border: #e5e5e5; /* Default border, adjust if needed */
   --color-input: #e5e5e5; /* Default input border, adjust if needed */
-  --color-ring: #DC2626; /* Primary Red for focus rings */
+  --color-border: #e5e5e5;
+  --color-ring: #DC2626;
 
   --color-chart-1: #e67e22;
   --color-chart-2: #2d8659;
@@ -72,22 +78,10 @@
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
-  }
+  @keyframes shine { from { transform: translateX(-100%) } to { transform: translateX(100%) } }
+  @keyframes accordion-down { from { height: 0 } to { height: var(--radix-accordion-content-height) } }
+  @keyframes accordion-up { from { height: var(--radix-accordion-content-height) } to { height: 0 } }
+
 }
 
 /*
@@ -156,6 +150,7 @@
     color: var(--foreground);
     font-family: var(--font-primary);
     line-height: 1.5;
+    @apply antialiased;
   }
 
   @keyframes shine {
@@ -215,7 +210,160 @@
   }
 }
 
-/* Hide Next.js error overlay portal */
-nextjs-portal {
-  display: none !important;
+/* ====== Components (Buttons brand) ====== */
+@layer components {
+  /* Primary */
+  .btn-brand {
+    @apply relative inline-flex items-center gap-2 rounded-lg px-6 py-3.5 font-semibold
+           text-white bg-[--color-primary] transition-all duration-300 will-change-transform;
+    box-shadow: 0 10px 20px -12px color-mix(in oklab, var(--color-primary) 35%, transparent);
+  }
+  .btn-brand:hover {
+    @apply -translate-y-px;
+    box-shadow: 0 14px 28px -12px color-mix(in oklab, var(--color-primary) 45%, transparent);
+  }
+  .btn-brand:active { @apply translate-y-0; }
+  .btn-brand:focus-visible { @apply ring-2 ring-[--color-ring] ring-offset-2; }
+  .btn-brand::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+    transform: translateX(-100%); transition: transform .7s ease; pointer-events: none;
+  }
+  .btn-brand:hover::after { transform: translateX(100%); }
+
+  /* Secondary (outline) */
+  .btn-outline-brand {
+    @apply relative inline-flex items-center gap-2 rounded-lg px-6 py-3.5 font-semibold
+           text-[--color-foreground] bg-transparent border-2
+           transition-all duration-300 will-change-transform;
+    border-color: color-mix(in oklab, var(--color-primary) 25%, white);
+  }
+  .btn-outline-brand:hover {
+    @apply -translate-y-px;
+    background: color-mix(in oklab, var(--color-primary) 5%, transparent);
+    border-color: color-mix(in oklab, var(--color-primary) 55%, white);
+    box-shadow: 0 10px 22px -14px color-mix(in oklab, var(--color-primary) 35%, transparent);
+  }
+  .btn-outline-brand:active { @apply translate-y-0; }
+  .btn-outline-brand:focus-visible { @apply ring-2 ring-[--color-ring] ring-offset-2; }
+
+  /* Ikon geser */
+  .icon-slide { transition: transform .3s ease; }
+  .group:hover .icon-slide { transform: translateX(4px); }
+
+  .btn-brand { box-shadow: 0 10px 20px -12px rgba(220, 38, 38, .35); }
+  .btn-brand:hover { box-shadow: 0 14px 28px -12px rgba(220, 38, 38, .40); }
+  .btn-outline-brand:hover { box-shadow: 0 10px 22px -14px rgba(220, 38, 38, .28); }
+  .btn-brand::after { pointer-events: none; }
 }
+
+@layer utilities {
+  .grid-row-lg { grid-auto-rows: 128px; }         /* sebelumnya 110px */
+
+  /* Border halus & hover ke merah brand */
+  .border-smooth {
+    border-color: color-mix(in oklab, #0f172a 8%, transparent);
+  }
+  .border-smooth-hover {
+    border-color: color-mix(in oklab, var(--color-primary) 36%, #ffffff 64%);
+  }
+
+  /* Glow tipis merah brand */
+  .shadow-glow-red {
+    box-shadow:
+      0 10px 22px -16px color-mix(in oklab, var(--color-primary) 28%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--color-primary) 10%, transparent) inset;
+  }
+  .shadow-glow-red-hover {
+    box-shadow:
+      0 14px 28px -16px color-mix(in oklab, var(--color-primary) 38%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--color-primary) 22%, transparent) inset;
+  }
+
+  /* Warna konten ke merah brand saat hover parent .group */
+  .group-hover-text-primary           { transition: color .25s ease; }
+  .group:hover .group-hover-text-primary { color: var(--color-primary); }
+
+  .group-hover-stroke-primary         { transition: stroke .25s ease; }
+  .group:hover .group-hover-stroke-primary { stroke: var(--color-primary); }
+
+  /* Overlay gradasi halus di 4 sisi grid */
+  .grid-soft-vignette {
+    background:
+      radial-gradient(55% 38% at 50% 0%,   color-mix(in oklab, var(--color-primary) 16%, transparent) 0%, transparent 70%),
+      radial-gradient(55% 38% at 50% 100%, color-mix(in oklab, #f43f5e 14%, transparent) 0%, transparent 70%),
+      radial-gradient(38% 55% at 0% 50%,   color-mix(in oklab, #fb7185 14%, transparent) 0%, transparent 70%),
+      radial-gradient(38% 55% at 100% 50%, color-mix(in oklab, var(--color-primary) 12%, transparent) 0%, transparent 70%);
+    /* lembutkan lagi dengan mask halus */
+    -webkit-mask-image: radial-gradient(120% 120% at 50% 50%, black 40%, transparent 100%);
+            mask-image: radial-gradient(120% 120% at 50% 50%, black 40%, transparent 100%);
+  }
+
+    /* Border & glow merah lebih tegas saat hover */
+  .border-primary-strong { border-color: var(--color-primary) !important; }
+  .shadow-red-strong {
+    box-shadow:
+      0 16px 32px -18px color-mix(in oklab, var(--color-primary) 46%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--color-primary) 28%, transparent) inset;
+  }
+
+  /* Mask lembut di keempat sisi untuk seluruh grid wrapper */
+  .grid-edge-mask {
+    /* kiri↔kanan + atas↔bawah */
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 2%, #d9d9d9 10%, #d9d9d9 90%, transparent 98%),
+      linear-gradient(180deg, transparent 5%, #d9d9d9 15%, #d9d9d9 85%, transparent 95%);
+            mask-image:
+      linear-gradient(90deg, transparent 2%, #d9d9d9 10%, #d9d9d9 90%, transparent 98%),
+      linear-gradient(180deg, transparent 5%, #d9d9d9 15%, #d9d9d9 85%, transparent 95%);
+    /* komposisi agar kedua mask saling mengiris */
+    -webkit-mask-composite: source-in, xor; /* Safari/WebKit */
+            mask-composite: intersect;      /* Spec/Chromium */
+  }
+
+  /* versi dengan variabel jika ingin gampang disetel */
+  .grid-edge-mask-vars {
+    --gx1: 2%;  --gx2: 10%; --gx3: 90%; --gx4: 98%;
+    --gy1: 5%;  --gy2: 15%; --gy3: 85%; --gy4: 95%;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent var(--gx1), #d9d9d9 var(--gx2), #d9d9d9 var(--gx3), transparent var(--gx4)),
+      linear-gradient(180deg, transparent var(--gy1), #d9d9d9 var(--gy2), #d9d9d9 var(--gy3), transparent var(--gy4));
+            mask-image:
+      linear-gradient(90deg, transparent var(--gx1), #d9d9d9 var(--gx2), #d9d9d9 var(--gx3), transparent var(--gx4)),
+      linear-gradient(180deg, transparent var(--gy1), #d9d9d9 var(--gy2), #d9d9d9 var(--gy3), transparent var(--gy4));
+    -webkit-mask-composite: source-in, xor;
+            mask-composite: intersect;
+  }
+
+   /* Mask lembut untuk AREA SECTION (lebih lebar dari grid supaya transisi mulus) */
+  .section-edge-mask {
+    /* kiri↔kanan + atas↔bawah */
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 1.5%, #d9d9d9 8%, #d9d9d9 92%, transparent 98.5%),
+      linear-gradient(180deg, transparent 3%,  #d9d9d9 12%, #d9d9d9 88%, transparent 97%);
+            mask-image:
+      linear-gradient(90deg, transparent 1.5%, #d9d9d9 8%, #d9d9d9 92%, transparent 98.5%),
+      linear-gradient(180deg, transparent 3%,  #d9d9d9 12%, #d9d9d9 88%, transparent 97%);
+    -webkit-mask-composite: source-in, xor; /* Safari/WebKit */
+            mask-composite: intersect;      /* Spec/Chromium */
+  }
+
+  /* Versi variabel bila ingin gampang di-tweak dari JSX */
+  .section-edge-mask-vars {
+    --sx1: 1.5%; --sx2: 8%;  --sx3: 92%; --sx4: 98.5%;
+    --sy1: 3%;   --sy2: 12%; --sy3: 88%; --sy4: 97%;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent var(--sx1), #d9d9d9 var(--sx2), #d9d9d9 var(--sx3), transparent var(--sx4)),
+      linear-gradient(180deg, transparent var(--sy1), #d9d9d9 var(--sy2), #d9d9d9 var(--sy3), transparent var(--sy4));
+            mask-image:
+      linear-gradient(90deg, transparent var(--sx1), #d9d9d9 var(--sx2), #d9d9d9 var(--sx3), transparent var(--sx4)),
+      linear-gradient(180deg, transparent var(--sy1), #d9d9d9 var(--sy2), #d9d9d9 var(--sy3), transparent var(--sy4));
+    -webkit-mask-composite: source-in, xor;
+            mask-composite: intersect;
+  }
+
+}
+
+/* Optional: sembunyikan overlay Next error */
+nextjs-portal { display: none !important; }

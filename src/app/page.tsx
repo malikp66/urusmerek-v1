@@ -20,9 +20,9 @@ export default function Page() {
       <TrustedCompanies />
       {/* <ProblemSolutionSection /> */}
       <ServicesShowcase />
-      <AiFeatures />
+      {/* <AiFeatures /> */}
       <FeaturesGrid />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       {/* <FlexibilityFeatures /> */}
       <IndustryTemplates />
       <FinalCta />

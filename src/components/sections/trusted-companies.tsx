@@ -1,3 +1,5 @@
+"use client"
+
 import Image from 'next/image';
 import React from 'react';
 
@@ -18,30 +20,50 @@ const logos = [
 ];
 
 const TrustedCompanies = () => {
-  const extendedLogos = [...logos, ...logos];
+  const extended = [...logos, ...logos];
 
   return (
-    <section className="bg-background py-16 sm:py-20">
+    <section className="bg-background py-6 sm:py-10">
       <div className="container mx-auto px-4">
-        <p className="text-center text-sm font-medium text-muted-foreground mb-8">
-          Dipercaya oleh berbagai perusahaan terkemuka di dunia
+        <p className="mb-8 text-center text-sm font-medium text-muted-foreground">
+          Dipercaya oleh berbagai perusahaan terkemuka di Indonesia
         </p>
-        <div className="group relative mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
-          <div className="flex animate-infinite-scroll group-hover:[animation-play-state:paused]">
-            {extendedLogos.map((logo, index) => (
-              <div key={index} className="mx-8 flex-shrink-0">
+
+        {/* Mask gradient kanan-kiri agar fade in/out */}
+        <div className="group relative mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
+          <div
+            className="flex items-center gap-12 will-change-transform group-hover:[animation-play-state:paused] motion-reduce:!animate-none"
+            style={{
+              animation: "marquee-left 42s linear infinite", // pelan
+            }}
+          >
+            {extended.map((logo, i) => (
+              <div key={`${logo.name}-${i}`} className="flex-shrink-0">
                 <Image
                   src={logo.src}
                   alt={`${logo.name} Logo`}
                   width={140}
                   height={32}
-                  className="h-8 max-w-[140px] w-auto object-contain grayscale opacity-60"
+                  className="h-8 w-auto max-w-[140px] object-contain opacity-70 grayscale transition-[filter,opacity,transform] duration-200 hover:opacity-100 hover:grayscale-0"
+                  priority={i < 8} // sedikit percepat LCP di awal
                 />
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Inline keyframes agar tak perlu ubah tailwind.config */}
+      <style jsx>{`
+        @keyframes marquee-left {
+          0% {
+            transform: translate3d(0, 0, 0);
+          }
+          100% {
+            transform: translate3d(-50%, 0, 0); /* karena kita gandakan array */
+          }
+        }
+      `}</style>
     </section>
   );
 };

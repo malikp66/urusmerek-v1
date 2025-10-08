@@ -49,7 +49,7 @@ export default function NavigationHeader() {
   return (
     <>
       <header className="fixed top-0 z-50 w-full">
-        <div className="container flex h-20 max-w-7xl items-center justify-between gap-4">
+        <div className="container flex h-20 items-center justify-between gap-4">
           {/* Logo */}
           <div className={cn(capsuleClass, "px-5 py-2 h-12 flex items-center")}>
             <Link href="/" className="flex items-center gap-0">

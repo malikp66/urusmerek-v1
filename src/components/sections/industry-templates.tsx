@@ -1,274 +1,340 @@
 "use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useMemo, useState } from "react";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+
+/* Lucide icons */
 import {
-  Rocket, Factory, Store, Cpu, Paintbrush, CheckCircle, ShieldCheck, FileText,
-  BarChart, MessageCircle, Globe, Package, Users, FileCheck2, ShoppingBag,
-  Map, AlertTriangle, Codepen, Cloud, Book, Briefcase, Palette, Copyright, Film,
-  Handshake, LayoutGrid, ArrowRight, LucideProps
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+  BadgeCheck,        // Pendaftaran
+  CalendarClock,     // Perpanjangan
+  Stamp,             // Cetak sertifikat
+  FileEdit,          // Perubahan data
+  ArrowLeftRight,    // Pengalihan hak
+  FileWarning,       // Usul/tolak
+  Gavel,             // Surat keberatan/oposisi
+  Handshake,         // Perjanjian lisensi
+  CheckCircle,
+  LayoutGrid,
+  ArrowLeft,
+  ArrowRight,
+} from "lucide-react";
 
-type IconName = 'Rocket' | 'Factory' | 'Store' | 'Cpu' | 'Paintbrush' | 'ShieldCheck' | 'FileText' | 'BarChart' | 'MessageCircle' | 'Globe' | 'Package' | 'Users' | 'FileCheck2' | 'ShoppingBag' | 'Map' | 'AlertTriangle' | 'Codepen' | 'Cloud' | 'Book' | 'Briefcase' | 'Palette' | 'Copyright' | 'Film' | 'Handshake';
-
-const ICONS: { [key in IconName]: React.ComponentType<LucideProps> } = {
-  Rocket, Factory, Store, Cpu, Paintbrush, ShieldCheck, FileText, BarChart, MessageCircle, Globe, Package, Users, FileCheck2, ShoppingBag, Map, AlertTriangle, Codepen, Cloud, Book, Briefcase, Palette, Copyright, Film, Handshake
-};
-
-const IconComponent = ({ name, className }: { name: IconName; className?: string }) => {
-  const Icon = ICONS[name];
-  return Icon ? <Icon className={className} /> : null;
-};
-
-interface TabData {
+/* ===== Types ===== */
+type PriceVariant = { id: string; name: string; price: number; note?: string };
+type Service = {
   id: string;
-  label: string;
-  icon: React.ComponentType<LucideProps>;
-  title: string;
-  description: string;
-  features: string[];
-  testimonial: {
-    quote: string;
-    boldPart: string;
-    quoteAfter: string;
-    name: string;
-    role: string;
-    image: string;
-  };
-  benefits: {
-    icon: IconName;
-    text: string;
-  }[];
-  link: string;
-}
+  label: string;                   // pendek untuk tab
+  title: string;                   // judul di panel
+  description: string;             // copy pendek
+  icon: React.ComponentType<any>;  // lucide icon
+  image: string;                   // ilustrasi/cover
+  features: string[];              // bullet utama
+  benefits: string[];              // bullet tambahan
+  prices: PriceVariant[];          // 1 atau lebih varian
+  ctaLink?: string;                // WA / link lainnya
+};
 
-const TABS_DATA: TabData[] = [
+const IDR = (n: number) =>
+  new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
+
+/* ===== Data (disalin dari PDF harga & deskripsi layanan) ===== */
+const SERVICES: Service[] = [
   {
-    id: 'startup',
-    label: 'Startup',
-    icon: Rocket,
-    title: 'Amankan Nama Brand Startup Anda Sejak Dini',
-    description: 'Bangun fondasi brand yang kuat dengan perlindungan merek yang tepat, pastikan ide brilian Anda aman dari peniruan.',
+    id: "pendaftaran",
+    label: "Pendaftaran",
+    title: "Jasa Pendaftaran Merek",
+    description:
+      "Bebas antri & terima beres—analisis ketersediaan nama lalu ajukan resmi ke DJKI hingga terbit sertifikat.",
+    icon: BadgeCheck,
+    image:
+      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
     features: [
-      'Validasi nama brand agar unik dan aman',
-      'Pendaftaran merek untuk produk/layanan digital',
-      'Perlindungan logo dan tagline inovatif Anda',
+      "Analisis awal nama/kelas merek",
+      "One-day submission (dokumen lengkap)",
+      "Pendampingan penuh sampai sertifikat",
     ],
-    testimonial: {
-      quote: 'UrusMerek membantu kami mengamankan brand teknologi kami',
-      boldPart: 'dengan cepat',
-      quoteAfter: ', sehingga kami bisa fokus pada pengembangan produk.',
-      name: 'Andi Pratama',
-      role: 'CEO, TechStarter',
-      image: "https://images.ctfassets.net/w8fc6tgspyjz/53XXc832C6bIBuA69DTIAe/c7a5060dd37cdcddbab2ba6acc61b0d2/convene-headshot.png",
-    },
     benefits: [
-      { icon: 'ShieldCheck', text: 'Perlindungan hukum menyeluruh' },
-      { icon: 'FileText', text: 'Proses pendaftaran efisien' },
-      { icon: 'BarChart', text: 'Monitoring merek pasca-pendaftaran' },
-      { icon: 'MessageCircle', text: 'Konsultasi ahli HKI' },
+      "Tanpa drama birokrasi",
+      "Progress update & bukti permohonan resmi",
     ],
-    link: '#',
+    prices: [{ id: "std", name: "Paket Lengkap", price: 4_500_000 }],
+    ctaLink:
+      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+daftar+merek+di+UrusMerek.",
   },
   {
-    id: 'manufaktur',
-    label: 'Manufaktur',
-    icon: Factory,
-    title: 'Lindungi Merek Dagang Produk Manufaktur',
-    description: 'Pastikan merek produk unggulan Anda terlindungi di pasar domestik dan internasional, dari nama hingga desain kemasan.',
+    id: "perpanjangan",
+    label: "Perpanjangan",
+    title: "Perpanjangan Merek 10 Tahun",
+    description:
+      "Cek masa berlaku & ajukan perpanjangan online—sekali proses, perlindungan lanjut 10 tahun.",
+    icon: CalendarClock,
+    image:
+      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
     features: [
-      'Pendaftaran merek untuk barang produksi',
-      'Perlindungan desain industri produk',
-      'Manajemen portofolio merek untuk lini produk',
+      "Audit dokumen & tenggat masa berlaku",
+      "Pengajuan cepat oleh tim ahli",
+      "Notifikasi status perpanjangan",
     ],
-    testimonial: {
-      quote: 'Dengan portofolio produk yang luas,',
-      boldPart: 'UrusMerek menjadi mitra strategis',
-      quoteAfter: ' kami dalam menjaga aset tak berwujud perusahaan.',
-      name: 'Budi Santoso',
-      role: 'Direktur Operasional, Manufaktur Jaya',
-      image: "https://images.ctfassets.net/w8fc6tgspyjz/6ohY5Fu69CRHGE0mah7axr/059950d4d81638a7397ec2419c96cc49/finastra-headshot.png",
-    },
     benefits: [
-      { icon: 'Globe', text: 'Perlindungan merek internasional' },
-      { icon: 'Package', text: 'Keamanan desain kemasan' },
-      { icon: 'Users', text: 'Lisensi dan waralaba merek' },
-      { icon: 'FileCheck2', text: 'Audit aset merek' },
+      "Minim risiko lewat pengecekan awal",
+      "Proses ringkas & transparan",
     ],
-    link: '#',
+    prices: [
+      { id: "early", name: "< 6 bulan sebelum habis", price: 3_500_000 },
+      { id: "late", name: "≥ 6 bulan/grace period", price: 6_000_000 },
+    ],
+    ctaLink:
+      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+perpanjang+merek.",
   },
   {
-    id: 'retail',
-    label: 'Retail',
-    icon: Store,
-    title: 'Jaga Identitas Unik Bisnis Retail Anda',
-    description: 'Dari nama toko hingga merek produk private label, lindungi semua aset yang membuat bisnis retail Anda menonjol di antara pesaing.',
+    id: "sertifikat",
+    label: "Cetak Sertifikat",
+    title: "Cetak Sertifikat Merek Terdaftar",
+    description:
+      "Cetak fisik sertifikat yang sudah terbit & kirim ke alamat Anda—bukti kepemilikan sah.",
+    icon: Stamp,
+    image:
+      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
     features: [
-      'Pendaftaran merek toko dan slogan',
-      'Perlindungan merek "private label"',
-      'Strategi merek untuk ekspansi cabang',
+      "Validasi data & nomor sertifikat",
+      "Proses percetakan resmi",
+      "Pengemasan & pengiriman",
     ],
-    testimonial: {
-      quote: 'Kami bisa berekspansi dengan tenang karena',
-      boldPart: 'nama toko kami sudah aman terdaftar',
-      quoteAfter: ' berkat layanan profesional dari UrusMerek.',
-      name: 'Citra Lestari',
-      role: 'Pemilik, Retail Lokal Maju',
-      image: "https://images.ctfassets.net/w8fc6tgspyjz/7uRPSnTn4VvZydj8WdKPLS/7dd63b4d43dea19d5d7b706b0114e329/lulu-headshot.png",
-    },
     benefits: [
-      { icon: 'Store', text: 'Perlindungan identitas toko' },
-      { icon: 'ShoppingBag', text: 'Keamanan merek produk' },
-      { icon: 'Map', text: 'Strategi ekspansi aman' },
-      { icon: 'AlertTriangle', text: 'Pencegahan sengketa merek' },
+      "Dokumen otentik yang rapi",
+      "Tracking pengiriman",
     ],
-    link: '#',
+    prices: [{ id: "print", name: "Cetak Sertifikat", price: 1_000_000 }],
+    ctaLink:
+      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+cetak+sertifikat+merek.",
   },
   {
-    id: 'teknologi',
-    label: 'Teknologi',
-    icon: Cpu,
-    title: 'Perlindungan Komprehensif untuk Inovasi',
-    description: 'Amankan merek software, aplikasi, dan platform Anda. Pastikan nama dan logo solusi digital Anda terlindungi secara hukum.',
-    features: [
-      'Pendaftaran merek untuk software & aplikasi',
-      'Perlindungan nama domain dan platform digital',
-      'Manajemen merek untuk produk SaaS',
-    ],
-    testimonial: {
-      quote: 'Proses pendaftaran merek SaaS kami berjalan sangat mulus. Tim',
-      boldPart: 'UrusMerek sangat mengerti kebutuhan industri teknologi.',
-      quoteAfter: '',
-      name: 'Dewi Anggraini',
-      role: 'Product Manager, Inovasi Digital',
-      image: "https://images.ctfassets.net/w8fc6tgspyjz/7tXR2qwRxHMkFKTzSkYnO2/9c3756d6e60b7395c72ac037b65521eb/pressed-headshot.png",
-    },
-    benefits: [
-      { icon: 'Codepen', text: 'Keamanan merek perangkat lunak' },
-      { icon: 'Cloud', text: 'Perlindungan platform SaaS' },
-      { icon: 'Book', text: 'Hak cipta & dokumentasi' },
-      { icon: 'Briefcase', text: 'Strategi lisensi perangkat lunak' },
-    ],
-    link: '#',
+    id: "perubahan",
+    label: "Perubahan Data",
+    title: "Permohonan Perubahan Nama/Alamat",
+    description:
+      "Koreksi data pemilik merek (nama/alamat) secara resmi dan terdokumentasi.",
+    icon: FileEdit,
+    image:
+      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+    features: ["Penyusunan berkas", "Pengajuan pencatatan perubahan", "Pelaporan hasil resmi"],
+    benefits: ["Akurat & tuntas", "Minim revisi dokumen"],
+    prices: [{ id: "chg", name: "Perubahan Data", price: 3_500_000 }],
+    ctaLink:
+      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+ubah+data+merek.",
   },
   {
-    id: 'kreatif',
-    label: 'Kreatif',
-    icon: Paintbrush,
-    title: 'Lindungi Karya dan Brand Industri Kreatif',
-    description: 'Bagi agensi, studio, atau kreator individu, merek adalah identitas. Kami bantu lindungi nama, logo, dan karya Anda.',
-    features: [
-      'Pendaftaran merek untuk agensi/studio',
-      'Perlindungan hak cipta untuk konten kreatif',
-      'Manajemen merek untuk portofolio klien',
-    ],
-    testimonial: {
-      quote: 'Reputasi adalah segalanya di industri kreatif.',
-      boldPart: 'UrusMerek memastikan brand agensi kami terlindungi',
-      quoteAfter: ' dengan baik.',
-      name: 'Rian Firmansyah',
-      role: 'Creative Director, Agensi Visi',
-      image: "https://images.ctfassets.net/w8fc6tgspyjz/3WlMeqwdFWzrKz9Gikfwsh/65b6c88dacf2a804a870dfa529de8305/hawkemedia-headshot.png",
-    },
-    benefits: [
-      { icon: 'Palette', text: 'Perlindungan merek kreatif' },
-      { icon: 'Copyright', text: 'Manajemen Hak Cipta' },
-      { icon: 'Film', text: 'Keamanan konten digital' },
-      { icon: 'Handshake', text: 'Perjanjian kerja kreatif' },
-    ],
-    link: '#',
-  }
+    id: "pengalihan",
+    label: "Pengalihan Hak",
+    title: "Pengalihan Hak Atas Merek",
+    description:
+      "Transfer kepemilikan merek yang aman sesuai kesepakatan—didampingi ahli berpengalaman.",
+    icon: ArrowLeftRight,
+    image:
+      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+    features: ["Review perjanjian pengalihan", "Pengajuan pencatatan resmi", "Dokumentasi lengkap"],
+    benefits: ["Kepastian legal", "Alur tertib & jelas"],
+    prices: [{ id: "assign", name: "Pengalihan Hak", price: 6_000_000 }],
+    ctaLink:
+      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+pengalihan+hak+merek.",
+  },
+  {
+    id: "usul-tolak",
+    label: "Usul/Tolak",
+    title: "Tanggapan Substantif Usul/Tolak",
+    description:
+      "Analisis dasar penolakan lalu susun argumen & bukti agar peluang pendaftaran tetap terbuka.",
+    icon: FileWarning,
+    image:
+      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+    features: ["Analisis kemiripan/pasal terkait", "Perumusan argumen hukum", "Pengajuan tanggapan"],
+    benefits: ["Strategi anti-tolak", "Dikerjakan tim ahli HKI"],
+    prices: [{ id: "resp", name: "Tanggapan Substantif", price: 2_500_000 }],
+    ctaLink:
+      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+butuh+tanggapan+usul%2Ftolak.",
+  },
+  {
+    id: "keberatan",
+    label: "Keberatan",
+    title: "Surat Keberatan (Oposisi)",
+    description:
+      "Hadang merek tiruan saat masa publikasi dengan surat keberatan berbasis riset pembanding.",
+    icon: Gavel,
+    image:
+      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+    features: ["Riset pembanding & bukti", "Penyusunan legal letter", "Pengajuan resmi"],
+    benefits: ["Lindungi ruang merekmu", "Cepat & terstruktur"],
+    prices: [{ id: "opp", name: "Oposisi/Keberatan", price: 2_500_000 }],
+    ctaLink:
+      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+ajukan+keberatan+merek.",
+  },
+  {
+    id: "lisensi",
+    label: "Lisensi",
+    title: "Perjanjian Lisensi Merek",
+    description:
+      "Rancang perjanjian lisensi yang jelas & menguntungkan—siap untuk kolaborasi komersial.",
+    icon: Handshake,
+    image:
+      "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+    features: ["Draft perjanjian komprehensif", "Penyesuaian klausul bisnis", "Review risiko & kepatuhan"],
+    benefits: ["Protect IP & revenue", "Dokumen siap tanda tangan"],
+    prices: [{ id: "lic", name: "Penyusunan Lisensi", price: 3_500_000 }],
+    ctaLink:
+      "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+butuh+perjanjian+lisensi+merek.",
+  },
 ];
 
+/* ===== Component ===== */
 export default function IndustryTemplates() {
-  const [activeTab, setActiveTab] = useState(TABS_DATA[0].id);
+  const [activeId, setActiveId] = useState<Service["id"]>("pendaftaran");
+  const [expanded, setExpanded] = useState(false);
+  const [pickedVariantByService, setPickedVariantByService] = useState<Record<string, string>>({});
 
-  const activeTabData = TABS_DATA.find((tab) => tab.id === activeTab);
+  const active = useMemo(() => SERVICES.find((s) => s.id === activeId)!, [activeId]);
+  const visibleServices = expanded ? SERVICES : SERVICES.slice(0, 4);
+
+  const currentVariantId = pickedVariantByService[active.id] ?? active.prices[0].id;
+  const currentVariant = active.prices.find((p) => p.id === currentVariantId) ?? active.prices[0];
 
   return (
-    <section className="py-20 bg-secondary">
+    <section className="py-20 bg-white">
       <div className="container">
+        {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-4xl md:text-5xl font-semibold text-foreground tracking-tight">Mulai dengan Cepat dan Tepat</h2>
-          <p className="mt-4 text-lg text-muted-foreground">Solusi siap pakai untuk setiap jenis usaha agar bisa langsung mulai.</p>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">Harga Layanan</h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Pilih layanan yang Anda butuhkan—detail, manfaat, dan harga akan tampil di panel.
+          </p>
         </div>
 
+        {/* Selector + toggle */}
         <div className="flex flex-col sm:flex-row items-center justify-center mb-8 gap-4">
           <div className="flex flex-wrap justify-center gap-1.5 bg-white p-1.5 rounded-xl shadow-sm">
-            {TABS_DATA.map((tab) => {
-              const Icon = tab.icon;
+            {visibleServices.map((s) => {
+              const Icon = s.icon;
+              const checked = s.id === activeId;
               return (
                 <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  key={s.id}
+                  onClick={() => setActiveId(s.id)}
                   className={cn(
-                    'flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-200',
-                    activeTab === tab.id
-                      ? 'bg-primary text-primary-foreground shadow'
-                      : 'text-foreground hover:bg-gray-100'
+                    "flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium transition-colors",
+                    checked ? "bg-primary text-primary-foreground shadow" : "text-foreground hover:bg-gray-100"
                   )}
                 >
                   <Icon className="w-4 h-4" />
-                  <span>{tab.label}</span>
+                  <span>{s.label}</span>
                 </button>
               );
             })}
           </div>
-          <a href="#" className="flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium text-foreground bg-white shadow-sm hover:bg-gray-100 transition-colors">
-            <LayoutGrid className="w-4 h-4" />
-            <span>Lihat semua</span>
-          </a>
+
+          {/* Toggle expand/collapse */}
+          {!expanded ? (
+            <button
+              onClick={() => setExpanded(true)}
+              className="flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium text-foreground bg-white shadow-sm hover:bg-gray-100 transition-colors"
+            >
+              <LayoutGrid className="w-4 h-4" />
+              <span>Lihat semua</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => setExpanded(false)}
+              aria-label="Tutup daftar"
+              className="flex items-center justify-center h-10 w-10 rounded-lg text-foreground bg-white shadow-sm hover:bg-gray-100 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
-        {activeTabData && (
-          <div className="bg-card p-6 sm:p-8 md:p-12 rounded-2xl shadow-lg max-w-6xl mx-auto transition-all duration-300">
-            <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
-              <div className="lg:col-span-3">
-                <h3 className="text-2xl md:text-3xl font-semibold text-foreground">{activeTabData.title}</h3>
-                <p className="mt-3 text-muted-foreground">{activeTabData.description}</p>
-                <ul className="mt-6 space-y-3">
-                  {activeTabData.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                      <span className="text-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-8 pt-8 border-t flex items-center gap-5">
-                  <Image
-                    src={activeTabData.testimonial.image}
-                    alt={activeTabData.testimonial.name}
-                    width={56}
-                    height={56}
-                    className="rounded-full flex-shrink-0"
-                  />
-                  <blockquote className="text-muted-foreground">
-                    “{activeTabData.testimonial.quote} <span className="font-semibold text-foreground">{activeTabData.testimonial.boldPart}</span>{activeTabData.testimonial.quoteAfter}”
-                  </blockquote>
+        {/* Details panel */}
+        <div className="bg-card p-6 sm:p-8 md:p-12 rounded-2xl shadow-lg max-w-6xl mx-auto transition-all duration-300">
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
+            {/* Left: copy + features */}
+            <div className="lg:col-span-3">
+              <h3 className="text-2xl md:text-3xl font-semibold">{active.title}</h3>
+              <p className="mt-3 text-muted-foreground">{active.description}</p>
+
+              <ul className="mt-6 space-y-3">
+                {active.features.map((f) => (
+                  <li key={f} className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-8 overflow-hidden rounded-xl">
+                <div className="relative h-48 w-full">
+                  <Image src={active.image} alt={active.title} fill className="object-cover rounded-xl" />
                 </div>
               </div>
+            </div>
 
-              <div className="lg:col-span-2 flex flex-col justify-between">
-                <div className="space-y-3">
-                  {activeTabData.benefits.map((benefit) => (
-                    <div key={benefit.text} className="flex items-center gap-4 p-4 border rounded-lg bg-background">
-                      <IconComponent name={benefit.icon} className="w-6 h-6 text-primary flex-shrink-0" />
-                      <span className="font-medium text-sm text-foreground">{benefit.text}</span>
+            {/* Right: price + benefits + CTA */}
+            <div className="lg:col-span-2 flex flex-col justify-between">
+              {/* Variants */}
+              <div>
+                <h4 className="text-lg font-semibold">Opsi & Harga</h4>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {active.prices.map((p) => {
+                    const isActive = currentVariantId === p.id;
+                    return (
+                      <button
+                        key={p.id}
+                        onClick={() =>
+                          setPickedVariantByService((prev) => ({ ...prev, [active.id]: p.id }))
+                        }
+                        className={cn(
+                          "rounded-full border px-4 py-2 text-sm font-medium transition",
+                          isActive ? "border-primary bg-primary text-white" : "hover:border-primary/60"
+                        )}
+                      >
+                        {p.name}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Price */}
+                <div className="mt-5">
+                  <div className="text-sm text-muted-foreground">Harga</div>
+                  <div className="text-3xl font-semibold">{IDR(currentVariant.price)}</div>
+                  {currentVariant.note && (
+                    <div className="text-sm text-muted-foreground mt-1">{currentVariant.note}</div>
+                  )}
+                </div>
+
+                {/* Benefits */}
+                <div className="mt-6 grid grid-cols-1 gap-2">
+                  {active.benefits.map((b) => (
+                    <div key={b} className="flex items-start gap-2 text-sm">
+                      <span className="mt-1 inline-block h-2 w-2 rounded-full bg-emerald-500" />
+                      <span>{b}</span>
                     </div>
                   ))}
                 </div>
-                <Button asChild size="lg" className="mt-6 w-full">
-                  <a href={activeTabData.link}>
-                    Gunakan Solusi Ini
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
+
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Pendaftaran mencakup biaya resmi; untuk layanan lain PNBP mengikuti ketentuan DJKI (jika berlaku).
+                </p>
               </div>
+
+              <Button asChild size="lg" className="mt-6 w-full">
+                <a href={active.ctaLink ?? "#"} target="_blank" rel="noopener noreferrer">
+                  Konsultasi & Pesan
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
