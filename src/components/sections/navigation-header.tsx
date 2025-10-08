@@ -19,23 +19,25 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/
 // ⬇️ import modal
 import { AuthModal } from "@/components/auth/AuthModal";
 import { LangSwitcher } from "@/components/lang/LangSwitcher";
-
-const layananItems = [
-  { title: "Pendaftaran Merek", href: "/layanan/pendaftaran-merek", description: "Amankan identitas brand Anda dengan pendaftaran merek resmi." },
-  { title: "Perpanjangan Merek", href: "/layanan/perpanjangan-merek", description: "Jaga keberlangsungan proteksi merek Anda yang akan berakhir." },
-  { title: "Pengalihan Hak Merek", href: "/layanan/pengalihan-hak", description: "Proses legal untuk memindahkan kepemilikan merek Anda." },
-  { title: "Konsultasi HKI", href: "/layanan/konsultasi-hki", description: "Dapatkan panduan ahli mengenai strategi Hak Kekayaan Intelektual." },
-];
+import { useTranslations } from "@/lib/i18n/context";
 
 export default function NavigationHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [authOpen, setAuthOpen] = React.useState(false); // ⬅️ state modal
   const pathname = usePathname();
+  const tNav = useTranslations("navigation");
+  const brand = tNav<{ primary: string; secondary: string; fallbackPrimary: string; fallbackSecondary: string }>("brand");
+  const menu = tNav<{ home: string; services: string; pricing: string; company: string; faq: string; contact: string; partner: string }>("menu");
+  const services = tNav<{ title: string; description: string; href: string }[]>("services");
+  const aria = tNav<{ openMenu: string }>("aria");
+  const mobile = tNav<{ seeAll: string; close: string }>("mobile");
+  const consultLabel = tNav<string>("cta.consult");
+
   const isActive = React.useCallback(
     (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")),
     [pathname]
   );
-  const layananActive = React.useMemo(() => layananItems.some(i => isActive(i.href)), [isActive]);
+  const layananActive = React.useMemo(() => services.some(i => isActive(i.href)), [isActive, services]);
 
   const capsuleClass =
     "rounded-full border border-black/10 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 " +
@@ -53,8 +55,8 @@ export default function NavigationHeader() {
           {/* Logo */}
           <div className={cn(capsuleClass, "px-5 py-2 h-12 flex items-center")}>
             <Link href="/" className="flex items-center gap-0">
-              <span className="text-xl font-bold text-primary">urusmerek</span>
-              <span className="text-xl font-bold text-foreground">.id</span>
+              <span className="text-xl font-bold text-primary">{brand.primary}</span>
+              <span className="text-xl font-bold text-foreground">{brand.secondary}</span>
             </Link>
           </div>
 
@@ -64,8 +66,8 @@ export default function NavigationHeader() {
               <NavigationMenuList className="flex items-center gap-1">
                 <NavigationMenuItem>
                   <Link href="/" aria-current={isActive("/") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/") ? linkActive : "text-foreground/80")}>
-                      Beranda
+                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/") ? linkActive : "text-foreground/80")}> 
+                      {menu.home}
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -75,11 +77,11 @@ export default function NavigationHeader() {
                     className={cn("px-4 h-8 rounded-full text-sm font-medium transition", linkHover, layananActive ? linkActive : "text-foreground/80")}
                     aria-current={layananActive ? "page" : undefined}
                   >
-                    Layanan
+                    {menu.services}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className={cn("shadow-lg", menuPopoverRadius)}>
                     <ul className="grid w-[420px] gap-3 p-4 md:w-[520px] md:grid-cols-2 lg:w-[620px]">
-                      {layananItems.map((item) => (
+                      {services.map((item) => (
                         <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
                           {item.description}
                         </ListItem>
@@ -90,24 +92,24 @@ export default function NavigationHeader() {
 
                 <NavigationMenuItem>
                   <Link href="/harga" aria-current={isActive("/harga") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/harga") ? linkActive : "text-foreground/80")}>
-                      Harga
+                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/harga") ? linkActive : "text-foreground/80")}> 
+                      {menu.pricing}
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
                   <Link href="/profil-perusahaan" aria-current={isActive("/profil-perusahaan") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/profil-perusahaan") ? linkActive : "text-foreground/80")}>
-                      Profil Perusahaan
+                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/profil-perusahaan") ? linkActive : "text-foreground/80")}> 
+                      {menu.company}
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
                   <Link href="/faq" aria-current={isActive("/faq") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/faq") ? linkActive : "text-foreground/80")}>
-                      FAQ
+                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/faq") ? linkActive : "text-foreground/80")}> 
+                      {menu.faq}
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -117,19 +119,15 @@ export default function NavigationHeader() {
 
           <div className="hidden lg:flex items-center gap-3">
             {/* Lang Switcher */}
-            <LangSwitcher
-              className={cn(capsuleClass, "h-12 px-2")}
-              // contoh: sambungkan ke router/i18n-mu di sini
-              onChange={(loc) => {
-                // TODO: jika pakai i18n route, lakukan router.replace(`/${loc}${pathnameWithoutLocale}`)
-                // Untuk sementara cukup simpan & refresh:
-                if (typeof window !== "undefined") window.location.reload();
-              }}
-            />
+            <LangSwitcher className={cn(capsuleClass, "h-12 px-2")} />
 
             {/* CTA kanan */}
             <div className={cn("items-center flex h-12", capsuleClass, "px-2")}>
-              <CtaSegmented onOpenAuth={() => setAuthOpen(true)} />
+              <CtaSegmented
+                onOpenAuth={() => setAuthOpen(true)}
+                partnerLabel={menu.partner}
+                consultLabel={consultLabel}
+              />
             </div>
           </div>
 
@@ -140,40 +138,45 @@ export default function NavigationHeader() {
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
                   <Menu className="h-5 w-5" />
-                  <span className="sr-only">Buka menu</span>
+                  <span className="sr-only">{aria.openMenu}</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[350px]">
                 <SheetHeader>
                   <Link href="/" className="flex items-center gap-1" onClick={() => setIsMobileMenuOpen(false)}>
-                    <span className="text-xl font-bold text-primary">UrusMerek</span>
-                    <span className="text-xl font-bold text-foreground">.id</span>
+                    <span className="text-xl font-bold text-primary">{brand.fallbackPrimary}</span>
+                    <span className="text-xl font-bold text-foreground">{brand.fallbackSecondary}</span>
                   </Link>
                 </SheetHeader>
                 {/* Mobile Lang Switcher */}
                 <div className={cn("mb-4", capsuleClass, "px-2 py-2")}>
-                  <LangSwitcher className="w-full justify-between" onChange={() => window.location.reload()} />
+                  <LangSwitcher className="w-full justify-between" />
                 </div>
 
 
                 <div className="flex h-full flex-col py-6">
                   <nav className="flex flex-col space-y-4 text-sm font-medium text-foreground">
                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={cn(isActive("/") ? "text-primary font-semibold" : "text-foreground", "transition")}>
-                      Beranda
+                      {menu.home}
                     </Link>
 
-                    <MobileLayananDropdown onLinkClick={() => setIsMobileMenuOpen(false)} currentPath={pathname} />
+                    <MobileLayananDropdown
+                      onLinkClick={() => setIsMobileMenuOpen(false)}
+                      currentPath={pathname}
+                      label={menu.services}
+                      items={services}
+                    />
 
                     <Link href="/harga" onClick={() => setIsMobileMenuOpen(false)} className={cn(isActive("/harga") ? "text-primary font-semibold" : "text-foreground", "transition")}>
-                      Harga
+                      {menu.pricing}
                     </Link>
 
                     <Link href="/profil-perusahaan" onClick={() => setIsMobileMenuOpen(false)} className={cn(isActive("/profil-perusahaan") ? "text-primary font-semibold" : "text-foreground", "transition")}>
-                      Profil Perusahaan
+                      {menu.company}
                     </Link>
 
                     <Link href="/faq" onClick={() => setIsMobileMenuOpen(false)} className={cn(isActive("/faq") ? "text-primary font-semibold" : "text-foreground", "transition")}>
-                      FAQ
+                      {menu.faq}
                     </Link>
 
                     <button
@@ -183,11 +186,11 @@ export default function NavigationHeader() {
                       }}
                       className={cn("text-left transition")}
                     >
-                      Mitra
+                      {menu.partner}
                     </button>
 
                     <Link href="/hubungi-kami" onClick={() => setIsMobileMenuOpen(false)} className={cn(isActive("/hubungi-kami") ? "text-primary font-semibold" : "text-foreground", "transition")}>
-                      Hubungi Kami
+                      {menu.contact}
                     </Link>
                   </nav>
 
@@ -198,6 +201,8 @@ export default function NavigationHeader() {
                         setIsMobileMenuOpen(false);
                         setAuthOpen(true);
                       }}
+                      partnerLabel={menu.partner}
+                      consultLabel={consultLabel}
                     />
                   </div>
                 </div>
@@ -214,7 +219,17 @@ export default function NavigationHeader() {
 }
 
 /* --- CTA --- */
-const CtaSegmented = ({ className = "", onOpenAuth }: { className?: string; onOpenAuth?: () => void }) => (
+const CtaSegmented = ({
+  className = "",
+  onOpenAuth,
+  partnerLabel,
+  consultLabel,
+}: {
+  className?: string;
+  onOpenAuth?: () => void;
+  partnerLabel: string;
+  consultLabel: string;
+}) => (
   <div className={cn("inline-flex items-center gap-1", className)}>
     {/* Ganti Link Mitra menjadi tombol pemicu modal */}
     <button
@@ -224,7 +239,7 @@ const CtaSegmented = ({ className = "", onOpenAuth }: { className?: string; onOp
         "text-foreground/80 hover:text-primary hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)] transition"
       )}
     >
-      Mitra
+      {partnerLabel}
     </button>
     <Link
       href="/hubungi-kami"
@@ -236,7 +251,7 @@ const CtaSegmented = ({ className = "", onOpenAuth }: { className?: string; onOp
         "active:translate-y-px transition"
       )}
     >
-      Konsultasi
+      {consultLabel}
     </Link>
   </div>
 )
@@ -245,27 +260,34 @@ const CtaSegmented = ({ className = "", onOpenAuth }: { className?: string; onOp
 const MobileLayananDropdown = ({
   onLinkClick,
   currentPath,
+  label,
+  items,
 }: {
   onLinkClick: () => void;
   currentPath: string;
+  label: string;
+  items: { title: string; description: string; href: string }[];
 }) => {
-  const [isOpen, setIsOpen] = React.useState(layananItems.some((i) => currentPath.startsWith(i.href)));
+  const [isOpen, setIsOpen] = React.useState(items.some((i) => currentPath.startsWith(i.href)));
   const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + "/");
 
   return (
     <div className="flex flex-col space-y-2">
       <button
-        className={cn("flex items-center justify-between w-full transition", layananItems.some((i) => isActive(i.href)) && "text-primary font-semibold")}
+        className={cn(
+          "flex items-center justify-between w-full transition",
+          items.some((i) => isActive(i.href)) && "text-primary font-semibold"
+        )}
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
-        <span>Layanan</span>
+        <span>{label}</span>
         <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} />
       </button>
 
       {isOpen && (
         <div className="flex flex-col space-y-2 pl-4 border-l-2 ml-1">
-          {layananItems.map((item) => (
+          {items.map((item) => (
             <Link
               key={item.href}
               href={item.href}

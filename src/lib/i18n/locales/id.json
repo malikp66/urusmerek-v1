@@ -1,0 +1,998 @@
+{
+  "navigation": {
+    "brand": {
+      "primary": "urusmerek",
+      "secondary": ".id",
+      "fallbackPrimary": "UrusMerek",
+      "fallbackSecondary": ".id"
+    },
+    "menu": {
+      "home": "Beranda",
+      "services": "Layanan",
+      "pricing": "Harga",
+      "company": "Profil Perusahaan",
+      "faq": "FAQ",
+      "contact": "Hubungi Kami",
+      "partner": "Mitra"
+    },
+    "cta": {
+      "consult": "Konsultasi"
+    },
+    "aria": {
+      "openMenu": "Buka menu"
+    },
+    "mobile": {
+      "seeAll": "Lihat semua",
+      "close": "Tutup daftar"
+    },
+    "langSwitcherLabel": "Pilih bahasa",
+    "services": [
+      {
+        "title": "Pendaftaran Merek",
+        "description": "Amankan identitas merek Anda dengan pendaftaran resmi di DJKI.",
+        "href": "/layanan/pendaftaran-merek"
+      },
+      {
+        "title": "Perpanjangan Merek",
+        "description": "Pastikan perlindungan merek Anda berlanjut tanpa jeda masa berlaku.",
+        "href": "/layanan/perpanjangan-merek"
+      },
+      {
+        "title": "Pengalihan Hak Merek",
+        "description": "Kelola perpindahan kepemilikan merek secara legal dan terdokumentasi.",
+        "href": "/layanan/pengalihan-hak"
+      },
+      {
+        "title": "Konsultasi HKI",
+        "description": "Dapatkan strategi perlindungan kekayaan intelektual dari konsultan bersertifikat.",
+        "href": "/layanan/konsultasi-hki"
+      }
+    ]
+  },
+  "hero": {
+    "badge": "Layanan Konsultasi dan Pengurusan Merek",
+    "title": "Urus merek Anda",
+    "typewriter": [
+      "lebih cepat",
+      "lebih aman",
+      "lebih transparan",
+      "lebih efisien"
+    ],
+    "description": "Mulai dari pengecekan kesesuaian, pemilihan kelas, hingga penerbitan dokumen. Semua tertata, didampingi konsultan, dan mengikuti regulasi DJKI.",
+    "cta": {
+      "primary": "Mulai Konsultasi",
+      "primaryLabel": "Mulai Konsultasi via WhatsApp",
+      "secondary": "Lihat Layanan"
+    },
+    "stats": [
+      {
+        "label": "Pelaku usaha yang terbantu",
+        "value": "850+"
+      },
+      {
+        "label": "Konsultan HKI bersertifikat",
+        "value": "30"
+      },
+      {
+        "label": "Rata rata waktu inisiasi",
+        "value": "24 jam"
+      }
+    ],
+    "services": [
+      {
+        "id": "pendaftaran",
+        "name": "Pendaftaran Merek",
+        "description": "Validasi kelas dan dokumen, pengajuan resmi, sampai bukti permohonan terbit."
+      },
+      {
+        "id": "perpanjangan",
+        "name": "Perpanjangan Merek",
+        "description": "Perpanjang perlindungan tepat waktu untuk keberlanjutan sepuluh tahun berikutnya."
+      },
+      {
+        "id": "sertifikat",
+        "name": "Cetak Sertifikat",
+        "description": "Ajukan cetak sertifikat merek terdaftar dan kirim ke alamat Anda."
+      },
+      {
+        "id": "perubahan",
+        "name": "Perubahan Nama atau Alamat",
+        "description": "Catat perubahan data pemilik atau pengguna merek sesuai ketentuan yang berlaku."
+      },
+      {
+        "id": "pengalihan",
+        "name": "Pengalihan Hak Merek",
+        "description": "Alihkan kepemilikan merek dengan aman dan dokumentasi yang lengkap."
+      },
+      {
+        "id": "usulTolak",
+        "name": "Tanggapan Usul atau Tolak",
+        "description": "Susun argumentasi substantif agar merek tetap berpeluang memperoleh perlindungan."
+      },
+      {
+        "id": "keberatan",
+        "name": "Surat Keberatan",
+        "description": "Sampaikan keberatan terhadap merek yang berpotensi meniru atau membingungkan pasar."
+      },
+      {
+        "id": "lisensi",
+        "name": "Perjanjian Lisensi",
+        "description": "Siapkan perjanjian lisensi yang sah untuk kolaborasi yang aman dan saling menguntungkan."
+      }
+    ]
+  },
+  "trustedCompanies": {
+    "tagline": "Dipercaya oleh beragam perusahaan ternama"
+  },
+  "servicesShowcase": {
+    "heading": "Selesaikan kebutuhan merek Anda lebih cepat",
+    "description": "Dari pendaftaran, perpanjangan, hingga surat keberatan semuanya dipersiapkan agar proses lebih ringkas dan aman.",
+    "cta": "Lihat semua layanan",
+    "tabs": [
+      {
+        "title": "Pendaftaran Merek",
+        "description": "Pendampingan menyeluruh mulai dari penelusuran, pemilihan kelas Nice, penyiapan dokumen, pengajuan resmi ke DJKI, sampai pemantauan status.",
+        "image": "/service-1.png"
+      },
+      {
+        "title": "Perpanjangan Merek",
+        "description": "Perpanjangan tepat waktu dengan validasi data, pengajuan formal, dan notifikasi tenggat agar perlindungan berlanjut sepuluh tahun ke depan.",
+        "image": "/service-2.png"
+      },
+      {
+        "title": "Surat Keberatan",
+        "description": "Susun keberatan dengan dasar hukum yang kuat untuk menghadang merek tiruan. Struktur surat sistematis, cepat, dan tepat sasaran.",
+        "image": "/service-3.png"
+      }
+    ]
+  },
+  "featuresGrid": {
+    "eyebrow": "Layanan Urus Merek",
+    "heading": "Layanan lengkap untuk pendaftaran, perpanjangan, dan perlindungan merek",
+    "description": "Semua proses ditangani langsung oleh tim konsultan dengan formulir yang rapi dan respons cepat.",
+    "cta": "Mulai Konsultasi",
+    "primary": [
+      {
+        "id": "registration",
+        "name": "Pendaftaran Merek",
+        "subtitle": "Pendampingan menyeluruh dari ide sampai bukti permohonan",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "link": "/layanan/pendaftaran-merek"
+      },
+      {
+        "id": "renewal",
+        "name": "Perpanjangan Sepuluh Tahun",
+        "subtitle": "Pantau masa berlaku dan aman tanpa jeda perlindungan",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "link": "/layanan/perpanjangan-merek"
+      },
+      {
+        "id": "objection",
+        "name": "Surat Keberatan",
+        "subtitle": "Blok merek tiruan dengan argumen yang terstruktur",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "link": "/layanan/surat-keberatan"
+      },
+      {
+        "id": "search",
+        "name": "Penelusuran Nama Merek",
+        "subtitle": "Validasi ketersediaan nama sebelum Anda melangkah",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "link": "/layanan/pendaftaran-merek#penelusuran"
+      }
+    ],
+    "small": [
+      {
+        "id": "assignment",
+        "name": "Pengalihan Hak",
+        "link": "/layanan/pengalihan-hak"
+      },
+      {
+        "id": "license",
+        "name": "Lisensi Merek",
+        "link": "/layanan/lisensi"
+      },
+      {
+        "id": "deadlineAlerts",
+        "name": "Pengingat Tenggat",
+        "link": "/info/notifikasi-tenggat"
+      },
+      {
+        "id": "documentManagement",
+        "name": "Manajemen Dokumen",
+        "link": "/info/dokumen"
+      },
+      {
+        "id": "workflow",
+        "name": "Alur Kerja Terstandar",
+        "link": "/info/proses"
+      },
+      {
+        "id": "dataSecurity",
+        "name": "Keamanan Data",
+        "link": "/info/keamanan-data"
+      },
+      {
+        "id": "auditTrail",
+        "name": "Audit Trail Internal",
+        "link": "/info/audit"
+      },
+      {
+        "id": "caseManagement",
+        "name": "Manajemen Kasus",
+        "link": "/info/kasus"
+      },
+      {
+        "id": "internalNotes",
+        "name": "Catatan Internal",
+        "link": "/info/komentar"
+      },
+      {
+        "id": "versionHistory",
+        "name": "Riwayat Versi",
+        "link": "/info/riwayat"
+      },
+      {
+        "id": "progressSummary",
+        "name": "Ringkasan Progres",
+        "link": "/info/progres"
+      },
+      {
+        "id": "tasks",
+        "name": "Tugas dan Checklist",
+        "link": "/info/tugas"
+      },
+      {
+        "id": "assetManagement",
+        "name": "Manajemen Aset",
+        "link": "/info/aset"
+      },
+      {
+        "id": "knowledgeBase",
+        "name": "Basis Pengetahuan",
+        "link": "/info/basis-pengetahuan"
+      },
+      {
+        "id": "archiveSearch",
+        "name": "Pencarian Arsip",
+        "link": "/info/pencarian-arsip"
+      },
+      {
+        "id": "timeTracking",
+        "name": "Pelacakan Waktu",
+        "link": "/info/time-tracking"
+      },
+      {
+        "id": "labels",
+        "name": "Label Berkas",
+        "link": "/info/tag"
+      },
+      {
+        "id": "globalJurisdiction",
+        "name": "Panduan Yurisdiksi Global",
+        "link": "/info/yurisdiksi"
+      },
+      {
+        "id": "dashboard",
+        "name": "Dasbor Segera Hadir",
+        "link": "/soon"
+      },
+      {
+        "id": "centralStorage",
+        "name": "Penyimpanan Terpusat",
+        "link": "/info/penyimpanan"
+      },
+      {
+        "id": "forms",
+        "name": "Formulir Digital",
+        "link": "/info/formulir"
+      },
+      {
+        "id": "support",
+        "name": "Dukungan Sepanjang Hari",
+        "link": "/kontak"
+      },
+      {
+        "id": "portfolio",
+        "name": "Portofolio Merek",
+        "link": "/info/portofolio"
+      },
+      {
+        "id": "automation",
+        "name": "Automasi Internal",
+        "link": "/info/otomatisasi"
+      },
+      {
+        "id": "clientList",
+        "name": "Daftar Klien",
+        "link": "/info/klien"
+      },
+      {
+        "id": "teamCollaboration",
+        "name": "Kolaborasi Tim",
+        "link": "/info/tim"
+      },
+      {
+        "id": "settings",
+        "name": "Pengaturan",
+        "link": "/info/pengaturan"
+      }
+    ]
+  },
+  "industryTemplates": {
+    "heading": "Harga Layanan",
+    "description": "Pilih layanan yang Anda perlukan. Rincian manfaat dan harga akan tampil di panel.",
+    "seeAll": "Lihat semua",
+    "close": "Tutup daftar",
+    "optionsHeading": "Opsi dan Harga",
+    "priceLabel": "Harga",
+    "priceDisclaimer": "Pendaftaran mencakup biaya resmi. Untuk layanan lain, PNBP mengikuti ketentuan DJKI apabila berlaku.",
+    "cta": "Konsultasi dan Pesan",
+    "services": [
+      {
+        "id": "pendaftaran",
+        "label": "Pendaftaran",
+        "title": "Jasa Pendaftaran Merek",
+        "description": "Analisis ketersediaan nama lalu ajukan resmi ke DJKI hingga sertifikat terbit.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "BadgeCheck",
+        "features": [
+          "Analisis awal nama dan kelas merek",
+          "Pengajuan dalam satu hari setelah dokumen lengkap",
+          "Pendampingan penuh sampai sertifikat diterima"
+        ],
+        "benefits": [
+          "Tanpa repot urusan birokrasi",
+          "Update progres dan bukti permohonan resmi"
+        ],
+        "prices": [
+          {
+            "id": "std",
+            "name": "Paket Lengkap",
+            "price": 4500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+daftar+merek+di+UrusMerek."
+      },
+      {
+        "id": "perpanjangan",
+        "label": "Perpanjangan",
+        "title": "Perpanjangan Merek Sepuluh Tahun",
+        "description": "Cek masa berlaku dan ajukan perpanjangan satu kali proses untuk perlindungan lanjut sepuluh tahun.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "CalendarClock",
+        "features": [
+          "Audit dokumen dan tenggat masa berlaku",
+          "Pengajuan cepat oleh tim ahli",
+          "Notifikasi status perpanjangan"
+        ],
+        "benefits": [
+          "Risiko rendah dengan pengecekan awal",
+          "Proses ringkas dan transparan"
+        ],
+        "prices": [
+          {
+            "id": "early",
+            "name": "Kurang dari enam bulan sebelum habis",
+            "price": 3500000
+          },
+          {
+            "id": "late",
+            "name": "Lebih dari enam bulan atau masa tenggang",
+            "price": 6000000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+perpanjang+merek."
+      },
+      {
+        "id": "sertifikat",
+        "label": "Cetak Sertifikat",
+        "title": "Cetak Sertifikat Merek Terdaftar",
+        "description": "Cetak fisik sertifikat yang sudah terbit dan kirim ke alamat Anda sebagai bukti kepemilikan sah.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "Stamp",
+        "features": [
+          "Validasi data dan nomor sertifikat",
+          "Proses percetakan resmi",
+          "Pengemasan dan pengiriman"
+        ],
+        "benefits": [
+          "Dokumen otentik yang rapi",
+          "Pelacakan pengiriman"
+        ],
+        "prices": [
+          {
+            "id": "print",
+            "name": "Cetak Sertifikat",
+            "price": 1000000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+cetak+sertifikat+merek."
+      },
+      {
+        "id": "perubahan",
+        "label": "Perubahan Data",
+        "title": "Permohonan Perubahan Nama atau Alamat",
+        "description": "Koreksi data pemilik merek secara resmi dan terdokumentasi.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "FileEdit",
+        "features": [
+          "Penyusunan dokumen pendukung",
+          "Pengajuan pencatatan perubahan",
+          "Pelaporan hasil resmi"
+        ],
+        "benefits": [
+          "Akurat dan tuntas",
+          "Minim revisi dokumen"
+        ],
+        "prices": [
+          {
+            "id": "chg",
+            "name": "Perubahan Data",
+            "price": 3500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+ubah+data+merek."
+      },
+      {
+        "id": "pengalihan",
+        "label": "Pengalihan Hak",
+        "title": "Pengalihan Hak Atas Merek",
+        "description": "Pindahkan kepemilikan merek secara aman dengan pendampingan ahli.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "ArrowLeftRight",
+        "features": [
+          "Review perjanjian pengalihan",
+          "Pengajuan pencatatan resmi",
+          "Dokumentasi lengkap"
+        ],
+        "benefits": [
+          "Kepastian legal",
+          "Alur tertib dan jelas"
+        ],
+        "prices": [
+          {
+            "id": "assign",
+            "name": "Pengalihan Hak",
+            "price": 6000000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+pengalihan+hak+merek."
+      },
+      {
+        "id": "usulTolak",
+        "label": "Usul atau Tolak",
+        "title": "Tanggapan Substantif Usul atau Tolak",
+        "description": "Analisis dasar penolakan kemudian susun argumen dan bukti agar peluang pendaftaran tetap terbuka.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "FileWarning",
+        "features": [
+          "Analisis kemiripan dan pasal terkait",
+          "Perumusan argumen hukum",
+          "Pengajuan tanggapan resmi"
+        ],
+        "benefits": [
+          "Strategi agar tidak ditolak",
+          "Dikerjakan tim ahli HKI"
+        ],
+        "prices": [
+          {
+            "id": "resp",
+            "name": "Tanggapan Substantif",
+            "price": 2500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+butuh+tanggapan+usul%2Ftolak."
+      },
+      {
+        "id": "keberatan",
+        "label": "Keberatan",
+        "title": "Surat Keberatan atau Oposisi",
+        "description": "Hadang merek tiruan saat masa publikasi dengan surat keberatan berbasis riset pembanding.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "Gavel",
+        "features": [
+          "Riset pembanding dan bukti",
+          "Penyusunan surat hukum",
+          "Pengajuan resmi"
+        ],
+        "benefits": [
+          "Lindungi ruang merek Anda",
+          "Cepat dan terstruktur"
+        ],
+        "prices": [
+          {
+            "id": "opp",
+            "name": "Oposisi atau Keberatan",
+            "price": 2500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+ajukan+keberatan+merek."
+      },
+      {
+        "id": "lisensi",
+        "label": "Lisensi",
+        "title": "Perjanjian Lisensi Merek",
+        "description": "Rancang perjanjian lisensi yang jelas dan menguntungkan untuk kolaborasi komersial.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "Handshake",
+        "features": [
+          "Draft perjanjian yang komprehensif",
+          "Penyesuaian klausul bisnis",
+          "Review risiko dan kepatuhan"
+        ],
+        "benefits": [
+          "Lindungi kekayaan intelektual dan pendapatan",
+          "Dokumen siap tanda tangan"
+        ],
+        "prices": [
+          {
+            "id": "lic",
+            "name": "Penyusunan Lisensi",
+            "price": 3500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+butuh+perjanjian+lisensi+merek."
+      }
+    ]
+  },
+  "finalCta": {
+    "eyebrow": "UrusMerek.id",
+    "heading": "Lindungi merek Anda mulai hari ini",
+    "subheading": "Jangan tunggu nama Anda dipakai orang lain.",
+    "body": "Kami bantu pendaftaran dan perpanjangan merek secara resmi di DJKI, mulai dari penelusuran, pengajuan, sampai sertifikat terbit. Kami juga menangani keberatan atau oposisi, tanggapan usul atau tolak, perubahan data, pengalihan hak, lisensi, dan cetak sertifikat.",
+    "note": "Resmi DJKI Kemenkumham. Harga tetap dan transparan. Pembaruan progres berkala.",
+    "primaryCta": "Konsultasi Sekarang",
+    "secondaryCta": "Lihat Paket dan Harga",
+    "imageAlt": "Dasbor pengurusan merek UrusMerek.id untuk pendaftaran dan perpanjangan.",
+    "imageSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+  },
+  "footer": {
+    "trustBadges": [
+      {
+        "icon": "HelpCircle",
+        "text": "Dukungan sepanjang hari"
+      },
+      {
+        "icon": "CalendarDays",
+        "text": "Terdaftar di DJKI"
+      },
+      {
+        "icon": "ShieldCheck",
+        "text": "Aman dan tepercaya"
+      },
+      {
+        "icon": "Zap",
+        "text": "Proses cepat"
+      }
+    ],
+    "brand": {
+      "description": "Mitra tepercaya untuk pendaftaran, perpanjangan, dan perlindungan merek di Indonesia.",
+      "logoAlt": "UrusMerek.id"
+    },
+    "licenses": {
+      "title": "Lisensi dan Referensi",
+      "items": [
+        {
+          "name": "Kementerian Hukum dan HAM (DJKI)",
+          "href": "https://www.dgip.go.id/",
+          "imgSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+        },
+        {
+          "name": "Direktorat Jenderal Kekayaan Intelektual",
+          "href": "https://www.dgip.go.id/",
+          "imgSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+        },
+        {
+          "name": "Klasifikasi Nice (Referensi Kelas Merek)",
+          "href": "https://www.wipo.int/classifications/nice/",
+          "imgSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+        }
+      ],
+      "disclaimer": "Logo instansi pemerintah ditampilkan sebagai referensi otoritas pendaftaran merek. UrusMerek.id adalah konsultan independen."
+    },
+    "columns": {
+      "servicesTitle": "Layanan",
+      "learnTitle": "Pelajari",
+      "connectTitle": "Terhubung",
+      "services": [
+        {
+          "name": "Pendaftaran Merek",
+          "href": "/layanan/pendaftaran-merek"
+        },
+        {
+          "name": "Perpanjangan Merek",
+          "href": "/layanan/perpanjangan-merek"
+        },
+        {
+          "name": "Perubahan Nama atau Alamat",
+          "href": "/layanan/perubahan-data"
+        },
+        {
+          "name": "Pengalihan Hak",
+          "href": "/layanan/pengalihan-hak"
+        },
+        {
+          "name": "Cetak Sertifikat",
+          "href": "/layanan/cetak-sertifikat"
+        },
+        {
+          "name": "Keberatan atau Oposisi",
+          "href": "/layanan/keberatan-oposisi"
+        },
+        {
+          "name": "Tanggapan Usul atau Tolak",
+          "href": "/layanan/tanggapan-penolakan"
+        },
+        {
+          "name": "Perjanjian Lisensi",
+          "href": "/layanan/lisensi-merek"
+        }
+      ],
+      "learn": [
+        {
+          "name": "Blog",
+          "href": "/blog"
+        },
+        {
+          "name": "Pusat UMKM",
+          "href": "/pusat/umkm"
+        },
+        {
+          "name": "Pusat Agensi",
+          "href": "/pusat/agensi"
+        }
+      ],
+      "social": [
+        {
+          "name": "WhatsApp",
+          "href": "https://api.whatsapp.com/send/?phone=6282267890152",
+          "icon": "MessageCircle"
+        },
+        {
+          "name": "LinkedIn",
+          "href": "https://www.linkedin.com/",
+          "icon": "Linkedin"
+        },
+        {
+          "name": "Facebook",
+          "href": "https://www.facebook.com/",
+          "icon": "Facebook"
+        },
+        {
+          "name": "Instagram",
+          "href": "https://www.instagram.com/",
+          "icon": "Instagram"
+        }
+      ]
+    },
+    "bottom": {
+      "security": "Keamanan",
+      "privacy": "Privasi",
+      "terms": "Ketentuan"
+    }
+  },
+  "aiFeatures": {
+    "eyebrow": "UrusMerek AI",
+    "title": "Alat pintar untuk urus merek cepat dan tepat",
+    "description": "Cek nama merek, siapkan dokumen, dan awasi proses bersama konsultan yang siap membantu.",
+    "items": [
+      {
+        "id": "similarityCheck",
+        "badge": "Analisis awal praktis",
+        "title": "AI cek ketersediaan dan kemiripan nama merek",
+        "body": "Terima hasil pengecekan instan lengkap dengan tingkat kemiripan. Laporan ringkas menjadi dasar diskusi bersama konsultan sehingga keputusan pendaftaran terasa lebih yakin.",
+        "image": {
+          "src": "/images/ai-similarity-check.png",
+          "alt": "Tampilan AI pengecekan nama merek"
+        },
+        "buttons": [
+          {
+            "variant": "primary",
+            "label": "Coba gratis",
+            "href": "/konsultasi"
+          },
+          {
+            "variant": "secondary",
+            "label": "Pelajari layanan",
+            "href": "/layanan/pendaftaran-merek"
+          }
+        ]
+      },
+      {
+        "id": "documentAutomation",
+        "badge": "Dokumen rapi lebih cepat",
+        "title": "Otomatisasi dokumen dan pencarian cerdas",
+        "body": "Susun dokumen pendaftaran dengan template terarah, kurangi risiko kesalahan input, dan cari data pendukung secara cerdas. Konsultan kami memfinalkan berkas dan mengurus pengajuan resmi.",
+        "image": {
+          "src": "/images/ai-doc-automation.png",
+          "alt": "Otomatisasi dokumen dan pencarian cerdas"
+        },
+        "buttons": [
+          {
+            "variant": "primary",
+            "label": "Konsultasi sekarang",
+            "href": "/konsultasi"
+          },
+          {
+            "variant": "secondary",
+            "label": "Lihat semua layanan",
+            "href": "/layanan"
+          }
+        ]
+      },
+      {
+        "id": "oneDayService",
+        "badge": "Pendampingan menyeluruh",
+        "title": "Layanan satu hari dan perlindungan lanjut",
+        "body": "Pengajuan diproses pada hari kerja berikutnya setelah dokumen lengkap. Layanan lanjut mencakup perpanjangan sepuluh tahun, tanggapan penolakan, pengalihan hak, dan perjanjian lisensi sesuai kebutuhan.",
+        "image": {
+          "src": "/images/ai-one-day-service.png",
+          "alt": "Layanan satu hari dan perlindungan lanjut"
+        },
+        "buttons": [
+          {
+            "variant": "primary",
+            "label": "Perpanjangan merek",
+            "href": "/layanan/perpanjangan-merek"
+          },
+          {
+            "variant": "secondary",
+            "label": "Surat keberatan",
+            "href": "/layanan/surat-keberatan"
+          }
+        ]
+      }
+    ],
+    "cta": {
+      "title": "Jangan menunggu merekmu dipakai orang lain",
+      "description": "Lindungi identitas usaha bersama konsultan profesional UrusMerek.id.",
+      "button": {
+        "label": "Konsultasi sekarang",
+        "href": "/konsultasi"
+      }
+    }
+  },
+  "problemSolution": {
+    "problem": {
+      "title": "Pendaftaran merek itu rumit",
+      "description": "Banyak alat berbeda, formulir yang membingungkan, dan istilah hukum yang melelahkan. Waktu terbuang dan risiko salah langkah makin besar.",
+      "video": {
+        "src": "https://videos.ctfassets.net/w8fc6tgspyjz/3Y7YYziaKZhhmQPuSppcXr/3ab81599ecbb75e685729d55489da272/CHAT_IS_BROKEN_V02-ezgif.com-gif-to-mp4-converter.mp4",
+        "poster": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      }
+    },
+    "solution": {
+      "title": "Kami membuatnya sederhana",
+      "description": "UrusMerek.id menyatukan penelusuran, pengajuan, pemantauan status, perpanjangan, dan surat keberatan dalam satu alur kerja yang tertata.",
+      "video": {
+        "src": "https://videos.ctfassets.net/w8fc6tgspyjz/6vm22aRpEdepqdDHlhP1rQ/a0b6722cb15efcdfcb028ff92a4fd153/CONVERGENCE_08_GIF_DARKMODE_1mbps_V01.mp4",
+        "poster": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      }
+    },
+    "cta": {
+      "label": "Mulai konsultasi",
+      "href": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2CSaya+ingin+konsultasi+pendaftaran+merek.&type=phone_number&app_absent=0",
+      "aria": "Mulai konsultasi melalui WhatsApp"
+    },
+    "converge": [
+      "Semua alat urus merek",
+      "dalam satu platform"
+    ]
+  },
+  "flexibility": {
+    "heading": "Semua kebutuhan tim terpenuhi",
+    "description": "Fleksibilitas platform kami mendukung berbagai skenario layanan merek dan terus berkembang untuk menghadirkan solusi terbaik.",
+    "cards": [
+      {
+        "id": "serviceTypes",
+        "title": "Beragam tipe layanan",
+        "description": "Pilih tampilan daftar, kanban, garis waktu, dan format lain untuk mengelola setiap permohonan.",
+        "image": {
+          "src": "https://clickup.com/assets/home-test/view-work-your-way-v4.png",
+          "alt": "Visual tipe layanan berbeda"
+        }
+      },
+      {
+        "id": "customPackages",
+        "title": "Paket yang mudah disesuaikan",
+        "description": "Atur kombinasi layanan sesuai kebutuhan klien hanya dengan menyalakan sakelar yang relevan.",
+        "toggles": [
+          "search",
+          "filing",
+          "management"
+        ]
+      }
+    ],
+    "toggles": [
+      {
+        "id": "search",
+        "label": "Penelusuran menyeluruh"
+      },
+      {
+        "id": "filing",
+        "label": "Pendampingan pengajuan"
+      },
+      {
+        "id": "management",
+        "label": "Manajemen portofolio"
+      }
+    ]
+  },
+  "pricingSelector": {
+    "eyebrow": "Paket dan harga",
+    "title": "Pilih layanan yang Anda butuhkan",
+    "description": "Pilih opsi di bawah untuk melihat detail layanan, manfaat, dan biaya.",
+    "selector": {
+      "title": "Pilih layanan",
+      "description": "Sentuh salah satu opsi untuk menampilkan ringkasan.",
+      "button": {
+        "label": "Konsultasi",
+        "href": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+memesan+layanan+UrusMerek.",
+        "aria": "Hubungi konsultan melalui WhatsApp"
+      }
+    },
+    "panel": {
+      "selectedLabel": "Layanan terpilih",
+      "optionLabel": "Pilih opsi dan lihat harga",
+      "priceLabel": "Harga",
+      "note": "Harga sudah termasuk jasa pengurusan. Beberapa layanan memerlukan PNBP sesuai ketentuan DJKI."
+    },
+    "services": [
+      {
+        "id": "pendaftaran",
+        "name": "Pendaftaran merek",
+        "icon": "badgeCheck",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Pendampingan pendaftaran merek"
+        },
+        "blurb": "Analisis awal hingga pengajuan resmi DJKI. Anda menerima bukti permohonan dan pendampingan sampai sertifikat terbit.",
+        "benefits": [
+          "Analisis ketersediaan nama",
+          "Pengajuan satu hari setelah dokumen lengkap",
+          "Pendampingan sampai sertifikat terbit"
+        ],
+        "variants": [
+          {
+            "id": "std",
+            "name": "Paket lengkap",
+            "price": 4500000
+          }
+        ],
+        "badge": "Favorit"
+      },
+      {
+        "id": "perpanjangan",
+        "name": "Perpanjangan merek",
+        "icon": "refreshCw",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Perpanjangan perlindungan merek"
+        },
+        "blurb": "Perpanjang perlindungan sepuluh tahun dengan monitoring tenggat dan pengajuan resmi.",
+        "benefits": [
+          "Cek masa berlaku dan kelengkapan dokumen",
+          "Pengajuan daring ditangani konsultan"
+        ],
+        "variants": [
+          {
+            "id": "early",
+            "name": "Kurang dari enam bulan sebelum habis",
+            "price": 3500000
+          },
+          {
+            "id": "late",
+            "name": "Lebih dari enam bulan atau masa tenggang",
+            "price": 6000000
+          }
+        ]
+      },
+      {
+        "id": "cetakSertifikat",
+        "name": "Cetak sertifikat",
+        "icon": "fileText",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Cetak fisik sertifikat merek"
+        },
+        "blurb": "Cetak sertifikat merek terdaftar berikut pengiriman ke alamat Anda.",
+        "benefits": [
+          "Validasi nomor sertifikat",
+          "Percetakan dan pengiriman"
+        ],
+        "variants": [
+          {
+            "id": "print",
+            "name": "Cetak sertifikat",
+            "price": 1000000
+          }
+        ]
+      },
+      {
+        "id": "perubahanData",
+        "name": "Perubahan nama atau alamat",
+        "icon": "fileSignature",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Perubahan data kepemilikan merek"
+        },
+        "blurb": "Koreksi data pemilik atau alamat dengan pencatatan resmi di DJKI.",
+        "benefits": [
+          "Penyusunan berkas perubahan",
+          "Pengajuan pencatatan resmi"
+        ],
+        "variants": [
+          {
+            "id": "chg",
+            "name": "Perubahan data",
+            "price": 3500000
+          }
+        ]
+      },
+      {
+        "id": "pengalihanHak",
+        "name": "Pengalihan hak",
+        "icon": "arrowLeftRight",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Proses pengalihan hak merek"
+        },
+        "blurb": "Alihkan kepemilikan merek dengan dokumen yang aman dan terdokumentasi.",
+        "benefits": [
+          "Review dokumen peralihan",
+          "Pengajuan ke DJKI"
+        ],
+        "variants": [
+          {
+            "id": "assign",
+            "name": "Pengalihan hak",
+            "price": 6000000
+          }
+        ]
+      },
+      {
+        "id": "tanggapanPenolakan",
+        "name": "Tanggapan penolakan",
+        "icon": "shieldAlert",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Strategi tanggapan penolakan merek"
+        },
+        "blurb": "Susun argumen substantif agar merek tetap berpeluang terdaftar.",
+        "benefits": [
+          "Analisis dasar penolakan",
+          "Penyusunan argumen dan bukti"
+        ],
+        "variants": [
+          {
+            "id": "resp",
+            "name": "Tanggapan substantif",
+            "price": 2500000
+          }
+        ]
+      },
+      {
+        "id": "suratKeberatan",
+        "name": "Surat keberatan",
+        "icon": "calendarClock",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Penyusunan surat keberatan merek"
+        },
+        "blurb": "Ajukan keberatan ketika ada merek serupa yang diumumkan.",
+        "benefits": [
+          "Riset pembanding",
+          "Penyusunan dokumen keberatan"
+        ],
+        "variants": [
+          {
+            "id": "opp",
+            "name": "Surat keberatan",
+            "price": 2500000
+          }
+        ]
+      }
+    ]
+  }
+}

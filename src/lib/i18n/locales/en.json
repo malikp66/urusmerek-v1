@@ -1,0 +1,998 @@
+{
+  "navigation": {
+    "brand": {
+      "primary": "urusmerek",
+      "secondary": ".id",
+      "fallbackPrimary": "UrusMerek",
+      "fallbackSecondary": ".id"
+    },
+    "menu": {
+      "home": "Home",
+      "services": "Services",
+      "pricing": "Pricing",
+      "company": "Company Profile",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "partner": "Partner"
+    },
+    "cta": {
+      "consult": "Consult"
+    },
+    "aria": {
+      "openMenu": "Open menu"
+    },
+    "mobile": {
+      "seeAll": "View all",
+      "close": "Close list"
+    },
+    "langSwitcherLabel": "Choose language",
+    "services": [
+      {
+        "title": "Trademark Filing",
+        "description": "Secure your brand identity with an official filing at DJKI.",
+        "href": "/layanan/pendaftaran-merek"
+      },
+      {
+        "title": "Trademark Renewal",
+        "description": "Keep your trademark protection active without any lapse in validity.",
+        "href": "/layanan/perpanjangan-merek"
+      },
+      {
+        "title": "Trademark Assignment",
+        "description": "Manage the transfer of trademark ownership with full legal documentation.",
+        "href": "/layanan/pengalihan-hak"
+      },
+      {
+        "title": "IP Consultation",
+        "description": "Receive certified guidance on building an intellectual property strategy.",
+        "href": "/layanan/konsultasi-hki"
+      }
+    ]
+  },
+  "hero": {
+    "badge": "Trademark Advisory and Filing Services",
+    "title": "Manage your trademark",
+    "typewriter": [
+      "faster",
+      "safer",
+      "more transparent",
+      "more efficient"
+    ],
+    "description": "From clearance checks and class selection to document issuance. Everything is organised, guided by consultants, and compliant with DJKI regulations.",
+    "cta": {
+      "primary": "Start a Consultation",
+      "primaryLabel": "Start a consultation on WhatsApp",
+      "secondary": "View Services"
+    },
+    "stats": [
+      {
+        "label": "Businesses supported",
+        "value": "850+"
+      },
+      {
+        "label": "Certified IP consultants",
+        "value": "30"
+      },
+      {
+        "label": "Average kickoff time",
+        "value": "24 hours"
+      }
+    ],
+    "services": [
+      {
+        "id": "pendaftaran",
+        "name": "Trademark Filing",
+        "description": "Verify classes and documents, submit officially, and deliver the filing receipt."
+      },
+      {
+        "id": "perpanjangan",
+        "name": "Trademark Renewal",
+        "description": "Extend protection on time so your mark stays covered for the next ten years."
+      },
+      {
+        "id": "sertifikat",
+        "name": "Certificate Printing",
+        "description": "Request a printed certificate for your registered mark and ship it to your address."
+      },
+      {
+        "id": "perubahan",
+        "name": "Name or Address Change",
+        "description": "Record ownership or user data changes in line with DJKI requirements."
+      },
+      {
+        "id": "pengalihan",
+        "name": "Trademark Assignment",
+        "description": "Transfer ownership securely with complete documentation prepared for you."
+      },
+      {
+        "id": "usulTolak",
+        "name": "Office Action Response",
+        "description": "Craft substantive arguments so your application keeps its chance of approval."
+      },
+      {
+        "id": "keberatan",
+        "name": "Opposition Letter",
+        "description": "File an objection against lookalike marks that may confuse the market."
+      },
+      {
+        "id": "lisensi",
+        "name": "Trademark Licensing",
+        "description": "Prepare a compliant licence agreement for mutually beneficial partnerships."
+      }
+    ]
+  },
+  "trustedCompanies": {
+    "tagline": "Trusted by leading brands"
+  },
+  "servicesShowcase": {
+    "heading": "Handle every trademark need sooner",
+    "description": "From filing and renewal to opposition letters, each service is designed to keep the process lean and secure.",
+    "cta": "Explore all services",
+    "tabs": [
+      {
+        "title": "Trademark Filing",
+        "description": "Full assistance that covers clearance research, Nice class selection, document preparation, official DJKI submission, and status monitoring.",
+        "image": "/service-1.png"
+      },
+      {
+        "title": "Trademark Renewal",
+        "description": "Renew on time with data validation, formal submission, and deadline reminders so your protection extends for another ten years.",
+        "image": "/service-2.png"
+      },
+      {
+        "title": "Opposition Letter",
+        "description": "Develop a strong legal basis to challenge imitators. The structure is methodical, swift, and laser focused.",
+        "image": "/service-3.png"
+      }
+    ]
+  },
+  "featuresGrid": {
+    "eyebrow": "UrusMerek Services",
+    "heading": "A complete suite for filing, renewal, and trademark protection",
+    "description": "Every workflow is handled by experienced consultants with tidy forms and rapid responses.",
+    "cta": "Start a Consultation",
+    "primary": [
+      {
+        "id": "registration",
+        "name": "Trademark Filing",
+        "subtitle": "Guidance from concept to formal application",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "link": "/layanan/pendaftaran-merek"
+      },
+      {
+        "id": "renewal",
+        "name": "Ten Year Renewal",
+        "subtitle": "Stay ahead of deadlines with zero downtime",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "link": "/layanan/perpanjangan-merek"
+      },
+      {
+        "id": "objection",
+        "name": "Opposition Letter",
+        "subtitle": "Block imitations with structured arguments",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "link": "/layanan/surat-keberatan"
+      },
+      {
+        "id": "search",
+        "name": "Name Availability Search",
+        "subtitle": "Confirm viability before you invest in a mark",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "link": "/layanan/pendaftaran-merek#penelusuran"
+      }
+    ],
+    "small": [
+      {
+        "id": "assignment",
+        "name": "Ownership Transfer",
+        "link": "/layanan/pengalihan-hak"
+      },
+      {
+        "id": "license",
+        "name": "Trademark Licensing",
+        "link": "/layanan/lisensi"
+      },
+      {
+        "id": "deadlineAlerts",
+        "name": "Deadline Alerts",
+        "link": "/info/notifikasi-tenggat"
+      },
+      {
+        "id": "documentManagement",
+        "name": "Document Management",
+        "link": "/info/dokumen"
+      },
+      {
+        "id": "workflow",
+        "name": "Standardised Workflow",
+        "link": "/info/proses"
+      },
+      {
+        "id": "dataSecurity",
+        "name": "Data Security",
+        "link": "/info/keamanan-data"
+      },
+      {
+        "id": "auditTrail",
+        "name": "Internal Audit Trail",
+        "link": "/info/audit"
+      },
+      {
+        "id": "caseManagement",
+        "name": "Case Management",
+        "link": "/info/kasus"
+      },
+      {
+        "id": "internalNotes",
+        "name": "Internal Notes",
+        "link": "/info/komentar"
+      },
+      {
+        "id": "versionHistory",
+        "name": "Version History",
+        "link": "/info/riwayat"
+      },
+      {
+        "id": "progressSummary",
+        "name": "Progress Summary",
+        "link": "/info/progres"
+      },
+      {
+        "id": "tasks",
+        "name": "Tasks and Checklists",
+        "link": "/info/tugas"
+      },
+      {
+        "id": "assetManagement",
+        "name": "Asset Management",
+        "link": "/info/aset"
+      },
+      {
+        "id": "knowledgeBase",
+        "name": "Knowledge Base",
+        "link": "/info/basis-pengetahuan"
+      },
+      {
+        "id": "archiveSearch",
+        "name": "Archive Search",
+        "link": "/info/pencarian-arsip"
+      },
+      {
+        "id": "timeTracking",
+        "name": "Time Tracking",
+        "link": "/info/time-tracking"
+      },
+      {
+        "id": "labels",
+        "name": "File Labels",
+        "link": "/info/tag"
+      },
+      {
+        "id": "globalJurisdiction",
+        "name": "Global Jurisdiction Guidance",
+        "link": "/info/yurisdiksi"
+      },
+      {
+        "id": "dashboard",
+        "name": "Dashboard Coming Soon",
+        "link": "/soon"
+      },
+      {
+        "id": "centralStorage",
+        "name": "Central Storage",
+        "link": "/info/penyimpanan"
+      },
+      {
+        "id": "forms",
+        "name": "Digital Forms",
+        "link": "/info/formulir"
+      },
+      {
+        "id": "support",
+        "name": "Always On Support",
+        "link": "/kontak"
+      },
+      {
+        "id": "portfolio",
+        "name": "Trademark Portfolio",
+        "link": "/info/portofolio"
+      },
+      {
+        "id": "automation",
+        "name": "Internal Automation",
+        "link": "/info/otomatisasi"
+      },
+      {
+        "id": "clientList",
+        "name": "Client List",
+        "link": "/info/klien"
+      },
+      {
+        "id": "teamCollaboration",
+        "name": "Team Collaboration",
+        "link": "/info/tim"
+      },
+      {
+        "id": "settings",
+        "name": "Settings",
+        "link": "/info/pengaturan"
+      }
+    ]
+  },
+  "industryTemplates": {
+    "heading": "Service Pricing",
+    "description": "Select the service you need to view the details, benefits, and investment.",
+    "seeAll": "View all",
+    "close": "Close list",
+    "optionsHeading": "Options and Pricing",
+    "priceLabel": "Price",
+    "priceDisclaimer": "Filing includes government fees. Other services follow DJKI tariffs whenever they apply.",
+    "cta": "Consult and Order",
+    "services": [
+      {
+        "id": "pendaftaran",
+        "label": "Filing",
+        "title": "Trademark Filing Service",
+        "description": "Check name availability then submit officially to DJKI until the certificate is issued.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "BadgeCheck",
+        "features": [
+          "Initial analysis of names and classes",
+          "Submission within one day after documents are complete",
+          "Full assistance until the certificate arrives"
+        ],
+        "benefits": [
+          "No bureaucratic hassle",
+          "Progress updates with official receipts"
+        ],
+        "prices": [
+          {
+            "id": "std",
+            "name": "Complete Package",
+            "price": 4500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+would+like+to+file+a+trademark+with+UrusMerek."
+      },
+      {
+        "id": "perpanjangan",
+        "label": "Renewal",
+        "title": "Ten Year Trademark Renewal",
+        "description": "Review validity and submit once so protection continues for the next decade.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "CalendarClock",
+        "features": [
+          "Document and expiry review",
+          "Fast submission by experts",
+          "Status notifications"
+        ],
+        "benefits": [
+          "Lower risk with early checks",
+          "Clear and transparent process"
+        ],
+        "prices": [
+          {
+            "id": "early",
+            "name": "Under six months before expiry",
+            "price": 3500000
+          },
+          {
+            "id": "late",
+            "name": "Over six months or grace period",
+            "price": 6000000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+need+to+renew+my+trademark."
+      },
+      {
+        "id": "sertifikat",
+        "label": "Certificate",
+        "title": "Registered Trademark Certificate Printing",
+        "description": "Print and deliver the physical certificate of your registered mark as proof of ownership.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "Stamp",
+        "features": [
+          "Validate data and certificate number",
+          "Official printing process",
+          "Packaging and delivery"
+        ],
+        "benefits": [
+          "Neat and authentic documents",
+          "Delivery tracking"
+        ],
+        "prices": [
+          {
+            "id": "print",
+            "name": "Certificate Printing",
+            "price": 1000000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+would+like+to+print+my+trademark+certificate."
+      },
+      {
+        "id": "perubahan",
+        "label": "Data Change",
+        "title": "Name or Address Change Filing",
+        "description": "Correct trademark owner details officially with complete documentation.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "FileEdit",
+        "features": [
+          "Prepare supporting documents",
+          "Submit the change request",
+          "Report official results"
+        ],
+        "benefits": [
+          "Accurate and complete",
+          "Minimal revisions required"
+        ],
+        "prices": [
+          {
+            "id": "chg",
+            "name": "Data Change",
+            "price": 3500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+need+to+update+my+trademark+details."
+      },
+      {
+        "id": "pengalihan",
+        "label": "Assignment",
+        "title": "Trademark Assignment",
+        "description": "Transfer trademark ownership safely with expert guidance.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "ArrowLeftRight",
+        "features": [
+          "Review the assignment agreement",
+          "Submit the official recordal",
+          "Provide complete documentation"
+        ],
+        "benefits": [
+          "Legal certainty",
+          "Orderly and clear process"
+        ],
+        "prices": [
+          {
+            "id": "assign",
+            "name": "Assignment",
+            "price": 6000000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+need+help+with+a+trademark+assignment."
+      },
+      {
+        "id": "usulTolak",
+        "label": "Office Action",
+        "title": "Substantive Office Action Response",
+        "description": "Analyse the refusal grounds then prepare arguments and evidence to keep your application moving.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "FileWarning",
+        "features": [
+          "Analyse similarity and relevant provisions",
+          "Develop legal arguments",
+          "Submit the official response"
+        ],
+        "benefits": [
+          "Strategy to avoid refusal",
+          "Led by certified IP specialists"
+        ],
+        "prices": [
+          {
+            "id": "resp",
+            "name": "Substantive Response",
+            "price": 2500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+need+help+with+an+office+action+response."
+      },
+      {
+        "id": "keberatan",
+        "label": "Opposition",
+        "title": "Opposition or Objection Letter",
+        "description": "Stop imitator marks during publication with a research backed opposition letter.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "Gavel",
+        "features": [
+          "Research comparables and evidence",
+          "Draft the legal letter",
+          "Submit officially"
+        ],
+        "benefits": [
+          "Protect your brand space",
+          "Fast and structured delivery"
+        ],
+        "prices": [
+          {
+            "id": "opp",
+            "name": "Opposition or Objection",
+            "price": 2500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+would+like+to+file+an+opposition."
+      },
+      {
+        "id": "lisensi",
+        "label": "Licence",
+        "title": "Trademark Licence Agreement",
+        "description": "Design a clear and profitable licence agreement for commercial collaborations.",
+        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "icon": "Handshake",
+        "features": [
+          "Comprehensive agreement draft",
+          "Adjust business clauses",
+          "Assess risk and compliance"
+        ],
+        "benefits": [
+          "Protect intellectual property and revenue",
+          "Ready to sign documents"
+        ],
+        "prices": [
+          {
+            "id": "lic",
+            "name": "Licence Drafting",
+            "price": 3500000
+          }
+        ],
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+need+a+trademark+licence+agreement."
+      }
+    ]
+  },
+  "finalCta": {
+    "eyebrow": "UrusMerek.id",
+    "heading": "Protect your trademark today",
+    "subheading": "Do not wait until someone else uses your name.",
+    "body": "We manage trademark filing and renewal at DJKI, from clearance and submission through to certificate issuance. We also cover opposition letters, office action responses, data changes, assignments, licences, and certificate printing.",
+    "note": "Official DJKI partner. Transparent flat pricing. Regular progress updates.",
+    "primaryCta": "Start a Consultation",
+    "secondaryCta": "See Packages and Pricing",
+    "imageAlt": "UrusMerek.id dashboard for managing trademark filing and renewal.",
+    "imageSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+  },
+  "footer": {
+    "trustBadges": [
+      {
+        "icon": "HelpCircle",
+        "text": "Always on support"
+      },
+      {
+        "icon": "CalendarDays",
+        "text": "Registered with DJKI"
+      },
+      {
+        "icon": "ShieldCheck",
+        "text": "Secure and reliable"
+      },
+      {
+        "icon": "Zap",
+        "text": "Fast processing"
+      }
+    ],
+    "brand": {
+      "description": "Your trusted partner for trademark filing, renewal, and protection in Indonesia.",
+      "logoAlt": "UrusMerek.id"
+    },
+    "licenses": {
+      "title": "Licences and References",
+      "items": [
+        {
+          "name": "Ministry of Law and Human Rights (DJKI)",
+          "href": "https://www.dgip.go.id/",
+          "imgSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+        },
+        {
+          "name": "Directorate General of Intellectual Property",
+          "href": "https://www.dgip.go.id/",
+          "imgSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+        },
+        {
+          "name": "Nice Classification (Trademark Classes Reference)",
+          "href": "https://www.wipo.int/classifications/nice/",
+          "imgSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+        }
+      ],
+      "disclaimer": "Government logos are shown as references to the official trademark authority. UrusMerek.id operates as an independent consultant."
+    },
+    "columns": {
+      "servicesTitle": "Services",
+      "learnTitle": "Learn",
+      "connectTitle": "Connect",
+      "services": [
+        {
+          "name": "Trademark Filing",
+          "href": "/layanan/pendaftaran-merek"
+        },
+        {
+          "name": "Trademark Renewal",
+          "href": "/layanan/perpanjangan-merek"
+        },
+        {
+          "name": "Name or Address Change",
+          "href": "/layanan/perubahan-data"
+        },
+        {
+          "name": "Ownership Transfer",
+          "href": "/layanan/pengalihan-hak"
+        },
+        {
+          "name": "Certificate Printing",
+          "href": "/layanan/cetak-sertifikat"
+        },
+        {
+          "name": "Opposition or Objection",
+          "href": "/layanan/keberatan-oposisi"
+        },
+        {
+          "name": "Office Action Response",
+          "href": "/layanan/tanggapan-penolakan"
+        },
+        {
+          "name": "Licence Agreement",
+          "href": "/layanan/lisensi-merek"
+        }
+      ],
+      "learn": [
+        {
+          "name": "Blog",
+          "href": "/blog"
+        },
+        {
+          "name": "SME Hub",
+          "href": "/pusat/umkm"
+        },
+        {
+          "name": "Agency Hub",
+          "href": "/pusat/agensi"
+        }
+      ],
+      "social": [
+        {
+          "name": "WhatsApp",
+          "href": "https://api.whatsapp.com/send/?phone=6282267890152",
+          "icon": "MessageCircle"
+        },
+        {
+          "name": "LinkedIn",
+          "href": "https://www.linkedin.com/",
+          "icon": "Linkedin"
+        },
+        {
+          "name": "Facebook",
+          "href": "https://www.facebook.com/",
+          "icon": "Facebook"
+        },
+        {
+          "name": "Instagram",
+          "href": "https://www.instagram.com/",
+          "icon": "Instagram"
+        }
+      ]
+    },
+    "bottom": {
+      "security": "Security",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    }
+  },
+  "aiFeatures": {
+    "eyebrow": "UrusMerek AI",
+    "title": "Smart tools to manage your trademark faster",
+    "description": "Check name availability, prepare documents, and monitor filings with dedicated consultants.",
+    "items": [
+      {
+        "id": "similarityCheck",
+        "badge": "Quick preliminary analysis",
+        "title": "AI checks trademark availability and similarity",
+        "body": "Receive instant search results complete with similarity insights. A concise report guides conversations with our consultants so every filing decision feels secure.",
+        "image": {
+          "src": "/images/ai-similarity-check.png",
+          "alt": "AI interface for trademark similarity review"
+        },
+        "buttons": [
+          {
+            "variant": "primary",
+            "label": "Try for free",
+            "href": "/konsultasi"
+          },
+          {
+            "variant": "secondary",
+            "label": "Explore the service",
+            "href": "/layanan/pendaftaran-merek"
+          }
+        ]
+      },
+      {
+        "id": "documentAutomation",
+        "badge": "Documents ready in no time",
+        "title": "Automated paperwork and intelligent search",
+        "body": "Structure every filing document with guided templates, avoid input mistakes, and locate supporting data intelligently. Our consultants finalize each dossier and submit it formally.",
+        "image": {
+          "src": "/images/ai-doc-automation.png",
+          "alt": "Automated document preparation"
+        },
+        "buttons": [
+          {
+            "variant": "primary",
+            "label": "Talk to us now",
+            "href": "/konsultasi"
+          },
+          {
+            "variant": "secondary",
+            "label": "View all services",
+            "href": "/layanan"
+          }
+        ]
+      },
+      {
+        "id": "oneDayService",
+        "badge": "Full support",
+        "title": "Next day service and extended protection",
+        "body": "Once documents are ready your application moves forward on the next business day. Ongoing support covers ten year renewals, refusal responses, ownership transfers, and licensing agreements tailored to your needs.",
+        "image": {
+          "src": "/images/ai-one-day-service.png",
+          "alt": "Fast track trademark assistance"
+        },
+        "buttons": [
+          {
+            "variant": "primary",
+            "label": "Renew your mark",
+            "href": "/layanan/perpanjangan-merek"
+          },
+          {
+            "variant": "secondary",
+            "label": "Draft an objection",
+            "href": "/layanan/surat-keberatan"
+          }
+        ]
+      }
+    ],
+    "cta": {
+      "title": "Do not wait until someone else claims your brand",
+      "description": "Protect your identity with the support of UrusMerek.id consultants.",
+      "button": {
+        "label": "Book a consultation",
+        "href": "/konsultasi"
+      }
+    }
+  },
+  "problemSolution": {
+    "problem": {
+      "title": "Trademark filing feels complicated",
+      "description": "Too many tools, confusing forms, and legal jargon slow everything down. Time is wasted and mistakes become more likely.",
+      "video": {
+        "src": "https://videos.ctfassets.net/w8fc6tgspyjz/3Y7YYziaKZhhmQPuSppcXr/3ab81599ecbb75e685729d55489da272/CHAT_IS_BROKEN_V02-ezgif.com-gif-to-mp4-converter.mp4",
+        "poster": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      }
+    },
+    "solution": {
+      "title": "We make it simple",
+      "description": "UrusMerek.id unifies search, filing, status tracking, renewals, and objection letters in one organised workflow.",
+      "video": {
+        "src": "https://videos.ctfassets.net/w8fc6tgspyjz/6vm22aRpEdepqdDHlhP1rQ/a0b6722cb15efcdfcb028ff92a4fd153/CONVERGENCE_08_GIF_DARKMODE_1mbps_V01.mp4",
+        "poster": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      }
+    },
+    "cta": {
+      "label": "Start a consultation",
+      "href": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2CSaya+ingin+konsultasi+pendaftaran+merek.&type=phone_number&app_absent=0",
+      "aria": "Start a consultation via WhatsApp"
+    },
+    "converge": [
+      "Every trademark tool",
+      "inside one platform"
+    ]
+  },
+  "flexibility": {
+    "heading": "Everything your team needs",
+    "description": "Our flexible platform adapts to every trademark scenario and keeps evolving to deliver better service.",
+    "cards": [
+      {
+        "id": "serviceTypes",
+        "title": "Multiple service views",
+        "description": "Switch between list, board, timeline, and more to manage every engagement with ease.",
+        "image": {
+          "src": "https://clickup.com/assets/home-test/view-work-your-way-v4.png",
+          "alt": "Visual display of different service views"
+        }
+      },
+      {
+        "id": "customPackages",
+        "title": "Packages you can tailor",
+        "description": "Toggle the services your client needs and launch the right assistance instantly.",
+        "toggles": [
+          "search",
+          "filing",
+          "management"
+        ]
+      }
+    ],
+    "toggles": [
+      {
+        "id": "search",
+        "label": "Comprehensive search"
+      },
+      {
+        "id": "filing",
+        "label": "Filing assistance"
+      },
+      {
+        "id": "management",
+        "label": "Portfolio management"
+      }
+    ]
+  },
+  "pricingSelector": {
+    "eyebrow": "Plans and pricing",
+    "title": "Choose the service you need",
+    "description": "Select any option below to reveal the service details, benefits, and fees.",
+    "selector": {
+      "title": "Choose a service",
+      "description": "Tap an option to show the highlights.",
+      "button": {
+        "label": "Chat with us",
+        "href": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+memesan+layanan+UrusMerek.",
+        "aria": "Chat with our consultants on WhatsApp"
+      }
+    },
+    "panel": {
+      "selectedLabel": "Selected service",
+      "optionLabel": "Pick an option to see the price",
+      "priceLabel": "Price",
+      "note": "Fees already include our handling service. Some items may require official government charges."
+    },
+    "services": [
+      {
+        "id": "pendaftaran",
+        "name": "Trademark filing",
+        "icon": "badgeCheck",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Trademark filing assistance"
+        },
+        "blurb": "From preliminary analysis to official DJKI submission, including proof of filing and support until the certificate is issued.",
+        "benefits": [
+          "Name availability analysis",
+          "Submission completed the next business day",
+          "Support until the certificate is issued"
+        ],
+        "variants": [
+          {
+            "id": "std",
+            "name": "Full package",
+            "price": 4500000
+          }
+        ],
+        "badge": "Popular"
+      },
+      {
+        "id": "perpanjangan",
+        "name": "Trademark renewal",
+        "icon": "refreshCw",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Trademark renewal"
+        },
+        "blurb": "Extend protection for another decade with deadline monitoring and formal submission.",
+        "benefits": [
+          "Validity review and document check",
+          "Online submission handled by consultants"
+        ],
+        "variants": [
+          {
+            "id": "early",
+            "name": "Less than six months before expiry",
+            "price": 3500000
+          },
+          {
+            "id": "late",
+            "name": "More than six months or grace period",
+            "price": 6000000
+          }
+        ]
+      },
+      {
+        "id": "cetakSertifikat",
+        "name": "Certificate printing",
+        "icon": "fileText",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Trademark certificate printing"
+        },
+        "blurb": "Print the registered certificate and send it straight to your address.",
+        "benefits": [
+          "Certificate number validation",
+          "Printing and delivery"
+        ],
+        "variants": [
+          {
+            "id": "print",
+            "name": "Certificate printing",
+            "price": 1000000
+          }
+        ]
+      },
+      {
+        "id": "perubahanData",
+        "name": "Owner or address update",
+        "icon": "fileSignature",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Trademark ownership update"
+        },
+        "blurb": "Update ownership or address information with official records at DJKI.",
+        "benefits": [
+          "Preparation of amendment documents",
+          "Official record submission"
+        ],
+        "variants": [
+          {
+            "id": "chg",
+            "name": "Data amendment",
+            "price": 3500000
+          }
+        ]
+      },
+      {
+        "id": "pengalihanHak",
+        "name": "Ownership transfer",
+        "icon": "arrowLeftRight",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Trademark transfer process"
+        },
+        "blurb": "Transfer ownership with secure documentation and guided execution.",
+        "benefits": [
+          "Review of transfer documents",
+          "Submission to DJKI"
+        ],
+        "variants": [
+          {
+            "id": "assign",
+            "name": "Ownership transfer",
+            "price": 6000000
+          }
+        ]
+      },
+      {
+        "id": "tanggapanPenolakan",
+        "name": "Refusal response",
+        "icon": "shieldAlert",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Trademark refusal response"
+        },
+        "blurb": "Craft persuasive arguments to keep your mark eligible for protection.",
+        "benefits": [
+          "Analysis of refusal grounds",
+          "Argument and evidence preparation"
+        ],
+        "variants": [
+          {
+            "id": "resp",
+            "name": "Substantive response",
+            "price": 2500000
+          }
+        ]
+      },
+      {
+        "id": "suratKeberatan",
+        "name": "Opposition letter",
+        "icon": "calendarClock",
+        "image": {
+          "src": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+          "alt": "Trademark opposition letter"
+        },
+        "blurb": "File an objection when a similar mark is published.",
+        "benefits": [
+          "Comparative research",
+          "Objection document drafting"
+        ],
+        "variants": [
+          {
+            "id": "opp",
+            "name": "Opposition letter",
+            "price": 2500000
+          }
+        ]
+      }
+    ]
+  }
+}

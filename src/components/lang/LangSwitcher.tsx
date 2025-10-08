@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { useLocale, useTranslations } from "@/lib/i18n/context";
 
 type Locale = "id" | "en";
 
@@ -12,23 +13,19 @@ export function LangSwitcher({
 }: {
   initialLocale?: Locale;
   className?: string;
-  onChange?: (locale: Locale) => void; // pasang ke router/i18n-mu kalau perlu
+  onChange?: (locale: Locale) => void;
 }) {
-  const [locale, setLocale] = React.useState<Locale>(initialLocale);
+  const { locale: contextLocale, setLocale } = useLocale();
+  const label = useTranslations("navigation")<string>("langSwitcherLabel");
+  const [locale, setInternalLocale] = React.useState<Locale>(contextLocale ?? initialLocale);
 
   React.useEffect(() => {
-    // sinkron dari cookie/localStorage bila ada
-    const saved = (typeof window !== "undefined" && (localStorage.getItem("lang") || getCookie("lang"))) as Locale | null;
-    if (saved && (saved === "id" || saved === "en")) setLocale(saved);
-  }, []);
+    setInternalLocale(contextLocale ?? initialLocale);
+  }, [contextLocale, initialLocale]);
 
   function select(next: Locale) {
+    setInternalLocale(next);
     setLocale(next);
-    // persist
-    try {
-      document.cookie = `lang=${next}; path=/; max-age=31536000; samesite=lax`;
-      localStorage.setItem("lang", next);
-    } catch {}
     onChange?.(next);
   }
 
@@ -49,7 +46,7 @@ export function LangSwitcher({
         className
       )}
       role="group"
-      aria-label="Pilih bahasa"
+      aria-label={label}
     >
       <button
         type="button"
@@ -71,13 +68,6 @@ export function LangSwitcher({
       </button>
     </div>
   );
-}
-
-/* === Helper cookie === */
-function getCookie(name: string) {
-  if (typeof document === "undefined") return null;
-  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
-  return match ? decodeURIComponent(match[2]) : null;
 }
 
 /* === Simple SVG Flags (clean) === */

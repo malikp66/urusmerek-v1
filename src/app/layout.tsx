@@ -6,6 +6,7 @@ import Script from "next/script";
 import MaintenanceGate from "@/components/maintenance/maintenance-gate";
 import Footer from "@/components/sections/footer";
 import NavigationHeader from "@/components/sections/navigation-header";
+import Providers from "@/components/Providers";
 
 const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 
@@ -34,25 +35,27 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang="id">
       <body className="antialiased">
-        <ErrorReporter />
-        <Script
-          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
-          strategy="afterInteractive"
-          data-target-origin="*"
-          data-message-type="ROUTE_CHANGE"
-          data-include-search-params="true"
-          data-only-in-iframe="true"
-          data-debug="true"
-          data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
-        />
-        <NavigationHeader />
-        <main className="relative mt-20">
-          {children}
-        </main>
-        <Footer />
-        <VisualEditsMessenger />
+        <Providers>
+          <ErrorReporter />
+          <Script
+            src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
+            strategy="afterInteractive"
+            data-target-origin="*"
+            data-message-type="ROUTE_CHANGE"
+            data-include-search-params="true"
+            data-only-in-iframe="true"
+            data-debug="true"
+            data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
+          />
+          <NavigationHeader />
+          <main className="relative mt-20">
+            {children}
+          </main>
+          <Footer />
+          <VisualEditsMessenger />
+        </Providers>
       </body>
     </html>
   );
