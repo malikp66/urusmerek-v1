@@ -22,13 +22,23 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Environment Variables
 
-Create a `.env.local` file in the project root if it does not exist and define:
+Create a `.env.local` file in the project root if it does not exist and define the required variables:
 
 ```bash
+NODE_ENV=development # development | test | production
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DB
+REDIS_URL=redis://USER:PASSWORD@HOST:PORT
+JWT_SECRET=super-long-secret-string-at-least-32-chars
+APP_URL=http://localhost:3000
+LOG_LEVEL=info # debug | info | warn | error (defaults to info if omitted)
+IP_HASH_SALT=long-random-string-min-16-chars
 NEXT_PUBLIC_MAINTENANCE_MODE=false
 ```
 
-Switch the value to `true` whenever the site needs to enter maintenance mode. When active, the public `banner.png` (desktop) and `banner-mobile.png` (mobile) assets are served as the only response.
+- `LOG_LEVEL` controls the verbosity of the shared logger and is optional—if you leave it empty it falls back to `info`.
+- `IP_HASH_SALT` is used to hash visitor IP addresses for click tracking privacy. Supply a unique random string (at least 16 characters). When unset it reuses `JWT_SECRET`, but a dedicated salt is recommended.
+
+Switch the `NEXT_PUBLIC_MAINTENANCE_MODE` value to `true` whenever the site needs to enter maintenance mode. When active, the public `banner.png` (desktop) and `banner-mobile.png` (mobile) assets are served as the only response.
 
 ## Learn More
 
