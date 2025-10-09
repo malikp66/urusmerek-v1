@@ -35,15 +35,39 @@ redis.on('connect', () => {
 export const AFFILIATE_CODE_CACHE_KEY = 'affiliate:code';
 export const AFFILIATE_CODE_CACHE_TTL_SECONDS = 60 * 60 * 24; // 1 day
 
-export async function cacheAffiliateCode(code: string, mitraId: number): Promise<void> {
-  const key = `${AFFILIATE_CODE_CACHE_KEY}:${code.toLowerCase()}`;
-  await redis.set(key, String(mitraId), 'EX', AFFILIATE_CODE_CACHE_TTL_SECONDS);
+export interface CachedAffiliateLink {
+  linkId: number;
+  userId: number;
 }
 
-export async function getAffiliateCodeMitraId(code: string): Promise<number | null> {
+export async function cacheAffiliateCode(
+  code: string,
+  linkId: number,
+  userId: number,
+): Promise<void> {
+  const key = `${AFFILIATE_CODE_CACHE_KEY}:${code.toLowerCase()}`;
+  const value = `${linkId}|${userId}`;
+  await redis.set(key, value, 'EX', AFFILIATE_CODE_CACHE_TTL_SECONDS);
+}
+
+export async function getCachedAffiliateCode(code: string): Promise<CachedAffiliateLink | null> {
   const key = `${AFFILIATE_CODE_CACHE_KEY}:${code.toLowerCase()}`;
   const value = await redis.get(key);
-  return value ? Number.parseInt(value, 10) : null;
+
+  if (!value) {
+    return null;
+  }
+
+  const [linkIdRaw, userIdRaw] = value.split('|', 2);
+  const linkId = Number.parseInt(linkIdRaw ?? '', 10);
+  const userId = Number.parseInt(userIdRaw ?? '', 10);
+
+  if (!Number.isFinite(linkId) || !Number.isFinite(userId)) {
+    await redis.del(key);
+    return null;
+  }
+
+  return { linkId, userId };
 }
 
 export async function invalidateAffiliateCode(code: string): Promise<void> {
