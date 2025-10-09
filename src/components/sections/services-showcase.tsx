@@ -5,27 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const TABS_DATA = [
-  {
-    title: "Pendaftaran Merek",
-    description:
-      "Pendampingan end-to-end: penelusuran awal, pemilihan kelas (Nice Classification), penyiapan dokumen, pengajuan resmi ke DJKI, hingga pemantauan status.",
-    image: "/service-1.png",
-  },
-  {
-    title: "Perpanjangan Merek",
-    description:
-      "Perpanjangan tepat waktu dengan validasi data & dokumen, pengajuan formal, serta notifikasi tenggat untuk memastikan perlindungan berkelanjutan 10 tahun ke depan.",
-    image: "/service-2.png",
-  },
-  {
-    title: "Surat Keberatan",
-    description:
-      "Susun keberatan dengan argumen hukum yang kuat untuk menghadang merek tiruan lolos pemeriksaan. Struktur surat sistematis, cepat, dan tepat sasaran.",
-    image: "/service-3.png",
-  },
-];
+import { useTranslations } from "@/lib/i18n/context";
 
 type TabProps = {
   title: string;
@@ -60,14 +40,20 @@ const ServiceTab = ({ title, description, isActive, onClick }: TabProps) => (
 const AUTO_MS = 3000;
 
 const ServicesShowcase = () => {
+  const t = useTranslations("servicesShowcase");
+  const heading = t<string>("heading");
+  const description = t<string>("description");
+  const cta = t<string>("cta");
+  const tabs = t<{ title: string; description: string; image: string }[]>("tabs");
+  const tabItems = tabs ?? [];
   const [activeTab, setActiveTab] = useState(0);
   const [paused, setPaused] = useState(false);
-  const total = TABS_DATA.length;
+  const total = tabItems.length;
   const hoverAreaRef = useRef<HTMLDivElement | null>(null);
 
   // Auto-rotate logic (pause-aware)
   useEffect(() => {
-    if (paused) return;
+    if (paused || total === 0) return;
     const id = setInterval(() => {
       setActiveTab((prev) => (prev + 1) % total);
     }, AUTO_MS);
@@ -83,17 +69,13 @@ const ServicesShowcase = () => {
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-          <h2 className="font-bold text-4xl md:text-5xl leading-tight text-foreground tracking-tight">
-            Urus kebutuhan merek Anda, lebih cepat
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Dari pendaftaran, perpanjangan, hingga surat keberatan—semua layanan disiapkan agar proses lebih ringkas dan aman.
-          </p>
+          <h2 className="font-bold text-4xl md:text-5xl leading-tight text-foreground tracking-tight">{heading}</h2>
+          <p className="mt-4 text-lg text-muted-foreground">{description}</p>
           <Link
             href="/layanan"
-            className="mt-6 inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            className="mt-6 btn-secondary"
           >
-            <span>Lihat semua layanan</span>
+            <span>{cta}</span>
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </div>
@@ -106,7 +88,7 @@ const ServicesShowcase = () => {
           onMouseLeave={() => setPaused(false)}
         >
           <div className="flex flex-col mb-12 lg:mb-0">
-            {TABS_DATA.map((tab, index) => (
+            {tabItems.map((tab, index) => (
               <ServiceTab
                 key={index}
                 title={tab.title}
@@ -123,7 +105,7 @@ const ServicesShowcase = () => {
           </div>
 
           <div className="relative w-full aspect-[640/423] overflow-hidden">
-            {TABS_DATA.map((tab, index) => (
+            {tabItems.map((tab, index) => (
               <Image
                 key={index}
                 src={tab.image}

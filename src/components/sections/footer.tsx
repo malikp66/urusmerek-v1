@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,47 +13,18 @@ import {
   Instagram,
   MessageCircle,
 } from "lucide-react";
+import { useTranslations } from "@/lib/i18n/context";
 
-/* ====== Links (selaras layanan UrusMerek) ====== */
-const servicesLinks = [
-  { name: "Pendaftaran Merek", href: "/layanan/pendaftaran-merek" },
-  { name: "Perpanjangan Merek", href: "/layanan/perpanjangan-merek" },
-  { name: "Perubahan Nama/Alamat", href: "/layanan/perubahan-data" },
-  { name: "Pengalihan Hak", href: "/layanan/pengalihan-hak" },
-  { name: "Cetak Sertifikat", href: "/layanan/cetak-sertifikat" },
-  { name: "Keberatan (Oposisi)", href: "/layanan/keberatan-oposisi" },
-  { name: "Tanggapan Usul/Tolak", href: "/layanan/tanggapan-penolakan" },
-  { name: "Perjanjian Lisensi", href: "/layanan/lisensi-merek" },
-];
-
-const learnLinks = [
-  { name: "Blog", href: "/blog" },
-  { name: "Pusat UMKM", href: "/pusat/umkm" },
-  { name: "Pusat Agensi", href: "/pusat/agensi" },
-];
-
-/* ====== Sosial & kontak ====== */
-const socialLinks = [
-  { name: "WhatsApp", icon: MessageCircle, href: "https://api.whatsapp.com/send/?phone=6282267890152" },
-  { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/" },
-  { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/" },
-  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/" },
-];
-
-/* ====== Lisensi & Referensi (logo lokal / public/logo.png) ======
-   Ganti imgSrc ke PNG resmi tiap instansi bila sudah ada URL-nya. */
-const licenses = [
-  { name: "Kementerian Hukum & HAM (DJKI)", href: "https://www.dgip.go.id/", imgSrc: "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA" },
-  { name: "Direktorat Jenderal Kekayaan Intelektual", href: "https://www.dgip.go.id/", imgSrc: "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA" },
-  { name: "Klasifikasi Nice (Referensi Kelas Merek)", href: "https://www.wipo.int/classifications/nice/", imgSrc: "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA" },
-];
-
-const trustBadges = [
-  { icon: HelpCircle, text: "Dukungan 24/7" },
-  { icon: CalendarDays, text: "Terdaftar di DJKI" },
-  { icon: ShieldCheck, text: "Aman & Terpercaya" },
-  { icon: Zap, text: "Proses Cepat" },
-];
+const iconMap = {
+  HelpCircle,
+  CalendarDays,
+  ShieldCheck,
+  Zap,
+  MessageCircle,
+  Linkedin,
+  Facebook,
+  Instagram,
+};
 
 const FooterLinkColumn = ({
   title,
@@ -80,14 +53,40 @@ const FooterLinkColumn = ({
 );
 
 const Footer = () => {
+  const t = useTranslations("footer");
+  const trustBadges = t<{ icon: string; text: string }[]>("trustBadges") ?? [];
+  const trustItems = trustBadges.map((badge) => ({
+    text: badge.text,
+    Icon: iconMap[badge.icon as keyof typeof iconMap] ?? HelpCircle,
+  }));
+  const brand = t<{ description: string; logoAlt: string }>("brand");
+  const licenses = t<{
+    title: string;
+    items: { name: string; href: string; imgSrc: string }[];
+    disclaimer: string;
+  }>("licenses");
+  const columns = t<{
+    servicesTitle: string;
+    learnTitle: string;
+    connectTitle: string;
+    services: { name: string; href: string }[];
+    learn: { name: string; href: string }[];
+    social: { name: string; href: string; icon: string }[];
+  }>("columns");
+  const socialItems = columns.social.map((item) => ({
+    ...item,
+    Icon: iconMap[item.icon as keyof typeof iconMap] ?? MessageCircle,
+  }));
+  const bottom = t<{ security: string; privacy: string; terms: string }>("bottom");
+
   return (
     <footer className="bg-background">
       {/* Stripe kepercayaan */}
       <div className="border-y border-border">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
-          {trustBadges.map((badge) => (
+          {trustItems.map((badge) => (
             <div key={badge.text} className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <badge.icon className="w-5 h-5 text-current" />
+              <badge.Icon className="w-5 h-5 text-current" />
               <span>{badge.text}</span>
             </div>
           ))}
@@ -101,12 +100,10 @@ const Footer = () => {
             {/* Brand */}
             <div className="col-span-2">
               <Link href="/" className="flex items-center gap-2 mb-3">
-                <Image src="/logo.png" alt="UrusMerek.id" width={62} height={62} />
+                <Image src="/logo.png" alt={brand.logoAlt} width={62} height={62} />
                 <span className="font-semibold text-lg">UrusMerek.id</span>
               </Link>
-              <p className="text-sm text-muted-foreground">
-                Mitra tepercaya untuk pendaftaran, perpanjangan, dan perlindungan merek di Indonesia.
-              </p>
+              <p className="text-sm text-muted-foreground">{brand.description}</p>
             </div>
 
             <div className="">
@@ -115,10 +112,10 @@ const Footer = () => {
             {/* Lisensi & referensi */}
             <div className="col-span-2">
               <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
-                Lisensi & Referensi
+                {licenses.title}
               </h3>
               <div className="flex flex-wrap items-center gap-6">
-                {licenses.map((l) => (
+                {licenses.items.map((l) => (
                   <Link
                     key={l.name}
                     href={l.href}
@@ -141,31 +138,30 @@ const Footer = () => {
                 ))}
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
-                * Logo instansi pemerintah ditampilkan sebagai referensi otoritas pendaftaran merek.
-                UrusMerek.id adalah konsultan independen.
+                {licenses.disclaimer}
               </p>
             </div>
 
             {/* Menu */}
-            <FooterLinkColumn title="Layanan" links={servicesLinks} />
+            <FooterLinkColumn title={columns.servicesTitle} links={columns.services} />
 
             {/* Pelajari + Sosial */}
             <div>
-              <FooterLinkColumn title="Pelajari" links={learnLinks} />
+              <FooterLinkColumn title={columns.learnTitle} links={columns.learn} />
 
               <div className="mt-6">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
-                  Connect
+                  {columns.connectTitle}
                 </h3>
                 <div className="flex flex-wrap gap-3">
-                  {socialLinks.map((s) => (
+                  {socialItems.map((s) => (
                     <Link
                       key={s.name}
                       href={s.href}
                       aria-label={s.name}
                       className="bg-gray-200 p-2 rounded-md text-foreground hover:bg-gray-300 transition-colors"
                     >
-                      <s.icon className="w-5 h-5" />
+                      <s.Icon className="w-5 h-5" />
                     </Link>
                   ))}
                 </div>
@@ -179,9 +175,9 @@ const Footer = () => {
               &copy; {new Date().getFullYear()} UrusMerek.id
             </div>
             <div className="flex gap-x-4 text-sm">
-              <Link href="/legal/keamanan" className="hover:text-primary transition-colors">Keamanan</Link>
-              <Link href="/legal/privasi" className="hover:text-primary transition-colors">Privasi</Link>
-              <Link href="/legal/ketentuan" className="hover:text-primary transition-colors">Ketentuan</Link>
+              <Link href="/legal/keamanan" className="hover:text-primary transition-colors">{bottom.security}</Link>
+              <Link href="/legal/privasi" className="hover:text-primary transition-colors">{bottom.privacy}</Link>
+              <Link href="/legal/ketentuan" className="hover:text-primary transition-colors">{bottom.terms}</Link>
             </div>
           </div>
         </div>

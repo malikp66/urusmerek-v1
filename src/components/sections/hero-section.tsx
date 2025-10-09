@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import {
   ArrowRight,
@@ -14,94 +14,30 @@ import {
   FileSignature     // Perjanjian Lisensi
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "@/lib/i18n/context";
 
 const VIDEO_SRC = "/gone-banner.mp4";
 
-type Service = {
+type ServiceCopy = {
   id: string;
   name: string;
   description: string;
+};
+
+type ServiceWithIcon = ServiceCopy & {
   Icon: React.ElementType;
 };
 
-
-// Badge kecil di atas judul
-const BADGE_TEXT = "Layanan Konsultasi & Pengurusan Merek";
-
-// Kata dinamis (typewriter)
-const typeWords = [
-  "lebih cepat",
-  "lebih aman",
-  "lebih transparan",
-  "lebih efisien",
-];
-
-// Statistik singkat
-const heroStats = [
-  { label: "Pelaku usaha terbantu", value: "850+", icon: "" },
-  { label: "Konsultan HKI bersertifikat", value: "30", icon: "" },
-  { label: "Rata-rata inisiasi", value: "24 jam", icon: "" },
-];
-
-// Daftar layanan
-const services: Service[] = [
-  {
-    id: "pendaftaran",
-    name: "Pendaftaran Merek",
-    description:
-      "Validasi kelas & dokumen, pengajuan resmi, hingga terbit bukti permohonan.",
-    Icon: ClipboardCheck,
-  },
-  {
-    id: "perpanjangan",
-    name: "Perpanjangan Merek",
-    description:
-      "Perpanjang perlindungan secara tepat waktu untuk keberlanjutan 10 tahun berikutnya.",
-    Icon: CalendarClock,
-  },
-  {
-    id: "sertifikat",
-    name: "Cetak Sertifikat",
-    description:
-      "Pengajuan cetak fisik sertifikat merek terdaftar dan pengiriman ke alamat Anda.",
-    Icon: Award,
-  },
-  {
-    id: "perubahan-nama",
-    name: "Perubahan Nama/Alamat",
-    description:
-      "Pencatatan perubahan data pemilik/pengguna merek sesuai ketentuan yang berlaku.",
-    Icon: UserCog,
-  },
-  {
-    id: "pengalihan-hak",
-    name: "Pengalihan Hak Merek",
-    description:
-      "Alih hak kepemilikan yang aman dan terdokumentasi lengkap oleh tim berpengalaman.",
-    Icon: Shuffle,
-  },
-  {
-    id: "usul-tolak",
-    name: "Tanggapan Usul/Tolak",
-    description:
-      "Penyusunan argumentasi substantif agar merek tetap berpeluang memperoleh perlindungan.",
-    Icon: FileWarning,
-  },
-  {
-    id: "surat-keberatan",
-    name: "Surat Keberatan",
-    description:
-      "Penyampaian keberatan terhadap merek yang berpotensi meniru atau membingungkan pasar.",
-    Icon: ShieldCheck,
-  },
-  {
-    id: "lisensi",
-    name: "Perjanjian Lisensi",
-    description:
-      "Perjanjian lisensi yang sah untuk kemitraan komersial yang aman dan saling menguntungkan.",
-    Icon: FileSignature,
-  },
-];
+const serviceIcons: Record<string, React.ElementType> = {
+  pendaftaran: ClipboardCheck,
+  perpanjangan: CalendarClock,
+  sertifikat: Award,
+  perubahan: UserCog,
+  pengalihan: Shuffle,
+  usulTolak: FileWarning,
+  keberatan: ShieldCheck,
+  lisensi: FileSignature,
+};
 
 const TYPE_SPEED = 70;
 const PAUSE_AFTER = 1400;
@@ -118,6 +54,23 @@ export default function HeroSection() {
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const [typed, setTyped] = useState("");
   const [isHydrated, setIsHydrated] = useState(false);
+  const tHero = useTranslations("hero");
+  const badgeText = tHero<string>("badge");
+  const titleText = tHero<string>("title");
+  const descriptionText = tHero<string>("description");
+  const typeWords = tHero<string[]>("typewriter");
+  const heroStats = tHero<{ label: string; value: string }[]>("stats");
+  const servicesCopy = tHero<ServiceCopy[]>("services");
+  const cta = tHero<{ primary: string; primaryLabel: string; secondary: string }>("cta");
+  const serviceItems = useMemo<ServiceWithIcon[]>(
+    () =>
+      servicesCopy.map((service) => ({
+        ...service,
+        Icon: serviceIcons[service.id] ?? ClipboardCheck,
+      })),
+    [servicesCopy]
+  );
+  const totalServices = serviceItems.length;
 
   useEffect(() => {
     setIsHydrated(true);
@@ -125,17 +78,17 @@ export default function HeroSection() {
 
   // 🌀 Auto carousel (only after hydration)
   useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || totalServices === 0) return;
 
     const interval = window.setInterval(() => {
-      setActiveServiceIndex((prev) => (prev + 1) % services.length);
+      setActiveServiceIndex((prev) => (prev + 1) % totalServices);
     }, 4000);
     return () => window.clearInterval(interval);
-  }, [isHydrated]);
+  }, [isHydrated, totalServices]);
 
   // ⌨️ Typewriter effect (only after hydration)
   useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || typeWords.length === 0) return;
 
     let wordIndex = 0;
     let charIndex = 0;
@@ -165,7 +118,7 @@ export default function HeroSection() {
     return () => {
       if (timer) window.clearTimeout(timer);
     };
-  }, [isHydrated]);
+  }, [isHydrated, typeWords]);
 
   // 🎬 GSAP Animations (entrance + floating)
   useEffect(() => {
@@ -207,8 +160,10 @@ export default function HeroSection() {
   }, [isHydrated]);
 
   // Use this index to render safely both SSR and after hydration
-  const currentServiceIndex = isHydrated ? activeServiceIndex : 0;
-  const activeService = services[currentServiceIndex];
+  const currentServiceIndex = totalServices > 0 ? (isHydrated ? activeServiceIndex % totalServices : 0) : 0;
+  const activeService = serviceItems[currentServiceIndex];
+
+  const ActiveIcon = activeService?.Icon ?? ClipboardCheck;
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden py-10 sm:py-14 lg:py-20">
@@ -225,11 +180,11 @@ export default function HeroSection() {
           <div ref={leftRef} className="max-w-xl space-y-6">
             <div ref={badgeRef} className="inline-flex items-center gap-2.5 rounded-full bg-[#DC2626]/10 px-4 py-2 text-sm font-semibold text-[#DC2626] border border-[#DC2626]/30">
               <span className="h-2.5 w-2.5 rounded-full bg-[#DC2626] animate-pulse" />
-              {BADGE_TEXT}
+              {badgeText}
             </div>
 
             <h1 ref={titleRef} className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
-              Urus merek Anda
+              {titleText}
             </h1>
 
             <div className="relative">
@@ -237,10 +192,7 @@ export default function HeroSection() {
               <span className="ml-1 text-[#DC2626] text-3xl sm:text-4xl lg:text-5xl animate-pulse">▎</span>
             </div>
 
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Mulai dari pengecekan kesesuaian, pemilihan kelas, hingga penerbitan dokumen —
-              semua tertata, terdampingi konsultan, dan mengikuti regulasi DJKI.
-            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">{descriptionText}</p>
 
             {/* CTA buttons */}
             <div className="flex gap-3 pt-2">
@@ -249,9 +201,9 @@ export default function HeroSection() {
                 <a
                   className="group inline-flex items-center gap-2"
                   href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek."
-                  target="_blank" rel="noopener noreferrer" aria-label="Mulai Konsultasi via WhatsApp"
+                  target="_blank" rel="noopener noreferrer" aria-label={cta.primaryLabel}
                 >
-                  Mulai Konsultasi
+                  {cta.primary}
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none" />
                 </a>
               </Button>
@@ -259,7 +211,7 @@ export default function HeroSection() {
               {/* Secondary */}
               <Button asChild size="lg" variant="outline" className="btn-outline-brand hover:-translate-y-px">
                 <a className="group inline-flex items-center gap-2" href="#layanan">
-                  Lihat Layanan
+                  {cta.secondary}
                 </a>
               </Button>
             </div>
@@ -275,17 +227,17 @@ export default function HeroSection() {
               <div className="absolute left-6 bottom-8 bg-white/90 backdrop-blur-md border border-white/20 rounded-xl p-5 shadow-2xl max-w-sm">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-[#DC2626]/10 text-[#DC2626] flex-shrink-0">
-                    <activeService.Icon className="h-5 w-5" />
+                    <ActiveIcon className="h-5 w-5" />
                   </div>
                   <div>
-                    <h5 className="font-bold text-gray-900">{activeService.name}</h5>
-                    <p className="text-sm text-gray-600">{activeService.description}</p>
+                    <h5 className="font-bold text-gray-900">{activeService?.name}</h5>
+                    <p className="text-sm text-gray-600">{activeService?.description}</p>
                   </div>
                 </div>
 
                 {/* Pagination dots tetap */}
                 <div className="flex justify-center gap-2 mt-4">
-                  {services.map((_, i) => (
+                  {serviceItems.map((_, i) => (
                     <span
                       key={i}
                       className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${i === currentServiceIndex ? "bg-[#DC2626]" : "bg-gray-300"}`}
