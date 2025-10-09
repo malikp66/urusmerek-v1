@@ -1,9 +1,7 @@
-import { randomBytes } from 'node:crypto';
-
-import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
+import { generateUniqueAffiliateCode } from '@/lib/affiliate';
 import { db, schema } from '@/lib/db';
 import { logger } from '@/lib/logger';
 import {
@@ -101,7 +99,7 @@ export async function POST(req: Request) {
     const affiliateLink = await createDefaultAffiliateLink(user.id, name);
 
     if (affiliateLink) {
-      await cacheAffiliateCode(affiliateLink.code, user.id);
+      await cacheAffiliateCode(affiliateLink.code, affiliateLink.id, user.id);
     }
 
     const token = await signJwt({
@@ -138,7 +136,7 @@ export async function POST(req: Request) {
 }
 
 async function createDefaultAffiliateLink(userId: number, name: string) {
-  const code = await generateUniqueAffiliateCode(name);
+  const code = await generateUniqueAffiliateCode({ userId, name });
 
   if (!code) {
     return null;
@@ -147,35 +145,12 @@ async function createDefaultAffiliateLink(userId: number, name: string) {
   const [link] = await db
     .insert(schema.affiliateLinks)
     .values({ userId, code })
-    .returning({ id: schema.affiliateLinks.id, code: schema.affiliateLinks.code });
-
-  return link ?? null;
-}
-
-async function generateUniqueAffiliateCode(name: string, maxAttempts = 5): Promise<string | null> {
-  const base = name
-    .normalize('NFKD')
-    .replace(/[^a-zA-Z0-9]/g, '')
-    .slice(0, 6)
-    .toUpperCase();
-
-  const prefix = base.length >= 3 ? base : 'MITRA';
-
-  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
-    const randomPart = randomBytes(3).toString('hex').toUpperCase();
-    const candidate = `${prefix}${randomPart}`.slice(0, 12);
-
-    const existing = await db.query.affiliateLinks.findFirst({
-      where: eq(schema.affiliateLinks.code, candidate),
-      columns: { id: true },
+    .returning({
+      id: schema.affiliateLinks.id,
+      code: schema.affiliateLinks.code,
     });
 
-    if (!existing) {
-      return candidate;
-    }
-  }
-
-  return null;
+  return link ?? null;
 }
 
 function getClientIp(req: Request): string {

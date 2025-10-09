@@ -78,7 +78,7 @@ export async function POST(req: Request) {
       },
       with: {
         affiliateLinks: {
-          columns: { code: true },
+          columns: { id: true, code: true },
           limit: 1,
         },
       },
@@ -102,10 +102,11 @@ export async function POST(req: Request) {
       );
     }
 
-    const affiliateCode = user.affiliateLinks?.[0]?.code ?? null;
+    const affiliateLink = user.affiliateLinks?.[0] ?? null;
+    const affiliateCode = affiliateLink?.code ?? null;
 
-    if (affiliateCode) {
-      await cacheAffiliateCode(affiliateCode, user.id);
+    if (affiliateLink?.id && affiliateCode) {
+      await cacheAffiliateCode(affiliateCode, affiliateLink.id, user.id);
     }
 
     const token = await signJwt({
