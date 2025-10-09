@@ -26,6 +26,14 @@ const eslintConfig = [
       'import/no-cycle': 'error',
       'import/no-useless-path-segments': 'error',
     },
+    settings: {
+      'import/core-modules': ['server-only', 'pg', 'ioredis'],
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        },
+      },
+    },
   },
 ]
  
