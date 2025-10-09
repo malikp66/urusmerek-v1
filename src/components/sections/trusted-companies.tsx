@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { useTranslations } from "@/lib/i18n/context";
+import { MediaSkeleton } from "@/components/ui/media-skeleton";
 
 // Per instruction to adapt for an Indonesian audience, this component uses the provided logos
 // with a translated title. The original site's logos are used as no Indonesian assets were supplied.
@@ -19,6 +20,29 @@ const logos = [
   { name: 'Zillow', src: 'https://images.ctfassets.net/w8fc6tgspyjz/7m4JUxNakVJnixrMbPYipQ/379964530942e63ab0f978e88fa44aec/zillow.svg' },
   { name: 'Datadog', src: 'https://images.ctfassets.net/w8fc6tgspyjz/32hgaZETaNJLoQcjupoE2m/64ae91001c50d2e2b6ef4a99696aeffb/datadog.svg' },
 ];
+
+const LogoItem = ({ logo, priority }: { logo: { name: string; src: string }; priority: boolean }) => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  return (
+    <div className="group relative flex h-8 w-[140px] items-center justify-center">
+      <MediaSkeleton isVisible={!isLoaded} className="rounded-sm" />
+      <Image
+        src={logo.src}
+        alt={`${logo.name} Logo`}
+        width={140}
+        height={32}
+        priority={priority}
+        loading={priority ? undefined : "lazy"}
+        onLoadingComplete={() => setIsLoaded(true)}
+        className={`h-8 w-auto max-w-[140px] object-contain transition-[filter,opacity,transform] duration-200
+          ${isLoaded ? "opacity-70 grayscale" : "opacity-0"}
+          group-hover:opacity-100 group-hover:grayscale-0
+        `}
+      />
+    </div>
+  );
+};
 
 const TrustedCompanies = () => {
   const t = useTranslations("trustedCompanies");
@@ -40,14 +64,7 @@ const TrustedCompanies = () => {
           >
             {extended.map((logo, i) => (
               <div key={`${logo.name}-${i}`} className="flex-shrink-0">
-                <Image
-                  src={logo.src}
-                  alt={`${logo.name} Logo`}
-                  width={140}
-                  height={32}
-                  className="h-8 w-auto max-w-[140px] object-contain opacity-70 grayscale transition-[filter,opacity,transform] duration-200 hover:opacity-100 hover:grayscale-0"
-                  priority={i < 8} // sedikit percepat LCP di awal
-                />
+                <LogoItem logo={logo} priority={i < 8} />
               </div>
             ))}
           </div>

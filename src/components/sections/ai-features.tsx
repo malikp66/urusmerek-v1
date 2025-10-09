@@ -46,7 +46,7 @@ const AiFeatures = () => {
     <section className="bg-background py-20 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16 lg:mb-20">
-          <p className="text-primary font-semibold mb-2">{eyebrow}</p>
+          <p className="text-primary eyebrow font-semibold mb-2">{eyebrow}</p>
           <h2 className="text-4xl md:text-5xl font-semibold text-foreground mb-4">{title}</h2>
           <p className="text-lg text-muted-foreground">{description}</p>
         </div>

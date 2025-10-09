@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "@/lib/i18n/context";
 import { Button } from "../ui/button";
+import { MediaSkeleton } from "@/components/ui/media-skeleton";
 
 type TabProps = {
   title: string;
@@ -49,6 +50,7 @@ const ServicesShowcase = () => {
   const tabItems = tabs ?? [];
   const [activeTab, setActiveTab] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
   const total = tabItems.length;
   const hoverAreaRef = useRef<HTMLDivElement | null>(null);
 
@@ -106,20 +108,36 @@ const ServicesShowcase = () => {
           </div>
 
           <div className="relative w-full aspect-[640/423] overflow-hidden">
-            {tabItems.map((tab, index) => (
-              <Image
-                key={index}
-                src={tab.image}
-                alt={tab.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                className={cn(
-                  "rounded-xl shadow-2xl object-cover absolute inset-0 transition-opacity duration-500 ease-in-out",
-                  activeTab === index ? "opacity-100" : "opacity-0"
-                )}
-                priority={index === 0}
-              />
-            ))}
+            {tabItems.map((tab, index) => {
+              const isLoaded = loadedImages[index];
+              const isActive = activeTab === index;
+
+              return (
+                <div
+                  key={index}
+                  className={cn(
+                    "absolute inset-0 transition-opacity duration-500 ease-in-out",
+                    isActive ? "opacity-100" : "opacity-0 pointer-events-none"
+                  )}
+                >
+                  <MediaSkeleton isVisible={!isLoaded && isActive} className="rounded-xl" />
+                  <Image
+                    src={tab.image}
+                    alt={tab.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                    priority={index === 0}
+                    onLoadingComplete={() =>
+                      setLoadedImages((prev) => (prev[index] ? prev : { ...prev, [index]: true }))
+                    }
+                    className={cn(
+                      "rounded-xl shadow-2xl object-cover absolute inset-0 transition-opacity duration-500 ease-in-out",
+                      isLoaded ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </div>
+              );
+            })}
 
             {/* Soft gradient overlay for smoother fade (opsional, feel free to remove) */}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/0 via-black/0 to-black/0 transition-opacity" />

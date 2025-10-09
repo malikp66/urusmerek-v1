@@ -14,7 +14,9 @@ import {
   FileSignature     // Perjanjian Lisensi
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MediaSkeleton } from "@/components/ui/media-skeleton";
 import { useTranslations } from "@/lib/i18n/context";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const VIDEO_SRC = "/gone-banner.mp4";
@@ -54,6 +56,7 @@ export default function HeroSection() {
 
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const [typed, setTyped] = useState("");
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
   const tHero = useTranslations("hero");
   const badgeText = tHero<string>("badge");
@@ -221,7 +224,22 @@ export default function HeroSection() {
           {/* RIGHT */}
           <div ref={rightRef} className="relative">
             <div ref={cardRef} className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border/70 shadow-xl bg-black/5">
-              <video src={VIDEO_SRC} autoPlay muted loop playsInline className="h-full w-full object-cover" />
+              <MediaSkeleton isVisible={!isVideoLoaded} className="rounded-2xl" />
+              <video
+                src={VIDEO_SRC}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                onLoadedData={() => setIsVideoLoaded(true)}
+                onCanPlay={() => setIsVideoLoaded(true)}
+                onLoadedMetadata={() => setIsVideoLoaded(true)}
+                className={cn(
+                  "h-full w-full object-cover transition-opacity duration-500 ease-out",
+                  isVideoLoaded ? "opacity-100" : "opacity-0"
+                )}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 
               {/* Overlay Info */}

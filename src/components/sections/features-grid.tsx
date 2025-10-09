@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { useTranslations } from "@/lib/i18n/context";
 import { Button } from "@/components/ui/button";
+import { MediaSkeleton } from "@/components/ui/media-skeleton";
+import { cn } from "@/lib/utils";
 
 type PrimaryFeature = {
   id: string;
@@ -84,37 +86,37 @@ const SmallCard = ({ feature }: { feature?: SmallFeature }) => {
   );
 };
 
-const LargeCard = ({ feature }: { feature: PrimaryFeature }) => (
-  <Link
-    href={feature.link}
-    className="group h-full w-full overflow-hidden rounded-xl border border-smooth bg-white
-              shadow-sm shadow-glow-red transition-all duration-300
-              hover:-translate-y-[1px] hover:border-primary-strong hover:shadow-red-strong
-              flex flex-col"
-  >
-    <div className="p-0 flex-1">
-      {/* bg-gradient-to-br from-rose-50 to-white */}
-      <div className="h-full w-full overflow-hidden rounded-lg">
-        <Image
-          src={feature.image}
-          alt={feature.name}
-          width={1000}
-          height={700}
-          className="h-full w-full object-cover"
-          priority
-        />
+const LargeCard = ({ feature }: { feature: PrimaryFeature }) => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  return (
+    <Link
+      href={feature.link}
+      className="group h-full w-full overflow-hidden rounded-xl border border-smooth bg-white
+                shadow-sm shadow-glow-red transition-all duration-300
+                hover:-translate-y-[1px] hover:border-primary-strong hover:shadow-red-strong
+                flex flex-col"
+    >
+      <div className="p-0 flex-1">
+        <div className="relative h-full w-full overflow-hidden rounded-lg">
+          <MediaSkeleton isVisible={!isLoaded} className="rounded-lg" />
+          <Image
+            src={feature.image}
+            alt={feature.name}
+            width={1000}
+            height={700}
+            priority
+            onLoadingComplete={() => setIsLoaded(true)}
+            className={cn(
+              "h-full w-full object-cover transition-opacity duration-500 ease-out",
+              isLoaded ? "opacity-100" : "opacity-0"
+            )}
+          />
+        </div>
       </div>
-    </div>
-    {/* <div className="px-4 pb-4 pt-0">
-      <strong className="text-base text-center font-semibold block text-gray-900 group-hover-text-primary">
-        {feature.name}
-      </strong>
-      {feature.subtitle && (
-        <span className="mt-0.5 block text-xs text-gray-600 leading-snug">{feature.subtitle}</span>
-      )}
-    </div> */}
-  </Link>
-);
+    </Link>
+  );
+};
 
 /* === Grid === */
 export default function FeaturesGrid() {
@@ -148,7 +150,7 @@ export default function FeaturesGrid() {
       <div className="container mx-auto px-5">
         {/* header */}
         <div className="mx-auto max-w-3xl text-center">
-          <span className="text-base font-semibold text-primary">{eyebrow}</span>
+          <span className="text-base eyebrow font-semibold text-primary">{eyebrow}</span>
           <h2 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">{heading}</h2>
           <p className="mt-6 text-lg text-muted-foreground">{description}</p>
           <div className="mt-10">

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/i18n/context";
+import { MediaSkeleton } from "@/components/ui/media-skeleton";
 
 /* Lucide icons */
 import {
@@ -75,6 +76,7 @@ export default function IndustryTemplates() {
   const [activeId, setActiveId] = useState<string>(servicesCopy[0]?.id ?? "");
   const [expanded, setExpanded] = useState(false);
   const [pickedVariantByService, setPickedVariantByService] = useState<Record<string, string>>({});
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (!services.some((service) => service.id === activeId)) {
@@ -87,6 +89,8 @@ export default function IndustryTemplates() {
 
   const currentVariantId = active ? pickedVariantByService[active.id] ?? active.prices[0]?.id : undefined;
   const currentVariant = active?.prices.find((p) => p.id === currentVariantId) ?? active?.prices[0];
+  const activeImageId = active?.id;
+  const activeImageLoaded = activeImageId ? loadedImages[activeImageId] ?? false : false;
 
   if (!active) {
     return null;
@@ -102,8 +106,8 @@ export default function IndustryTemplates() {
         </div>
 
         {/* Selector + toggle */}
-        <div className="flex flex-col sm:flex-row items-center justify-center mb-8 gap-4">
-          <div className="flex flex-wrap justify-center gap-1.5 bg-white p-1.5 rounded-xl shadow-sm">
+        <div className="flex flex-col sm:flex-row items-center justify-center mb-8 gap-1.5">
+          <div className="flex flex-wrap justify-center gap-1.5 rounded-xl">
             {visibleServices.map((s) => {
               const Icon = s.icon;
               const checked = s.id === activeId;
@@ -124,10 +128,10 @@ export default function IndustryTemplates() {
           {/* Toggle expand/collapse */}
           {!expanded ? (
             <Button
-              variant="ghost"
+              variant="outline"
               size="lg"
               onClick={() => setExpanded(true)}
-              className="flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium text-foreground bg-white shadow-sm hover:bg-gray-100 transition-colors"
+              className="flex items-center"
             >
               <LayoutGrid className="w-4 h-4" />
               <span>{seeAll}</span>
@@ -135,10 +139,10 @@ export default function IndustryTemplates() {
           ) : (
             <Button
               size="lg"
-              variant="ghost"
+              variant="outline"
               onClick={() => setExpanded(false)}
               aria-label={close}
-              className="flex items-center justify-center h-10 w-10 rounded-lg text-foreground bg-white shadow-sm hover:bg-gray-100 transition-colors"
+              className="flex items-center justify-center h-10 w-10 "
             >
               <ArrowLeft className="w-4 h-4" />
             </Button>
@@ -164,7 +168,23 @@ export default function IndustryTemplates() {
 
               <div className="mt-8 overflow-hidden rounded-xl">
                 <div className="relative h-48 w-full">
-                  <Image src={active.image} alt={active.title} fill className="object-cover rounded-xl" />
+                  <MediaSkeleton isVisible={!activeImageLoaded} className="rounded-xl" />
+                  <Image
+                    src={active.image}
+                    alt={active.title}
+                    fill
+                    onLoadingComplete={() =>
+                      activeImageId
+                        ? setLoadedImages((prev) =>
+                            prev[activeImageId] ? prev : { ...prev, [activeImageId]: true }
+                          )
+                        : undefined
+                    }
+                    className={cn(
+                      "object-cover rounded-xl transition-opacity duration-500 ease-out",
+                      activeImageLoaded ? "opacity-100" : "opacity-0"
+                    )}
+                  />
                 </div>
               </div>
             </div>

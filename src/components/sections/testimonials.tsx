@@ -95,7 +95,7 @@ const PricingSelectorSection = () => {
     <section id="harga" className="bg-background py-16 sm:py-24">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-sm font-semibold text-primary uppercase tracking-wider">{eyebrow}</p>
+          <p className="text-sm font-semibold text-primary uppercase tracking-wider eyebrow">{eyebrow}</p>
           <h2 className="mt-2 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">{title}</h2>
           <p className="mt-4 text-lg text-muted-foreground">{description}</p>
         </div>

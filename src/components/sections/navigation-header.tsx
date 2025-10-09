@@ -49,26 +49,13 @@ const toolsItems = [
   },
 ];
 
-  const menuPanelClass =
-  "relative overflow-hidden p-3 " +
-  "rounded-[28px] backdrop-blur-xl bg-white/30 supports-[backdrop-filter]:bg-white/20 " +
-  "ring-1 ring-black/5 shadow-[0_20px_60px_-20px_rgba(15,23,42,.25),0_6px_18px_-10px_rgba(220,38,38,.25)] " +
-  "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 " +
-  // gradient border via ::before
-  "before:absolute before:inset-0 before:rounded-[28px] before:p-[1px] " +
-  "before:[background:linear-gradient(135deg,rgba(255,255,255,.65),rgba(220,38,38,.35),rgba(255,255,255,.55))] " +
-  "before:[-webkit-mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] " +
-  // soft top highlight
-  "after:pointer-events-none after:absolute after:inset-x-6 after:top-0 after:h-10 after:rounded-[24px] after:bg-white/30 after:blur-xl";
+const menuPanelClass =
+  "relative rounded-[28px] border border-primary/10 bg-white shadow-[0_24px_48px_-28px_rgba(220,38,38,.6)] " +
+  "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 p-6";
 
 const glassCard =
-  "group relative block rounded-2xl p-4 transition " +
-  "bg-white/55 supports-[backdrop-filter]:bg-white/30 backdrop-blur-lg " +
-  "ring-1 ring-black/5 hover:ring-red-200/60 hover:bg-white/70 " +
-  "shadow-[inset_0_-1px_0_rgba(255,255,255,.35),0_6px_18px_-10px_rgba(220,38,38,.25)] " +
-  "hover:shadow-[inset_0_-1px_0_rgba(255,255,255,.45),0_12px_28px_-16px_rgba(220,38,38,.35)] " +
-  // subtle glow on hover
-  "hover:[box-shadow:0_0_0_1px_rgba(220,38,38,.15),0_14px_40px_-18px_rgba(220,38,38,.45)]";
+  "group relative block h-full rounded-2xl border border-transparent bg-white p-4 shadow-[0_16px_40px_-32px_rgba(220,38,38,.55)] transition " +
+  "hover:border-primary/30 hover:shadow-[0_20px_46px_-28px_rgba(220,38,38,.65)]";
 
 export default function NavigationHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -90,20 +77,26 @@ export default function NavigationHeader() {
   const toolsActive = React.useMemo(() => toolsItems.some(i => isActive(i.href)), [isActive]);
 
   const capsuleClass =
-    "rounded-full border border-black/10 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 " +
-    "[box-shadow:0_1px_0_0_rgba(0,0,0,.03),0_4px_14px_-6px_rgba(17,24,39,.10)]";
+    "rounded-full border border-primary/10 bg-white px-3 py-2 shadow-[0_10px_30px_-24px_rgba(220,38,38,.6)]";
 
-  const linkBase = "px-4 py-0 justify-center h-8 inline-flex items-center rounded-full text-sm font-medium transition";
-  const linkHover = "hover:bg-transparent focus:bg-transparent hover:text-primary hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)]";
-  const linkActive = "text-primary [text-shadow:0_0_8px_rgba(220,38,38,.35)]";
-  const menuPopoverRadius = "rounded-[28px]";
+  const navShellClass =
+    "rounded-full border border-primary/10 bg-white px-2 py-1 shadow-[0_20px_40px_-30px_rgba(220,38,38,.45)]";
+
+  const linkBase =
+    "inline-flex h-9 items-center justify-center gap-1 rounded-full px-4 text-sm font-semibold text-foreground/80 transition-all border border-transparent";
+  const linkHover =
+    "hover:text-primary hover:border-primary/20 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30";
+  const linkActive =
+    "bg-primary/10 text-primary border-primary/30 shadow-[0_12px_32px_-24px_rgba(220,38,38,.7)]";
+  const menuPopoverRadius = "rounded-[28px] border border-primary/10 bg-white shadow-[0_24px_48px_-32px_rgba(220,38,38,.55)]";
 
   return (
     <>
-      <header className="fixed top-0 z-50 w-full">
+      <div className="fixed inset-0 top-0 h-4 w-full shadow-[0_18px_40px_-32px_rgba(220,38,38,.6)]"></div>
+      <header className="fixed top-0 z-50 w-full border-t border-primary/10 bg-transparent">
         <div className="container flex h-20 items-center justify-between gap-4">
           {/* Logo */}
-          <div className={cn(capsuleClass, "px-5 py-2 h-12 flex items-center")}>
+          <div className={cn("rounded-full border border-primary/10 bg-white px-5 py-2 shadow-[0_16px_32px_-28px_rgba(220,38,38,.55)]", "h-12 flex items-center")}>
             <Link href="/" className="flex items-center gap-0">
               <span className="text-xl font-bold text-primary">{brand.primary}</span>
               <span className="text-xl font-bold text-foreground">{brand.secondary}</span>
@@ -111,12 +104,12 @@ export default function NavigationHeader() {
           </div>
 
           {/* Nav */}
-          <div className={cn("hidden lg:flex", capsuleClass, "px-3 py-2 h-12")}>
+          <div className={cn("hidden lg:flex h-12 items-center", navShellClass)}>
             <NavigationMenu>
               <NavigationMenuList className="flex items-center gap-1">
                 <NavigationMenuItem>
                   <Link href="/" aria-current={isActive("/") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/") ? linkActive : "text-foreground/80")}> 
+                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/") ? linkActive : "")}>
                       {menu.home}
                     </NavigationMenuLink>
                   </Link>
@@ -124,31 +117,30 @@ export default function NavigationHeader() {
 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
-                    className={cn("px-4 h-8 rounded-full text-sm font-medium transition", linkHover, layananActive ? linkActive : "text-foreground/80")}
+                    className={cn(
+                      linkBase,
+                      linkHover,
+                      "data-[state=open]:bg-primary/10 data-[state=open]:border-primary/30 data-[state=open]:text-primary [&_svg]:transition-transform data-[state=open]:[&_svg]:rotate-180",
+                      layananActive ? linkActive : ""
+                    )}
                     aria-current={layananActive ? "page" : undefined}
                   >
-                    {menu.services}
+                    <span>{menu.services}</span>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className={cn(menuPanelClass)}>
-                    {/* caret / ekor kapsul */}
-                    <div className="pointer-events-none absolute -top-2 left-1/2 h-5 w-5 -translate-x-1/2 rotate-45 rounded-md
-                                    bg-white/30 ring-1 ring-black/5" />
-                    {/* inner grid */}
-                    <div className="relative rounded-[22px] p-3">
-                      <ul className="grid w-[420px] gap-3 md:w-[520px] md:grid-cols-2 lg:w-[620px]">
-                        {services.map((item) => (
-                          <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
-                            {item.description}
-                          </ListItem>
-                        ))}
-                      </ul>
-                    </div>
+                    <ul className="grid w-[420px] gap-4 md:w-[520px] md:grid-cols-2 lg:w-[620px]">
+                      {services.map((item) => (
+                        <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
+                          {item.description}
+                        </ListItem>
+                      ))}
+                    </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
                   <Link href="/harga" aria-current={isActive("/harga") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/harga") ? linkActive : "text-foreground/80")}> 
+                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/harga") ? linkActive : "")}>
                       {menu.pricing}
                     </NavigationMenuLink>
                   </Link>
@@ -156,13 +148,18 @@ export default function NavigationHeader() {
 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
-                    className={cn("px-4 h-8 rounded-full text-sm font-medium transition", linkHover, toolsActive ? linkActive : "text-foreground/80")}
+                    className={cn(
+                      linkBase,
+                      linkHover,
+                      "data-[state=open]:bg-primary/10 data-[state=open]:border-primary/30 data-[state=open]:text-primary [&_svg]:transition-transform data-[state=open]:[&_svg]:rotate-180",
+                      toolsActive ? linkActive : ""
+                    )}
                     aria-current={toolsActive ? "page" : undefined}
                   >
-                    Tools Merek
+                    <span>Tools Merek</span>
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className={cn("shadow-lg", menuPopoverRadius)}>
-                    <ul className="grid w-[420px] gap-3 p-4 md:w-[520px] lg:w-[620px]">
+                  <NavigationMenuContent className={cn(menuPopoverRadius, "p-6")}>
+                    <ul className="grid w-[420px] gap-4 md:w-[520px] lg:w-[620px]">
                       {toolsItems.map((item) => (
                         <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
                           {item.description}
@@ -174,7 +171,7 @@ export default function NavigationHeader() {
 
                 <NavigationMenuItem>
                   <Link href="/tentang-kami" aria-current={isActive("/tentang-kami") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/tentang-kami") ? linkActive : "text-foreground/80")}>
+                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/tentang-kami") ? linkActive : "")}>
                       Tentang Kami
                     </NavigationMenuLink>
                   </Link>
@@ -427,29 +424,28 @@ const ListItem = React.memo(React.forwardRef<
       <NavigationMenuLink asChild>
         <a
           ref={ref}
-          className={cn(glassCard, className)}
+          className={cn(
+            glassCard,
+            "bg-white/95",
+            active
+              ? "border-primary/40 shadow-[0_24px_48px_-30px_rgba(220,38,38,.55)]"
+              : "hover:border-primary/20",
+            className
+          )}
           {...props}
         >
-          {/* title (glow di teks saja) */}
-          <div className={cn(
-            "text-sm font-semibold leading-none transition",
-            active
-              ? "text-primary [text-shadow:0_0_10px_rgba(220,38,38,.35)]"
-              : "text-foreground group-hover:text-primary group-hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)]"
-          )}>
+          <div
+            className={cn(
+              "text-sm font-semibold leading-none transition",
+              active ? "text-primary" : "text-foreground group-hover:text-primary"
+            )}
+          >
             {title}
           </div>
 
-          {/* desc (tenang, tanpa border/rounded putih saat hover) */}
-          <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground
-                        group-hover:text-muted-foreground/90 group-hover:[text-shadow:none]">
+          <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground group-hover:text-muted-foreground/90">
             {children}
           </p>
-
-          {/* soft underline glow on hover (ornamental) */}
-          <span className="pointer-events-none absolute inset-x-4 bottom-3 h-px
-                            bg-gradient-to-r from-transparent via-red-300/40 to-transparent
-                            opacity-0 group-hover:opacity-100 transition" />
         </a>
       </NavigationMenuLink>
     </li>

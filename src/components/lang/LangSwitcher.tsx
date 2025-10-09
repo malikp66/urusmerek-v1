@@ -42,7 +42,6 @@ export function LangSwitcher({
       className={cn(
         "inline-flex items-center gap-1 rounded-full bg-white p-1",
         "border border-black/10 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.04)]",
-        "backdrop-blur supports-[backdrop-filter]:bg-white/80",
         className
       )}
       role="group"
