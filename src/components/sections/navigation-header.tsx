@@ -27,6 +27,27 @@ const layananItems = [
   { title: "Konsultasi HKI", href: "/layanan/konsultasi-hki", description: "Dapatkan panduan ahli mengenai strategi Hak Kekayaan Intelektual." },
 ];
 
+const toolsItems = [
+  {
+    title: "Cek Merek",
+    href: "/cek-merek",
+    description:
+      "Platform cek merek dengan teknologi AI yang menampilkan estimasi peluang keberhasilan pendaftaran secara real-time serta menyediakan Dokumen Hasil Analisis (DHA) lengkap.",
+  },
+  {
+    title: "Cari Kelas Merek",
+    href: "/cari-kelas-merek",
+    description:
+      "Portal pencarian kelas merek terlengkap, mencakup kelas barang (1-35) hingga kelas jasa (36-45), dengan sistem filter lanjutan untuk hasil pencarian yang lebih akurat.",
+  },
+  {
+    title: "Monitoring Merek",
+    href: "/monitoring-merek",
+    description:
+      "Tools monitoring status merek untuk mitigasi risiko penolakan. Aktifkan notifikasi otomatis dan pantau perubahan status merek Anda.",
+  },
+];
+
 export default function NavigationHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [authOpen, setAuthOpen] = React.useState(false); // ⬅️ state modal
@@ -36,6 +57,7 @@ export default function NavigationHeader() {
     [pathname]
   );
   const layananActive = React.useMemo(() => layananItems.some(i => isActive(i.href)), [isActive]);
+  const toolsActive = React.useMemo(() => toolsItems.some(i => isActive(i.href)), [isActive]);
 
   const capsuleClass =
     "rounded-full border border-black/10 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 " +
@@ -97,17 +119,27 @@ export default function NavigationHeader() {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href="/profil-perusahaan" aria-current={isActive("/profil-perusahaan") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/profil-perusahaan") ? linkActive : "text-foreground/80")}>
-                      Profil Perusahaan
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuTrigger
+                    className={cn("px-4 h-8 rounded-full text-sm font-medium transition", linkHover, toolsActive ? linkActive : "text-foreground/80")}
+                    aria-current={toolsActive ? "page" : undefined}
+                  >
+                    Tools Merek
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className={cn("shadow-lg", menuPopoverRadius)}>
+                    <ul className="grid w-[420px] gap-3 p-4 md:w-[520px] lg:w-[620px]">
+                      {toolsItems.map((item) => (
+                        <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
+                          {item.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href="/faq" aria-current={isActive("/faq") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/faq") ? linkActive : "text-foreground/80")}>
-                      FAQ
+                  <Link href="/tentang-kami" aria-current={isActive("/tentang-kami") ? "page" : undefined}>
+                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/tentang-kami") ? linkActive : "text-foreground/80")}>
+                      Tentang Kami
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -168,12 +200,10 @@ export default function NavigationHeader() {
                       Harga
                     </Link>
 
-                    <Link href="/profil-perusahaan" onClick={() => setIsMobileMenuOpen(false)} className={cn(isActive("/profil-perusahaan") ? "text-primary font-semibold" : "text-foreground", "transition")}>
-                      Profil Perusahaan
-                    </Link>
+                    <MobileToolsDropdown onLinkClick={() => setIsMobileMenuOpen(false)} currentPath={pathname} />
 
-                    <Link href="/faq" onClick={() => setIsMobileMenuOpen(false)} className={cn(isActive("/faq") ? "text-primary font-semibold" : "text-foreground", "transition")}>
-                      FAQ
+                    <Link href="/tentang-kami" onClick={() => setIsMobileMenuOpen(false)} className={cn(isActive("/tentang-kami") ? "text-primary font-semibold" : "text-foreground", "transition")}>
+                      Tentang Kami
                     </Link>
 
                     <button
@@ -277,6 +307,52 @@ const MobileLayananDropdown = ({
               )}
             >
               {item.title}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const MobileToolsDropdown = ({
+  onLinkClick,
+  currentPath,
+}: {
+  onLinkClick: () => void;
+  currentPath: string;
+}) => {
+  const [isOpen, setIsOpen] = React.useState(toolsItems.some((i) => currentPath.startsWith(i.href)));
+  const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + "/");
+
+  return (
+    <div className="flex flex-col space-y-2">
+      <button
+        className={cn("flex items-center justify-between w-full transition", toolsItems.some((i) => isActive(i.href)) && "text-primary font-semibold")}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+      >
+        <span>Tools Merek</span>
+        <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} />
+      </button>
+
+      {isOpen && (
+        <div className="flex flex-col space-y-3 pl-4 border-l-2 ml-1">
+          {toolsItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={onLinkClick}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              className={cn(
+                "transition",
+                isActive(item.href)
+                  ? "text-primary font-semibold"
+                  : "text-muted-foreground hover:text-primary hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)]"
+              )}
+            >
+              <span className="block text-sm">{item.title}</span>
+              <span className="block text-xs text-muted-foreground leading-snug">{item.description}</span>
             </Link>
           ))}
         </div>
