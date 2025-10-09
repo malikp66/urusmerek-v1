@@ -1,6 +1,8 @@
-import 'server-only';
-
 import { z } from 'zod';
+
+if (typeof window !== 'undefined') {
+  throw new Error('env should only be used in server environments');
+}
 
 const envSchema = z
   .object({
