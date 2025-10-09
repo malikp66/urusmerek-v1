@@ -8,6 +8,7 @@ import TestimonialsSection from "@/components/sections/testimonials";
 import FlexibilityFeatures from "@/components/sections/flexibility-features";
 import IndustryTemplates from "@/components/sections/industry-templates";
 import FinalCta from "@/components/sections/final-cta";
+import FaqSection from "@/components/sections/faq-section";
 import RedDiagonalBackground from "@/components/RedDiagonalBackground";
 
 export default function Page() {
@@ -25,6 +26,7 @@ export default function Page() {
       {/* <TestimonialsSection /> */}
       {/* <FlexibilityFeatures /> */}
       <IndustryTemplates />
+      {/* <FaqSection /> */}
       <FinalCta />
       
     </div>

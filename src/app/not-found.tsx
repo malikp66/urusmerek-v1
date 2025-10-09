@@ -54,7 +54,7 @@ export default function NotFound() {
   return (
     <div
       ref={rootRef}
-      className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#fafafa] via-white to-[#f8fafc] px-6 py-16 text-center text-slate-800"
+      className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center text-slate-800"
     >
       {/* background geometry */}
       <div className="pointer-events-none absolute inset-0 -z-10">

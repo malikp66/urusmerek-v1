@@ -50,12 +50,38 @@ const toolsItems = [
 ];
 
 const menuPanelClass =
-  "relative rounded-[28px] border border-primary/10 bg-white shadow-[0_24px_48px_-28px_rgba(220,38,38,.6)] " +
-  "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 p-6";
+  [
+    "relative isolate rounded-[28px] p-6 md:p-7",
+    // glass base
+    "bg-white/80 backdrop-blur-xl",
+    // ring & inner highlight
+    "ring-1 ring-black/5",
+    "before:content-[''] before:absolute before:inset-px before:rounded-[26px]",
+    "before:shadow-[inset_0_1px_0_rgba(255,255,255,.9),inset_0_-1px_0_rgba(2,6,23,.04)]",
+    // outer depth (dual soft shadows, merah lembut + slate netral)
+    "shadow-[0_40px_80px_-30px_rgba(2,6,23,.22),0_24px_60px_-40px_rgba(220,38,38,.35)]",
+    // corner glow accents
+    "after:content-[''] after:absolute after:-z-10 after:h-56 after:w-56 after:blur-3xl",
+    "after:bg-[radial-gradient(closest-side,rgba(220,38,38,.18),transparent_70%)] after:top-[-20%] after:left-[-6%]",
+    // caret (pointer) di atas kiri—geser sesuai kebutuhan
+    "data-[state=open]:before:content-['']",
+    "data-[state=open]:before:absolute data-[state=open]:before:top-[-8px] data-[state=open]:before:left-10",
+    "data-[state=open]:before:h-4 data-[state=open]:before:w-4 data-[state=open]:before:rotate-45",
+    "data-[state=open]:before:rounded-[6px] data-[state=open]:before:bg-white/80",
+    "data-[state=open]:before:backdrop-blur-xl data-[state=open]:before:ring-1 data-[state=open]:before:ring-black/5",
+    // open anims
+    "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+  ].join(" ");
+
 
 const glassCard =
-  "group relative block h-full rounded-2xl border border-transparent bg-white p-4 shadow-[0_16px_40px_-32px_rgba(220,38,38,.55)] transition " +
-  "hover:border-primary/30 hover:shadow-[0_20px_46px_-28px_rgba(220,38,38,.65)]";
+  [
+    "group relative block h-full rounded-2xl p-4",
+    "bg-white/90 backdrop-blur-sm",
+    "ring-1 ring-black/[0.06] transition",
+    "shadow-[0_14px_36px_-26px_rgba(2,6,23,.22)]",
+    "hover:ring-primary/20 hover:shadow-[0_22px_46px_-24px_rgba(2,6,23,.25)]",
+  ].join(" ");
 
 export default function NavigationHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -128,7 +154,7 @@ export default function NavigationHeader() {
                     <span>{menu.services}</span>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className={cn(menuPanelClass)}>
-                    <ul className="grid w-[420px] gap-4 md:w-[520px] md:grid-cols-2 lg:w-[620px]">
+                    <ul className="grid w-[420px] gap-4 md:w-[560px] md:grid-cols-2 lg:w-[680px]">
                       {services.map((item) => (
                         <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
                           {item.description}
@@ -158,8 +184,8 @@ export default function NavigationHeader() {
                   >
                     <span>Tools Merek</span>
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className={cn(menuPopoverRadius, "p-6")}>
-                    <ul className="grid w-[420px] gap-4 md:w-[520px] lg:w-[620px]">
+                  <NavigationMenuContent className={cn(menuPopoverRadius, "p-6 data-[state=open]:before:left-1/3 md:data-[state=open]:before:left-24")}>
+                    <ul className="grid w-[420px] gap-4 md:w-[560px] md:grid-cols-2 lg:w-[680px]">
                       {toolsItems.map((item) => (
                         <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
                           {item.description}

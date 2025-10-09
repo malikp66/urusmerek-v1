@@ -66,7 +66,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
       <body>
         <div
           ref={rootRef}
-          className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#fafafa] via-white to-[#f8fafc] px-6 py-16 text-center text-slate-800"
+          className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-16 text-center text-slate-800"
         >
           {/* subtle geometry */}
           <div className="pointer-events-none absolute inset-0 -z-10">
