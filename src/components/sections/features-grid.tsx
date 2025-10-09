@@ -11,6 +11,7 @@ import {
   Database, Link as LinkIcon,
 } from "lucide-react";
 import { useTranslations } from "@/lib/i18n/context";
+import { Button } from "@/components/ui/button";
 
 type PrimaryFeature = {
   id: string;
@@ -69,8 +70,8 @@ const SmallCard = ({ feature }: { feature?: SmallFeature }) => {
     <Link
       href={feature.link}
       className="group h-full w-full rounded-xl border border-smooth bg-white/90 backdrop-blur-sm
-                shadow-sm shadow-glow-red transition-all duration-300
-                hover:-translate-y-[1px] hover:border-primary-strong hover:shadow-red-strong
+                shadow-sm transition-all duration-300
+                hover:-translate-y-[1px] hover:border-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.35)]
                 flex items-center justify-center text-center p-3"
     >
       <div className="flex flex-col items-center gap-1.5">
@@ -91,26 +92,27 @@ const LargeCard = ({ feature }: { feature: PrimaryFeature }) => (
               hover:-translate-y-[1px] hover:border-primary-strong hover:shadow-red-strong
               flex flex-col"
   >
-    <div className="p-4 pb-3 flex-1">
-      <div className="h-full w-full overflow-hidden rounded-lg bg-gradient-to-br from-rose-50 to-white">
+    <div className="p-0 flex-1">
+      {/* bg-gradient-to-br from-rose-50 to-white */}
+      <div className="h-full w-full overflow-hidden rounded-lg">
         <Image
           src={feature.image}
           alt={feature.name}
-          width={1200}
-          height={900}
+          width={1000}
+          height={700}
           className="h-full w-full object-cover"
           priority
         />
       </div>
     </div>
-    <div className="px-4 pb-4 pt-0">
+    {/* <div className="px-4 pb-4 pt-0">
       <strong className="text-base text-center font-semibold block text-gray-900 group-hover-text-primary">
         {feature.name}
       </strong>
       {feature.subtitle && (
         <span className="mt-0.5 block text-xs text-gray-600 leading-snug">{feature.subtitle}</span>
       )}
-    </div>
+    </div> */}
   </Link>
 );
 
@@ -150,9 +152,11 @@ export default function FeaturesGrid() {
           <h2 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">{heading}</h2>
           <p className="mt-6 text-lg text-muted-foreground">{description}</p>
           <div className="mt-10">
-            <Link href="/konsultasi" className="btn-brand rounded-full">
-              {cta}
-            </Link>
+            <Button asChild size="lg" className="btn-brand hover:-translate-y-px">
+              <Link href="/konsultasi" className="">
+                {cta}
+              </Link>
+            </Button>
           </div>
         </div>
 

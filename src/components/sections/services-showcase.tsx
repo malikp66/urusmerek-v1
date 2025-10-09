@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "@/lib/i18n/context";
+import { Button } from "../ui/button";
 
 type TabProps = {
   title: string;
@@ -71,13 +72,13 @@ const ServicesShowcase = () => {
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <h2 className="font-bold text-4xl md:text-5xl leading-tight text-foreground tracking-tight">{heading}</h2>
           <p className="mt-4 text-lg text-muted-foreground">{description}</p>
-          <Link
-            href="/layanan"
-            className="mt-6 btn-secondary"
-          >
-            <span>{cta}</span>
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
+          <Button asChild variant="secondary" size="lg" className="btn-secondary mt-6 hover:-translate-y-px">
+            <Link
+              href="/layanan"
+            >
+              <span>{cta}</span>
+            </Link>
+          </Button>
         </div>
 
         {/* Hovering area pauses auto-rotate */}

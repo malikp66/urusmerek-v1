@@ -212,6 +212,9 @@
 
 /* ====== Components (Buttons brand) ====== */
 @layer components {
+  .hover-glow-red {
+    @apply transition-all duration-300 hover:border-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.35)];
+  }
   /* Primary */
   .btn-brand {
     @apply relative inline-flex items-center gap-2 rounded-lg px-6 py-3.5 font-semibold

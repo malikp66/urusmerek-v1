@@ -156,28 +156,28 @@
         "id": "registration",
         "name": "Pendaftaran Merek",
         "subtitle": "Pendampingan menyeluruh dari ide sampai bukti permohonan",
-        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "image": "/fitur/pendaftaran-merek.png",
         "link": "/layanan/pendaftaran-merek"
       },
       {
         "id": "renewal",
         "name": "Perpanjangan Sepuluh Tahun",
         "subtitle": "Pantau masa berlaku dan aman tanpa jeda perlindungan",
-        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "image": "/fitur/perpanjangan-merek.png",
         "link": "/layanan/perpanjangan-merek"
       },
       {
         "id": "objection",
         "name": "Surat Keberatan",
         "subtitle": "Blok merek tiruan dengan argumen yang terstruktur",
-        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "image": "/fitur/surat-keberatan.png",
         "link": "/layanan/surat-keberatan"
       },
       {
         "id": "search",
         "name": "Penelusuran Nama Merek",
         "subtitle": "Validasi ketersediaan nama sebelum Anda melangkah",
-        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "image": "/fitur/pendaftaran-merek-penelusuran.png",
         "link": "/layanan/pendaftaran-merek#penelusuran"
       }
     ],
@@ -545,7 +545,7 @@
     "primaryCta": "Konsultasi Sekarang",
     "secondaryCta": "Lihat Paket dan Harga",
     "imageAlt": "Dasbor pengurusan merek UrusMerek.id untuk pendaftaran dan perpanjangan.",
-    "imageSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+    "imageSrc": "/finalCta.png"
   },
   "footer": {
     "trustBadges": [

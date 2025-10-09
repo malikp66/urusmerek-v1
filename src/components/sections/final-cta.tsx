@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "@/lib/i18n/context";
+import { Button } from "../ui/button";
 
 const FinalCta = () => {
   const t = useTranslations("finalCta");
@@ -15,15 +16,13 @@ const FinalCta = () => {
   const secondaryCta = t<string>("secondaryCta");
   const imageSrc = t<string>("imageSrc");
   const imageAlt = t<string>("imageAlt");
+
   return (
     <section className="relative overflow-hidden bg-white">
       {/* Background: red theme */}
-      <div
-        className="absolute inset-0 bg-gradient-to-br from-rose-50 via-red-50 to-white"
-        aria-hidden="true"
-      />
+      <div className="absolute inset-0 bg-gradient-to-br from-rose-50 via-red-50 to-white" aria-hidden="true" />
 
-      {/* Red decorative glows (pure CSS, tanpa asset eksternal) */}
+      {/* Red decorative glows */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 -right-24 h-[28rem] w-[28rem] rounded-full blur-3xl opacity-60
@@ -45,34 +44,26 @@ const FinalCta = () => {
             <h2 className="mt-2 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               {heading}
             </h2>
+            <p className="mt-3 text-base font-semibold text-primary">{subheading}</p>
+            <p className="mt-4 text-lg text-muted-foreground">{body}</p>
+            <p className="mt-3 text-sm text-muted-foreground">{note}</p>
 
-            <p className="mt-3 text-base font-semibold text-primary">
-              {subheading}
-            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild size="lg" className="hover:-translate-y-px">
+                <Link
+                  href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+konsultasi+pendaftaran+merek.&type=phone_number&app_absent=0"
+                >
+                  {primaryCta}
+                </Link>
+              </Button>
 
-            <p className="mt-4 text-lg text-muted-foreground">
-              {body}
-            </p>
-
-            <p className="mt-3 text-sm text-muted-foreground">
-              {note}
-            </p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+konsultasi+pendaftaran+merek.&type=phone_number&app_absent=0"
-              className="btn-brand sm:px-8 sm:text-lg"
-            >
-               {primaryCta}
-            </Link>
-
-            <Link
-              href="#harga"
-              className="btn-outline-brand sm:px-8 sm:text-lg"
-            >
-                {secondaryCta}
-            </Link>
-          </div>
+              <Button variant="outline" asChild size="lg" className="btn-outline-brand hover:-translate-y-px">
+                <Link href="#harga">
+                  {secondaryCta}
+                </Link>
+              </Button>
+            </div>
+          </div> {/* ✅ TUTUP div Copy */}
 
           {/* Visual */}
           <div className="mt-12 lg:mt-0">

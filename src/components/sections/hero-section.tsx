@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/i18n/context";
+import Link from "next/link";
 
 const VIDEO_SRC = "/gone-banner.mp4";
 
@@ -198,28 +199,28 @@ export default function HeroSection() {
             <div className="flex gap-3 pt-2">
               {/* Primary */}
               <Button asChild size="lg" className="btn-brand hover:-translate-y-px">
-                <a
+                <Link
                   className="group inline-flex items-center gap-2"
                   href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek."
                   target="_blank" rel="noopener noreferrer" aria-label={cta.primaryLabel}
                 >
                   {cta.primary}
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none" />
-                </a>
+                </Link>
               </Button>
 
               {/* Secondary */}
               <Button asChild size="lg" variant="outline" className="btn-outline-brand hover:-translate-y-px">
-                <a className="group inline-flex items-center gap-2" href="#layanan">
+                <Link className="group inline-flex items-center gap-2" href="#layanan">
                   {cta.secondary}
-                </a>
+                </Link>
               </Button>
             </div>
           </div>
 
           {/* RIGHT */}
           <div ref={rightRef} className="relative">
-            <div ref={cardRef} className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/70 shadow-xl bg-black/5">
+            <div ref={cardRef} className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border/70 shadow-xl bg-black/5">
               <video src={VIDEO_SRC} autoPlay muted loop playsInline className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 

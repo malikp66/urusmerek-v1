@@ -49,6 +49,27 @@ const toolsItems = [
   },
 ];
 
+  const menuPanelClass =
+  "relative overflow-hidden p-3 " +
+  "rounded-[28px] backdrop-blur-xl bg-white/30 supports-[backdrop-filter]:bg-white/20 " +
+  "ring-1 ring-black/5 shadow-[0_20px_60px_-20px_rgba(15,23,42,.25),0_6px_18px_-10px_rgba(220,38,38,.25)] " +
+  "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 " +
+  // gradient border via ::before
+  "before:absolute before:inset-0 before:rounded-[28px] before:p-[1px] " +
+  "before:[background:linear-gradient(135deg,rgba(255,255,255,.65),rgba(220,38,38,.35),rgba(255,255,255,.55))] " +
+  "before:[-webkit-mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] " +
+  // soft top highlight
+  "after:pointer-events-none after:absolute after:inset-x-6 after:top-0 after:h-10 after:rounded-[24px] after:bg-white/30 after:blur-xl";
+
+const glassCard =
+  "group relative block rounded-2xl p-4 transition " +
+  "bg-white/55 supports-[backdrop-filter]:bg-white/30 backdrop-blur-lg " +
+  "ring-1 ring-black/5 hover:ring-red-200/60 hover:bg-white/70 " +
+  "shadow-[inset_0_-1px_0_rgba(255,255,255,.35),0_6px_18px_-10px_rgba(220,38,38,.25)] " +
+  "hover:shadow-[inset_0_-1px_0_rgba(255,255,255,.45),0_12px_28px_-16px_rgba(220,38,38,.35)] " +
+  // subtle glow on hover
+  "hover:[box-shadow:0_0_0_1px_rgba(220,38,38,.15),0_14px_40px_-18px_rgba(220,38,38,.45)]";
+
 export default function NavigationHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [authOpen, setAuthOpen] = React.useState(false); // ⬅️ state modal
@@ -108,14 +129,20 @@ export default function NavigationHeader() {
                   >
                     {menu.services}
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className={cn("shadow-lg", menuPopoverRadius)}>
-                    <ul className="grid w-[420px] gap-3 p-4 md:w-[520px] md:grid-cols-2 lg:w-[620px]">
-                      {services.map((item) => (
-                        <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
-                          {item.description}
-                        </ListItem>
-                      ))}
-                    </ul>
+                  <NavigationMenuContent className={cn(menuPanelClass)}>
+                    {/* caret / ekor kapsul */}
+                    <div className="pointer-events-none absolute -top-2 left-1/2 h-5 w-5 -translate-x-1/2 rotate-45 rounded-md
+                                    bg-white/30 ring-1 ring-black/5" />
+                    {/* inner grid */}
+                    <div className="relative rounded-[22px] p-3">
+                      <ul className="grid w-[420px] gap-3 md:w-[520px] md:grid-cols-2 lg:w-[620px]">
+                        {services.map((item) => (
+                          <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
+                            {item.description}
+                          </ListItem>
+                        ))}
+                      </ul>
+                    </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
@@ -400,19 +427,33 @@ const ListItem = React.memo(React.forwardRef<
       <NavigationMenuLink asChild>
         <a
           ref={ref}
-          className={cn(
-            // ubah hover jadi text-only di dalam kartu konten
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-            active ? "text-primary [text-shadow:0_0_8px_rgba(220,38,38,.35)]" : "text-foreground",
-            className
-          )}
+          className={cn(glassCard, className)}
           {...props}
         >
-          <div className="text-sm font-medium leading-none group-hover:text-primary group-hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)]">{title}</div>
-          <p className="line-clamp-2 text-sm group-hover:text-muted-foreground group-hover:[text-shadow:none] leading-snug text-muted-foreground">{children}</p>
+          {/* title (glow di teks saja) */}
+          <div className={cn(
+            "text-sm font-semibold leading-none transition",
+            active
+              ? "text-primary [text-shadow:0_0_10px_rgba(220,38,38,.35)]"
+              : "text-foreground group-hover:text-primary group-hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)]"
+          )}>
+            {title}
+          </div>
+
+          {/* desc (tenang, tanpa border/rounded putih saat hover) */}
+          <p className="mt-1 line-clamp-2 text-sm leading-snug text-muted-foreground
+                        group-hover:text-muted-foreground/90 group-hover:[text-shadow:none]">
+            {children}
+          </p>
+
+          {/* soft underline glow on hover (ornamental) */}
+          <span className="pointer-events-none absolute inset-x-4 bottom-3 h-px
+                            bg-gradient-to-r from-transparent via-red-300/40 to-transparent
+                            opacity-0 group-hover:opacity-100 transition" />
         </a>
       </NavigationMenuLink>
     </li>
   );
 }));
+
 ListItem.displayName = "ListItem";

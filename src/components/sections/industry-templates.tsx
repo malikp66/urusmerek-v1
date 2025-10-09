@@ -21,6 +21,7 @@ import {
   ArrowLeft,
   ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 
 /* ===== Types ===== */
 type PriceVariant = { id: string; name: string; price: number; note?: string };
@@ -107,38 +108,40 @@ export default function IndustryTemplates() {
               const Icon = s.icon;
               const checked = s.id === activeId;
               return (
-                <button
+                <Button
+                  variant={checked ? "default" : "outline"}
                   key={s.id}
                   onClick={() => setActiveId(s.id)}
-                  className={cn(
-                    "flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium transition-colors",
-                    checked ? "bg-primary text-primary-foreground shadow" : "text-foreground hover:bg-gray-100"
-                  )}
+                  size="lg"
                 >
                   <Icon className="w-4 h-4" />
                   <span>{s.label}</span>
-                </button>
+                </Button>
               );
             })}
           </div>
 
           {/* Toggle expand/collapse */}
           {!expanded ? (
-            <button
+            <Button
+              variant="ghost"
+              size="lg"
               onClick={() => setExpanded(true)}
               className="flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium text-foreground bg-white shadow-sm hover:bg-gray-100 transition-colors"
             >
               <LayoutGrid className="w-4 h-4" />
               <span>{seeAll}</span>
-            </button>
+            </Button>
           ) : (
-            <button
+            <Button
+              size="lg"
+              variant="ghost"
               onClick={() => setExpanded(false)}
               aria-label={close}
               className="flex items-center justify-center h-10 w-10 rounded-lg text-foreground bg-white shadow-sm hover:bg-gray-100 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-            </button>
+            </Button>
           )}
         </div>
 
@@ -214,11 +217,11 @@ export default function IndustryTemplates() {
                 <p className="mt-4 text-xs text-muted-foreground">{priceDisclaimer}</p>
               </div>
 
-              <Button asChild size="lg" className="mt-6 w-full btn-brand justify-center">
-                <a href={active.ctaLink ?? "#"} target="_blank" rel="noopener noreferrer">
+              <Button asChild size="lg" className="mt-6">
+                <Link href={active.ctaLink ?? "#"} target="_blank" rel="noopener noreferrer">
                   {cta}
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                </Link>
               </Button>
             </div>
           </div>
