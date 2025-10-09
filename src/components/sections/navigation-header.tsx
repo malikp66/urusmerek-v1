@@ -92,8 +92,8 @@ export default function NavigationHeader() {
 
   return (
     <>
-      <div className="fixed inset-0 top-0 h-4 w-full shadow-[0_18px_40px_-32px_rgba(220,38,38,.6)]"></div>
-      <header className="fixed top-0 z-50 w-full border-t border-primary/10 bg-transparent">
+      <div className="fixed top-0 h-1 z-50 w-full shadow-[0_18px_40px_-32px_rgba(220,38,38,.6)]"></div>
+      <header className="fixed top-0 z-40 w-full border-t border-primary/10 bg-transparent">
         <div className="container flex h-20 items-center justify-between gap-4">
           {/* Logo */}
           <div className={cn("rounded-full border border-primary/10 bg-white px-5 py-2 shadow-[0_16px_32px_-28px_rgba(220,38,38,.55)]", "h-12 flex items-center")}>
