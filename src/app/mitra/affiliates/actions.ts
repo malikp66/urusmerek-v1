@@ -19,6 +19,16 @@ const createSchema = z.object({
   description: z.string().max(160, "Keterangan maksimal 160 karakter").optional(),
 });
 
+const updateSchema = z.object({
+  linkId: z.number().int().positive(),
+  targetUrl: z.string().url("URL tujuan tidak valid").max(2048),
+  description: z.string().max(160, "Keterangan maksimal 160 karakter").optional(),
+});
+
+const deleteSchema = z.object({
+  linkId: z.number().int().positive(),
+});
+
 export async function toggleAffiliateLink(input: {
   linkId: number;
   isActive: boolean;
@@ -65,4 +75,54 @@ export async function createAffiliateLink(input: { targetUrl: string; descriptio
 
   revalidatePath("/mitra/affiliates");
   return { code };
+}
+
+export async function updateAffiliateLink(input: {
+  linkId: number;
+  targetUrl: string;
+  description?: string;
+}) {
+  const session = await requireMitra();
+  const payload = updateSchema.parse(input);
+
+  const result = await db
+    .update(affiliateLinks)
+    .set({
+      targetUrl: payload.targetUrl.trim(),
+      description: payload.description?.trim() || null,
+    })
+    .where(
+      and(
+        eq(affiliateLinks.id, payload.linkId),
+        eq(affiliateLinks.userId, Number(session.sub))
+      )
+    )
+    .returning({ id: affiliateLinks.id });
+
+  if (result.length === 0) {
+    throw new Error("Link tidak ditemukan");
+  }
+
+  revalidatePath("/mitra/affiliates");
+}
+
+export async function deleteAffiliateLink(input: { linkId: number }) {
+  const session = await requireMitra();
+  const payload = deleteSchema.parse(input);
+
+  const result = await db
+    .delete(affiliateLinks)
+    .where(
+      and(
+        eq(affiliateLinks.id, payload.linkId),
+        eq(affiliateLinks.userId, Number(session.sub))
+      )
+    )
+    .returning({ id: affiliateLinks.id });
+
+  if (result.length === 0) {
+    throw new Error("Link tidak ditemukan");
+  }
+
+  revalidatePath("/mitra/affiliates");
 }

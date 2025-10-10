@@ -4,16 +4,9 @@ import { redirect } from 'next/navigation';
 
 import Link from 'next/link';
 import { type ReactNode } from 'react';
-import {
-  BarChart3,
-  Briefcase,
-  CircleDollarSign,
-  FileText,
-  Settings,
-  Users,
-} from 'lucide-react';
-
 import { requireAdmin } from '@/lib/auth-guards';
+import { LangSwitcher } from '@/components/lang/LangSwitcher';
+import { Button } from '@/components/ui/button';
 import {
   Sidebar,
   SidebarContent,
@@ -29,12 +22,12 @@ import {
 import { AdminNavMenu, type AdminNavigationItem } from './AdminNavMenu';
 
 const NAVIGATION: AdminNavigationItem[] = [
-  { title: 'Dashboard', href: '/admin', icon: BarChart3 },
-  { title: 'Mitra', href: '/admin/mitra', icon: Users },
-  { title: 'Konsultasi', href: '/admin/konsultasi', icon: FileText },
-  { title: 'Withdraw', href: '/admin/withdraw', icon: CircleDollarSign },
-  { title: 'Pengaturan Komisi', href: '/admin/settings/commission', icon: Settings },
-  { title: 'Fitur Lain', href: '/admin/features', icon: Briefcase, badge: 'Segera' },
+  { title: 'Dashboard', href: '/admin', icon: 'barChart3' },
+  { title: 'Mitra', href: '/admin/mitra', icon: 'users' },
+  { title: 'Konsultasi', href: '/admin/konsultasi', icon: 'fileText' },
+  { title: 'Withdraw', href: '/admin/withdraw', icon: 'circleDollarSign' },
+  { title: 'Pengaturan Komisi', href: '/admin/settings/commission', icon: 'settings' },
+  { title: 'Fitur Lain', href: '/admin/features', icon: 'briefcase', badge: 'Segera' },
 ];
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
@@ -79,6 +72,12 @@ export default async function AdminLayout({ children }: { children: ReactNode })
             <div className="flex flex-col">
               <h1 className="text-base font-semibold leading-none">Admin Panel</h1>
               <p className="text-xs text-muted-foreground">Kelola mitra dan operasional</p>
+            </div>
+            <div className="ml-auto flex items-center gap-3">
+              <LangSwitcher />
+              <Button asChild variant="outline">
+                <Link href="/">Kembali ke Beranda</Link>
+              </Button>
             </div>
           </div>
         </header>

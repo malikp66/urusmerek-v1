@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { startTransition } from "react";
 
 type GlobalErrorProps = {
   error: Error & { digest?: string };
@@ -18,6 +20,8 @@ const phrases = [
 ];
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
+  const router = useRouter();
+
   const rootRef = useRef<HTMLDivElement | null>(null);
   const ringRef1 = useRef<HTMLDivElement | null>(null);
   const ringRef2 = useRef<HTMLDivElement | null>(null);
@@ -25,6 +29,17 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
   const textRef = useRef<HTMLParagraphElement | null>(null);
   const [active, setActive] = useState(phrases[0]);
   const [detail, setDetail] = useState(false);
+
+  const tryAgain = () => {
+    // Pilihan 1: soft refresh + reset (kadang cukup jika errornya bukan fatal)
+    router.refresh();
+    startTransition(() => reset());
+  };
+
+  // ---- Atau ----
+  const hardReload = () => {
+    window.location.reload(); // paling aman untuk global error
+  };
 
   useEffect(() => {
     console.error(error);
@@ -116,7 +131,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
               <Button
                 variant="outline"
-                onClick={reset}
+                onClick={hardReload} // atau onClick={tryAgain}
                 className="rounded-lg bg-red-600 px-5 py-2.5 text-white shadow hover:brightness-110"
               >
                 Coba Lagi

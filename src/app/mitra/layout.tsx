@@ -3,9 +3,9 @@ import "@/app/globals.css";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { type ReactNode } from "react";
-import { BarChart3, CreditCard, UserCircle } from "lucide-react";
-
 import { getCurrentUser } from "@/lib/auth";
+import { LangSwitcher } from "@/components/lang/LangSwitcher";
+import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -21,9 +21,9 @@ import {
 import { AdminNavMenu, type AdminNavigationItem } from "@/app/admin/AdminNavMenu";
 
 const NAV_ITEMS: AdminNavigationItem[] = [
-  { title: "Dashboard", href: "/mitra/affiliates", icon: BarChart3 },
-  { title: "Withdraw", href: "/mitra/withdraw", icon: CreditCard },
-  { title: "Profil", href: "/mitra/profile", icon: UserCircle },
+  { title: "Dashboard", href: "/mitra/affiliates", icon: "barChart3" },
+  { title: "Withdraw", href: "/mitra/withdraw", icon: "creditCard" },
+  { title: "Profil", href: "/mitra/profile", icon: "userCircle" },
 ];
 
 export default async function MitraLayout({ children }: { children: ReactNode }) {
@@ -67,6 +67,12 @@ export default async function MitraLayout({ children }: { children: ReactNode })
             <div className="flex flex-col">
               <h1 className="text-base font-semibold leading-none">Panel Mitra</h1>
               <p className="text-xs text-muted-foreground">Kelola komisi dan performa referral.</p>
+            </div>
+            <div className="ml-auto flex items-center gap-3">
+              <LangSwitcher />
+              <Button asChild variant="outline">
+                <Link href="/">Kembali ke Beranda</Link>
+              </Button>
             </div>
           </div>
         </header>

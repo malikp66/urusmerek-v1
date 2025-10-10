@@ -4,8 +4,6 @@ import VisualEditsMessenger from "../visual-edits/VisualEditsMessenger";
 import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 import MaintenanceGate from "@/components/maintenance/maintenance-gate";
-import Footer from "@/components/sections/footer";
-import NavigationHeader from "@/components/sections/navigation-header";
 import Providers from "@/components/Providers";
 
 const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
@@ -49,11 +47,7 @@ export default function RootLayout({
             data-debug="true"
             data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
           />
-          <NavigationHeader />
-          <main className="relative mt-20">
-            {children}
-          </main>
-          <Footer />
+          {children}
           <VisualEditsMessenger />
         </Providers>
       </body>

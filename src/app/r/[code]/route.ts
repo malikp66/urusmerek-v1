@@ -14,9 +14,12 @@ import { hashIpAddress, withRateLimit, AFFILIATE_CLICK_RATE_LIMIT } from '@/lib/
 
 export const runtime = 'nodejs';
 
-export async function GET(req: Request, { params }: { params: { code: string } }) {
-  const code = params.code ?? '';
-  const normalizedCode = code.trim();
+export async function GET(
+  req: Request,
+  context: { params: Promise<{ code?: string }> },
+) {
+  const { code } = await context.params;
+  const normalizedCode = (code ?? '').trim();
 
   if (!normalizedCode) {
     return NextResponse.redirect(env.APP_URL, { status: 302 });

@@ -3,6 +3,7 @@ import "server-only";
 import { SQL, sql } from "drizzle-orm";
 
 import { db } from "@/lib/db";
+import { env } from "@/lib/env";
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -36,6 +37,7 @@ export type MitraLinkRow = {
   id: number;
   code: string;
   targetUrl: string;
+  shareUrl: string;
   description: string | null;
   createdAt: Date;
   isActive: boolean;
@@ -192,10 +194,16 @@ export async function getMitraDashboardData(userId: number): Promise<MitraDashbo
 }
 
 async function getPerformanceSeries(userId: number, days: number): Promise<PerformancePoint[]> {
+  const range = Math.max(0, days - 1);
+
   const result = await db.execute(sql`
     WITH dates AS (
       SELECT generate_series::date AS day
-      FROM generate_series(CURRENT_DATE - interval '${days - 1} days', CURRENT_DATE, interval '1 day')
+      FROM generate_series(
+        CURRENT_DATE - ${range} * interval '1 day',
+        CURRENT_DATE,
+        interval '1 day'
+      )
     ),
     clicks AS (
       SELECT
@@ -204,7 +212,7 @@ async function getPerformanceSeries(userId: number, days: number): Promise<Perfo
       FROM affiliate_clicks c
       JOIN affiliate_links l ON l.id = c.link_id
       WHERE l.user_id = ${userId}
-        AND c.created_at >= CURRENT_DATE - interval '${days - 1} days'
+        AND c.created_at >= CURRENT_DATE - ${range} * interval '1 day'
       GROUP BY day
     ),
     referrals AS (
@@ -214,7 +222,7 @@ async function getPerformanceSeries(userId: number, days: number): Promise<Perfo
       FROM affiliate_referrals r
       JOIN affiliate_links l ON l.id = r.link_id
       WHERE l.user_id = ${userId}
-        AND r.created_at >= CURRENT_DATE - interval '${days - 1} days'
+        AND r.created_at >= CURRENT_DATE - ${range} * interval '1 day'
       GROUP BY day
     )
     SELECT
@@ -227,11 +235,19 @@ async function getPerformanceSeries(userId: number, days: number): Promise<Perfo
     ORDER BY d.day;
   `);
 
-  return result.rows.map((row) => ({
-    date: (row.day as Date).toISOString().slice(0, 10),
-    clicks: Number(row.clicks) || 0,
-    referrals: Number(row.referrals) || 0,
-  }));
+  return result.rows.map((row: any) => {
+    // PG DATE -> string "YYYY-MM-DD"
+    const dateStr =
+      typeof row.day === "string"
+        ? row.day
+        : new Date(row.day as Date).toISOString().slice(0, 10);
+
+    return {
+      date: dateStr,
+      clicks: Number(row.clicks) || 0,
+      referrals: Number(row.referrals) || 0,
+    };
+  });
 }
 
 export async function getMitraLinks({
@@ -301,6 +317,7 @@ export async function getMitraLinks({
     id: Number(row.id),
     code: String(row.code),
     targetUrl: String(row.target_url),
+    shareUrl: new URL(`/r/${String(row.code)}`, env.APP_URL).toString(),
     description: row.description ? String(row.description) : null,
     createdAt: new Date(row.created_at as Date),
     isActive: Boolean(row.is_active),

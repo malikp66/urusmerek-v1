@@ -262,6 +262,7 @@ export default function NavigationHeader() {
                 panelHref={mitraPanelPath}
                 consultLabel={consultLabel}
                 hasSession={hasSession}
+                onRequireAuth={() => setAuthOpen(true)}
               />
             </div>
           </div>
@@ -334,6 +335,10 @@ export default function NavigationHeader() {
               panelHref={mitraPanelPath}
               consultLabel={consultLabel}
               hasSession={hasSession}
+              onRequireAuth={() => {
+                setIsMobileMenuOpen(false);
+                setAuthOpen(true);
+              }}
             />
           </div>
         </div>
@@ -361,39 +366,53 @@ const CtaSegmented = ({
   panelLabel,
   consultLabel,
   hasSession,
+  onRequireAuth,
 }: {
   className?: string;
   panelHref: string;
   panelLabel: string;
   consultLabel: string;
   hasSession: boolean;
+  onRequireAuth?: () => void;
 }) => {
   const primaryHref = panelHref;
   const primaryLabel = hasSession ? `${panelLabel} Panel` : panelLabel;
+  const segmentBaseClass =
+    "h-9 px-4 inline-flex items-center rounded-full text-sm border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-px";
+  const segmentActiveClass =
+    "font-semibold text-white bg-[linear-gradient(135deg,#ff4d4d_0%,#dc2626_45%,#a10000_100%)] border-white/20 shadow-[inset_0_-1px_0_rgba(0,0,0,.08),0_6px_14px_-6px_rgba(220,38,38,.45)] hover:shadow-[inset_0_-1px_0_rgba(0,0,0,.12),0_10px_18px_-8px_rgba(220,38,38,.55)] focus-visible:ring-[#dc2626]/40";
+  const segmentInactiveClass =
+    "font-medium text-foreground/80 bg-transparent border-transparent hover:text-primary hover:border-primary/20 hover:bg-primary/5 hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)] focus-visible:ring-primary/30";
+  const mitraActive = hasSession;
+  const consultActive = !hasSession;
+  const handleMitraClick = React.useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      if (mitraActive) {
+        return;
+      }
+      event.preventDefault();
+      onRequireAuth?.();
+    },
+    [mitraActive, onRequireAuth]
+  );
 
   return (
     <div className={cn("inline-flex items-center gap-1", className)}>
       <Link
         href={primaryHref}
         className={cn(
-          "h-9 px-4 inline-flex items-center rounded-full text-sm font-semibold text-white",
-          "bg-[linear-gradient(135deg,#ff4d4d_0%,#dc2626_45%,#a10000_100%)]",
-          "border border-white/20 shadow-[inset_0_-1px_0_rgba(0,0,0,.08),0_6px_14px_-6px_rgba(220,38,38,.45)]",
-          "hover:shadow-[inset_0_-1px_0_rgba(0,0,0,.12),0_10px_18px_-8px_rgba(220,38,38,.55)]",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#dc2626]/40",
-          "active:translate-y-px transition"
+          segmentBaseClass,
+          mitraActive ? segmentActiveClass : segmentInactiveClass
         )}
+        onClick={handleMitraClick}
       >
         {primaryLabel}
       </Link>
       <Link
         href="/konsultasi"
         className={cn(
-          "h-9 px-4 inline-flex items-center rounded-full text-sm font-medium text-foreground/80",
-          "border border-transparent transition",
-          "hover:text-primary hover:border-primary/20 hover:bg-primary/5 hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)]",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2",
-          "active:translate-y-px"
+          segmentBaseClass,
+          consultActive ? segmentActiveClass : segmentInactiveClass
         )}
       >
         {consultLabel}
