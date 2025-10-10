@@ -4,13 +4,21 @@ import { getCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { partnerBankAccounts, partnerProfiles } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { updateMitraProfile } from "./actions";
 import { getLocaleFromRequest, getTranslations } from "@/lib/i18n/server";
+import { signOut } from "@/lib/actions/sign-out";
 
 export const revalidate = 0;
 
@@ -103,6 +111,22 @@ export default async function MitraProfilePage() {
             <Button type="submit">{t("save")}</Button>
           </form>
         </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base font-semibold">Keluar dari Akun</CardTitle>
+          <CardDescription>
+            Akhiri sesi Anda di panel mitra dengan aman setelah selesai menggunakan akun ini.
+          </CardDescription>
+        </CardHeader>
+        <CardFooter className="border-t justify-end">
+          <form action={signOut}>
+            <Button type="submit" variant="destructive">
+              Keluar
+            </Button>
+          </form>
+        </CardFooter>
       </Card>
     </div>
   );

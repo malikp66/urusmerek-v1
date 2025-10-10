@@ -21,6 +21,15 @@ import {
 } from '@/components/ui/sidebar';
 import { AdminNavMenu, type AdminNavigationItem } from './AdminNavMenu';
 import { getLocaleFromRequest, getTranslations } from '@/lib/i18n/server';
+const NAVIGATION: AdminNavigationItem[] = [
+  { title: 'Dashboard', href: '/admin', icon: 'barChart3' },
+  { title: 'Mitra', href: '/admin/mitra', icon: 'users' },
+  { title: 'Konsultasi', href: '/admin/konsultasi', icon: 'fileText' },
+  { title: 'Withdraw', href: '/admin/withdraw', icon: 'circleDollarSign' },
+  { title: 'Profil', href: '/admin/profile', icon: 'userCircle' },
+  { title: 'Pengaturan Komisi', href: '/admin/settings/commission', icon: 'settings' },
+  { title: 'Fitur Lain', href: '/admin/features', icon: 'briefcase', badge: 'Segera' },
+];
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const session = await requireAdmin().catch(() => null);
