@@ -1,9 +1,7 @@
 "use client";
 
-import { useMemo, useOptimistic, useTransition } from "react";
-import { toast } from "sonner";
+import { useMemo } from "react";
 
-import { updateReferralStatus } from "@/app/mitra/affiliates/actions";
 import { PaginatedResult, ReferralRow } from "@/app/mitra/affiliates/queries";
 import {
   Table,
@@ -20,23 +18,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-const STATUS_OPTIONS: Array<{
-  value: ReferralRow["status"];
-  label: string;
-}> = [
-  { value: "pending", label: "Pending" },
-  { value: "approved", label: "Approved" },
-  { value: "rejected", label: "Rejected" },
-  { value: "paid", label: "Paid" },
-];
+import { Badge } from "@/components/ui/badge";
 
 function createQueryString(
   base: Record<string, string | undefined>,
@@ -65,15 +47,6 @@ type Props = {
 };
 
 export function RefTable({ result, query }: Props) {
-  const [optimisticData, setOptimisticData] = useOptimistic(
-    result.data,
-    (state, update: { id: number; status: ReferralRow["status"] }) =>
-      state.map((item) =>
-        item.id === update.id ? { ...item, status: update.status } : item
-      )
-  );
-  const [isPending, startTransition] = useTransition();
-
   const paginationMessage = useMemo(() => {
     const start = (result.page - 1) * result.perPage + 1;
     const end = Math.min(result.totalItems, start + result.perPage - 1);
@@ -84,18 +57,6 @@ export function RefTable({ result, query }: Props) {
   }, [result.page, result.perPage, result.totalItems]);
 
   const baseQuery = useMemo(() => ({ ...query }), [query]);
-
-  const handleStatusChange = (id: number, status: ReferralRow["status"]) => {
-    setOptimisticData({ id, status });
-    startTransition(async () => {
-      try {
-        await updateReferralStatus({ referralId: id, status });
-        toast.success("Status referral diperbarui");
-      } catch (error) {
-        toast.error("Gagal memperbarui status referral");
-      }
-    });
-  };
 
   return (
     <div className="space-y-4">
@@ -108,18 +69,19 @@ export function RefTable({ result, query }: Props) {
               <TableHead className="text-right">Amount</TableHead>
               <TableHead className="text-right">Komisi</TableHead>
               <TableHead>Status</TableHead>
+              <TableHead>Withdraw</TableHead>
               <TableHead>Tanggal</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {optimisticData.length === 0 ? (
+            {result.data.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground">
+                <TableCell colSpan={7} className="text-center text-muted-foreground">
                   Tidak ada referral ditemukan
                 </TableCell>
               </TableRow>
             ) : (
-              optimisticData.map((item) => {
+              result.data.map((item) => {
                 const createdAt = new Date(item.createdAt);
                 return (
                   <TableRow key={item.id}>
@@ -139,24 +101,16 @@ export function RefTable({ result, query }: Props) {
                       {formatCurrency(item.commission)}
                     </TableCell>
                     <TableCell>
-                      <Select
-                        value={item.status}
-                        onValueChange={(value) =>
-                          handleStatusChange(item.id, value as ReferralRow["status"])
-                        }
-                        disabled={isPending}
-                      >
-                        <SelectTrigger size="sm" className="w-32">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {STATUS_OPTIONS.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <Badge variant="outline" className="capitalize">
+                        {item.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      {item.payoutRequestId ? (
+                        <Badge variant="secondary">Withdraw #{item.payoutRequestId}</Badge>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">Belum diajukan</span>
+                      )}
                     </TableCell>
                     <TableCell>
                       {createdAt.toLocaleString("id-ID", {

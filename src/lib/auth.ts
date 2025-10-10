@@ -8,7 +8,7 @@ import { cookies } from 'next/headers';
 
 import { env } from './env';
 
-export type UserRole = 'mitra';
+export type UserRole = 'mitra' | 'admin';
 
 const SESSION_COOKIE_NAME = 'session';
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7; // 7 days
@@ -70,7 +70,7 @@ export async function verifyJwt(token: string): Promise<JwtSession | null> {
       return null;
     }
 
-    if (role !== 'mitra') {
+    if (role !== 'mitra' && role !== 'admin') {
       return null;
     }
 

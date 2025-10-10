@@ -4,7 +4,8 @@ import { useMemo, useOptimistic, useTransition } from "react";
 import { toast } from "sonner";
 
 import { toggleAffiliateLink } from "@/app/mitra/affiliates/actions";
-import { AffiliateLinkRow, PaginatedResult } from "@/app/mitra/affiliates/queries";
+import { MitraLinkRow, PaginatedResult } from "@/app/mitra/affiliates/queries";
+import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import {
   Table,
@@ -46,7 +47,7 @@ function getPaginationMessage(page: number, perPage: number, total: number) {
 }
 
 type Props = {
-  result: PaginatedResult<AffiliateLinkRow>;
+  result: PaginatedResult<MitraLinkRow>;
   query: Record<string, string | undefined>;
 };
 
@@ -87,7 +88,7 @@ export function AffTable({ result, query }: Props) {
           <TableHeader>
             <TableRow>
               <TableHead>Kode</TableHead>
-              <TableHead>Mitra</TableHead>
+              <TableHead>Target</TableHead>
               <TableHead className="text-right">Klik (7h)</TableHead>
               <TableHead className="text-right">Referral (7h)</TableHead>
               <TableHead className="text-right">Komisi Lifetime</TableHead>
@@ -110,13 +111,25 @@ export function AffTable({ result, query }: Props) {
                       <span className="text-xs text-muted-foreground">
                         ID #{link.id}
                       </span>
+                      {link.description ? (
+                        <span className="text-xs text-muted-foreground line-clamp-1">
+                          {link.description}
+                        </span>
+                      ) : null}
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-col">
-                      <span className="font-medium">{link.partnerName}</span>
+                      <span className="text-sm text-muted-foreground break-all">
+                        {link.targetUrl}
+                      </span>
                       <span className="text-xs text-muted-foreground">
-                        {link.partnerEmail}
+                        Dibuat{" "}
+                        {link.createdAt.toLocaleDateString("id-ID", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
                       </span>
                     </div>
                   </TableCell>
@@ -138,6 +151,11 @@ export function AffTable({ result, query }: Props) {
                       disabled={isPending}
                       aria-label={`Toggle link ${link.code}`}
                     />
+                    {!link.isActive ? (
+                      <Badge variant="outline" className="mt-2 text-[10px] uppercase tracking-wide">
+                        Nonaktif
+                      </Badge>
+                    ) : null}
                   </TableCell>
                 </TableRow>
               ))

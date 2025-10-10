@@ -6,27 +6,39 @@ import { db } from "@/lib/db";
 
 const DEFAULT_PAGE_SIZE = 10;
 
-export type AffiliateStats = {
-  totalActivePartners: number;
-  totalActiveLinks: number;
+export type MitraDashboardStats = {
   clicks7d: number;
-  referrals: {
-    pending: number;
-    approved: number;
-    rejected: number;
-    paid: number;
-  };
-  totalAmount: number;
+  totalLinks: number;
+  activeLinks: number;
+  referralsPending: number;
+  referralsApproved: number;
+  referralsRejected: number;
+  referralsPaid: number;
   totalCommission: number;
-  commissionToPay: number;
+  approvedCommission: number;
+  paidCommission: number;
+  withdrawPending: number;
 };
 
-export type AffiliateLinkRow = {
+export type PerformancePoint = {
+  date: string;
+  clicks: number;
+  referrals: number;
+};
+
+export type MitraDashboardData = {
+  stats: MitraDashboardStats;
+  performance7d: PerformancePoint[];
+  performance30d: PerformancePoint[];
+};
+
+export type MitraLinkRow = {
   id: number;
   code: string;
+  targetUrl: string;
+  description: string | null;
+  createdAt: Date;
   isActive: boolean;
-  partnerName: string;
-  partnerEmail: string;
   clicks7d: number;
   referrals7d: number;
   lifetimeCommission: number;
@@ -41,12 +53,14 @@ export type PaginatedResult<T> = {
 };
 
 export type LinkQueryParams = {
+  userId: number;
   search?: string | null;
   page?: number;
   perPage?: number;
 };
 
 export type ReferralQueryParams = {
+  userId: number;
   search?: string | null;
   status?: string | null;
   page?: number;
@@ -60,22 +74,53 @@ export type ReferralRow = {
   amount: number;
   commission: number;
   status: "pending" | "approved" | "rejected" | "paid";
+  payoutRequestId: number | null;
   createdAt: Date;
 };
 
-export async function getAffiliateStats(): Promise<AffiliateStats> {
-  const result = await db.execute(sql`
-    WITH clicks AS (
-      SELECT COUNT(*)::int AS clicks_7d
-      FROM affiliate_clicks c
-      WHERE c.created_at > now() - interval '7 days'
-    ),
-    active_links AS (
+export type MitraBalance = {
+  totalEarned: number;
+  approved: number;
+  paid: number;
+  pending: number;
+  withdrawPending: number;
+  available: number;
+};
+
+export type MitraWithdrawRow = {
+  id: number;
+  amount: number;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+  notes: string | null;
+  bankSnapshot: Record<string, unknown>;
+};
+
+export type WithdrawQueryParams = {
+  userId: number;
+  page?: number;
+  perPage?: number;
+};
+
+const parseNumeric = (value: unknown) =>
+  typeof value === "number" ? value : Number.parseFloat(value as string) || 0;
+
+export async function getMitraDashboardData(userId: number): Promise<MitraDashboardData> {
+  const statsResult = await db.execute(sql`
+    WITH user_links AS (
       SELECT
         COUNT(*)::int AS total_links,
-        COUNT(DISTINCT l.user_id)::int AS total_partners
+        COUNT(*) FILTER (WHERE l.is_active)::int AS active_links
       FROM affiliate_links l
-      WHERE l.is_active = true
+      WHERE l.user_id = ${userId}
+    ),
+    clicks_7d AS (
+      SELECT COUNT(*)::int AS clicks
+      FROM affiliate_clicks c
+      JOIN affiliate_links l ON l.id = c.link_id
+      WHERE l.user_id = ${userId}
+        AND c.created_at >= now() - interval '7 days'
     ),
     referral_totals AS (
       SELECT
@@ -83,70 +128,129 @@ export async function getAffiliateStats(): Promise<AffiliateStats> {
         COALESCE(SUM(CASE WHEN r.status = 'approved' THEN 1 ELSE 0 END), 0)::int AS approved_count,
         COALESCE(SUM(CASE WHEN r.status = 'rejected' THEN 1 ELSE 0 END), 0)::int AS rejected_count,
         COALESCE(SUM(CASE WHEN r.status = 'paid' THEN 1 ELSE 0 END), 0)::int AS paid_count,
-        COALESCE(SUM(r.amount), 0)::numeric AS total_amount,
-        COALESCE(SUM(r.commission), 0)::numeric AS total_commission,
+        COALESCE(SUM(CASE WHEN r.status <> 'rejected' THEN r.commission ELSE 0 END), 0)::numeric AS total_commission,
         COALESCE(SUM(CASE WHEN r.status IN ('approved', 'paid') THEN r.commission ELSE 0 END), 0)::numeric AS approved_commission,
         COALESCE(SUM(CASE WHEN r.status = 'paid' THEN r.commission ELSE 0 END), 0)::numeric AS paid_commission
       FROM affiliate_referrals r
+      JOIN affiliate_links l ON l.id = r.link_id
+      WHERE l.user_id = ${userId}
+    ),
+    withdraw_totals AS (
+      SELECT
+        COALESCE(
+          SUM(
+            CASE WHEN w.status IN ('pending', 'approved', 'processing')
+            THEN w.amount
+            ELSE 0 END
+          ),
+          0
+        )::numeric AS pending_amount
+      FROM partner_withdraw_requests w
+      WHERE w.user_id = ${userId}
     )
     SELECT
-      al.total_partners,
-      al.total_links,
-      c.clicks_7d,
+      ul.total_links,
+      ul.active_links,
+      c7.clicks,
       rt.pending_count,
       rt.approved_count,
       rt.rejected_count,
       rt.paid_count,
-      rt.total_amount,
       rt.total_commission,
-      (rt.approved_commission - rt.paid_commission) AS commission_to_pay
-    FROM active_links al, clicks c, referral_totals rt;
+      rt.approved_commission,
+      rt.paid_commission,
+      wt.pending_amount
+    FROM user_links ul, clicks_7d c7, referral_totals rt, withdraw_totals wt;
   `);
 
-  const row = result.rows[0] ?? {
-    total_partners: 0,
-    total_links: 0,
-    clicks_7d: 0,
-    pending_count: 0,
-    approved_count: 0,
-    rejected_count: 0,
-    paid_count: 0,
-    total_amount: 0,
-    total_commission: 0,
-    commission_to_pay: 0,
+  const statsRow = statsResult.rows[0] ?? {};
+
+  const stats: MitraDashboardStats = {
+    clicks7d: Number(statsRow.clicks) || 0,
+    totalLinks: Number(statsRow.total_links) || 0,
+    activeLinks: Number(statsRow.active_links) || 0,
+    referralsPending: Number(statsRow.pending_count) || 0,
+    referralsApproved: Number(statsRow.approved_count) || 0,
+    referralsRejected: Number(statsRow.rejected_count) || 0,
+    referralsPaid: Number(statsRow.paid_count) || 0,
+    totalCommission: parseNumeric(statsRow.total_commission),
+    approvedCommission: parseNumeric(statsRow.approved_commission),
+    paidCommission: parseNumeric(statsRow.paid_commission),
+    withdrawPending: parseNumeric(statsRow.pending_amount),
   };
 
-  const parseNumeric = (value: unknown) =>
-    typeof value === "number" ? value : Number.parseFloat(value as string) || 0;
+  const [performance7d, performance30d] = await Promise.all([
+    getPerformanceSeries(userId, 7),
+    getPerformanceSeries(userId, 30),
+  ]);
 
   return {
-    totalActivePartners: Number(row.total_partners) || 0,
-    totalActiveLinks: Number(row.total_links) || 0,
-    clicks7d: Number(row.clicks_7d) || 0,
-    referrals: {
-      pending: Number(row.pending_count) || 0,
-      approved: Number(row.approved_count) || 0,
-      rejected: Number(row.rejected_count) || 0,
-      paid: Number(row.paid_count) || 0,
-    },
-    totalAmount: parseNumeric(row.total_amount),
-    totalCommission: parseNumeric(row.total_commission),
-    commissionToPay: parseNumeric(row.commission_to_pay),
+    stats,
+    performance7d,
+    performance30d,
   };
 }
 
-export async function getAffiliateLinks(
-  params: LinkQueryParams
-): Promise<PaginatedResult<AffiliateLinkRow>> {
-  const page = Math.max(1, params.page ?? 1);
-  const perPage = Math.max(1, params.perPage ?? DEFAULT_PAGE_SIZE);
-  const offset = (page - 1) * perPage;
-  const search = params.search?.trim();
+async function getPerformanceSeries(userId: number, days: number): Promise<PerformancePoint[]> {
+  const result = await db.execute(sql`
+    WITH dates AS (
+      SELECT generate_series::date AS day
+      FROM generate_series(CURRENT_DATE - interval '${days - 1} days', CURRENT_DATE, interval '1 day')
+    ),
+    clicks AS (
+      SELECT
+        date_trunc('day', c.created_at)::date AS day,
+        COUNT(*)::int AS total_clicks
+      FROM affiliate_clicks c
+      JOIN affiliate_links l ON l.id = c.link_id
+      WHERE l.user_id = ${userId}
+        AND c.created_at >= CURRENT_DATE - interval '${days - 1} days'
+      GROUP BY day
+    ),
+    referrals AS (
+      SELECT
+        date_trunc('day', r.created_at)::date AS day,
+        COUNT(*)::int AS total_referrals
+      FROM affiliate_referrals r
+      JOIN affiliate_links l ON l.id = r.link_id
+      WHERE l.user_id = ${userId}
+        AND r.created_at >= CURRENT_DATE - interval '${days - 1} days'
+      GROUP BY day
+    )
+    SELECT
+      d.day,
+      COALESCE(c.total_clicks, 0) AS clicks,
+      COALESCE(r.total_referrals, 0) AS referrals
+    FROM dates d
+    LEFT JOIN clicks c ON c.day = d.day
+    LEFT JOIN referrals r ON r.day = d.day
+    ORDER BY d.day;
+  `);
 
-  const searchCondition = search
-    ? sql`(l.code ILIKE ${"%" + search + "%"} OR u.email ILIKE ${"%" + search + "%"})`
-    : undefined;
-  const searchFilter = searchCondition ? sql`WHERE ${searchCondition}` : sql``;
+  return result.rows.map((row) => ({
+    date: (row.day as Date).toISOString().slice(0, 10),
+    clicks: Number(row.clicks) || 0,
+    referrals: Number(row.referrals) || 0,
+  }));
+}
+
+export async function getMitraLinks({
+  userId,
+  search,
+  page,
+  perPage,
+}: LinkQueryParams): Promise<PaginatedResult<MitraLinkRow>> {
+  const currentPage = Math.max(1, page ?? 1);
+  const pageSize = Math.max(1, perPage ?? DEFAULT_PAGE_SIZE);
+  const offset = (currentPage - 1) * pageSize;
+  const term = search?.trim();
+
+  const filters: SQL[] = [sql`l.user_id = ${userId}`];
+  if (term) {
+    filters.push(sql`l.code ILIKE ${"%" + term + "%"}`);
+  }
+
+  const whereClause = sql`WHERE ${sql.join(filters, sql` AND `)}`;
 
   const dataQuery = await db.execute(sql`
     WITH clicks_agg AS (
@@ -162,95 +266,83 @@ export async function getAffiliateLinks(
       GROUP BY r.link_id
     ),
     commission_agg AS (
-      SELECT r.link_id, COALESCE(SUM(CASE WHEN r.status <> 'rejected' THEN r.commission ELSE 0 END), 0)::numeric AS lifetime_commission
+      SELECT
+        r.link_id,
+        COALESCE(SUM(CASE WHEN r.status <> 'rejected' THEN r.commission ELSE 0 END), 0)::numeric AS lifetime_commission
       FROM affiliate_referrals r
       GROUP BY r.link_id
     )
     SELECT
       l.id,
       l.code,
+      l.target_url,
+      l.description,
+      l.created_at,
       l.is_active,
-      u.name AS partner_name,
-      u.email AS partner_email,
       COALESCE(ca.clicks_7d, 0) AS clicks_7d,
       COALESCE(ra.referrals_7d, 0) AS referrals_7d,
       COALESCE(co.lifetime_commission, 0) AS lifetime_commission
     FROM affiliate_links l
-    JOIN users u ON u.id = l.user_id
     LEFT JOIN clicks_agg ca ON ca.link_id = l.id
     LEFT JOIN referrals_agg ra ON ra.link_id = l.id
     LEFT JOIN commission_agg co ON co.link_id = l.id
-    ${searchFilter}
+    ${whereClause}
     ORDER BY l.created_at DESC
-    LIMIT ${perPage} OFFSET ${offset};
+    LIMIT ${pageSize} OFFSET ${offset};
   `);
 
-  const totalResult = await db.execute(sql`
+  const totalQuery = await db.execute(sql`
     SELECT COUNT(*)::int AS total
     FROM affiliate_links l
-    JOIN users u ON u.id = l.user_id
-    ${searchFilter};
+    ${whereClause};
   `);
 
-  const rows = dataQuery.rows as Array<{
-    id: number;
-    code: string;
-    is_active: boolean;
-    partner_name: string;
-    partner_email: string;
-    clicks_7d: number;
-    referrals_7d: number;
-    lifetime_commission: unknown;
-  }>;
-
-  const parseNumeric = (value: unknown) =>
-    typeof value === "number" ? value : Number.parseFloat(value as string) || 0;
-
-  const data = rows.map((row) => ({
+  const data = dataQuery.rows.map((row) => ({
     id: Number(row.id),
-    code: row.code,
+    code: String(row.code),
+    targetUrl: String(row.target_url),
+    description: row.description ? String(row.description) : null,
+    createdAt: new Date(row.created_at as Date),
     isActive: Boolean(row.is_active),
-    partnerName: row.partner_name,
-    partnerEmail: row.partner_email,
     clicks7d: Number(row.clicks_7d) || 0,
     referrals7d: Number(row.referrals_7d) || 0,
     lifetimeCommission: parseNumeric(row.lifetime_commission),
   }));
 
-  const totalItems = Number(totalResult.rows[0]?.total ?? 0) || 0;
-  const pageCount = Math.max(1, Math.ceil(totalItems / perPage));
+  const totalItems = Number(totalQuery.rows[0]?.total ?? 0) || 0;
+  const pageCount = Math.max(1, Math.ceil(totalItems / pageSize));
 
   return {
     data,
-    page,
-    perPage,
+    page: currentPage,
+    perPage: pageSize,
     totalItems,
     pageCount,
   };
 }
 
-export async function getAffiliateReferrals(
-  params: ReferralQueryParams
-): Promise<PaginatedResult<ReferralRow>> {
-  const page = Math.max(1, params.page ?? 1);
-  const perPage = Math.max(1, params.perPage ?? DEFAULT_PAGE_SIZE);
-  const offset = (page - 1) * perPage;
-  const search = params.search?.trim();
-  const status = params.status?.trim();
+export async function getMitraReferrals({
+  userId,
+  search,
+  status,
+  page,
+  perPage,
+}: ReferralQueryParams): Promise<PaginatedResult<ReferralRow>> {
+  const currentPage = Math.max(1, page ?? 1);
+  const pageSize = Math.max(1, perPage ?? DEFAULT_PAGE_SIZE);
+  const offset = (currentPage - 1) * pageSize;
+  const term = search?.trim();
+  const statusFilter = status?.trim();
 
-  const conditions: SQL[] = [];
-  if (search) {
-    conditions.push(
-      sql`(l.code ILIKE ${"%" + search + "%"} OR u.email ILIKE ${"%" + search + "%"})`
-    );
+  const filters: SQL[] = [sql`l.user_id = ${userId}`];
+  if (term) {
+    filters.push(sql`(l.code ILIKE ${"%" + term + "%"} OR r.order_id ILIKE ${"%" + term + "%"})`);
   }
-  if (status) {
-    conditions.push(sql`r.status = ${status}`);
+  if (statusFilter) {
+    filters.push(sql`r.status = ${statusFilter}`);
   }
 
-  const whereClause = conditions.length
-    ? sql`WHERE ${sql.join(conditions, sql` AND `)}`
-    : sql``;
+  const whereClause = sql`WHERE ${sql.join(filters, sql` AND `)}`;
 
   const dataResult = await db.execute(sql`
     SELECT
@@ -259,56 +351,145 @@ export async function getAffiliateReferrals(
       r.amount,
       r.commission,
       r.status,
+      r.payout_request_id,
       r.created_at,
-      l.code,
-      u.email
+      l.code
     FROM affiliate_referrals r
     JOIN affiliate_links l ON l.id = r.link_id
-    JOIN users u ON u.id = l.user_id
     ${whereClause}
     ORDER BY r.created_at DESC
-    LIMIT ${perPage} OFFSET ${offset};
+    LIMIT ${pageSize} OFFSET ${offset};
   `);
 
   const totalResult = await db.execute(sql`
     SELECT COUNT(*)::int AS total
     FROM affiliate_referrals r
     JOIN affiliate_links l ON l.id = r.link_id
-    JOIN users u ON u.id = l.user_id
     ${whereClause};
   `);
 
-  const parseNumeric = (value: unknown) =>
-    typeof value === "number" ? value : Number.parseFloat(value as string) || 0;
-
-  const rows = dataResult.rows as Array<{
-    id: number;
-    order_id: string;
-    amount: unknown;
-    commission: unknown;
-    status: "pending" | "approved" | "rejected" | "paid";
-    created_at: Date;
-    code: string;
-    email: string;
-  }>;
-
-  const data = rows.map((row) => ({
+  const data = dataResult.rows.map((row) => ({
     id: Number(row.id),
-    orderId: row.order_id,
-    code: row.code,
+    orderId: String(row.order_id ?? ""),
+    code: String(row.code ?? ""),
     amount: parseNumeric(row.amount),
     commission: parseNumeric(row.commission),
-    status: row.status,
-    createdAt: new Date(row.created_at),
+    status: row.status as ReferralRow["status"],
+    payoutRequestId: row.payout_request_id ? Number(row.payout_request_id) : null,
+    createdAt: new Date(row.created_at as Date),
   }));
 
   const totalItems = Number(totalResult.rows[0]?.total ?? 0) || 0;
-  const pageCount = Math.max(1, Math.ceil(totalItems / perPage));
+  const pageCount = Math.max(1, Math.ceil(totalItems / pageSize));
 
   return {
     data,
-    page,
-    perPage,
+    page: currentPage,
+    perPage: pageSize,
+    totalItems,
+    pageCount,
+  };
+}
+
+export async function getMitraBalance(userId: number): Promise<MitraBalance> {
+  const result = await db.execute(sql`
+    WITH referral_totals AS (
+      SELECT
+        COALESCE(SUM(CASE WHEN r.status <> 'rejected' THEN r.commission ELSE 0 END), 0)::numeric AS total_commission,
+        COALESCE(SUM(CASE WHEN r.status = 'approved' THEN r.commission ELSE 0 END), 0)::numeric AS approved_commission,
+        COALESCE(SUM(CASE WHEN r.status = 'pending' THEN r.commission ELSE 0 END), 0)::numeric AS pending_commission,
+        COALESCE(SUM(CASE WHEN r.status = 'paid' THEN r.commission ELSE 0 END), 0)::numeric AS paid_commission
+      FROM affiliate_referrals r
+      JOIN affiliate_links l ON l.id = r.link_id
+      WHERE l.user_id = ${userId}
+    ),
+    withdraw_totals AS (
+      SELECT
+        COALESCE(
+          SUM(
+            CASE WHEN w.status IN ('pending', 'approved', 'processing')
+            THEN w.amount
+            ELSE 0 END
+          ),
+          0
+        )::numeric AS pending_amount
+      FROM partner_withdraw_requests w
+      WHERE w.user_id = ${userId}
+    )
+    SELECT
+      rt.total_commission,
+      rt.approved_commission,
+      rt.pending_commission,
+      rt.paid_commission,
+      wt.pending_amount
+    FROM referral_totals rt, withdraw_totals wt;
+  `);
+
+  const row = result.rows[0] ?? {};
+  const totalEarned = parseNumeric(row.total_commission);
+  const approved = parseNumeric(row.approved_commission);
+  const pending = parseNumeric(row.pending_commission);
+  const paid = parseNumeric(row.paid_commission);
+  const withdrawPending = parseNumeric(row.pending_amount);
+  const available = Math.max(0, approved - withdrawPending);
+
+  return {
+    totalEarned,
+    approved,
+    paid,
+    pending,
+    withdrawPending,
+    available,
+  };
+}
+
+export async function getMitraWithdraws({
+  userId,
+  page,
+  perPage,
+}: WithdrawQueryParams): Promise<PaginatedResult<MitraWithdrawRow>> {
+  const currentPage = Math.max(1, page ?? 1);
+  const pageSize = Math.max(1, perPage ?? DEFAULT_PAGE_SIZE);
+  const offset = (currentPage - 1) * pageSize;
+
+  const dataQuery = await db.execute(sql`
+    SELECT
+      w.id,
+      w.amount,
+      w.status,
+      w.created_at,
+      w.updated_at,
+      w.notes,
+      w.bank_snapshot
+    FROM partner_withdraw_requests w
+    WHERE w.user_id = ${userId}
+    ORDER BY w.created_at DESC
+    LIMIT ${pageSize} OFFSET ${offset};
+  `);
+
+  const totalQuery = await db.execute(sql`
+    SELECT COUNT(*)::int AS total
+    FROM partner_withdraw_requests w
+    WHERE w.user_id = ${userId};
+  `);
+
+  const data = dataQuery.rows.map((row) => ({
+    id: Number(row.id),
+    amount: parseNumeric(row.amount),
+    status: String(row.status),
+    createdAt: new Date(row.created_at as Date),
+    updatedAt: new Date(row.updated_at as Date),
+    notes: row.notes ? String(row.notes) : null,
+    bankSnapshot: (row.bank_snapshot as Record<string, unknown>) ?? {},
+  }));
+
+  const totalItems = Number(totalQuery.rows[0]?.total ?? 0) || 0;
+  const pageCount = Math.max(1, Math.ceil(totalItems / pageSize));
+
+  return {
+    data,
+    page: currentPage,
+    perPage: pageSize,
     totalItems,
     pageCount,
   };

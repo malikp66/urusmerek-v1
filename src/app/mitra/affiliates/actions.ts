@@ -2,56 +2,67 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
-import { affiliateLinks, affiliateReferrals } from "@/db/schema";
+import { affiliateLinks } from "@/db/schema";
 import { db } from "@/lib/db";
-import { getCurrentUser } from "@/lib/auth";
-
-const referralSchema = z.object({
-  referralId: z.number().int().positive(),
-  status: z.enum(["pending", "approved", "rejected", "paid"]),
-});
+import { requireMitra } from "@/lib/auth-guards";
+import { generateUniqueAffiliateCode } from "@/lib/affiliate";
 
 const toggleSchema = z.object({
   linkId: z.number().int().positive(),
   isActive: z.boolean(),
 });
 
-async function requireMitra() {
-  const user = await getCurrentUser();
-  if (!user || user.role !== "mitra") {
-    throw new Error("Unauthorized");
-  }
-  return user;
-}
-
-export async function updateReferralStatus(input: {
-  referralId: number;
-  status: "pending" | "approved" | "rejected" | "paid";
-}) {
-  await requireMitra();
-  const payload = referralSchema.parse(input);
-
-  await db
-    .update(affiliateReferrals)
-    .set({ status: payload.status })
-    .where(eq(affiliateReferrals.id, payload.referralId));
-
-  revalidatePath("/mitra/affiliates");
-}
+const createSchema = z.object({
+  targetUrl: z.string().url("URL tujuan tidak valid").max(2048),
+  description: z.string().max(160, "Keterangan maksimal 160 karakter").optional(),
+});
 
 export async function toggleAffiliateLink(input: {
   linkId: number;
   isActive: boolean;
 }) {
-  await requireMitra();
+  const session = await requireMitra();
   const payload = toggleSchema.parse(input);
 
-  await db
+  const result = await db
     .update(affiliateLinks)
     .set({ isActive: payload.isActive })
-    .where(eq(affiliateLinks.id, payload.linkId));
+    .where(
+      and(
+        eq(affiliateLinks.id, payload.linkId),
+        eq(affiliateLinks.userId, Number(session.sub))
+      )
+    )
+    .returning({ id: affiliateLinks.id });
+
+  if (result.length === 0) {
+    throw new Error("Link tidak ditemukan");
+  }
 
   revalidatePath("/mitra/affiliates");
+}
+
+export async function createAffiliateLink(input: { targetUrl: string; description?: string }) {
+  const session = await requireMitra();
+  const payload = createSchema.parse(input);
+
+  const targetUrl = payload.targetUrl.trim();
+  const description = payload.description?.trim();
+
+  const code = await generateUniqueAffiliateCode({
+    userId: Number(session.sub),
+  });
+
+  await db.insert(affiliateLinks).values({
+    userId: Number(session.sub),
+    code,
+    targetUrl,
+    description: description ? description : null,
+    isActive: true,
+  });
+
+  revalidatePath("/mitra/affiliates");
+  return { code };
 }

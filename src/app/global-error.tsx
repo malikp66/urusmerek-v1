@@ -121,12 +121,15 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               >
                 Coba Lagi
               </Button>
-              <Link
-                href="/"
-                className="rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-slate-800 hover:bg-slate-50"
+              <Button
+                variant="outline"
               >
-                Ke Beranda
-              </Link>
+                <Link
+                  href="/"
+                >
+                  Ke Beranda
+                </Link>
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => setDetail((s) => !s)}
