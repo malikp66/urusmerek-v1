@@ -1,6 +1,18 @@
 CREATE TYPE "public"."consultation_status" AS ENUM('new', 'in_review', 'contacted', 'completed', 'cancelled');--> statement-breakpoint
 CREATE TYPE "public"."withdraw_status" AS ENUM('pending', 'approved', 'processing', 'paid', 'rejected');--> statement-breakpoint
-ALTER TYPE "public"."user_role" ADD VALUE 'admin';--> statement-breakpoint
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_enum e
+        JOIN pg_type t ON e.enumtypid = t.oid
+        WHERE t.typname = 'user_role'
+          AND e.enumlabel = 'admin'
+    ) THEN
+        ALTER TYPE "public"."user_role" ADD VALUE 'admin';
+    END IF;
+END;
+$$;--> statement-breakpoint
 CREATE TABLE "partner_bank_accounts" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"user_id" integer NOT NULL,
