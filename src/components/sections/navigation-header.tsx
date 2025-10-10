@@ -322,8 +322,12 @@ const CtaSegmented = ({
     <button
       onClick={onOpenAuth}
       className={cn(
-        "h-9 px-4 inline-flex items-center rounded-full text-sm font-medium",
-        "text-foreground/80 hover:text-primary hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)] transition"
+        "h-9 px-4 inline-flex items-center rounded-full text-sm font-semibold text-white",
+        "bg-[linear-gradient(135deg,#ff4d4d_0%,#dc2626_45%,#a10000_100%)]",
+        "border border-white/20 shadow-[inset_0_-1px_0_rgba(0,0,0,.08),0_6px_14px_-6px_rgba(220,38,38,.45)]",
+        "hover:shadow-[inset_0_-1px_0_rgba(0,0,0,.12),0_10px_18px_-8px_rgba(220,38,38,.55)]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#dc2626]/40",
+        "active:translate-y-px transition"
       )}
     >
       {partnerLabel}
@@ -331,11 +335,11 @@ const CtaSegmented = ({
     <Link
       href="/hubungi-kami"
       className={cn(
-        "h-9 px-4 inline-flex items-center rounded-full text-sm font-semibold text-white",
-        "bg-[linear-gradient(135deg,#ff4d4d_0%,#dc2626_45%,#a10000_100%)]",
-        "border border-white/20 shadow-[inset_0_-1px_0_rgba(0,0,0,.08),0_6px_14px_-6px_rgba(220,38,38,.45)]",
-        "hover:shadow-[inset_0_-1px_0_rgba(0,0,0,.12),0_10px_18px_-8px_rgba(220,38,38,.55)]",
-        "active:translate-y-px transition"
+        "h-9 px-4 inline-flex items-center rounded-full text-sm font-medium text-foreground/80",
+        "border border-transparent transition",
+        "hover:text-primary hover:border-primary/20 hover:bg-primary/5 hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2",
+        "active:translate-y-px"
       )}
     >
       {consultLabel}

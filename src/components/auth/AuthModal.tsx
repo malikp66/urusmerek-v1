@@ -3,6 +3,7 @@
 import * as React from "react";
 import { X, Mail, Lock, User2, ShieldCheck, Chrome, Facebook } from "lucide-react";
 import { Dialog, DialogContent, DialogOverlay } from "@radix-ui/react-dialog";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useGlobalAlert } from "@/components/global-alert/GlobalAlertProvider";
 import { z } from "zod";
@@ -86,7 +87,10 @@ export function AuthModal({
   onOpenChange: (v: boolean) => void;
 }) {
   const [mode, setMode] = React.useState<"login" | "signup">("login");
+  const router = useRouter();
   const { showAlert } = useGlobalAlert();
+
+  const affiliatePanelPath = "/admin/affiliates";
 
   // Login form
   const {
@@ -120,6 +124,7 @@ export function AuthModal({
           result.message ?? "Selamat datang kembali di portal Mitra UrusMerek.",
       });
       onOpenChange(false);
+      router.push(affiliatePanelPath);
     } catch (error) {
       console.error(error);
       showAlert({
@@ -148,7 +153,11 @@ export function AuthModal({
           result.message ?? "Anda dapat langsung masuk menggunakan kredensial baru.",
       });
       onOpenChange(false);
+<<<<<<< HEAD
       setMode("login");
+=======
+      router.push(affiliatePanelPath);
+>>>>>>> 1cda115d61e9b365f655dad578d2a76d0ca45ba6
     } catch (error) {
       console.error(error);
       showAlert({

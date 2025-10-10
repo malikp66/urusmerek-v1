@@ -17,7 +17,7 @@ import { hashIpAddress, withRateLimit } from '@/lib/rate-limit';
 const signupSchema = z.object({
   name: z.string().min(1, 'Nama wajib diisi'),
   email: z.string().email('Email tidak valid'),
-  password: z.string().min(8, 'Password minimal 8 karakter'),
+  password: z.string().min(6, 'Password minimal 6 karakter'),
 });
 
 const SIGNUP_RATE_LIMIT = { limit: 3, windowMs: 60_000 } as const;
