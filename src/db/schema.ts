@@ -13,6 +13,7 @@ import {
   uniqueIndex,
   varchar,
   bigserial,
+  uuid,
 } from 'drizzle-orm/pg-core';
 
 import { env } from '../lib/env';
@@ -116,3 +117,14 @@ export const affiliateReferralsRelations = relations(affiliateReferrals, ({ one 
     references: [affiliateLinks.id],
   }),
 }));
+
+export const consultations = pgTable('consultations', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  email: text('email').notNull(),
+  brandName: text('brand_name').notNull(),
+  applicantName: text('applicant_name').notNull(),
+  service: text('service').notNull(),
+  ip: text('ip'),
+  userAgent: text('user_agent'),
+});
