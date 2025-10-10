@@ -37,6 +37,47 @@ const signupSchema = z.object({
 });
 type SignupValues = z.infer<typeof signupSchema>;
 
+type ApiResponse<T = unknown> = {
+  ok: boolean;
+  message?: string;
+  data?: T;
+};
+
+async function sendAuthRequest<T>(
+  url: string,
+  payload: unknown,
+  fallbackMessage: string
+): Promise<ApiResponse<T>> {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(payload),
+  });
+
+  let body: ApiResponse<T> | null = null;
+
+  try {
+    body = await response.json();
+  } catch {
+    body = null;
+  }
+
+  if (!response.ok || !body?.ok) {
+    throw new Error(body?.message ?? fallbackMessage);
+  }
+
+  return body;
+}
+
+function getErrorMessage(error: unknown, fallback: string): string {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  return fallback;
+}
+
 export function AuthModal({
   open,
   onOpenChange,
@@ -66,12 +107,17 @@ export function AuthModal({
 
   async function onLogin(values: LoginValues) {
     try {
-      await new Promise((r) => setTimeout(r, 600));
-      console.log("LOGIN", values);
+      const result = await sendAuthRequest(
+        "/api/mitra/login",
+        values,
+        "Terjadi kendala saat memproses permintaan login."
+      );
+
       showAlert({
         tone: "success",
         title: "Login berhasil",
-        description: "Selamat datang kembali di portal Mitra UrusMerek.",
+        description:
+          result.message ?? "Selamat datang kembali di portal Mitra UrusMerek.",
       });
       onOpenChange(false);
     } catch (error) {
@@ -79,33 +125,39 @@ export function AuthModal({
       showAlert({
         tone: "error",
         title: "Gagal masuk",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Terjadi kendala saat memproses permintaan login.",
+        description: getErrorMessage(
+          error,
+          "Terjadi kendala saat memproses permintaan login."
+        ),
       });
     }
   }
 
   async function onSignup(values: SignupValues) {
     try {
-      await new Promise((r) => setTimeout(r, 600));
-      console.log("SIGNUP", values);
+      const result = await sendAuthRequest(
+        "/api/mitra/signup",
+        values,
+        "Terjadi kendala saat memproses pendaftaran akun."
+      );
+
       showAlert({
         tone: "success",
         title: "Akun berhasil dibuat",
-        description: "Anda dapat langsung masuk menggunakan kredensial baru.",
+        description:
+          result.message ?? "Anda dapat langsung masuk menggunakan kredensial baru.",
       });
       onOpenChange(false);
+      setMode("login");
     } catch (error) {
       console.error(error);
       showAlert({
         tone: "error",
         title: "Pendaftaran gagal",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Terjadi kendala saat memproses pendaftaran akun.",
+        description: getErrorMessage(
+          error,
+          "Terjadi kendala saat memproses pendaftaran akun."
+        ),
       });
     }
   }
