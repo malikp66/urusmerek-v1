@@ -55,7 +55,7 @@ const FinalCta = () => {
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="hover:-translate-y-px">
                 <Link
-                  href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+konsultasi+pendaftaran+merek.&type=phone_number&app_absent=0"
+                  href="/konsultasi"
                 >
                   {primaryCta}
                 </Link>

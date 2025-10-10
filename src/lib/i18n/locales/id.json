@@ -15,9 +15,10 @@
       "contact": "Hubungi Kami",
       "partner": "Mitra"
     },
-    "cta": {
-      "consult": "Konsultasi"
-    },
+  "cta": {
+    "consult": "Konsultasi",
+    "panel": "Mitra"
+  },
     "aria": {
       "openMenu": "Buka menu"
     },

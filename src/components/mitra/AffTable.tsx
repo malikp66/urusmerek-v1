@@ -3,8 +3,8 @@
 import { useMemo, useOptimistic, useTransition } from "react";
 import { toast } from "sonner";
 
-import { toggleAffiliateLink } from "@/app/admin/affiliates/actions";
-import { AffiliateLinkRow, PaginatedResult } from "@/app/admin/affiliates/queries";
+import { toggleAffiliateLink } from "@/app/mitra/affiliates/actions";
+import { AffiliateLinkRow, PaginatedResult } from "@/app/mitra/affiliates/queries";
 import { Switch } from "@/components/ui/switch";
 import {
   Table,

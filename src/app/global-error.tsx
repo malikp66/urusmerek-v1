@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
+import { Button } from "@/components/ui/button";
 
 type GlobalErrorProps = {
   error: Error & { digest?: string };
@@ -113,24 +114,26 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
 
             {/* actions */}
             <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
-              <button
+              <Button
+                variant="outline"
                 onClick={reset}
                 className="rounded-lg bg-red-600 px-5 py-2.5 text-white shadow hover:brightness-110"
               >
                 Coba Lagi
-              </button>
+              </Button>
               <Link
                 href="/"
                 className="rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-slate-800 hover:bg-slate-50"
               >
                 Ke Beranda
               </Link>
-              <button
+              <Button
+                variant="outline"
                 onClick={() => setDetail((s) => !s)}
                 className="rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-slate-800 hover:bg-slate-50"
               >
                 {detail ? "Sembunyikan Detail" : "Lihat Detail"}
-              </button>
+              </Button>
             </div>
 
             {detail && (

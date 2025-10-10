@@ -374,8 +374,7 @@
       "name": "user_role",
       "schema": "public",
       "values": [
-        "mitra",
-        "admin"
+        "mitra"
       ]
     }
   },

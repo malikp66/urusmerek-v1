@@ -3,8 +3,8 @@
 import { useMemo, useOptimistic, useTransition } from "react";
 import { toast } from "sonner";
 
-import { updateReferralStatus } from "@/app/admin/affiliates/actions";
-import { PaginatedResult, ReferralRow } from "@/app/admin/affiliates/queries";
+import { updateReferralStatus } from "@/app/mitra/affiliates/actions";
+import { PaginatedResult, ReferralRow } from "@/app/mitra/affiliates/queries";
 import {
   Table,
   TableBody,

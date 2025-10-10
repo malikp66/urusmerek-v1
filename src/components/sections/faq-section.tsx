@@ -529,7 +529,7 @@ const FaqSection = () => {
               size="lg"
               className="w-full shrink-0 bg-primary text-primary-foreground hover:-translate-y-[1px] hover:bg-primary/90 lg:w-auto"
             >
-              <Link href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+konsultasi+pendaftaran+merek.&type=phone_number&app_absent=0">
+              <Link href="/konsultasi">
                 Konsultasi Gratis Sekarang
               </Link>
             </Button>

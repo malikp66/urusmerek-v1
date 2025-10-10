@@ -204,8 +204,8 @@ export default function HeroSection() {
               <Button asChild size="lg" className="btn-brand hover:-translate-y-px">
                 <Link
                   className="group inline-flex items-center gap-2"
-                  href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+mulai+pendaftaran+merek."
-                  target="_blank" rel="noopener noreferrer" aria-label={cta.primaryLabel}
+                  href="/konsultasi"
+                  aria-label={cta.primaryLabel}
                 >
                   {cta.primary}
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none" />

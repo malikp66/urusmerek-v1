@@ -5,8 +5,8 @@ import { getCurrentUser } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { AffTable } from "@/components/admin/AffTable";
-import { RefTable } from "@/components/admin/RefTable";
+import { AffTable } from "@/components/mitra/AffTable";
+import { RefTable } from "@/components/mitra/RefTable";
 import {
   AffiliateStats,
   getAffiliateLinks,
@@ -217,20 +217,22 @@ function TableSkeleton() {
   );
 }
 
-export default async function AffiliatesPage({
+export default async function MitraDashboardPage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
+  const resolvedSearchParams = await searchParams;
+
   const user = await getCurrentUser();
-  if (!user || user.role !== "admin") {
+  if (!user || user.role !== "mitra") {
     redirect("/");
   }
 
-  const search = toStringValue(searchParams.search);
-  const status = toStringValue(searchParams.status);
-  const linkPage = toNumber(toStringValue(searchParams.linkPage), 1);
-  const refPage = toNumber(toStringValue(searchParams.refPage), 1);
+  const search = toStringValue(resolvedSearchParams.search);
+  const status = toStringValue(resolvedSearchParams.status);
+  const linkPage = toNumber(toStringValue(resolvedSearchParams.linkPage), 1);
+  const refPage = toNumber(toStringValue(resolvedSearchParams.refPage), 1);
 
   const params: Params = {
     search,
@@ -242,7 +244,7 @@ export default async function AffiliatesPage({
   return (
     <div className="container space-y-10 py-10">
       <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Affiliate Dashboard</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">Dashboard Mitra</h1>
         <p className="text-sm text-muted-foreground">
           Pantau performa mitra, link, dan referral terbaru.
         </p>
@@ -254,7 +256,7 @@ export default async function AffiliatesPage({
 
       <section className="space-y-6">
         <div className="rounded-xl border bg-card p-4">
-          <form className="grid gap-4 md:grid-cols-4" action="/admin/affiliates">
+          <form className="grid gap-4 md:grid-cols-4" action="/mitra/affiliates">
             <input type="hidden" name="linkPage" value="1" />
             <input type="hidden" name="refPage" value="1" />
             <div className="md:col-span-2">
@@ -288,7 +290,7 @@ export default async function AffiliatesPage({
             <div className="flex items-end gap-2">
               <Button type="submit">Terapkan</Button>
               <Button variant="ghost" type="reset" asChild>
-                <a href="/admin/affiliates">Reset</a>
+                <a href="/mitra/affiliates">Reset</a>
               </Button>
             </div>
           </form>
@@ -297,7 +299,7 @@ export default async function AffiliatesPage({
         <div className="space-y-8">
           <div className="space-y-4">
             <div>
-              <h2 className="text-xl font-semibold">Affiliate Links</h2>
+              <h2 className="text-xl font-semibold">Link Mitra</h2>
               <p className="text-sm text-muted-foreground">
                 Statistik klik dan komisi untuk setiap link aktif.
               </p>

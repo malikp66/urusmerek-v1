@@ -86,6 +86,7 @@ const glassCard =
 export default function NavigationHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [authOpen, setAuthOpen] = React.useState(false); // ⬅️ state modal
+  const [hasSession, setHasSession] = React.useState(false);
   const pathname = usePathname();
   const tNav = useTranslations("navigation");
   const brand = tNav<{ primary: string; secondary: string; fallbackPrimary: string; fallbackSecondary: string }>("brand");
@@ -94,6 +95,8 @@ export default function NavigationHeader() {
   const aria = tNav<{ openMenu: string }>("aria");
   const mobile = tNav<{ seeAll: string; close: string }>("mobile");
   const consultLabel = tNav<string>("cta.consult");
+  const panelCtaLabel = tNav<string>("cta.panel");
+  const mitraPanelPath = "/mitra/affiliates";
 
   const isActive = React.useCallback(
     (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")),
@@ -101,6 +104,48 @@ export default function NavigationHeader() {
   );
   const layananActive = React.useMemo(() => services.some(i => isActive(i.href)), [isActive, services]);
   const toolsActive = React.useMemo(() => toolsItems.some(i => isActive(i.href)), [isActive]);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    const controller = new AbortController();
+
+    type MitraSessionResponse = { ok?: boolean };
+
+    async function checkSession() {
+      try {
+        const res = await fetch("/api/affiliate/me", {
+          method: "GET",
+          credentials: "include",
+          signal: controller.signal,
+        });
+
+        if (!res.ok) {
+          if (!cancelled) {
+            setHasSession(false);
+          }
+          return;
+        }
+
+        const body = (await res.json().catch(() => null)) as MitraSessionResponse | null;
+
+        if (!cancelled && body?.ok) {
+          setHasSession(true);
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") {
+          return;
+        }
+        console.error("Failed to verify mitra session", error);
+      }
+    }
+
+    checkSession();
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, []);
 
   const capsuleClass =
     "rounded-full border border-primary/10 bg-white px-3 py-2 shadow-[0_10px_30px_-24px_rgba(220,38,38,.6)]";
@@ -213,9 +258,10 @@ export default function NavigationHeader() {
             {/* CTA kanan */}
             <div className={cn("items-center flex h-12", capsuleClass, "px-2")}>
               <CtaSegmented
-                onOpenAuth={() => setAuthOpen(true)}
-                partnerLabel={menu.partner}
+                panelLabel={panelCtaLabel}
+                panelHref={mitraPanelPath}
                 consultLabel={consultLabel}
+                hasSession={hasSession}
               />
             </div>
           </div>
@@ -281,26 +327,29 @@ export default function NavigationHeader() {
                     </Link>
                   </nav>
 
-                  <div className="mt-auto">
-                    <CtaSegmented
-                      className={cn(capsuleClass, "w-full justify-between p-1")}
-                      onOpenAuth={() => {
-                        setIsMobileMenuOpen(false);
-                        setAuthOpen(true);
-                      }}
-                      partnerLabel={menu.partner}
-                      consultLabel={consultLabel}
-                    />
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+          <div className="mt-auto">
+            <CtaSegmented
+              className={cn(capsuleClass, "w-full justify-between p-1")}
+              panelLabel={panelCtaLabel}
+              panelHref={mitraPanelPath}
+              consultLabel={consultLabel}
+              hasSession={hasSession}
+            />
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
           </div>
         </div>
       </header>
 
       {/* ⬇️ Modal Auth */}
-      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
+      <AuthModal
+        open={authOpen}
+        onOpenChange={setAuthOpen}
+        onAuthenticated={() => setHasSession(true)}
+        hasSession={hasSession}
+      />
     </>
   );
 }
@@ -308,44 +357,50 @@ export default function NavigationHeader() {
 /* --- CTA --- */
 const CtaSegmented = ({
   className = "",
-  onOpenAuth,
-  partnerLabel,
+  panelHref,
+  panelLabel,
   consultLabel,
+  hasSession,
 }: {
   className?: string;
-  onOpenAuth?: () => void;
-  partnerLabel: string;
+  panelHref: string;
+  panelLabel: string;
   consultLabel: string;
-}) => (
-  <div className={cn("inline-flex items-center gap-1", className)}>
-    {/* Ganti Link Mitra menjadi tombol pemicu modal */}
-    <button
-      onClick={onOpenAuth}
-      className={cn(
-        "h-9 px-4 inline-flex items-center rounded-full text-sm font-semibold text-white",
-        "bg-[linear-gradient(135deg,#ff4d4d_0%,#dc2626_45%,#a10000_100%)]",
-        "border border-white/20 shadow-[inset_0_-1px_0_rgba(0,0,0,.08),0_6px_14px_-6px_rgba(220,38,38,.45)]",
-        "hover:shadow-[inset_0_-1px_0_rgba(0,0,0,.12),0_10px_18px_-8px_rgba(220,38,38,.55)]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#dc2626]/40",
-        "active:translate-y-px transition"
-      )}
-    >
-      {partnerLabel}
-    </button>
-    <Link
-      href="/hubungi-kami"
-      className={cn(
-        "h-9 px-4 inline-flex items-center rounded-full text-sm font-medium text-foreground/80",
-        "border border-transparent transition",
-        "hover:text-primary hover:border-primary/20 hover:bg-primary/5 hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2",
-        "active:translate-y-px"
-      )}
-    >
-      {consultLabel}
-    </Link>
-  </div>
-)
+  hasSession: boolean;
+}) => {
+  const primaryHref = panelHref;
+  const primaryLabel = hasSession ? `${panelLabel} Panel` : panelLabel;
+
+  return (
+    <div className={cn("inline-flex items-center gap-1", className)}>
+      <Link
+        href={primaryHref}
+        className={cn(
+          "h-9 px-4 inline-flex items-center rounded-full text-sm font-semibold text-white",
+          "bg-[linear-gradient(135deg,#ff4d4d_0%,#dc2626_45%,#a10000_100%)]",
+          "border border-white/20 shadow-[inset_0_-1px_0_rgba(0,0,0,.08),0_6px_14px_-6px_rgba(220,38,38,.45)]",
+          "hover:shadow-[inset_0_-1px_0_rgba(0,0,0,.12),0_10px_18px_-8px_rgba(220,38,38,.55)]",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#dc2626]/40",
+          "active:translate-y-px transition"
+        )}
+      >
+        {primaryLabel}
+      </Link>
+      <Link
+        href="/konsultasi"
+        className={cn(
+          "h-9 px-4 inline-flex items-center rounded-full text-sm font-medium text-foreground/80",
+          "border border-transparent transition",
+          "hover:text-primary hover:border-primary/20 hover:bg-primary/5 hover:[text-shadow:0_0_10px_rgba(220,38,38,.45)]",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2",
+          "active:translate-y-px"
+        )}
+      >
+        {consultLabel}
+      </Link>
+    </div>
+  );
+};
 
 /* --- Mobile dropdown (tetap) --- */
 const MobileLayananDropdown = ({

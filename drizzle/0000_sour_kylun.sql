@@ -1,5 +1,5 @@
 CREATE TYPE "public"."referral_status" AS ENUM('pending', 'approved', 'rejected', 'paid');--> statement-breakpoint
-CREATE TYPE "public"."user_role" AS ENUM('mitra', 'admin');--> statement-breakpoint
+CREATE TYPE "public"."user_role" AS ENUM('mitra');--> statement-breakpoint
 CREATE TABLE "affiliate_clicks" (
 	"id" bigserial PRIMARY KEY NOT NULL,
 	"link_id" integer NOT NULL,

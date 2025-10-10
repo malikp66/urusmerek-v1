@@ -7,6 +7,7 @@ import {
   computeCommission,
   getLinkByCode,
 } from '@/lib/affiliate';
+import { getCurrentUser } from '@/lib/auth';
 import { db, schema } from '@/lib/db';
 import { logger } from '@/lib/logger';
 
@@ -68,6 +69,17 @@ export async function POST(req: Request) {
       return NextResponse.json({
         ok: true,
         message: 'Kode referral tidak ditemukan atau tidak aktif',
+        data: { attributed: false },
+      });
+    }
+
+    const session = await getCurrentUser(req);
+    const sessionUserId = session ? Number.parseInt(session.sub, 10) : Number.NaN;
+
+    if (Number.isFinite(sessionUserId) && sessionUserId === link.userId) {
+      return NextResponse.json({
+        ok: true,
+        message: 'Referral diabaikan karena menggunakan link milik sendiri',
         data: { attributed: false },
       });
     }

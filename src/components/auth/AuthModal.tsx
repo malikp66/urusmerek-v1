@@ -3,7 +3,7 @@
 import * as React from "react";
 import { X, Mail, Lock, User2, ShieldCheck, Chrome, Facebook } from "lucide-react";
 import { Dialog, DialogContent, DialogOverlay } from "@radix-ui/react-dialog";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useGlobalAlert } from "@/components/global-alert/GlobalAlertProvider";
 import { z } from "zod";
@@ -37,6 +37,13 @@ const signupSchema = z.object({
   password: passwordSchema,
 });
 type SignupValues = z.infer<typeof signupSchema>;
+
+type AuthModalProps = {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  onAuthenticated?: () => void;
+  hasSession?: boolean;
+};
 
 type ApiResponse<T = unknown> = {
   ok: boolean;
@@ -82,15 +89,15 @@ function getErrorMessage(error: unknown, fallback: string): string {
 export function AuthModal({
   open,
   onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (v: boolean) => void;
-}) {
+  onAuthenticated,
+  hasSession = false,
+}: AuthModalProps) {
   const [mode, setMode] = React.useState<"login" | "signup">("login");
   const router = useRouter();
+  const pathname = usePathname();
   const { showAlert } = useGlobalAlert();
 
-  const affiliatePanelPath = "/admin/affiliates";
+  const mitraPanelPath = "/mitra/affiliates";
 
   // Login form
   const {
@@ -109,6 +116,29 @@ export function AuthModal({
 
   const pwd = watch("password");
 
+  React.useEffect(() => {
+    if (!hasSession) {
+      return;
+    }
+
+    setMode("login");
+    if (open) {
+      onOpenChange(false);
+    }
+  }, [hasSession, open, onOpenChange]);
+
+  const handlePostAuthSuccess = React.useCallback(() => {
+    setMode("login");
+    onOpenChange(false);
+    onAuthenticated?.();
+
+    if (pathname !== mitraPanelPath) {
+      router.push(mitraPanelPath);
+    } else {
+      router.refresh();
+    }
+  }, [mitraPanelPath, onAuthenticated, onOpenChange, pathname, router]);
+
   async function onLogin(values: LoginValues) {
     try {
       const result = await sendAuthRequest(
@@ -123,8 +153,7 @@ export function AuthModal({
         description:
           result.message ?? "Selamat datang kembali di portal Mitra UrusMerek.",
       });
-      onOpenChange(false);
-      router.push(affiliatePanelPath);
+      handlePostAuthSuccess();
     } catch (error) {
       console.error(error);
       showAlert({
@@ -152,12 +181,7 @@ export function AuthModal({
         description:
           result.message ?? "Anda dapat langsung masuk menggunakan kredensial baru.",
       });
-      onOpenChange(false);
-<<<<<<< HEAD
-      setMode("login");
-=======
-      router.push(affiliatePanelPath);
->>>>>>> 1cda115d61e9b365f655dad578d2a76d0ca45ba6
+      handlePostAuthSuccess();
     } catch (error) {
       console.error(error);
       showAlert({
@@ -255,7 +279,7 @@ export function AuthModal({
               <input
                 type="password"
                 autoComplete="current-password"
-                placeholder="••••••••"
+                placeholder="********"
                 className={inputClass(loginErrors.password)}
                 {...loginRegister("password")}
               />
@@ -326,7 +350,7 @@ export function AuthModal({
                 <input
                   type="password"
                   autoComplete="new-password"
-                  placeholder="••••••••"
+                placeholder="********"
                   className={inputClass(signupErrors.password)}
                   {...signupRegister("password")}
                 />
@@ -401,7 +425,7 @@ function inputClass(hasError?: unknown) {
 
 function PasswordChecklist({ value }: { value: string }) {
   const rules = [
-    { ok: value.length >= 6, label: "≥ 6 karakter" },
+    { ok: value.length >= 6, label: ">= 6 karakter" },
     { ok: /[a-z]/.test(value), label: "huruf kecil" },
     { ok: /[A-Z]/.test(value), label: "huruf besar" },
     { ok: /[0-9]/.test(value), label: "angka" },

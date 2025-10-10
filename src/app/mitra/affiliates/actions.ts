@@ -18,9 +18,9 @@ const toggleSchema = z.object({
   isActive: z.boolean(),
 });
 
-async function requireAdmin() {
+async function requireMitra() {
   const user = await getCurrentUser();
-  if (!user || user.role !== "admin") {
+  if (!user || user.role !== "mitra") {
     throw new Error("Unauthorized");
   }
   return user;
@@ -30,7 +30,7 @@ export async function updateReferralStatus(input: {
   referralId: number;
   status: "pending" | "approved" | "rejected" | "paid";
 }) {
-  await requireAdmin();
+  await requireMitra();
   const payload = referralSchema.parse(input);
 
   await db
@@ -38,14 +38,14 @@ export async function updateReferralStatus(input: {
     .set({ status: payload.status })
     .where(eq(affiliateReferrals.id, payload.referralId));
 
-  revalidatePath("/admin/affiliates");
+  revalidatePath("/mitra/affiliates");
 }
 
 export async function toggleAffiliateLink(input: {
   linkId: number;
   isActive: boolean;
 }) {
-  await requireAdmin();
+  await requireMitra();
   const payload = toggleSchema.parse(input);
 
   await db
@@ -53,5 +53,5 @@ export async function toggleAffiliateLink(input: {
     .set({ isActive: payload.isActive })
     .where(eq(affiliateLinks.id, payload.linkId));
 
-  revalidatePath("/admin/affiliates");
+  revalidatePath("/mitra/affiliates");
 }

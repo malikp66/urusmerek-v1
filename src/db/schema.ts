@@ -18,7 +18,7 @@ import {
 
 import { env } from '../lib/env';
 
-export const userRoleEnum = pgEnum('user_role', ['mitra', 'admin']);
+export const userRoleEnum = pgEnum('user_role', ['mitra']);
 export const referralStatusEnum = pgEnum('referral_status', ['pending', 'approved', 'rejected', 'paid']);
 
 export const users = pgTable(

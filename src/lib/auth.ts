@@ -8,7 +8,7 @@ import { cookies } from 'next/headers';
 
 import { env } from './env';
 
-export type UserRole = 'mitra' | 'admin';
+export type UserRole = 'mitra';
 
 const SESSION_COOKIE_NAME = 'session';
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7; // 7 days
@@ -70,7 +70,7 @@ export async function verifyJwt(token: string): Promise<JwtSession | null> {
       return null;
     }
 
-    if (role !== 'mitra' && role !== 'admin') {
+    if (role !== 'mitra') {
       return null;
     }
 
@@ -105,7 +105,7 @@ export function clearAuthCookie<T extends ResponseLike>(response: T): void {
 }
 
 export async function getCurrentUser(req?: Request): Promise<JwtSession | null> {
-  const token = req ? extractCookieFromHeader(req.headers.get('cookie')) : getTokenFromStore();
+  const token = req ? extractCookieFromHeader(req.headers.get('cookie')) : await getTokenFromStore();
 
   if (!token) {
     return null;
@@ -177,9 +177,10 @@ function extractCookieFromHeader(header: string | null): string | undefined {
   return undefined;
 }
 
-function getTokenFromStore(): string | undefined {
+async function getTokenFromStore(): Promise<string | undefined> {
   try {
-    return cookies().get(SESSION_COOKIE_NAME)?.value;
+    const cookieStore = await cookies();
+    return cookieStore.get(SESSION_COOKIE_NAME)?.value;
   } catch {
     return undefined;
   }

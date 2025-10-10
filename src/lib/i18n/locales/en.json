@@ -15,9 +15,10 @@
       "contact": "Contact",
       "partner": "Partner"
     },
-    "cta": {
-      "consult": "Consult"
-    },
+  "cta": {
+    "consult": "Consult",
+    "panel": "Mitra Panel"
+  },
     "aria": {
       "openMenu": "Open menu"
     },
