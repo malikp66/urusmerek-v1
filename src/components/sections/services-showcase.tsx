@@ -127,7 +127,7 @@ const ServicesShowcase = () => {
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                     priority={index === 0}
-                    onLoadingComplete={() =>
+                    onLoad={() =>
                       setLoadedImages((prev) => (prev[index] ? prev : { ...prev, [index]: true }))
                     }
                     className={cn(

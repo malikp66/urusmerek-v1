@@ -79,7 +79,7 @@ const FinalCta = () => {
                 width={1200}
                 height={760}
                 priority
-                onLoadingComplete={() => setIsImageLoaded(true)}
+                onLoad={() => setIsImageLoaded(true)}
                 className={`rounded-xl w-full h-auto transition-opacity duration-500 ease-out ${
                   isImageLoaded ? "opacity-100" : "opacity-0"
                 }`}

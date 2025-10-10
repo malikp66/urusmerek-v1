@@ -173,7 +173,7 @@ export default function IndustryTemplates() {
                     src={active.image}
                     alt={active.title}
                     fill
-                    onLoadingComplete={() =>
+                    onLoad={() =>
                       activeImageId
                         ? setLoadedImages((prev) =>
                             prev[activeImageId] ? prev : { ...prev, [activeImageId]: true }

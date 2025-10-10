@@ -106,7 +106,7 @@ const LargeCard = ({ feature }: { feature: PrimaryFeature }) => {
             width={1000}
             height={700}
             priority
-            onLoadingComplete={() => setIsLoaded(true)}
+            onLoad={() => setIsLoaded(true)}
             className={cn(
               "h-full w-full object-cover transition-opacity duration-500 ease-out",
               isLoaded ? "opacity-100" : "opacity-0"

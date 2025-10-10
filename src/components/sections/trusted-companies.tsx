@@ -34,7 +34,7 @@ const LogoItem = ({ logo, priority }: { logo: { name: string; src: string }; pri
         height={32}
         priority={priority}
         loading={priority ? undefined : "lazy"}
-        onLoadingComplete={() => setIsLoaded(true)}
+        onLoad={() => setIsLoaded(true)}
         className={`h-8 w-auto max-w-[140px] object-contain transition-[filter,opacity,transform] duration-200
           ${isLoaded ? "opacity-70 grayscale" : "opacity-0"}
           group-hover:opacity-100 group-hover:grayscale-0

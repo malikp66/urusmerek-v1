@@ -4,6 +4,7 @@ import * as React from "react";
 import { X, Mail, Lock, User2, ShieldCheck, Chrome, Facebook } from "lucide-react";
 import { Dialog, DialogContent, DialogOverlay } from "@radix-ui/react-dialog";
 import { cn } from "@/lib/utils";
+import { useGlobalAlert } from "@/components/global-alert/GlobalAlertProvider";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,6 +45,7 @@ export function AuthModal({
   onOpenChange: (v: boolean) => void;
 }) {
   const [mode, setMode] = React.useState<"login" | "signup">("login");
+  const { showAlert } = useGlobalAlert();
 
   // Login form
   const {
@@ -63,14 +65,49 @@ export function AuthModal({
   const pwd = watch("password");
 
   async function onLogin(values: LoginValues) {
-    await new Promise((r) => setTimeout(r, 600));
-    console.log("LOGIN", values);
-    onOpenChange(false);
+    try {
+      await new Promise((r) => setTimeout(r, 600));
+      console.log("LOGIN", values);
+      showAlert({
+        tone: "success",
+        title: "Login berhasil",
+        description: "Selamat datang kembali di portal Mitra UrusMerek.",
+      });
+      onOpenChange(false);
+    } catch (error) {
+      console.error(error);
+      showAlert({
+        tone: "error",
+        title: "Gagal masuk",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Terjadi kendala saat memproses permintaan login.",
+      });
+    }
   }
+
   async function onSignup(values: SignupValues) {
-    await new Promise((r) => setTimeout(r, 600));
-    console.log("SIGNUP", values);
-    onOpenChange(false);
+    try {
+      await new Promise((r) => setTimeout(r, 600));
+      console.log("SIGNUP", values);
+      showAlert({
+        tone: "success",
+        title: "Akun berhasil dibuat",
+        description: "Anda dapat langsung masuk menggunakan kredensial baru.",
+      });
+      onOpenChange(false);
+    } catch (error) {
+      console.error(error);
+      showAlert({
+        tone: "error",
+        title: "Pendaftaran gagal",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Terjadi kendala saat memproses pendaftaran akun.",
+      });
+    }
   }
 
   return (
