@@ -21,6 +21,7 @@ import {
 } from "./queries";
 import { CreateLinkDialog } from "./_components/CreateLinkDialog";
 import { PerformanceChart } from "./_components/PerformanceChart";
+import { getLocaleFromRequest, getTranslations } from "@/lib/i18n/server";
 
 export const revalidate = 30;
 
@@ -76,28 +77,33 @@ async function ReferralsTable({ userId, search, status, refPage, linkPage }: Par
   return <RefTable result={referrals} query={query} />;
 }
 
-function PerformanceSection({ dashboard }: { dashboard: MitraDashboardData }) {
+function PerformanceSection({
+  dashboard,
+  locale,
+}: {
+  dashboard: MitraDashboardData;
+  locale: "id" | "en";
+}) {
+  const t = getTranslations("panels.partner.dashboard", locale);
   return (
     <Card className="col-span-full">
       <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <CardTitle className="text-base font-semibold">Performa Referral</CardTitle>
-          <p className="text-sm text-muted-foreground">
-            Pantau tren klik dan referral dalam 7 dan 30 hari terakhir.
-          </p>
+          <CardTitle className="text-base font-semibold">{t("performance.title")}</CardTitle>
+          <p className="text-sm text-muted-foreground">{t("performance.description")}</p>
         </div>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="7d" className="space-y-4">
           <TabsList>
-            <TabsTrigger value="7d">7 Hari</TabsTrigger>
-            <TabsTrigger value="30d">30 Hari</TabsTrigger>
+            <TabsTrigger value="7d">{t("performance.tabs.sevenDays")}</TabsTrigger>
+            <TabsTrigger value="30d">{t("performance.tabs.thirtyDays")}</TabsTrigger>
           </TabsList>
           <TabsContent value="7d">
-            <PerformanceChart data={dashboard.performance7d} />
+            <PerformanceChart data={dashboard.performance7d} locale={locale} />
           </TabsContent>
           <TabsContent value="30d">
-            <PerformanceChart data={dashboard.performance30d} />
+            <PerformanceChart data={dashboard.performance30d} locale={locale} />
           </TabsContent>
         </Tabs>
       </CardContent>
@@ -108,10 +114,14 @@ function PerformanceSection({ dashboard }: { dashboard: MitraDashboardData }) {
 function DashboardStats({
   dashboard,
   balance,
+  locale,
 }: {
   dashboard: MitraDashboardData;
   balance: MitraBalance;
+  locale: "id" | "en";
 }) {
+  const intlLocale = locale === "en" ? "en-US" : "id-ID";
+  const t = getTranslations("panels.partner.dashboard", locale);
   const { stats } = dashboard;
   const totalLeads =
     stats.referralsPending +
@@ -119,36 +129,53 @@ function DashboardStats({
     stats.referralsPaid +
     stats.referralsRejected;
 
+  const statLabels = t<{
+    clicks7d: { title: string; caption: string };
+    totalLeads: { title: string; caption: string };
+    totalCommission: { title: string; caption: string };
+    readyToWithdraw: { title: string; caption: string };
+    withdrawPending: { title: string; captionPending: string; captionEmpty: string };
+  }>("stats");
   const statCards = [
     {
-      title: "Klik 7 Hari Terakhir",
-      value: stats.clicks7d.toLocaleString("id-ID"),
-      caption: `${totalLeads.toLocaleString("id-ID")} referral seumur hidup`,
+      title: statLabels.clicks7d.title,
+      value: stats.clicks7d.toLocaleString(intlLocale),
+      caption: statLabels.clicks7d.caption.replace(
+        "{total}",
+        totalLeads.toLocaleString(intlLocale)
+      ),
     },
     {
-      title: "Total Lead",
-      value: totalLeads.toLocaleString("id-ID"),
-      caption: `${stats.referralsApproved.toLocaleString(
-        "id-ID"
-      )} menunggu pencairan`,
+      title: statLabels.totalLeads.title,
+      value: totalLeads.toLocaleString(intlLocale),
+      caption: statLabels.totalLeads.caption.replace(
+        "{approved}",
+        stats.referralsApproved.toLocaleString(intlLocale)
+      ),
     },
     {
-      title: "Komisi Terkumpul",
-      value: `Rp ${stats.totalCommission.toLocaleString("id-ID")}`,
-      caption: `Paid ${stats.paidCommission.toLocaleString("id-ID")}`,
+      title: statLabels.totalCommission.title,
+      value: `Rp ${stats.totalCommission.toLocaleString(intlLocale)}`,
+      caption: statLabels.totalCommission.caption.replace(
+        "{amount}",
+        stats.paidCommission.toLocaleString(intlLocale)
+      ),
     },
     {
-      title: "Komisi Siap Cair",
-      value: `Rp ${balance.available.toLocaleString("id-ID")}`,
-      caption: `Approved ${stats.approvedCommission.toLocaleString("id-ID")}`,
+      title: statLabels.readyToWithdraw.title,
+      value: `Rp ${balance.available.toLocaleString(intlLocale)}`,
+      caption: statLabels.readyToWithdraw.caption.replace(
+        "{amount}",
+        stats.approvedCommission.toLocaleString(intlLocale)
+      ),
     },
     {
-      title: "Withdraw Pending",
-      value: `Rp ${stats.withdrawPending.toLocaleString("id-ID")}`,
+      title: statLabels.withdrawPending.title,
+      value: `Rp ${stats.withdrawPending.toLocaleString(intlLocale)}`,
       caption:
         stats.withdrawPending > 0
-          ? "Menunggu verifikasi tim Kami"
-          : "Belum ada permintaan",
+          ? statLabels.withdrawPending.captionPending
+          : statLabels.withdrawPending.captionEmpty,
     },
   ];
 
@@ -181,6 +208,9 @@ export default async function MitraDashboardPage({
     redirect("/");
   }
 
+  const locale = getLocaleFromRequest();
+  const intlLocale = locale === "en" ? "en-US" : "id-ID";
+  const t = getTranslations("panels.partner.dashboard", locale);
   const userId = Number(user.sub);
   const search = toStringValue(resolved.search);
   const status = toStringValue(resolved.status);
@@ -207,30 +237,25 @@ export default async function MitraDashboardPage({
     <div className="space-y-10 py-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Dashboard Mitra</h1>
-          <p className="text-sm text-muted-foreground">
-            Pantau performa link, referral terbaru, dan komisi yang siap dicairkan.
-          </p>
+          <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
+          <p className="text-sm text-muted-foreground">{t("description")}</p>
         </div>
         <div className="flex items-center gap-2">
           <CreateLinkDialog />
           <Button variant="outline" asChild>
-            <a href="/mitra/withdraw">Kelola Withdraw</a>
+            <a href="/mitra/withdraw">{t("manageWithdraw")}</a>
           </Button>
         </div>
       </div>
 
-      <DashboardStats dashboard={dashboard} balance={balance} />
+      <DashboardStats dashboard={dashboard} balance={balance} locale={locale} />
 
-      <PerformanceSection dashboard={dashboard} />
+      <PerformanceSection dashboard={dashboard} locale={locale} />
 
       {hasApprovedToWithdraw ? (
         <Alert>
-          <AlertTitle>Ada komisi yang siap dicairkan!</AlertTitle>
-          <AlertDescription>
-            Kamu memiliki komisi approved yang belum diajukan withdraw. Buka tab withdraw
-            untuk mengajukan pencairan.
-          </AlertDescription>
+          <AlertTitle>{t("alerts.ready.title")}</AlertTitle>
+          <AlertDescription>{t("alerts.ready.description")}</AlertDescription>
         </Alert>
       ) : null}
 
@@ -242,18 +267,18 @@ export default async function MitraDashboardPage({
               <input type="hidden" name="refPage" value="1" />
               <div className="md:col-span-2">
                 <label className="mb-2 block text-sm font-medium" htmlFor="search">
-                  Pencarian Link
+                  {t("filters.searchLabel")}
                 </label>
                 <Input
                   id="search"
                   name="search"
                   defaultValue={search ?? ""}
-                  placeholder="Cari kode link"
+                  placeholder={t("filters.searchPlaceholder")}
                 />
               </div>
               <div>
                 <label className="mb-2 block text-sm font-medium" htmlFor="status">
-                  Status Referral
+                  {t("filters.statusLabel")}
                 </label>
                 <select
                   id="status"
@@ -261,17 +286,19 @@ export default async function MitraDashboardPage({
                   defaultValue={status ?? ""}
                   className="border-input bg-background text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] dark:bg-input/30 dark:hover:bg-input/50 h-9 w-full rounded-md border px-3 text-sm shadow-xs transition-[color,box-shadow]"
                 >
-                  <option value="">Semua Status</option>
-                  <option value="pending">Pending</option>
-                  <option value="approved">Approved</option>
-                  <option value="rejected">Rejected</option>
-                  <option value="paid">Paid</option>
+                  {Object.entries(t<Record<string, string>>("filters.statusOptions")).map(
+                    ([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    )
+                  )}
                 </select>
               </div>
               <div className="flex items-end gap-2 md:col-span-2">
-                <Button type="submit">Terapkan</Button>
+                <Button type="submit">{t("filters.apply")}</Button>
                 <Button variant="ghost" type="reset" asChild>
-                  <a href="/mitra/affiliates">Reset</a>
+                  <a href="/mitra/affiliates">{t("filters.reset")}</a>
                 </Button>
               </div>
             </form>
@@ -281,10 +308,8 @@ export default async function MitraDashboardPage({
         <div className="space-y-8">
           <div className="space-y-4">
             <div>
-              <h2 className="text-xl font-semibold">Link Referral</h2>
-              <p className="text-sm text-muted-foreground">
-                Perbarui status link dan pantau performa klik serta komisi.
-              </p>
+              <h2 className="text-xl font-semibold">{t("sections.links.title")}</h2>
+              <p className="text-sm text-muted-foreground">{t("sections.links.description")}</p>
             </div>
             <Suspense fallback={<TableSkeleton />}>
               <LinksTable {...params} />
@@ -293,10 +318,8 @@ export default async function MitraDashboardPage({
 
           <div id="referrals" className="space-y-4">
             <div>
-              <h2 className="text-xl font-semibold">Riwayat Referral</h2>
-              <p className="text-sm text-muted-foreground">
-                Lihat riwayat referral dan status pencairan komisinya.
-              </p>
+              <h2 className="text-xl font-semibold">{t("sections.referrals.title")}</h2>
+              <p className="text-sm text-muted-foreground">{t("sections.referrals.description")}</p>
             </div>
             <Suspense fallback={<TableSkeleton />}>
               <ReferralsTable {...params} />

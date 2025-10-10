@@ -16,26 +16,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getTranslations } from "@/lib/i18n/server";
 
 type Props = {
   result: PaginatedResult<MitraWithdrawRow>;
   query: Record<string, string | undefined>;
+  locale: "id" | "en";
 };
-
-const STATUS_LABEL: Record<string, string> = {
-  pending: "Pending",
-  approved: "Disetujui",
-  processing: "Diproses",
-  paid: "Selesai",
-  rejected: "Ditolak",
-};
-
-const TIMELINE_STEPS: Array<{ value: string; label: string }> = [
-  { value: "pending", label: "Pending" },
-  { value: "approved", label: "Approved" },
-  { value: "processing", label: "Processing" },
-  { value: "paid", label: "Paid" },
-];
 
 function createQueryString(
   base: Record<string, string | undefined>,
@@ -51,15 +38,17 @@ function createQueryString(
   return `?${params.toString()}`;
 }
 
-function formatCurrency(value: number) {
-  return `Rp ${value.toLocaleString("id-ID")}`;
-}
-
-function WithdrawTimeline({ status }: { status: string }) {
-  const activeIndex = TIMELINE_STEPS.findIndex((step) => step.value === status);
+function WithdrawTimeline({
+  status,
+  steps,
+}: {
+  status: string;
+  steps: Array<{ value: string; label: string }>;
+}) {
+  const activeIndex = steps.findIndex((step) => step.value === status);
   return (
     <div className="flex items-center gap-2">
-      {TIMELINE_STEPS.map((step, index) => {
+      {steps.map((step, index) => {
         const isReached = activeIndex >= index && activeIndex !== -1;
         const isActive = index === activeIndex;
         return (
@@ -70,7 +59,7 @@ function WithdrawTimeline({ status }: { status: string }) {
             >
               {step.label}
             </Badge>
-            {index < TIMELINE_STEPS.length - 1 ? (
+            {index < steps.length - 1 ? (
               <Separator orientation="vertical" className="h-4" />
             ) : null}
           </div>
@@ -80,14 +69,34 @@ function WithdrawTimeline({ status }: { status: string }) {
   );
 }
 
-export function WithdrawTable({ result, query }: Props) {
+export function WithdrawTable({ result, query, locale }: Props) {
+  const intlLocale = locale === "en" ? "en-US" : "id-ID";
+  const t = getTranslations("panels.partner.withdrawTable", locale);
+  const headers = t<{
+    id: string;
+    amount: string;
+    bank: string;
+    status: string;
+    timeline: string;
+    updated: string;
+    notes: string;
+  }>("tableHeaders");
+  const statusLabels = t<Record<string, string>>("status");
+  const timelineLabels = t<Record<string, string>>("timeline");
+  const timelineSteps = ("pending approved processing paid".split(" ") as Array<
+    "pending" | "approved" | "processing" | "paid"
+  >).map((value) => ({ value, label: timelineLabels[value] ?? value }));
+  const pageIndicatorTemplate = t("pageIndicator");
   const paginationMessage = (() => {
+    if (result.totalItems === 0) {
+      return t("empty");
+    }
     const start = (result.page - 1) * result.perPage + 1;
     const end = Math.min(result.totalItems, start + result.perPage - 1);
-    if (result.totalItems === 0) {
-      return "Belum ada riwayat withdraw";
-    }
-    return `Menampilkan ${start}-${end} dari ${result.totalItems} permintaan`;
+    return t("pagination")
+      .replace("{start}", start.toLocaleString(intlLocale))
+      .replace("{end}", end.toLocaleString(intlLocale))
+      .replace("{total}", result.totalItems.toLocaleString(intlLocale));
   })();
 
   const baseQuery = { ...query };
@@ -98,20 +107,20 @@ export function WithdrawTable({ result, query }: Props) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Jumlah</TableHead>
-              <TableHead>Bank</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Timeline</TableHead>
-              <TableHead>Diperbarui</TableHead>
-              <TableHead>Catatan</TableHead>
+              <TableHead>{headers.id}</TableHead>
+              <TableHead>{headers.amount}</TableHead>
+              <TableHead>{headers.bank}</TableHead>
+              <TableHead>{headers.status}</TableHead>
+              <TableHead>{headers.timeline}</TableHead>
+              <TableHead>{headers.updated}</TableHead>
+              <TableHead>{headers.notes}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {result.data.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="text-center text-muted-foreground">
-                  Belum ada riwayat withdraw.
+                  {t("empty")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -120,8 +129,8 @@ export function WithdrawTable({ result, query }: Props) {
                   bankName?: string;
                   accountNumber?: string;
                 };
-                const statusLabel = STATUS_LABEL[item.status] ?? item.status;
-                const updated = item.updatedAt.toLocaleString("id-ID", {
+                const statusLabel = statusLabels[item.status] ?? item.status;
+                const updated = item.updatedAt.toLocaleString(intlLocale, {
                   day: "2-digit",
                   month: "short",
                   year: "numeric",
@@ -132,18 +141,26 @@ export function WithdrawTable({ result, query }: Props) {
                 return (
                   <TableRow key={item.id} className="align-top">
                     <TableCell>#{item.id}</TableCell>
-                    <TableCell className="font-medium">{formatCurrency(item.amount)}</TableCell>
+                    <TableCell className="font-medium">
+                      Rp {item.amount.toLocaleString(intlLocale)}
+                    </TableCell>
                     <TableCell>
                       <div className="flex flex-col">
                         <span className="text-sm font-medium">{bank.bankName ?? "-"}</span>
                         <span className="text-xs text-muted-foreground">
-                          {bank.accountNumber ? `••••${String(bank.accountNumber).slice(-4)}` : ""}
+                          {bank.accountNumber ? `••••${String(bank.accountNumber).slice(-4)}` : "-"}
                         </span>
                       </div>
                     </TableCell>
                     <TableCell>
                       <Badge
-                        variant={item.status === "paid" ? "default" : item.status === "rejected" ? "destructive" : "outline"}
+                        variant={
+                          item.status === "paid"
+                            ? "default"
+                            : item.status === "rejected"
+                              ? "destructive"
+                              : "outline"
+                        }
                         className="capitalize"
                       >
                         {statusLabel}
@@ -152,14 +169,14 @@ export function WithdrawTable({ result, query }: Props) {
                     <TableCell>
                       {item.status === "rejected" ? (
                         <Badge variant="destructive" className="text-[11px] uppercase">
-                          Ditolak
+                          {statusLabels.rejected ?? statusLabel}
                         </Badge>
                       ) : (
-                        <WithdrawTimeline status={item.status} />
+                        <WithdrawTimeline status={item.status} steps={timelineSteps} />
                       )}
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">{updated}</TableCell>
-                    <TableCell className="text-xs text-muted-foreground max-w-xs">
+                    <TableCell className="max-w-xs text-xs text-muted-foreground">
                       {item.notes ? item.notes : "-"}
                     </TableCell>
                   </TableRow>
@@ -187,7 +204,9 @@ export function WithdrawTable({ result, query }: Props) {
             </PaginationItem>
             <PaginationItem>
               <span className="px-2 text-sm text-muted-foreground">
-                Halaman {result.page} dari {result.pageCount}
+                {pageIndicatorTemplate
+                  .replace("{page}", result.page.toLocaleString(intlLocale))
+                  .replace("{total}", result.pageCount.toLocaleString(intlLocale))}
               </span>
             </PaginationItem>
             <PaginationItem>

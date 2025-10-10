@@ -19,15 +19,18 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AdminNavMenu, type AdminNavigationItem } from "@/app/admin/AdminNavMenu";
-
-const NAV_ITEMS: AdminNavigationItem[] = [
-  { title: "Dashboard", href: "/mitra/affiliates", icon: "barChart3" },
-  { title: "Withdraw", href: "/mitra/withdraw", icon: "creditCard" },
-  { title: "Profil", href: "/mitra/profile", icon: "userCircle" },
-];
+import { getLocaleFromRequest, getTranslations } from "@/lib/i18n/server";
 
 export default async function MitraLayout({ children }: { children: ReactNode }) {
   const session = await getCurrentUser();
+  const locale = getLocaleFromRequest();
+  const t = getTranslations("panels.partner.layout", locale);
+  const navLabels = t<{ dashboard: string; withdraw: string; profile: string }>("navItems");
+  const navigation: AdminNavigationItem[] = [
+    { title: navLabels.dashboard, href: "/mitra/affiliates", icon: "barChart3" },
+    { title: navLabels.withdraw, href: "/mitra/withdraw", icon: "creditCard" },
+    { title: navLabels.profile, href: "/mitra/profile", icon: "userCircle" },
+  ];
   if (!session || session.role !== "mitra") {
     redirect("/");
   }
@@ -41,22 +44,22 @@ export default async function MitraLayout({ children }: { children: ReactNode })
               UM
             </div>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold leading-tight">Mitra Panel</span>
-              <span className="text-xs text-muted-foreground leading-tight">UrusMerek</span>
+              <span className="text-sm font-semibold leading-tight">{t("brandPrimary")}</span>
+              <span className="text-xs text-muted-foreground leading-tight">{t("brandSecondary")}</span>
             </div>
           </Link>
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Navigasi</SidebarGroupLabel>
+            <SidebarGroupLabel>{t("navGroupLabel")}</SidebarGroupLabel>
             <SidebarGroupContent>
-              <AdminNavMenu items={NAV_ITEMS} />
+              <AdminNavMenu items={navigation} />
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
           <div className="rounded-md bg-muted/40 px-3 py-2 text-xs leading-tight text-muted-foreground">
-            Masuk sebagai <span className="font-medium text-foreground">Mitra #{session.sub}</span>
+            {t("signedInAs").replace("{id}", session.sub)}
           </div>
         </SidebarFooter>
       </Sidebar>
@@ -65,13 +68,13 @@ export default async function MitraLayout({ children }: { children: ReactNode })
           <div className="flex h-14 items-center gap-3 px-4">
             <SidebarTrigger />
             <div className="flex flex-col">
-              <h1 className="text-base font-semibold leading-none">Panel Mitra</h1>
-              <p className="text-xs text-muted-foreground">Kelola komisi dan performa referral.</p>
+              <h1 className="text-base font-semibold leading-none">{t("headerTitle")}</h1>
+              <p className="text-xs text-muted-foreground">{t("headerDescription")}</p>
             </div>
             <div className="ml-auto flex items-center gap-3">
               <LangSwitcher />
               <Button asChild variant="outline">
-                <Link href="/">Kembali ke Beranda</Link>
+                <Link href="/">{t("backToSite")}</Link>
               </Button>
             </div>
           </div>

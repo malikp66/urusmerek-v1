@@ -1,13 +1,7 @@
 'use client';
 
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  TooltipProps,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { useMemo } from 'react';
 
 import { PerformancePoint } from '@/app/mitra/affiliates/queries';
 import {
@@ -18,26 +12,33 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-
-const chartConfig = {
-  clicks: {
-    label: 'Klik',
-    color: 'hsl(var(--chart-1))',
-  },
-  referrals: {
-    label: 'Referral',
-    color: 'hsl(var(--chart-2))',
-  },
-} satisfies ChartConfig;
+import { useTranslations } from '@/lib/i18n/context';
 
 type Props = {
   data: PerformancePoint[];
+  locale: 'id' | 'en';
 };
 
-export function PerformanceChart({ data }: Props) {
+export function PerformanceChart({ data, locale }: Props) {
+  const intlLocale = locale === 'en' ? 'en-US' : 'id-ID';
+  const tSeries = useTranslations('panels.partner.performanceChart.series');
+  const chartConfig = useMemo(
+    () =>
+      ({
+        clicks: {
+          label: tSeries('clicks'),
+          color: 'hsl(var(--chart-1))',
+        },
+        referrals: {
+          label: tSeries('referrals'),
+          color: 'hsl(var(--chart-2))',
+        },
+      }) satisfies ChartConfig,
+    [tSeries]
+  );
   const formatted = data.map((item) => ({
     ...item,
-    label: new Date(item.date).toLocaleDateString('id-ID', {
+    label: new Date(item.date).toLocaleDateString(intlLocale, {
       day: '2-digit',
       month: 'short',
     }),
