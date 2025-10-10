@@ -26,6 +26,7 @@ const NAVIGATION: AdminNavigationItem[] = [
   { title: 'Mitra', href: '/admin/mitra', icon: 'users' },
   { title: 'Konsultasi', href: '/admin/konsultasi', icon: 'fileText' },
   { title: 'Withdraw', href: '/admin/withdraw', icon: 'circleDollarSign' },
+  { title: 'Profil', href: '/admin/profile', icon: 'userCircle' },
   { title: 'Pengaturan Komisi', href: '/admin/settings/commission', icon: 'settings' },
   { title: 'Fitur Lain', href: '/admin/features', icon: 'briefcase', badge: 'Segera' },
 ];
