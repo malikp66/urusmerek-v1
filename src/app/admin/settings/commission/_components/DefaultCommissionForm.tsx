@@ -7,12 +7,14 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useTranslations } from '@/lib/i18n/context';
 
 type Props = {
   defaultRate: number;
 };
 
 export function DefaultCommissionForm({ defaultRate }: Props) {
+  const t = useTranslations('panels.admin.forms.defaultCommission');
   const [percent, setPercent] = useState(() => Math.round(defaultRate * 1000) / 10);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -22,7 +24,7 @@ export function DefaultCommissionForm({ defaultRate }: Props) {
 
     const numeric = Number(percent);
     if (!Number.isFinite(numeric) || numeric <= 0) {
-      toast.error('Persentase komisi harus lebih dari 0');
+      toast.error(t('invalid'));
       return;
     }
 
@@ -35,11 +37,11 @@ export function DefaultCommissionForm({ defaultRate }: Props) {
 
       if (!response.ok) {
         const data = await response.json().catch(() => null);
-        toast.error(data?.message ?? 'Gagal menyimpan komisi default');
+        toast.error(data?.message ?? t('error'));
         return;
       }
 
-      toast.success('Komisi default diperbarui');
+      toast.success(t('success'));
       router.refresh();
     });
   };
@@ -47,7 +49,7 @@ export function DefaultCommissionForm({ defaultRate }: Props) {
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <div className="space-y-2">
-        <Label htmlFor="defaultRate">Komisi Default (%)</Label>
+        <Label htmlFor="defaultRate">{t('label')}</Label>
         <Input
           id="defaultRate"
           type="number"
@@ -59,12 +61,12 @@ export function DefaultCommissionForm({ defaultRate }: Props) {
           className="max-w-xs"
         />
         <p className="text-xs text-muted-foreground">
-          Komisi ini akan menjadi dasar untuk setiap mitra baru. Contoh: isi 12 untuk 12%.
+          {t('help')}
         </p>
       </div>
 
       <Button type="submit" disabled={isPending}>
-        {isPending ? 'Menyimpan...' : 'Simpan'}
+        {isPending ? t('saving') : t('save')}
       </Button>
     </form>
   );

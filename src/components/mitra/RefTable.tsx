@@ -19,6 +19,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Badge } from "@/components/ui/badge";
+import { useTranslations, useLocale } from "@/lib/i18n/context";
 
 function createQueryString(
   base: Record<string, string | undefined>,
@@ -34,27 +35,36 @@ function createQueryString(
   return `?${params.toString()}`;
 }
 
-function formatCurrency(value: number) {
-  return `Rp ${value.toLocaleString("id-ID", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  })}`;
-}
-
 type Props = {
   result: PaginatedResult<ReferralRow>;
   query: Record<string, string | undefined>;
 };
 
 export function RefTable({ result, query }: Props) {
+  const { locale } = useLocale();
+  const intlLocale = locale === "en" ? "en-US" : "id-ID";
+  const t = useTranslations("panels.partner.refTable");
+  const headers = t<{
+    order: string;
+    code: string;
+    amount: string;
+    commission: string;
+    status: string;
+    withdraw: string;
+    date: string;
+  }>("tableHeaders");
+  const statusLabels = t<Record<string, string>>("status");
   const paginationMessage = useMemo(() => {
+    if (result.totalItems === 0) {
+      return t("noData");
+    }
     const start = (result.page - 1) * result.perPage + 1;
     const end = Math.min(result.totalItems, start + result.perPage - 1);
-    if (result.totalItems === 0) {
-      return "Tidak ada data";
-    }
-    return `Menampilkan ${start}-${end} dari ${result.totalItems} referral`;
-  }, [result.page, result.perPage, result.totalItems]);
+    return t("pagination")
+      .replace("{start}", start.toLocaleString(intlLocale))
+      .replace("{end}", end.toLocaleString(intlLocale))
+      .replace("{total}", result.totalItems.toLocaleString(intlLocale));
+  }, [intlLocale, result.page, result.perPage, result.totalItems, t]);
 
   const baseQuery = useMemo(() => ({ ...query }), [query]);
 
@@ -64,20 +74,20 @@ export function RefTable({ result, query }: Props) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Order ID</TableHead>
-              <TableHead>Kode</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-              <TableHead className="text-right">Komisi</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Withdraw</TableHead>
-              <TableHead>Tanggal</TableHead>
+              <TableHead>{headers.order}</TableHead>
+              <TableHead>{headers.code}</TableHead>
+              <TableHead className="text-right">{headers.amount}</TableHead>
+              <TableHead className="text-right">{headers.commission}</TableHead>
+              <TableHead>{headers.status}</TableHead>
+              <TableHead>{headers.withdraw}</TableHead>
+              <TableHead>{headers.date}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {result.data.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="text-center text-muted-foreground">
-                  Tidak ada referral ditemukan
+                  {t("empty")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -89,31 +99,36 @@ export function RefTable({ result, query }: Props) {
                       <div className="flex flex-col">
                         <span className="font-medium">{item.orderId}</span>
                         <span className="text-xs text-muted-foreground">
-                          ID #{item.id}
+                          {t("idLabel").replace("{id}", String(item.id))}
                         </span>
                       </div>
                     </TableCell>
                     <TableCell>{item.code}</TableCell>
                     <TableCell className="text-right font-medium">
-                      {formatCurrency(item.amount)}
+                      {`Rp ${item.amount.toLocaleString(intlLocale)}`}
                     </TableCell>
                     <TableCell className="text-right font-medium">
-                      {formatCurrency(item.commission)}
+                      {`Rp ${item.commission.toLocaleString(intlLocale)}`}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline" className="capitalize">
-                        {item.status}
+                        {statusLabels[item.status] ?? item.status}
                       </Badge>
                     </TableCell>
                     <TableCell>
                       {item.payoutRequestId ? (
-                        <Badge variant="secondary">Withdraw #{item.payoutRequestId}</Badge>
+                        <Badge variant="secondary">
+                          {t("withdrawBadge").replace(
+                            "{id}",
+                            String(item.payoutRequestId)
+                          )}
+                        </Badge>
                       ) : (
-                        <span className="text-xs text-muted-foreground">Belum diajukan</span>
+                        <span className="text-xs text-muted-foreground">{t("withdrawEmpty")}</span>
                       )}
                     </TableCell>
                     <TableCell>
-                      {createdAt.toLocaleString("id-ID", {
+                      {createdAt.toLocaleString(intlLocale, {
                         day: "2-digit",
                         month: "short",
                         year: "numeric",
@@ -147,7 +162,9 @@ export function RefTable({ result, query }: Props) {
             </PaginationItem>
             <PaginationItem>
               <span className="px-2 text-sm text-muted-foreground">
-                Halaman {result.page} dari {result.pageCount}
+                {t("pageIndicator")
+                  .replace("{page}", result.page.toLocaleString(intlLocale))
+                  .replace("{total}", result.pageCount.toLocaleString(intlLocale))}
               </span>
             </PaginationItem>
             <PaginationItem>

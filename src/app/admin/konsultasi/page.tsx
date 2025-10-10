@@ -22,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { getLocaleFromRequest, getTranslations } from '@/lib/i18n/server';
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -49,6 +50,23 @@ export default async function AdminConsultationsPage({
 }) {
   await requireAdmin();
   const resolved = await searchParams;
+  const locale = getLocaleFromRequest();
+  const intlLocale = locale === 'en' ? 'en-US' : 'id-ID';
+  const t = getTranslations('panels.admin.consultations', locale);
+  const headers = t<{
+    brand: string;
+    contact: string;
+    service: string;
+    status: string;
+    created: string;
+    actions: string;
+  }>('tableHeaders');
+  const statusOptionsLabels = t<
+    Record<'all' | 'new' | 'in_review' | 'contacted' | 'completed' | 'cancelled', string>
+  >('statusOptions');
+  const statusBadge = t<
+    Record<'new' | 'in_review' | 'contacted' | 'completed' | 'cancelled', string>
+  >('statusBadge');
 
   const search = toStringValue(resolved.search);
   const status = toStringValue(resolved.status) || 'all';
@@ -72,10 +90,8 @@ export default async function AdminConsultationsPage({
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Pengajuan Konsultasi</h2>
-        <p className="text-sm text-muted-foreground">
-          Review dan tindak lanjuti permintaan konsultasi terbaru dari calon klien.
-        </p>
+        <h2 className="text-2xl font-semibold tracking-tight">{t('title')}</h2>
+        <p className="text-sm text-muted-foreground">{t('description')}</p>
       </div>
 
       <Card>
@@ -83,13 +99,13 @@ export default async function AdminConsultationsPage({
           <form className="grid gap-3 md:col-span-3 md:grid-cols-3" action="/admin/konsultasi">
             <Input
               name="search"
-              placeholder="Cari nama brand atau email"
+              placeholder={t('searchPlaceholder')}
               defaultValue={search}
               className="md:col-span-2"
             />
             <div>
               <label htmlFor="status" className="sr-only">
-                Status
+                {t('statusLabel')}
               </label>
               <select
                 id="status"
@@ -99,20 +115,15 @@ export default async function AdminConsultationsPage({
               >
                 {STATUS_OPTIONS.map((option) => (
                   <option key={option} value={option}>
-                    {option === 'all'
-                      ? 'Semua Status'
-                      : option
-                          .split('_')
-                          .map((word) => word[0].toUpperCase() + word.slice(1))
-                          .join(' ')}
+                    {statusOptionsLabels[option as keyof typeof statusOptionsLabels] ?? option}
                   </option>
                 ))}
               </select>
             </div>
             <div className="flex items-center gap-2 md:col-span-3">
-              <Button type="submit">Terapkan</Button>
+              <Button type="submit">{t('apply')}</Button>
               <Button variant="ghost" asChild>
-                <Link href="/admin/konsultasi">Reset</Link>
+                <Link href="/admin/konsultasi">{t('reset')}</Link>
               </Button>
             </div>
           </form>
@@ -123,19 +134,19 @@ export default async function AdminConsultationsPage({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Brand</TableHead>
-              <TableHead>Kontak</TableHead>
-              <TableHead>Layanan</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Diajukan</TableHead>
-              <TableHead className="text-right">Aksi</TableHead>
+              <TableHead>{headers.brand}</TableHead>
+              <TableHead>{headers.contact}</TableHead>
+              <TableHead>{headers.service}</TableHead>
+              <TableHead>{headers.status}</TableHead>
+              <TableHead>{headers.created}</TableHead>
+              <TableHead className="text-right">{headers.actions}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {result.data.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center text-muted-foreground">
-                  Belum ada konsultasi yang cocok dengan filter.
+                  {t('empty')}
                 </TableCell>
               </TableRow>
             ) : (
@@ -156,18 +167,18 @@ export default async function AdminConsultationsPage({
                   <TableCell>{item.service}</TableCell>
                   <TableCell>
                     <Badge variant="outline" className="capitalize">
-                      {item.status.replace('_', ' ')}
+                      {statusBadge[item.status as keyof typeof statusBadge] ?? item.status}
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    {new Date(item.createdAt).toLocaleString('id-ID', {
+                    {new Date(item.createdAt).toLocaleString(intlLocale, {
                       dateStyle: 'medium',
                       timeStyle: 'short',
                     })}
                   </TableCell>
                   <TableCell className="text-right">
                     <Button asChild size="sm" variant="outline">
-                      <Link href={`/admin/konsultasi/${item.id}`}>Kelola</Link>
+                      <Link href={`/admin/konsultasi/${item.id}`}>{t('manage')}</Link>
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -179,7 +190,9 @@ export default async function AdminConsultationsPage({
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
-          Menampilkan {result.data.length} dari {result.totalItems} konsultasi
+          {t('summary')
+            .replace('{displayed}', result.data.length.toLocaleString(intlLocale))
+            .replace('{total}', result.totalItems.toLocaleString(intlLocale))}
         </p>
         <Pagination>
           <PaginationContent>
@@ -192,7 +205,9 @@ export default async function AdminConsultationsPage({
             </PaginationItem>
             <PaginationItem>
               <span className="px-2 text-sm text-muted-foreground">
-                Halaman {result.page} dari {result.pageCount}
+                {t('pagination')
+                  .replace('{page}', result.page.toLocaleString(intlLocale))
+                  .replace('{total}', result.pageCount.toLocaleString(intlLocale))}
               </span>
             </PaginationItem>
             <PaginationItem>

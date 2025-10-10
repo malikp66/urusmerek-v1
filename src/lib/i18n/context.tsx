@@ -1,16 +1,9 @@
 "use client";
 
 import React from "react";
-import id from "./locales/id.json";
-import en from "./locales/en.json";
 
-export type Locale = "id" | "en";
-export type Messages = typeof id;
-
-const dictionaries: Record<Locale, Messages> = {
-  id,
-  en,
-};
+import { DEFAULT_LOCALE, dictionaries, type Locale, type Messages } from "./dictionaries";
+import { createTranslator } from "./utils";
 
 const STORAGE_KEY = "lang";
 
@@ -27,14 +20,20 @@ interface I18nContextValue {
 }
 
 const I18nContext = React.createContext<I18nContextValue>({
-  locale: "id",
-  messages: dictionaries.id,
+  locale: DEFAULT_LOCALE,
+  messages: dictionaries[DEFAULT_LOCALE],
   setLocale: () => {},
 });
 
-export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = React.useState<Locale>("id");
-  const [messages, setMessages] = React.useState<Messages>(dictionaries.id);
+export function I18nProvider({
+  children,
+  initialLocale = DEFAULT_LOCALE,
+}: {
+  children: React.ReactNode;
+  initialLocale?: Locale;
+}) {
+  const [locale, setLocaleState] = React.useState<Locale>(initialLocale);
+  const [messages, setMessages] = React.useState<Messages>(dictionaries[initialLocale]);
 
   React.useEffect(() => {
     if (typeof window === "undefined") return;
@@ -72,27 +71,9 @@ export function useI18n() {
   return React.useContext(I18nContext);
 }
 
-function getPath(messages: Messages, path: string | undefined) {
-  if (!path) return messages;
-  return path.split(".").reduce<unknown>((acc, key) => {
-    if (acc && typeof acc === "object" && key in acc) {
-      // @ts-expect-error -- dynamic access
-      return acc[key];
-    }
-    return undefined;
-  }, messages);
-}
-
 export function useTranslations(namespace?: string) {
   const { messages } = useI18n();
-  return React.useCallback(
-    <T = string>(key?: string) => {
-      const fullPath = [namespace, key].filter(Boolean).join(".");
-      const value = getPath(messages, key ? fullPath : namespace);
-      return (value ?? key ?? namespace) as T;
-    },
-    [messages, namespace]
-  );
+  return React.useCallback(createTranslator(messages, namespace), [messages, namespace]);
 }
 
 export function useLocale() {

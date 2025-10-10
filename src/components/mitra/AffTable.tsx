@@ -63,6 +63,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
+import { useTranslations, useLocale } from "@/lib/i18n/context";
 
 function createQueryString(
   base: Record<string, string | undefined>,
@@ -78,15 +79,6 @@ function createQueryString(
   return `?${params.toString()}`;
 }
 
-function getPaginationMessage(page: number, perPage: number, total: number) {
-  const start = (page - 1) * perPage + 1;
-  const end = Math.min(total, start + perPage - 1);
-  if (total === 0) {
-    return "Tidak ada data";
-  }
-  return `Menampilkan ${start}-${end} dari ${total} link`;
-}
-
 type Props = {
   result: PaginatedResult<MitraLinkRow>;
   query: Record<string, string | undefined>;
@@ -100,6 +92,18 @@ type OptimisticAction =
 
 export function AffTable({ result, query }: Props) {
   const router = useRouter();
+  const { locale } = useLocale();
+  const intlLocale = locale === "en" ? "en-US" : "id-ID";
+  const t = useTranslations("panels.partner.affTable");
+  const headers = t<{
+    link: string;
+    target: string;
+    clicks: string;
+    referrals: string;
+    commission: string;
+    active: string;
+    actions: string;
+  }>("tableHeaders");
   const [optimisticLinks, setOptimisticLinks] = useOptimistic(
     result.data,
     (state, action: OptimisticAction): MitraLinkRow[] => {
@@ -134,8 +138,18 @@ export function AffTable({ result, query }: Props) {
   }, [result.data, setOptimisticLinks]);
 
   const paginationMessage = useMemo(
-    () => getPaginationMessage(result.page, result.perPage, result.totalItems),
-    [result.page, result.perPage, result.totalItems]
+    () => {
+      if (result.totalItems === 0) {
+        return t("noData");
+      }
+      const start = (result.page - 1) * result.perPage + 1;
+      const end = Math.min(result.totalItems, start + result.perPage - 1);
+      return t("pagination")
+        .replace("{start}", start.toLocaleString(intlLocale))
+        .replace("{end}", end.toLocaleString(intlLocale))
+        .replace("{total}", result.totalItems.toLocaleString(intlLocale));
+    },
+    [intlLocale, result.page, result.perPage, result.totalItems, t]
   );
 
   const baseQuery = useMemo(() => ({ ...query }), [query]);
@@ -145,10 +159,10 @@ export function AffTable({ result, query }: Props) {
     startToggleTransition(async () => {
       try {
         await toggleAffiliateLink({ linkId: id, isActive });
-        toast.success("Status link diperbarui");
+        toast.success(t("toggleSuccess"));
         router.refresh();
       } catch (error) {
-        toast.error("Gagal mengubah status link");
+        toast.error(t("toggleError"));
         setOptimisticLinks({ type: "reset", data: result.data });
       }
     });
@@ -170,10 +184,10 @@ export function AffTable({ result, query }: Props) {
         targetUrl,
         description: description ?? undefined,
       });
-      toast.success("Link referral diperbarui");
+      toast.success(t("updateSuccess"));
       router.refresh();
     } catch (error) {
-      toast.error("Gagal memperbarui link");
+      toast.error(t("updateError"));
       setOptimisticLinks({ type: "reset", data: result.data });
       throw error;
     }
@@ -184,10 +198,10 @@ export function AffTable({ result, query }: Props) {
 
     try {
       await deleteAffiliateLink({ linkId: id });
-      toast.success("Link referral dihapus");
+      toast.success(t("deleteSuccess"));
       router.refresh();
     } catch (error) {
-      toast.error("Gagal menghapus link");
+      toast.error(t("deleteError"));
       setOptimisticLinks({ type: "reset", data: result.data });
       throw error;
     }
@@ -199,20 +213,20 @@ export function AffTable({ result, query }: Props) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Link Referral</TableHead>
-              <TableHead>URL Tujuan</TableHead>
-              <TableHead className="text-right">Klik (7h)</TableHead>
-              <TableHead className="text-right">Referral (7h)</TableHead>
-              <TableHead className="text-right">Komisi Lifetime</TableHead>
-              <TableHead className="text-center">Aktif</TableHead>
-              <TableHead className="text-right">Aksi</TableHead>
+              <TableHead>{headers.link}</TableHead>
+              <TableHead>{headers.target}</TableHead>
+              <TableHead className="text-right">{headers.clicks}</TableHead>
+              <TableHead className="text-right">{headers.referrals}</TableHead>
+              <TableHead className="text-right">{headers.commission}</TableHead>
+              <TableHead className="text-center">{headers.active}</TableHead>
+              <TableHead className="text-right">{headers.actions}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {optimisticLinks.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="text-center text-muted-foreground">
-                  Tidak ada link ditemukan
+                  {t("empty")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -247,7 +261,9 @@ export function AffTable({ result, query }: Props) {
             </PaginationItem>
             <PaginationItem>
               <span className="px-2 text-sm text-muted-foreground">
-                Halaman {result.page} dari {result.pageCount}
+                {t("pageIndicator")
+                  .replace("{page}", result.page.toLocaleString(intlLocale))
+                  .replace("{total}", result.pageCount.toLocaleString(intlLocale))}
               </span>
             </PaginationItem>
             <PaginationItem>
@@ -285,6 +301,9 @@ function AffiliateLinkRow({
   onEdit,
   onDelete,
 }: AffiliateLinkRowProps) {
+  const { locale } = useLocale();
+  const intlLocale = locale === "en" ? "en-US" : "id-ID";
+  const t = useTranslations("panels.partner.affTable");
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [targetUrl, setTargetUrl] = useState(link.targetUrl);
@@ -300,9 +319,9 @@ function AffiliateLinkRow({
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(link.shareUrl);
-      toast.success("URL referral disalin");
+      toast.success(t("copySuccess"));
     } catch {
-      toast.error("Tidak dapat menyalin otomatis. Silakan salin manual.");
+      toast.error(t("copyError"));
     }
   };
 
@@ -344,7 +363,9 @@ function AffiliateLinkRow({
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span className="font-medium">{link.code}</span>
-              <span className="text-xs text-muted-foreground">ID #{link.id}</span>
+              <span className="text-xs text-muted-foreground">
+                {t("idLabel").replace("{id}", String(link.id))}
+              </span>
             </div>
             <div className="flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
               <span className="break-all font-medium text-foreground/90">{link.shareUrl}</span>
@@ -356,15 +377,14 @@ function AffiliateLinkRow({
                 className="h-7 w-7"
               >
                 <Copy className="h-3.5 w-3.5" />
-                <span className="sr-only">Salin URL referral</span>
+                <span className="sr-only">{t("copyLabel")}</span>
               </Button>
             </div>
             {link.description ? (
               <p className="text-xs text-muted-foreground line-clamp-2">{link.description}</p>
             ) : null}
             <p className="text-xs text-muted-foreground">
-              Dibuat{" "}
-              {link.createdAt.toLocaleDateString("id-ID", {
+              {t("createdAt")} {link.createdAt.toLocaleDateString(intlLocale, {
                 day: "2-digit",
                 month: "short",
                 year: "numeric",
@@ -376,24 +396,24 @@ function AffiliateLinkRow({
           <span className="text-sm text-muted-foreground break-all">{link.targetUrl}</span>
         </TableCell>
         <TableCell className="text-right font-medium">
-          {link.clicks7d.toLocaleString("id-ID")}
+          {link.clicks7d.toLocaleString(intlLocale)}
         </TableCell>
         <TableCell className="text-right font-medium">
-          {link.referrals7d.toLocaleString("id-ID")}
+          {link.referrals7d.toLocaleString(intlLocale)}
         </TableCell>
         <TableCell className="text-right font-medium">
-          Rp {link.lifetimeCommission.toLocaleString("id-ID")}
+          Rp {link.lifetimeCommission.toLocaleString(intlLocale)}
         </TableCell>
         <TableCell className="text-center">
           <Switch
             checked={link.isActive}
             onCheckedChange={(checked) => onToggle(link.id, Boolean(checked))}
             disabled={isPendingToggle}
-            aria-label={`Toggle link ${link.code}`}
+            aria-label={t("toggleAria").replace("{code}", link.code)}
           />
           {!link.isActive ? (
             <Badge variant="outline" className="mt-2 text-[10px] uppercase tracking-wide">
-              Nonaktif
+              {t("nonActive")}
             </Badge>
           ) : null}
         </TableCell>
@@ -402,7 +422,7 @@ function AffiliateLinkRow({
             <DropdownMenuTrigger asChild>
               <Button type="button" variant="ghost" size="icon" className="h-8 w-8">
                 <MoreHorizontal className="h-4 w-4" />
-                <span className="sr-only">Buka menu tindakan</span>
+                <span className="sr-only">{t("menuLabel")}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-40">
@@ -413,7 +433,7 @@ function AffiliateLinkRow({
                 }}
               >
                 <Pencil className="mr-2 h-4 w-4" />
-                Edit
+                {t("edit")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onSelect={(event) => {
@@ -423,7 +443,7 @@ function AffiliateLinkRow({
                 className="text-destructive focus:text-destructive"
               >
                 <Trash2 className="mr-2 h-4 w-4" />
-                Hapus
+                {t("delete")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -433,39 +453,37 @@ function AffiliateLinkRow({
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Link Referral</DialogTitle>
-            <DialogDescription>
-              Perbarui URL tujuan atau keterangan internal untuk link ini.
-            </DialogDescription>
+            <DialogTitle>{t("editTitle")}</DialogTitle>
+            <DialogDescription>{t("editDescription")}</DialogDescription>
           </DialogHeader>
           <form onSubmit={handleEditSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor={`target-url-${link.id}`}>URL Tujuan</Label>
+              <Label htmlFor={`target-url-${link.id}`}>{t("targetLabel")}</Label>
               <Input
                 id={`target-url-${link.id}`}
                 type="url"
                 required
                 value={targetUrl}
                 onChange={(event) => setTargetUrl(event.target.value)}
-                placeholder="https://contoh.com/tawaran"
+                placeholder={t("targetPlaceholder")}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor={`description-${link.id}`}>Keterangan</Label>
+              <Label htmlFor={`description-${link.id}`}>{t("descriptionLabel")}</Label>
               <Textarea
                 id={`description-${link.id}`}
                 rows={3}
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
-                placeholder="Informasi singkat untuk membedakan link"
+                placeholder={t("descriptionPlaceholder")}
               />
               <p className="text-xs text-muted-foreground">
-                Keterangan tidak ditampilkan ke publik dan maksimal 160 karakter.
+                {t("descriptionHelp")}
               </p>
             </div>
             <DialogFooter>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Menyimpan..." : "Simpan Perubahan"}
+                {isSubmitting ? t("saving") : t("save")}
               </Button>
             </DialogFooter>
           </form>
@@ -475,20 +493,19 @@ function AffiliateLinkRow({
       <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Hapus link referral?</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Link <span className="font-medium">{link.code}</span> tidak dapat digunakan lagi setelah
-              dihapus. Tindakan ini tidak bisa dibatalkan.
+              {t("deleteDescription").replace("{code}", link.code)}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Batal</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeleting}>{t("cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {isDeleting ? "Menghapus..." : "Hapus"}
+              {isDeleting ? t("deleting") : t("confirmDelete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

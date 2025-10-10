@@ -6,6 +6,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { getMitraBalance, getMitraWithdraws } from "@/app/mitra/affiliates/queries";
 import { RequestWithdrawDialog } from "./_components/RequestWithdrawDialog";
 import { WithdrawTable } from "./_components/WithdrawTable";
+import { getLocaleFromRequest, getTranslations } from "@/lib/i18n/server";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -33,31 +34,37 @@ export default async function MitraWithdrawPage({
   const userId = Number(user.sub);
   const page = toNumber(resolved.page, 1);
 
+  const locale = getLocaleFromRequest();
+  const intlLocale = locale === "en" ? "en-US" : "id-ID";
+  const t = getTranslations("panels.partner.withdraw", locale);
   const [balance, withdraws] = await Promise.all([
     getMitraBalance(userId),
     getMitraWithdraws({ userId, page, perPage: 10 }),
   ]);
 
+  const cardLabels = t<any>("cards");
   const summaryCards = [
     {
-      title: "Total Komisi",
-      value: `Rp ${balance.totalEarned.toLocaleString("id-ID")}`,
-      caption: "Akumulasi seluruh komisi",
+      title: cardLabels.total.title,
+      value: `Rp ${balance.totalEarned.toLocaleString(intlLocale)}`,
+      caption: cardLabels.total.caption,
     },
     {
-      title: "Komisi Siap Cair",
-      value: `Rp ${balance.available.toLocaleString("id-ID")}`,
-      caption: `${balance.approved.toLocaleString("id-ID")} approved - ${balance.withdrawPending.toLocaleString("id-ID")} pending withdraw`,
+      title: cardLabels.available.title,
+      value: `Rp ${balance.available.toLocaleString(intlLocale)}`,
+      caption: cardLabels.available.caption
+        .replace("{approved}", balance.approved.toLocaleString(intlLocale))
+        .replace("{pending}", balance.withdrawPending.toLocaleString(intlLocale)),
     },
     {
-      title: "Komisi Dibayar",
-      value: `Rp ${balance.paid.toLocaleString("id-ID")}`,
-      caption: "Sudah ditransfer oleh tim kami",
+      title: cardLabels.paid.title,
+      value: `Rp ${balance.paid.toLocaleString(intlLocale)}`,
+      caption: cardLabels.paid.caption,
     },
     {
-      title: "Komisi Pending",
-      value: `Rp ${balance.pending.toLocaleString("id-ID")}`,
-      caption: "Menunggu verifikasi internal",
+      title: cardLabels.pending.title,
+      value: `Rp ${balance.pending.toLocaleString(intlLocale)}`,
+      caption: cardLabels.pending.caption,
     },
   ];
 
@@ -69,12 +76,10 @@ export default async function MitraWithdrawPage({
     <div className="space-y-8 py-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Withdraw Komisi</h1>
-          <p className="text-sm text-muted-foreground">
-            Ajukan pencairan komisi dan pantau statusnya secara real-time.
-          </p>
+          <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
+          <p className="text-sm text-muted-foreground">{t("description")}</p>
         </div>
-        <RequestWithdrawDialog availableAmount={balance.available} />
+        <RequestWithdrawDialog availableAmount={balance.available} locale={locale} />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -93,22 +98,17 @@ export default async function MitraWithdrawPage({
 
       {balance.available <= 0 ? (
         <Alert variant="default">
-          <AlertTitle>Belum ada komisi siap cair</AlertTitle>
-          <AlertDescription>
-            Komisi akan muncul di sini setelah referral kamu berstatus approved. Pantau terus
-            performa link di dashboard.
-          </AlertDescription>
+          <AlertTitle>{t("emptyAlert.title")}</AlertTitle>
+          <AlertDescription>{t("emptyAlert.description")}</AlertDescription>
         </Alert>
       ) : null}
 
       <section className="space-y-4">
         <div>
-          <h2 className="text-xl font-semibold">Riwayat Permintaan</h2>
-          <p className="text-sm text-muted-foreground">
-            Status diperbarui oleh tim finance. Catatan akan muncul jika dibutuhkan aksi tambahan.
-          </p>
+          <h2 className="text-xl font-semibold">{t("history.title")}</h2>
+          <p className="text-sm text-muted-foreground">{t("history.description")}</p>
         </div>
-        <WithdrawTable result={withdraws} query={query} />
+        <WithdrawTable result={withdraws} query={query} locale={locale} />
       </section>
     </div>
   );

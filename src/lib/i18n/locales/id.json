@@ -15,10 +15,10 @@
       "contact": "Hubungi Kami",
       "partner": "Mitra"
     },
-  "cta": {
-    "consult": "Konsultasi",
-    "panel": "Mitra"
-  },
+    "cta": {
+      "consult": "Konsultasi",
+      "panel": "Mitra"
+    },
     "aria": {
       "openMenu": "Buka menu"
     },
@@ -995,5 +995,443 @@
         ]
       }
     ]
+  },
+  "panels": {
+    "admin": {
+      "layout": {
+        "brandPrimary": "UrusMerek",
+        "brandSecondary": "Admin Panel",
+        "navGroupLabel": "Utama",
+        "signedInAs": "Masuk sebagai Admin #{id}",
+        "headerTitle": "Admin Panel",
+        "headerDescription": "Kelola mitra dan operasional",
+        "backToSite": "Kembali ke Beranda"
+      },
+      "navigation": {
+        "dashboard": "Dashboard",
+        "partners": "Mitra",
+        "consultations": "Konsultasi",
+        "withdraw": "Withdraw",
+        "commissionSettings": "Pengaturan Komisi",
+        "features": "Fitur Lain",
+        "featuresBadge": "Segera"
+      },
+      "dashboard": {
+        "title": "Ringkasan Operasional",
+        "description": "Pantau performa mitra, konsultasi, dan status withdraw terbaru.",
+          "cards": {
+            "totalPartners": "Total Mitra",
+            "activeLinks": "Link Aktif",
+            "pendingConsultations": "Konsultasi Menunggu",
+            "pendingWithdraw": "Withdraw Menunggu"
+          },
+          "commission": {
+            "title": "Status Komisi",
+            "approvedLabel": "Total Komisi Disetujui",
+            "approvedCaption": "Komisi siap untuk dicairkan",
+            "paidLabel": "Total Komisi Tersalurkan",
+            "paidCaption": "Komisi yang sudah dibayarkan"
+          },
+        "todo": {
+          "title": "Tindak Lanjut",
+          "items": [
+            "Review konsultasi baru dan assign ke tim legal.",
+            "Verifikasi permintaan withdraw sebelum jatuh tempo.",
+            "Update komisi mitra yang memerlukan penyesuaian."
+          ]
+        }
+      },
+      "partners": {
+        "title": "Daftar Mitra",
+        "description": "Pantau performa setiap mitra dan kelola detail komisi mereka.",
+        "searchPlaceholder": "Cari nama atau email mitra",
+        "searchButton": "Cari",
+        "reset": "Reset",
+          "tableHeaders": {
+            "partner": "Mitra",
+            "links": "Total Link",
+            "approved": "Komisi Disetujui",
+            "paid": "Komisi Dibayar",
+            "pending": "Withdraw Menunggu",
+            "actions": "Aksi"
+          },
+        "empty": "Tidak ada mitra ditemukan.",
+        "totalLinks": "Total {count}",
+        "detail": "Detail",
+        "summary": "Menampilkan {displayed} dari {total} mitra",
+        "pagination": "Halaman {page} dari {total}"
+      },
+      "consultations": {
+        "title": "Pengajuan Konsultasi",
+        "description": "Review dan tindak lanjuti permintaan konsultasi terbaru dari calon klien.",
+        "searchPlaceholder": "Cari nama brand atau email",
+        "statusLabel": "Status",
+        "statusOptions": {
+          "all": "Semua Status",
+          "new": "Baru",
+          "in_review": "Dalam Review",
+          "contacted": "Sudah Dihubungi",
+          "completed": "Selesai",
+          "cancelled": "Dibatalkan"
+        },
+        "apply": "Terapkan",
+        "reset": "Reset",
+        "tableHeaders": {
+          "brand": "Brand",
+          "contact": "Kontak",
+          "service": "Layanan",
+          "status": "Status",
+          "created": "Diajukan",
+          "actions": "Aksi"
+        },
+        "empty": "Belum ada konsultasi yang cocok dengan filter.",
+        "manage": "Kelola",
+        "summary": "Menampilkan {displayed} dari {total} konsultasi",
+        "pagination": "Halaman {page} dari {total}",
+        "statusBadge": {
+          "new": "Baru",
+          "in_review": "Dalam review",
+          "contacted": "Sudah dihubungi",
+          "completed": "Selesai",
+          "cancelled": "Dibatalkan"
+        }
+      },
+      "withdraw": {
+        "title": "Permintaan Withdraw",
+        "description": "Approve dan pantau status pencairan komisi mitra.",
+        "searchPlaceholder": "Cari nama/email mitra",
+        "statusLabel": "Status",
+        "statusOptions": {
+          "all": "Semua Status",
+          "pending": "Pending",
+          "approved": "Disetujui",
+          "processing": "Diproses",
+          "paid": "Selesai",
+          "rejected": "Ditolak"
+        },
+        "apply": "Terapkan",
+        "reset": "Reset",
+        "tableHeaders": {
+          "id": "ID",
+          "partner": "Mitra",
+          "amount": "Jumlah",
+          "status": "Status",
+          "created": "Diajukan",
+          "actions": "Aksi"
+        },
+        "empty": "Belum ada permintaan withdraw dengan filter saat ini.",
+        "manage": "Kelola",
+        "summary": "Menampilkan {displayed} dari {total} permintaan",
+        "pagination": "Halaman {page} dari {total}",
+        "statusBadge": {
+          "pending": "Pending",
+          "approved": "Disetujui",
+          "processing": "Diproses",
+          "paid": "Selesai",
+          "rejected": "Ditolak"
+        }
+      },
+      "features": {
+        "title": "Fitur Mendatang",
+        "description": "Ruang untuk fitur admin tambahan seperti manajemen konten dan laporan lanjutan.",
+        "cardTitle": "Segera Hadir",
+        "items": [
+          "Export laporan komisi dan transaksi.",
+          "Automasi notifikasi untuk mitra.",
+          "Integrasi pembayaran dan pencatatan bukti transfer."
+        ]
+      },
+      "commissionSettings": {
+        "title": "Pengaturan Komisi Default",
+        "description": "Atur komisi dasar yang berlaku untuk seluruh mitra kecuali yang memiliki pengaturan khusus.",
+        "cardTitle": "Komisi Default",
+        "notesTitle": "Catatan",
+        "notes": [
+          "Komisi default akan digunakan saat mitra belum memiliki pengaturan khusus.",
+          "Pengaturan custom dapat diubah pada halaman detail mitra."
+        ]
+      },
+      "forms": {
+        "defaultCommission": {
+          "label": "Komisi Default (%)",
+          "help": "Komisi ini akan menjadi dasar untuk setiap mitra baru. Contoh: isi 12 untuk 12%.",
+          "save": "Simpan",
+          "saving": "Menyimpan...",
+          "success": "Komisi default diperbarui",
+          "invalid": "Persentase komisi harus lebih dari 0",
+          "error": "Gagal menyimpan komisi default"
+        }
+      }
+    },
+    "partner": {
+      "layout": {
+        "brandPrimary": "Mitra Panel",
+        "brandSecondary": "UrusMerek",
+        "navGroupLabel": "Navigasi",
+        "signedInAs": "Masuk sebagai Mitra #{id}",
+        "headerTitle": "Panel Mitra",
+        "headerDescription": "Kelola komisi dan performa referral.",
+        "backToSite": "Kembali ke Beranda",
+        "navItems": {
+          "dashboard": "Dashboard",
+          "withdraw": "Withdraw",
+          "profile": "Profil"
+        }
+      },
+      "dashboard": {
+        "title": "Dashboard Mitra",
+        "description": "Pantau performa link, referral terbaru, dan komisi yang siap dicairkan.",
+        "createLink": "Buat Link Baru",
+        "manageWithdraw": "Kelola Withdraw",
+        "stats": {
+          "clicks7d": {
+            "title": "Klik 7 Hari Terakhir",
+            "caption": "{total} referral seumur hidup"
+          },
+          "totalLeads": {
+            "title": "Total Lead",
+            "caption": "{approved} menunggu pencairan"
+          },
+          "totalCommission": {
+            "title": "Komisi Terkumpul",
+            "caption": "Telah dibayarkan {amount}"
+          },
+          "readyToWithdraw": {
+            "title": "Komisi Siap Cair",
+            "caption": "Komisi disetujui {amount}"
+          },
+          "withdrawPending": {
+            "title": "Withdraw Pending",
+            "captionPending": "Menunggu verifikasi tim kami",
+            "captionEmpty": "Belum ada permintaan"
+          }
+        },
+        "performance": {
+          "title": "Performa Referral",
+          "description": "Pantau tren klik dan referral dalam 7 dan 30 hari terakhir.",
+          "tabs": {
+            "sevenDays": "7 Hari",
+            "thirtyDays": "30 Hari"
+          }
+        },
+        "alerts": {
+          "ready": {
+            "title": "Ada komisi yang siap dicairkan!",
+            "description": "Kamu memiliki komisi berstatus disetujui yang belum diajukan withdraw. Buka tab withdraw untuk mengajukan pencairan."
+          }
+        },
+        "filters": {
+          "searchLabel": "Pencarian Link",
+          "searchPlaceholder": "Cari kode link",
+          "statusLabel": "Status Referral",
+          "statusOptions": {
+            "": "Semua Status",
+            "pending": "Menunggu",
+            "approved": "Disetujui",
+            "rejected": "Ditolak",
+            "paid": "Sudah Dibayar"
+          },
+          "apply": "Terapkan",
+          "reset": "Reset"
+        },
+        "sections": {
+          "links": {
+            "title": "Link Referral",
+            "description": "Perbarui status link dan pantau performa klik serta komisi."
+          },
+          "referrals": {
+            "title": "Riwayat Referral",
+            "description": "Lihat riwayat referral dan status pencairan komisinya."
+          }
+        },
+        "emptyState": {
+          "noWithdraw": {
+            "title": "Belum ada komisi siap cair",
+            "description": "Komisi akan muncul di sini setelah referral kamu berstatus disetujui. Pantau terus performa link di dashboard."
+          }
+        }
+      },
+      "createLink": {
+        "trigger": "Buat Link Baru",
+        "title": "Buat Link Referral Baru",
+        "description": "Atur tujuan URL dan keterangan singkat agar mudah dibedakan.",
+        "targetLabel": "URL Tujuan",
+        "targetPlaceholder": "https://contoh.com/produk",
+        "notesLabel": "Keterangan (opsional)",
+        "notesPlaceholder": "Contoh: Promo paket konsultasi 2024",
+        "notesHelp": "Batas 160 karakter untuk keterangan internal agar mudah dikenali.",
+        "submit": "Simpan Link",
+        "submitting": "Membuat...",
+        "success": "Link baru berhasil dibuat ({code})",
+        "error": "Gagal membuat link baru. Pastikan URL valid."
+      },
+      "performanceChart": {
+        "series": {
+          "clicks": "Klik",
+          "referrals": "Referral"
+        }
+      },
+      "affTable": {
+        "tableHeaders": {
+          "link": "Link Referral",
+          "target": "URL Tujuan",
+          "clicks": "Klik (7h)",
+          "referrals": "Referral (7h)",
+          "commission": "Komisi Total",
+          "active": "Aktif",
+          "actions": "Aksi"
+        },
+        "empty": "Tidak ada link ditemukan",
+        "pagination": "Menampilkan {start}-{end} dari {total} link",
+        "noData": "Tidak ada data",
+        "toggleSuccess": "Status link diperbarui",
+        "toggleError": "Gagal mengubah status link",
+        "updateSuccess": "Link referral diperbarui",
+        "updateError": "Gagal memperbarui link",
+        "deleteSuccess": "Link referral dihapus",
+        "deleteError": "Gagal menghapus link",
+        "copySuccess": "URL referral disalin",
+        "copyError": "Tidak dapat menyalin otomatis. Silakan salin manual.",
+        "nonActive": "Nonaktif",
+        "menuLabel": "Buka menu tindakan",
+        "edit": "Edit",
+        "delete": "Hapus",
+        "editTitle": "Edit Link Referral",
+        "editDescription": "Perbarui URL tujuan atau keterangan internal untuk link ini.",
+        "targetLabel": "URL Tujuan",
+        "targetPlaceholder": "https://contoh.com/tawaran",
+        "descriptionLabel": "Keterangan",
+        "descriptionPlaceholder": "Informasi singkat untuk membedakan link",
+        "descriptionHelp": "Keterangan tidak ditampilkan ke publik dan maksimal 160 karakter.",
+        "save": "Simpan Perubahan",
+        "saving": "Menyimpan...",
+        "deleteTitle": "Hapus link referral?",
+        "deleteDescription": "Link {code} tidak dapat digunakan lagi setelah dihapus. Tindakan ini tidak bisa dibatalkan.",
+        "cancel": "Batal",
+        "confirmDelete": "Hapus",
+        "deleting": "Menghapus...",
+        "createdAt": "Dibuat",
+        "idLabel": "ID #{id}",
+        "copyLabel": "Salin URL referral",
+        "toggleAria": "Ubah status link {code}",
+        "pageIndicator": "Halaman {page} dari {total}"
+      },
+      "refTable": {
+        "tableHeaders": {
+          "order": "ID Pesanan",
+          "code": "Kode",
+          "amount": "Nominal",
+          "commission": "Komisi",
+          "status": "Status",
+          "withdraw": "Pencairan",
+          "date": "Tanggal"
+        },
+        "empty": "Tidak ada referral ditemukan",
+        "pagination": "Menampilkan {start}-{end} dari {total} referral",
+        "noData": "Tidak ada data",
+        "status": {
+          "pending": "Menunggu",
+          "approved": "Disetujui",
+          "rejected": "Ditolak",
+          "paid": "Sudah Dibayar"
+        },
+        "withdrawBadge": "Pencairan #{id}",
+        "withdrawEmpty": "Belum diajukan",
+        "idLabel": "ID #{id}",
+        "pageIndicator": "Halaman {page} dari {total}"
+      },
+      "withdraw": {
+        "title": "Withdraw Komisi",
+        "description": "Ajukan pencairan komisi dan pantau statusnya secara real-time.",
+        "cards": {
+          "total": {
+            "title": "Total Komisi",
+            "caption": "Akumulasi seluruh komisi"
+          },
+          "available": {
+            "title": "Komisi Siap Cair",
+            "caption": "{approved} disetujui - {pending} menunggu pencairan"
+          },
+          "paid": {
+            "title": "Komisi Dibayar",
+            "caption": "Sudah ditransfer oleh tim kami"
+          },
+          "pending": {
+            "title": "Komisi Pending",
+            "caption": "Menunggu verifikasi internal"
+          }
+        },
+        "emptyAlert": {
+          "title": "Belum ada komisi siap cair",
+          "description": "Komisi akan muncul di sini setelah referral kamu berstatus disetujui. Pantau terus performa link di dashboard."
+        },
+        "history": {
+          "title": "Riwayat Permintaan",
+          "description": "Status diperbarui oleh tim finance. Catatan akan muncul jika dibutuhkan aksi tambahan."
+        },
+        "summary": "Menampilkan {start}-{end} dari {total} permintaan"
+      },
+      "withdrawTable": {
+        "tableHeaders": {
+          "id": "ID",
+          "amount": "Jumlah",
+          "bank": "Bank",
+          "status": "Status",
+          "timeline": "Linimasa",
+          "updated": "Diperbarui",
+          "notes": "Catatan"
+        },
+        "status": {
+          "pending": "Menunggu",
+          "approved": "Disetujui",
+          "processing": "Diproses",
+          "paid": "Selesai",
+          "rejected": "Ditolak"
+        },
+        "timeline": {
+          "pending": "Menunggu",
+          "approved": "Disetujui",
+          "processing": "Diproses",
+          "paid": "Selesai"
+        },
+        "empty": "Belum ada riwayat withdraw.",
+        "pagination": "Menampilkan {start}-{end} dari {total} permintaan",
+        "pageIndicator": "Halaman {page} dari {total}"
+      },
+      "withdrawDialog": {
+        "trigger": "Ajukan Withdraw",
+        "title": "Ajukan Withdraw",
+        "description": "Saldo yang dapat dicairkan saat ini: Rp {amount}",
+        "amountLabel": "Nominal",
+        "amountPlaceholder": "Contoh: 250000",
+        "amountHelp": "Minimal 100.000 dan kelipatan 50.000.",
+        "bankLabel": "Bank Tujuan",
+        "bankPlaceholder": "Pilih bank",
+        "accountNameLabel": "Nama Pemilik Rekening",
+        "accountNamePlaceholder": "Nama sesuai buku tabungan",
+        "accountNumberLabel": "Nomor Rekening",
+        "accountNumberPlaceholder": "Contoh: 1234567890",
+        "setDefault": "Jadikan bank default untuk pencairan berikutnya",
+        "submit": "Ajukan Withdraw",
+        "submitting": "Mengajukan...",
+        "success": "Permintaan withdraw berhasil diajukan",
+        "error": "Gagal mengajukan withdraw"
+      },
+      "profile": {
+        "title": "Profil Mitra",
+        "description": "Perbarui informasi kontak dan pilih rekening utama untuk pencairan komisi.",
+        "contactTitle": "Informasi Kontak",
+        "phoneLabel": "Nomor Telepon",
+        "phonePlaceholder": "Contoh: 081234567890",
+        "taxLabel": "NPWP (opsional)",
+        "taxPlaceholder": "Nomor NPWP bila tersedia",
+        "addressLabel": "Alamat",
+        "addressPlaceholder": "Alamat lengkap untuk keperluan administrasi",
+        "bankLabel": "Rekening Default",
+        "bankPlaceholder": "Pilih rekening default",
+        "bankHelp": "Rekening default akan digunakan otomatis saat mengajukan withdraw baru.",
+        "save": "Simpan Perubahan"
+      }
+    }
   }
 }

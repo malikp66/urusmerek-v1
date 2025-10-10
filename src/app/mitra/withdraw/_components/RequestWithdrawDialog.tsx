@@ -25,12 +25,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useTranslations, useLocale } from '@/lib/i18n/context';
 
 type Props = {
   availableAmount: number;
+  locale: 'id' | 'en';
 };
 
-export function RequestWithdrawDialog({ availableAmount }: Props) {
+export function RequestWithdrawDialog({ availableAmount, locale }: Props) {
+  const t = useTranslations('panels.partner.withdrawDialog');
+  const { locale: contextLocale } = useLocale();
+  const effectiveLocale = locale ?? contextLocale;
+  const intlLocale = effectiveLocale === 'en' ? 'en-US' : 'id-ID';
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [bankCode, setBankCode] = useState('BCA');
@@ -43,12 +49,12 @@ export function RequestWithdrawDialog({ availableAmount }: Props) {
     startTransition(async () => {
       try {
         await createWithdrawRequest(formData);
-        toast.success('Permintaan withdraw berhasil diajukan');
+        toast.success(t('success'));
         setOpen(false);
         form.reset();
         setBankCode('BCA');
       } catch (error) {
-        toast.error((error as Error).message || 'Gagal mengajukan withdraw');
+        toast.error((error as Error).message || t('error'));
         console.error(error);
       }
     });
@@ -57,40 +63,43 @@ export function RequestWithdrawDialog({ availableAmount }: Props) {
   return (
     <Dialog open={open} onOpenChange={(value) => !isPending && setOpen(value)}>
       <DialogTrigger asChild>
-        <Button disabled={availableAmount <= 0}>Request Withdraw</Button>
+        <Button disabled={availableAmount <= 0}>{t('trigger')}</Button>
       </DialogTrigger>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle>Ajukan Withdraw</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
           <DialogDescription>
-            Saldo yang dapat dicairkan saat ini: <strong>Rp {availableAmount.toLocaleString('id-ID')}</strong>
+            {t('description').replace(
+              '{amount}',
+              availableAmount.toLocaleString(intlLocale)
+            )}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="amount">Nominal</Label>
+            <Label htmlFor="amount">{t('amountLabel')}</Label>
             <Input
               id="amount"
               name="amount"
               type="number"
               min={100000}
               step={50000}
-              placeholder="Contoh: 250000"
+              placeholder={t('amountPlaceholder')}
               required
               disabled={isPending}
               aria-describedby="amount-help"
             />
             <p id="amount-help" className="text-xs text-muted-foreground">
-              Minimal 100.000 dan kelipatan 50.000.
+              {t('amountHelp')}
             </p>
           </div>
 
           <div className="space-y-2">
-            <Label>Bank Tujuan</Label>
+            <Label>{t('bankLabel')}</Label>
             <input type="hidden" name="bankCode" value={bankCode} />
             <Select value={bankCode} onValueChange={setBankCode} disabled={isPending}>
               <SelectTrigger>
-                <SelectValue placeholder="Pilih bank" />
+                <SelectValue placeholder={t('bankPlaceholder')} />
               </SelectTrigger>
               <SelectContent className="max-h-64">
                 {INDONESIAN_BANKS.map((bank) => (
@@ -103,22 +112,22 @@ export function RequestWithdrawDialog({ availableAmount }: Props) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="accountName">Nama Pemilik Rekening</Label>
+            <Label htmlFor="accountName">{t('accountNameLabel')}</Label>
             <Input
               id="accountName"
               name="accountName"
-              placeholder="Nama sesuai buku tabungan"
+              placeholder={t('accountNamePlaceholder')}
               required
               disabled={isPending}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="accountNumber">Nomor Rekening</Label>
+            <Label htmlFor="accountNumber">{t('accountNumberLabel')}</Label>
             <Input
               id="accountNumber"
               name="accountNumber"
-              placeholder="Contoh: 1234567890"
+              placeholder={t('accountNumberPlaceholder')}
               required
               disabled={isPending}
             />
@@ -127,13 +136,13 @@ export function RequestWithdrawDialog({ availableAmount }: Props) {
           <div className="flex items-center space-x-2">
             <Checkbox id="setDefault" name="setDefault" disabled={isPending} />
             <Label htmlFor="setDefault" className="text-sm">
-              Jadikan bank default untuk pencairan berikutnya
+              {t('setDefault')}
             </Label>
           </div>
 
           <DialogFooter>
             <Button type="submit" disabled={isPending}>
-              {isPending ? 'Mengirim...' : 'Ajukan Withdraw'}
+              {isPending ? t('submitting') : t('submit')}
             </Button>
           </DialogFooter>
         </form>

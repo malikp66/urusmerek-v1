@@ -5,6 +5,7 @@ import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 import MaintenanceGate from "@/components/maintenance/maintenance-gate";
 import Providers from "@/components/Providers";
+import { getLocaleFromRequest } from "@/lib/i18n/server";
 
 const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 
@@ -22,9 +23,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = getLocaleFromRequest();
   if (isMaintenanceMode) {
     return (
-      <html lang="en">
+      <html lang={locale}>
         <body className="antialiased bg-white">
           <MaintenanceGate />
         </body>
@@ -33,9 +35,9 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="id">
+    <html lang={locale}>
       <body className="antialiased">
-        <Providers>
+        <Providers initialLocale={locale}>
           <ErrorReporter />
           <Script
             src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
