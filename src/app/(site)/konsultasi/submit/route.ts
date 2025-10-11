@@ -128,18 +128,6 @@ function renderConsultationEmail(params: {
               </td>
             </tr>
 
-            <!-- Signature row -->
-            // <tr>
-            //   <td style="padding:12px 32px 4px 32px;">
-            //     <div style="font-family:Inter,Arial,Helvetica,sans-serif;font-size:13px;color:${gray600};margin-bottom:4px;">Hormat kami,</div>
-            //     <div style="height:28px;">
-            //       <!-- placeholder tanda tangan (png/svg bisa diganti jika punya asset) -->
-            //       <div style="width:120px;height:24px;border-bottom:2px solid ${gray900};opacity:.6"></div>
-            //     </div>
-            //     <div style="font-family:Inter,Arial,Helvetica,sans-serif;font-size:13px;color:${gray900};font-weight:600">Tim UrusMerek.id</div>
-            //   </td>
-            // </tr>
-
             <!-- Footer: qr + socials + WA pill -->
             <tr>
               <td style="padding:20px 24px 24px 24px;">
@@ -162,9 +150,9 @@ function renderConsultationEmail(params: {
 
                     <!-- WA pill -->
                     <td align="right" style="padding:8px;">
-                      <a href="https://wa.me/628112119718" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block;background:${red};color:#fff;font-family:Inter,Arial,Helvetica,sans-serif;font-weight:700;font-size:14px;padding:10px 16px;border-radius:999px;">
+                      <p style="text-decoration:none;display:inline-block;background:${red};color:#fff;font-family:Inter,Arial,Helvetica,sans-serif;font-weight:700;font-size:14px;padding:10px 16px;border-radius:999px;">
                         ☎︎ 0811–2119–718
-                      </a>
+                      </p>
                     </td>
                   </tr>
                 </table>
@@ -262,7 +250,7 @@ export async function POST(req: NextRequest) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "UrusMerek <noreply@urusmerek.id>",
+          from: "UrusMerek <admin@urusmerek.id>",
           to: [emailTo],
           reply_to: data.email,
           subject: "Konsultasi Merek Baru",

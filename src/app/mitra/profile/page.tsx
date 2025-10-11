@@ -90,7 +90,6 @@ export default async function MitraProfilePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="defaultBankId">{t("bankLabel")}</Label>
               <div className="flex items-center justify-between gap-2">
                 <Label htmlFor="defaultBankId">Rekening Default</Label>
                 <CreateBankAccountDialog />
@@ -132,21 +131,6 @@ export default async function MitraProfilePage() {
             </Button>
           </form>
         </CardFooter>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base font-semibold">Keluar dari Akun</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <p className="text-sm text-muted-foreground">
-            Akhiri sesi Anda di panel mitra secara aman.
-          </p>
-          <form action={signOut}>
-            <Button type="submit" variant="destructive">
-              Sign out
-            </Button>
-          </form>
-        </CardContent>
       </Card>
     </div>
   );
