@@ -20,6 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { getLocaleFromRequest, getTranslations } from '@/lib/i18n/server';
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -47,6 +48,17 @@ export default async function AdminMitraPage({
 }) {
   await requireAdmin();
   const resolved = await searchParams;
+  const locale = getLocaleFromRequest();
+  const intlLocale = locale === 'en' ? 'en-US' : 'id-ID';
+  const t = getTranslations('panels.admin.partners', locale);
+  const headers = t<{
+    partner: string;
+    links: string;
+    approved: string;
+    paid: string;
+    pending: string;
+    actions: string;
+  }>('tableHeaders');
 
   const search = toStringValue(resolved.search);
   const page = toNumber(toStringValue(resolved.page) || '1', 1);
@@ -67,10 +79,8 @@ export default async function AdminMitraPage({
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Daftar Mitra</h2>
-        <p className="text-sm text-muted-foreground">
-          Pantau performa setiap mitra dan kelola detail komisi mereka.
-        </p>
+        <h2 className="text-2xl font-semibold tracking-tight">{t('title')}</h2>
+        <p className="text-sm text-muted-foreground">{t('description')}</p>
       </div>
 
       <Card>
@@ -78,13 +88,13 @@ export default async function AdminMitraPage({
           <form className="flex flex-col gap-3 md:flex-row md:items-center" action="/admin/mitra">
             <Input
               name="search"
-              placeholder="Cari nama atau email mitra"
+              placeholder={t('searchPlaceholder')}
               defaultValue={search}
               className="md:max-w-xs"
             />
-            <Button type="submit">Cari</Button>
+            <Button type="submit">{t('searchButton')}</Button>
             <Button variant="ghost" type="reset" asChild>
-              <Link href="/admin/mitra">Reset</Link>
+              <Link href="/admin/mitra">{t('reset')}</Link>
             </Button>
           </form>
         </CardContent>
@@ -94,19 +104,19 @@ export default async function AdminMitraPage({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Mitra</TableHead>
-              <TableHead>Total Link</TableHead>
-              <TableHead>Komisi Approved</TableHead>
-              <TableHead>Komisi Dibayar</TableHead>
-              <TableHead>Withdraw Pending</TableHead>
-              <TableHead className="text-right">Aksi</TableHead>
+              <TableHead>{headers.partner}</TableHead>
+              <TableHead>{headers.links}</TableHead>
+              <TableHead>{headers.approved}</TableHead>
+              <TableHead>{headers.paid}</TableHead>
+              <TableHead>{headers.pending}</TableHead>
+              <TableHead className="text-right">{headers.actions}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {result.data.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center text-muted-foreground">
-                  Tidak ada mitra ditemukan.
+                  {t('empty')}
                 </TableCell>
               </TableRow>
             ) : (
@@ -122,18 +132,19 @@ export default async function AdminMitraPage({
                     <div className="flex flex-col">
                       <span className="font-medium">{item.activeLinks}</span>
                       <span className="text-xs text-muted-foreground">
-                        Total {item.totalLinks.toLocaleString('id-ID')}
+                        {t('totalLinks').replace(
+                          '{count}',
+                          item.totalLinks.toLocaleString(intlLocale)
+                        )}
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell>
-                    Rp {item.approvedCommission.toLocaleString('id-ID')}
-                  </TableCell>
-                  <TableCell>Rp {item.paidCommission.toLocaleString('id-ID')}</TableCell>
-                  <TableCell>Rp {item.pendingWithdraw.toLocaleString('id-ID')}</TableCell>
+                  <TableCell>Rp {item.approvedCommission.toLocaleString(intlLocale)}</TableCell>
+                  <TableCell>Rp {item.paidCommission.toLocaleString(intlLocale)}</TableCell>
+                  <TableCell>Rp {item.pendingWithdraw.toLocaleString(intlLocale)}</TableCell>
                   <TableCell className="text-right">
                     <Button asChild size="sm" variant="outline">
-                      <Link href={`/admin/mitra/${item.id}`}>Detail</Link>
+                      <Link href={`/admin/mitra/${item.id}`}>{t('detail')}</Link>
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -145,7 +156,9 @@ export default async function AdminMitraPage({
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
-          Menampilkan {result.data.length} dari {result.totalItems} mitra
+          {t('summary')
+            .replace('{displayed}', result.data.length.toLocaleString(intlLocale))
+            .replace('{total}', result.totalItems.toLocaleString(intlLocale))}
         </p>
         <Pagination>
           <PaginationContent>
@@ -158,7 +171,9 @@ export default async function AdminMitraPage({
             </PaginationItem>
             <PaginationItem>
               <span className="px-2 text-sm text-muted-foreground">
-                Halaman {result.page} dari {result.pageCount}
+                {t('pagination')
+                  .replace('{page}', result.page.toLocaleString(intlLocale))
+                  .replace('{total}', result.pageCount.toLocaleString(intlLocale))}
               </span>
             </PaginationItem>
             <PaginationItem>

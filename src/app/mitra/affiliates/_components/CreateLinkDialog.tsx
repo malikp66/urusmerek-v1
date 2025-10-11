@@ -17,8 +17,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { useTranslations } from '@/lib/i18n/context';
 
 export function CreateLinkDialog() {
+  const t = useTranslations('panels.partner.createLink');
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [targetUrl, setTargetUrl] = useState('');
@@ -33,12 +35,12 @@ export function CreateLinkDialog() {
           targetUrl,
           description: description.trim() ? description.trim() : undefined,
         });
-        toast.success(`Link baru berhasil dibuat (${result.code})`);
+        toast.success(t('success').replace('{code}', result.code));
         setOpen(false);
         setTargetUrl('');
         setDescription('');
       } catch (error) {
-        toast.error('Gagal membuat link baru. Pastikan URL valid.');
+        toast.error(t('error'));
         console.error(error);
       }
     });
@@ -47,22 +49,20 @@ export function CreateLinkDialog() {
   return (
     <Dialog open={open} onOpenChange={(value) => !isPending && setOpen(value)}>
       <DialogTrigger asChild>
-        <Button variant="outline">Buat Link Baru</Button>
+        <Button variant="outline">{t('trigger')}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Buat Link Referral Baru</DialogTitle>
-          <DialogDescription>
-            Atur tujuan URL dan keterangan singkat agar mudah dibedakan.
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="target-url">URL Tujuan</Label>
+            <Label htmlFor="target-url">{t('targetLabel')}</Label>
             <Input
               id="target-url"
               type="url"
-              placeholder="https://contoh.com/produk"
+              placeholder={t('targetPlaceholder')}
               required
               value={targetUrl}
               onChange={(event) => setTargetUrl(event.target.value)}
@@ -70,22 +70,22 @@ export function CreateLinkDialog() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">Keterangan (opsional)</Label>
+            <Label htmlFor="description">{t('notesLabel')}</Label>
             <Textarea
               id="description"
-              placeholder="Contoh: Promo paket konsultasi 2024"
+              placeholder={t('notesPlaceholder')}
               rows={3}
               value={description}
               onChange={(event) => setDescription(event.target.value)}
               disabled={isPending}
             />
             <p className="text-xs text-muted-foreground">
-              Batas 160 karakter untuk keterangan internal agar mudah dikenali.
+              {t('notesHelp')}
             </p>
           </div>
           <DialogFooter>
             <Button type="submit" disabled={isPending}>
-              {isPending ? 'Membuat...' : 'Simpan Link'}
+              {isPending ? t('submitting') : t('submit')}
             </Button>
           </DialogFooter>
         </form>

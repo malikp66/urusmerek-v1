@@ -15,10 +15,10 @@
       "contact": "Contact",
       "partner": "Partner"
     },
-  "cta": {
-    "consult": "Consult",
-    "panel": "Mitra Panel"
-  },
+    "cta": {
+      "consult": "Consult",
+      "panel": "Mitra Panel"
+    },
     "aria": {
       "openMenu": "Open menu"
     },
@@ -1012,5 +1012,443 @@
         ]
       }
     ]
+  },
+  "panels": {
+    "admin": {
+      "layout": {
+        "brandPrimary": "UrusMerek",
+        "brandSecondary": "Admin Panel",
+        "navGroupLabel": "Main",
+        "signedInAs": "Signed in as Admin #{id}",
+        "headerTitle": "Admin Panel",
+        "headerDescription": "Manage partners and operations",
+        "backToSite": "Back to Homepage"
+      },
+      "navigation": {
+        "dashboard": "Dashboard",
+        "partners": "Partners",
+        "consultations": "Consultations",
+        "withdraw": "Withdraw",
+        "commissionSettings": "Commission Settings",
+        "features": "More Features",
+        "featuresBadge": "Coming Soon"
+      },
+      "dashboard": {
+        "title": "Operational Summary",
+        "description": "Track partner performance, consultations, and the latest withdraw requests.",
+        "cards": {
+          "totalPartners": "Total Partners",
+          "activeLinks": "Active Links",
+          "pendingConsultations": "Pending Consultations",
+          "pendingWithdraw": "Withdraw Pending"
+        },
+        "commission": {
+          "title": "Commission Status",
+          "approvedLabel": "Total Approved Commission",
+          "approvedCaption": "Commission ready to be disbursed",
+          "paidLabel": "Total Commission Paid",
+          "paidCaption": "Commission already paid out"
+        },
+        "todo": {
+          "title": "Next Actions",
+          "items": [
+            "Review new consultations and assign to the legal team.",
+            "Verify withdraw requests before their due dates.",
+            "Update partner commissions that need adjustment."
+          ]
+        }
+      },
+      "partners": {
+        "title": "Partner Directory",
+        "description": "Monitor each partner's performance and manage their commission details.",
+        "searchPlaceholder": "Search partner name or email",
+        "searchButton": "Search",
+        "reset": "Reset",
+        "tableHeaders": {
+          "partner": "Partner",
+          "links": "Total Links",
+          "approved": "Approved Commission",
+          "paid": "Commission Paid",
+          "pending": "Withdraw Pending",
+          "actions": "Actions"
+        },
+        "empty": "No partners found.",
+        "totalLinks": "Total {count}",
+        "detail": "Details",
+        "summary": "Showing {displayed} of {total} partners",
+        "pagination": "Page {page} of {total}"
+      },
+      "consultations": {
+        "title": "Consultation Requests",
+        "description": "Review and follow up on the latest consultation requests from prospects.",
+        "searchPlaceholder": "Search brand name or email",
+        "statusLabel": "Status",
+        "statusOptions": {
+          "all": "All Statuses",
+          "new": "New",
+          "in_review": "In Review",
+          "contacted": "Contacted",
+          "completed": "Completed",
+          "cancelled": "Cancelled"
+        },
+        "apply": "Apply",
+        "reset": "Reset",
+        "tableHeaders": {
+          "brand": "Brand",
+          "contact": "Contact",
+          "service": "Service",
+          "status": "Status",
+          "created": "Submitted",
+          "actions": "Actions"
+        },
+        "empty": "No consultations match the current filters.",
+        "manage": "Manage",
+        "summary": "Showing {displayed} of {total} consultations",
+        "pagination": "Page {page} of {total}",
+        "statusBadge": {
+          "new": "New",
+          "in_review": "In review",
+          "contacted": "Contacted",
+          "completed": "Completed",
+          "cancelled": "Cancelled"
+        }
+      },
+      "withdraw": {
+        "title": "Withdraw Requests",
+        "description": "Approve and monitor partner commission payouts.",
+        "searchPlaceholder": "Search partner name/email",
+        "statusLabel": "Status",
+        "statusOptions": {
+          "all": "All Statuses",
+          "pending": "Pending",
+          "approved": "Approved",
+          "processing": "Processing",
+          "paid": "Paid",
+          "rejected": "Rejected"
+        },
+        "apply": "Apply",
+        "reset": "Reset",
+        "tableHeaders": {
+          "id": "ID",
+          "partner": "Partner",
+          "amount": "Amount",
+          "status": "Status",
+          "created": "Submitted",
+          "actions": "Actions"
+        },
+        "empty": "No withdraw requests for the current filters.",
+        "manage": "Manage",
+        "summary": "Showing {displayed} of {total} requests",
+        "pagination": "Page {page} of {total}",
+        "statusBadge": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "processing": "Processing",
+          "paid": "Paid",
+          "rejected": "Rejected"
+        }
+      },
+      "features": {
+        "title": "Upcoming Features",
+        "description": "A space for future admin tools like content management and advanced reporting.",
+        "cardTitle": "Coming Soon",
+        "items": [
+          "Export commission and transaction reports.",
+          "Automate partner notifications.",
+          "Integrate payment tracking with proof uploads."
+        ]
+      },
+      "commissionSettings": {
+        "title": "Default Commission Settings",
+        "description": "Set the base commission applied to all partners unless they have custom rules.",
+        "cardTitle": "Default Commission",
+        "notesTitle": "Notes",
+        "notes": [
+          "The default rate is used when a partner has no custom configuration.",
+          "Custom settings can be updated on the partner detail page."
+        ]
+      },
+      "forms": {
+        "defaultCommission": {
+          "label": "Default Commission (%)",
+          "help": "This rate is applied to every new partner. Example: fill 12 for 12%.",
+          "save": "Save",
+          "saving": "Saving...",
+          "success": "Default commission updated",
+          "invalid": "Commission percentage must be greater than 0",
+          "error": "Failed to save default commission"
+        }
+      }
+    },
+    "partner": {
+      "layout": {
+        "brandPrimary": "Partner Panel",
+        "brandSecondary": "UrusMerek",
+        "navGroupLabel": "Navigation",
+        "signedInAs": "Signed in as Partner #{id}",
+        "headerTitle": "Partner Panel",
+        "headerDescription": "Manage your commissions and referral performance.",
+        "backToSite": "Back to Homepage",
+        "navItems": {
+          "dashboard": "Dashboard",
+          "withdraw": "Withdraw",
+          "profile": "Profile"
+        }
+      },
+      "dashboard": {
+        "title": "Partner Dashboard",
+        "description": "Track link performance, the latest referrals, and commissions ready to withdraw.",
+        "createLink": "Create New Link",
+        "manageWithdraw": "Manage Withdraw",
+        "stats": {
+          "clicks7d": {
+            "title": "Clicks (last 7 days)",
+            "caption": "{total} lifetime referrals"
+          },
+          "totalLeads": {
+            "title": "Total Leads",
+            "caption": "{approved} waiting for payout"
+          },
+          "totalCommission": {
+            "title": "Total Commission",
+            "caption": "Paid {amount}"
+          },
+          "readyToWithdraw": {
+            "title": "Ready to Withdraw",
+            "caption": "Approved {amount}"
+          },
+          "withdrawPending": {
+            "title": "Withdraw Pending",
+            "captionPending": "Awaiting our team verification",
+            "captionEmpty": "No requests yet"
+          }
+        },
+        "performance": {
+          "title": "Referral Performance",
+          "description": "Monitor click and referral trends in the last 7 and 30 days.",
+          "tabs": {
+            "sevenDays": "7 Days",
+            "thirtyDays": "30 Days"
+          }
+        },
+        "alerts": {
+          "ready": {
+            "title": "Commission ready to withdraw!",
+            "description": "You still have approved commission that hasn't been requested. Open the withdraw tab to submit a payout."
+          }
+        },
+        "filters": {
+          "searchLabel": "Link Search",
+          "searchPlaceholder": "Search link code",
+          "statusLabel": "Referral Status",
+          "statusOptions": {
+            "": "All Statuses",
+            "pending": "Pending",
+            "approved": "Approved",
+            "rejected": "Rejected",
+            "paid": "Paid"
+          },
+          "apply": "Apply",
+          "reset": "Reset"
+        },
+        "sections": {
+          "links": {
+            "title": "Referral Links",
+            "description": "Update link status and monitor clicks alongside commission performance."
+          },
+          "referrals": {
+            "title": "Referral History",
+            "description": "Review referral history and their payout status."
+          }
+        },
+        "emptyState": {
+          "noWithdraw": {
+            "title": "No commission ready to withdraw",
+            "description": "Commission will appear here after your referrals are approved. Keep an eye on link performance in the dashboard."
+          }
+        }
+      },
+      "createLink": {
+        "trigger": "Create New Link",
+        "title": "Create a New Referral Link",
+        "description": "Set the destination URL and short notes so everything is easy to recognise.",
+        "targetLabel": "Destination URL",
+        "targetPlaceholder": "https://example.com/product",
+        "notesLabel": "Notes (optional)",
+        "notesPlaceholder": "Example: Consultation promo 2024",
+        "notesHelp": "Maximum 160 characters for internal labelling.",
+        "submit": "Save Link",
+        "submitting": "Creating...",
+        "success": "New link created ({code})",
+        "error": "Failed to create link. Please provide a valid URL."
+      },
+      "performanceChart": {
+        "series": {
+          "clicks": "Clicks",
+          "referrals": "Referrals"
+        }
+      },
+      "affTable": {
+        "tableHeaders": {
+          "link": "Referral Link",
+          "target": "Destination URL",
+          "clicks": "Clicks (7d)",
+          "referrals": "Referrals (7d)",
+          "commission": "Lifetime Commission",
+          "active": "Active",
+          "actions": "Actions"
+        },
+        "empty": "No links found",
+        "pagination": "Showing {start}-{end} of {total} links",
+        "noData": "No data",
+        "toggleSuccess": "Link status updated",
+        "toggleError": "Failed to update link status",
+        "updateSuccess": "Referral link updated",
+        "updateError": "Failed to update link",
+        "deleteSuccess": "Referral link deleted",
+        "deleteError": "Failed to delete link",
+        "copySuccess": "Referral URL copied",
+        "copyError": "Automatic copy failed. Please copy manually.",
+        "nonActive": "Inactive",
+        "menuLabel": "Open action menu",
+        "edit": "Edit",
+        "delete": "Delete",
+        "editTitle": "Edit Referral Link",
+        "editDescription": "Update the destination URL or internal notes for this link.",
+        "targetLabel": "Destination URL",
+        "targetPlaceholder": "https://example.com/offer",
+        "descriptionLabel": "Notes",
+        "descriptionPlaceholder": "Short info to differentiate the link",
+        "descriptionHelp": "Notes are internal only and limited to 160 characters.",
+        "save": "Save Changes",
+        "saving": "Saving...",
+        "deleteTitle": "Delete referral link?",
+        "deleteDescription": "Link {code} can no longer be used once deleted. This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirmDelete": "Delete",
+        "deleting": "Deleting...",
+        "createdAt": "Created",
+        "idLabel": "ID #{id}",
+        "copyLabel": "Copy referral URL",
+        "toggleAria": "Toggle link {code}",
+        "pageIndicator": "Page {page} of {total}"
+      },
+      "refTable": {
+        "tableHeaders": {
+          "order": "Order ID",
+          "code": "Code",
+          "amount": "Amount",
+          "commission": "Commission",
+          "status": "Status",
+          "withdraw": "Withdraw",
+          "date": "Date"
+        },
+        "empty": "No referrals found",
+        "pagination": "Showing {start}-{end} of {total} referrals",
+        "noData": "No data",
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected",
+          "paid": "Paid"
+        },
+        "withdrawBadge": "Withdraw #{id}",
+        "withdrawEmpty": "Not requested yet",
+        "idLabel": "ID #{id}",
+        "pageIndicator": "Page {page} of {total}"
+      },
+      "withdraw": {
+        "title": "Commission Withdraw",
+        "description": "Request commission payouts and monitor their status in real time.",
+        "cards": {
+          "total": {
+            "title": "Total Commission",
+            "caption": "Sum of all commissions"
+          },
+          "available": {
+            "title": "Ready to Withdraw",
+            "caption": "{approved} approved - {pending} pending withdraw"
+          },
+          "paid": {
+            "title": "Commission Paid",
+            "caption": "Transferred by our finance team"
+          },
+          "pending": {
+            "title": "Pending Commission",
+            "caption": "Awaiting internal verification"
+          }
+        },
+        "emptyAlert": {
+          "title": "No commission ready to withdraw",
+          "description": "Commission will appear here once your referrals are approved. Keep monitoring link performance in the dashboard."
+        },
+        "history": {
+          "title": "Request History",
+          "description": "Status is updated by the finance team. Notes will appear if further action is needed."
+        },
+        "summary": "Showing {start}-{end} of {total} requests"
+      },
+      "withdrawTable": {
+        "tableHeaders": {
+          "id": "ID",
+          "amount": "Amount",
+          "bank": "Bank",
+          "status": "Status",
+          "timeline": "Timeline",
+          "updated": "Updated",
+          "notes": "Notes"
+        },
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "processing": "Processing",
+          "paid": "Paid",
+          "rejected": "Rejected"
+        },
+        "timeline": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "processing": "Processing",
+          "paid": "Paid"
+        },
+        "empty": "No withdraw history yet.",
+        "pagination": "Showing {start}-{end} of {total} requests",
+        "pageIndicator": "Page {page} of {total}"
+      },
+      "withdrawDialog": {
+        "trigger": "Request Withdraw",
+        "title": "Submit Withdraw Request",
+        "description": "Available balance to withdraw: Rp {amount}",
+        "amountLabel": "Amount",
+        "amountPlaceholder": "Example: 250000",
+        "amountHelp": "Minimum 100,000 and in multiples of 50,000.",
+        "bankLabel": "Destination Bank",
+        "bankPlaceholder": "Select bank",
+        "accountNameLabel": "Account Holder Name",
+        "accountNamePlaceholder": "Name as per bank book",
+        "accountNumberLabel": "Account Number",
+        "accountNumberPlaceholder": "Example: 1234567890",
+        "setDefault": "Set as default bank for next withdraw",
+        "submit": "Submit Withdraw",
+        "submitting": "Submitting...",
+        "success": "Withdraw request submitted",
+        "error": "Failed to submit withdraw request"
+      },
+      "profile": {
+        "title": "Partner Profile",
+        "description": "Update your contact information and choose the primary bank account for payouts.",
+        "contactTitle": "Contact Information",
+        "phoneLabel": "Phone Number",
+        "phonePlaceholder": "Example: 081234567890",
+        "taxLabel": "Tax Number (optional)",
+        "taxPlaceholder": "Enter NPWP if available",
+        "addressLabel": "Address",
+        "addressPlaceholder": "Complete address for administration",
+        "bankLabel": "Default Bank Account",
+        "bankPlaceholder": "Select default account",
+        "bankHelp": "The default account will be used automatically for new withdraw requests.",
+        "save": "Save Changes"
+      }
+    }
   }
 }

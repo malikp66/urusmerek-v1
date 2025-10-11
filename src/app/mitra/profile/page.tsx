@@ -4,13 +4,22 @@ import { getCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { partnerBankAccounts, partnerProfiles } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/lib/actions/signout";
 import { updateMitraProfile } from "./actions";
+import { getLocaleFromRequest, getTranslations } from "@/lib/i18n/server";
+import { signOut } from "@/lib/actions/sign-out";
 import { CreateBankAccountDialog } from "./_components/CreateBankAccountDialog";
 
 export const revalidate = 0;
@@ -22,6 +31,8 @@ export default async function MitraProfilePage() {
   }
 
   const userId = Number(user.sub);
+  const locale = getLocaleFromRequest();
+  const t = getTranslations("panels.partner.profile", locale);
 
   const profile = await db.query.partnerProfiles.findFirst({
     where: eq(partnerProfiles.userId, userId),
@@ -38,50 +49,49 @@ export default async function MitraProfilePage() {
   return (
     <div className="space-y-8 py-6">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Profil Mitra</h1>
-        <p className="text-sm text-muted-foreground">
-          Perbarui informasi kontak dan pilih rekening utama untuk pencairan komisi.
-        </p>
+        <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
+        <p className="text-sm text-muted-foreground">{t("description")}</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base font-semibold">Informasi Kontak</CardTitle>
+          <CardTitle className="text-base font-semibold">{t("contactTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
           <form action={updateMitraProfile} className="space-y-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="phone">Nomor Telepon</Label>
+                <Label htmlFor="phone">{t("phoneLabel")}</Label>
                 <Input
                   id="phone"
                   name="phone"
                   defaultValue={profile?.phone ?? ""}
-                  placeholder="Contoh: 081234567890"
+                  placeholder={t("phonePlaceholder")}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="taxNumber">NPWP (opsional)</Label>
+                <Label htmlFor="taxNumber">{t("taxLabel")}</Label>
                 <Input
                   id="taxNumber"
                   name="taxNumber"
                   defaultValue={profile?.taxNumber ?? ""}
-                  placeholder="Nomor NPWP bila tersedia"
+                  placeholder={t("taxPlaceholder")}
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="address">Alamat</Label>
+              <Label htmlFor="address">{t("addressLabel")}</Label>
               <Textarea
                 id="address"
                 name="address"
                 rows={4}
-                placeholder="Alamat lengkap untuk keperluan administrasi"
+                placeholder={t("addressPlaceholder")}
                 defaultValue={profile?.address ?? ""}
               />
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="defaultBankId">{t("bankLabel")}</Label>
               <div className="flex items-center justify-between gap-2">
                 <Label htmlFor="defaultBankId">Rekening Default</Label>
                 <CreateBankAccountDialog />
@@ -92,7 +102,7 @@ export default async function MitraProfilePage() {
                 defaultValue={bankDefaultId ? String(bankDefaultId) : ""}
                 className="border-input bg-background text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] dark:bg-input/30 dark:hover:bg-input/50 h-9 w-full rounded-md border px-3 text-sm shadow-xs transition-[color,box-shadow]"
               >
-                <option value="">Pilih rekening default</option>
+                <option value="">{t("bankPlaceholder")}</option>
                 {bankAccounts.map((account) => (
                   <option key={account.id} value={String(account.id)}>
                     {account.bankName} • {account.accountNumber}
@@ -100,13 +110,29 @@ export default async function MitraProfilePage() {
                 ))}
               </select>
               <p className="text-xs text-muted-foreground">
-                Rekening default akan digunakan otomatis saat mengajukan withdraw baru.
+                {t("bankHelp")}
               </p>
             </div>
 
-            <Button type="submit">Simpan Perubahan</Button>
+            <Button type="submit">{t("save")}</Button>
           </form>
         </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base font-semibold">Keluar dari Akun</CardTitle>
+          <CardDescription>
+            Akhiri sesi Anda di panel mitra dengan aman setelah selesai menggunakan akun ini.
+          </CardDescription>
+        </CardHeader>
+        <CardFooter className="border-t justify-end">
+          <form action={signOut}>
+            <Button type="submit" variant="destructive">
+              Keluar
+            </Button>
+          </form>
+        </CardFooter>
       </Card>
       <Card>
         <CardHeader>

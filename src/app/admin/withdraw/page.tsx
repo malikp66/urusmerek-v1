@@ -22,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { getLocaleFromRequest, getTranslations } from '@/lib/i18n/server';
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -42,10 +43,6 @@ function toNumber(value: string | null, fallback: number) {
 
 const STATUS_OPTIONS = ['all', ...withdrawStatusEnum.enumValues];
 
-function formatCurrency(value: number) {
-  return `Rp ${value.toLocaleString('id-ID')}`;
-}
-
 export default async function AdminWithdrawPage({
   searchParams,
 }: {
@@ -53,6 +50,23 @@ export default async function AdminWithdrawPage({
 }) {
   await requireAdmin();
   const resolved = await searchParams;
+  const locale = getLocaleFromRequest();
+  const intlLocale = locale === 'en' ? 'en-US' : 'id-ID';
+  const t = getTranslations('panels.admin.withdraw', locale);
+  const headers = t<{
+    id: string;
+    partner: string;
+    amount: string;
+    status: string;
+    created: string;
+    actions: string;
+  }>('tableHeaders');
+  const statusOptionsLabels = t<
+    Record<'all' | 'pending' | 'approved' | 'processing' | 'paid' | 'rejected', string>
+  >('statusOptions');
+  const statusBadgeLabels = t<
+    Record<'pending' | 'approved' | 'processing' | 'paid' | 'rejected', string>
+  >('statusBadge');
 
   const search = toStringValue(resolved.search);
   const status = toStringValue(resolved.status) || 'all';
@@ -76,10 +90,8 @@ export default async function AdminWithdrawPage({
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Permintaan Withdraw</h2>
-        <p className="text-sm text-muted-foreground">
-          Approve dan pantau status pencairan komisi mitra.
-        </p>
+        <h2 className="text-2xl font-semibold tracking-tight">{t('title')}</h2>
+        <p className="text-sm text-muted-foreground">{t('description')}</p>
       </div>
 
       <Card>
@@ -87,13 +99,13 @@ export default async function AdminWithdrawPage({
           <form className="grid gap-3 md:col-span-3 md:grid-cols-3" action="/admin/withdraw">
             <Input
               name="search"
-              placeholder="Cari nama/email mitra"
+              placeholder={t('searchPlaceholder')}
               defaultValue={search}
               className="md:col-span-2"
             />
             <div>
               <label htmlFor="status" className="sr-only">
-                Status
+                {t('statusLabel')}
               </label>
               <select
                 id="status"
@@ -103,17 +115,15 @@ export default async function AdminWithdrawPage({
               >
                 {STATUS_OPTIONS.map((option) => (
                   <option key={option} value={option}>
-                    {option === 'all'
-                      ? 'Semua Status'
-                      : option.charAt(0).toUpperCase() + option.slice(1)}
+                    {statusOptionsLabels[option as keyof typeof statusOptionsLabels] ?? option}
                   </option>
                 ))}
               </select>
             </div>
             <div className="flex items-center gap-2 md:col-span-3">
-              <Button type="submit">Terapkan</Button>
+              <Button type="submit">{t('apply')}</Button>
               <Button variant="ghost" asChild>
-                <Link href="/admin/withdraw">Reset</Link>
+                <Link href="/admin/withdraw">{t('reset')}</Link>
               </Button>
             </div>
           </form>
@@ -124,19 +134,19 @@ export default async function AdminWithdrawPage({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Mitra</TableHead>
-              <TableHead>Jumlah</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Diajukan</TableHead>
-              <TableHead className="text-right">Aksi</TableHead>
+              <TableHead>{headers.id}</TableHead>
+              <TableHead>{headers.partner}</TableHead>
+              <TableHead>{headers.amount}</TableHead>
+              <TableHead>{headers.status}</TableHead>
+              <TableHead>{headers.created}</TableHead>
+              <TableHead className="text-right">{headers.actions}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {result.data.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center text-muted-foreground">
-                  Belum ada permintaan withdraw dengan filter saat ini.
+                  {t('empty')}
                 </TableCell>
               </TableRow>
             ) : (
@@ -149,21 +159,21 @@ export default async function AdminWithdrawPage({
                       <span className="text-xs text-muted-foreground">{item.userEmail}</span>
                     </div>
                   </TableCell>
-                  <TableCell>{formatCurrency(item.amount)}</TableCell>
+                  <TableCell>Rp {item.amount.toLocaleString(intlLocale)}</TableCell>
                   <TableCell>
                     <Badge variant="outline" className="capitalize">
-                      {item.status}
+                      {statusBadgeLabels[item.status as keyof typeof statusBadgeLabels] ?? item.status}
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    {new Date(item.createdAt).toLocaleString('id-ID', {
+                    {new Date(item.createdAt).toLocaleString(intlLocale, {
                       dateStyle: 'medium',
                       timeStyle: 'short',
                     })}
                   </TableCell>
                   <TableCell className="text-right">
                     <Button asChild size="sm" variant="outline">
-                      <Link href={`/admin/withdraw/${item.id}`}>Kelola</Link>
+                      <Link href={`/admin/withdraw/${item.id}`}>{t('manage')}</Link>
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -175,7 +185,9 @@ export default async function AdminWithdrawPage({
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
-          Menampilkan {result.data.length} dari {result.totalItems} permintaan
+          {t('summary')
+            .replace('{displayed}', result.data.length.toLocaleString(intlLocale))
+            .replace('{total}', result.totalItems.toLocaleString(intlLocale))}
         </p>
         <Pagination>
           <PaginationContent>
@@ -188,7 +200,9 @@ export default async function AdminWithdrawPage({
             </PaginationItem>
             <PaginationItem>
               <span className="px-2 text-sm text-muted-foreground">
-                Halaman {result.page} dari {result.pageCount}
+                {t('pagination')
+                  .replace('{page}', result.page.toLocaleString(intlLocale))
+                  .replace('{total}', result.pageCount.toLocaleString(intlLocale))}
               </span>
             </PaginationItem>
             <PaginationItem>

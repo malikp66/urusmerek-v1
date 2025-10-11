@@ -21,18 +21,40 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { AdminNavMenu, type AdminNavigationItem } from './AdminNavMenu';
-
+import { getLocaleFromRequest, getTranslations } from '@/lib/i18n/server';
 const NAVIGATION: AdminNavigationItem[] = [
   { title: 'Dashboard', href: '/admin', icon: 'barChart3' },
   { title: 'Mitra', href: '/admin/mitra', icon: 'users' },
   { title: 'Konsultasi', href: '/admin/konsultasi', icon: 'fileText' },
   { title: 'Withdraw', href: '/admin/withdraw', icon: 'circleDollarSign' },
+  { title: 'Profil', href: '/admin/profile', icon: 'userCircle' },
   { title: 'Pengaturan Komisi', href: '/admin/settings/commission', icon: 'settings' },
   { title: 'Fitur Lain', href: '/admin/features', icon: 'briefcase', badge: 'Segera' },
 ];
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const session = await requireAdmin().catch(() => null);
+  const locale = getLocaleFromRequest();
+  const tLayout = getTranslations('panels.admin.layout', locale);
+  const tNav = getTranslations('panels.admin.navigation', locale);
+
+  const navigation: AdminNavigationItem[] = [
+    { title: tNav('dashboard'), href: '/admin', icon: 'barChart3' },
+    { title: tNav('partners'), href: '/admin/mitra', icon: 'users' },
+    { title: tNav('consultations'), href: '/admin/konsultasi', icon: 'fileText' },
+    { title: tNav('withdraw'), href: '/admin/withdraw', icon: 'circleDollarSign' },
+    {
+      title: tNav('commissionSettings'),
+      href: '/admin/settings/commission',
+      icon: 'settings',
+    },
+    {
+      title: tNav('features'),
+      href: '/admin/features',
+      icon: 'briefcase',
+      badge: tNav('featuresBadge'),
+    },
+  ];
 
   if (!session) {
     redirect('/');
@@ -47,16 +69,16 @@ export default async function AdminLayout({ children }: { children: ReactNode })
               UM
             </div>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold leading-tight">UrusMerek</span>
-              <span className="text-xs text-muted-foreground leading-tight">Admin Panel</span>
+              <span className="text-sm font-semibold leading-tight">{tLayout('brandPrimary')}</span>
+              <span className="text-xs text-muted-foreground leading-tight">{tLayout('brandSecondary')}</span>
             </div>
           </Link>
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Utama</SidebarGroupLabel>
+            <SidebarGroupLabel>{tLayout('navGroupLabel')}</SidebarGroupLabel>
             <SidebarGroupContent>
-              <AdminNavMenu items={NAVIGATION} />
+              <AdminNavMenu items={navigation} />
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
@@ -69,6 +91,9 @@ export default async function AdminLayout({ children }: { children: ReactNode })
               Sign out
             </Button>
           </form>
+          <div className="rounded-md bg-muted/40 px-3 py-2 text-xs leading-tight text-muted-foreground">
+            {tLayout('signedInAs').replace('{id}', session?.sub ?? '')}
+          </div>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset className="bg-muted/30">
@@ -76,13 +101,13 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           <div className="flex h-14 items-center gap-3 px-4">
             <SidebarTrigger />
             <div className="flex flex-col">
-              <h1 className="text-base font-semibold leading-none">Admin Panel</h1>
-              <p className="text-xs text-muted-foreground">Kelola mitra dan operasional</p>
+              <h1 className="text-base font-semibold leading-none">{tLayout('headerTitle')}</h1>
+              <p className="text-xs text-muted-foreground">{tLayout('headerDescription')}</p>
             </div>
             <div className="ml-auto flex items-center gap-3">
               <LangSwitcher />
               <Button asChild variant="outline">
-                <Link href="/">Kembali ke Beranda</Link>
+                <Link href="/">{tLayout('backToSite')}</Link>
               </Button>
             </div>
           </div>
