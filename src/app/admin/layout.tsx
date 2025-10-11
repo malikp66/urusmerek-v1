@@ -34,9 +34,9 @@ const NAVIGATION: AdminNavigationItem[] = [
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const session = await requireAdmin().catch(() => null);
-  const locale = getLocaleFromRequest();
-  const tLayout = getTranslations('panels.admin.layout', locale);
-  const tNav = getTranslations('panels.admin.navigation', locale);
+  const locale = await getLocaleFromRequest();
+  const tLayout = await getTranslations('panels.admin.layout', locale);
+  const tNav = await getTranslations('panels.admin.navigation', locale);
 
   const navigation: AdminNavigationItem[] = [
     { title: tNav('dashboard'), href: '/admin', icon: 'barChart3' },
@@ -91,9 +91,6 @@ export default async function AdminLayout({ children }: { children: ReactNode })
               Sign out
             </Button>
           </form>
-          <div className="rounded-md bg-muted/40 px-3 py-2 text-xs leading-tight text-muted-foreground">
-            {tLayout('signedInAs').replace('{id}', session?.sub ?? '')}
-          </div>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset className="bg-muted/30">

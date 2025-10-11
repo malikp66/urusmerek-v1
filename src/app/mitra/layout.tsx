@@ -24,8 +24,8 @@ import { getLocaleFromRequest, getTranslations } from "@/lib/i18n/server";
 
 export default async function MitraLayout({ children }: { children: ReactNode }) {
   const session = await getCurrentUser();
-  const locale = getLocaleFromRequest();
-  const t = getTranslations("panels.partner.layout", locale);
+  const locale = await getLocaleFromRequest();
+  const t = await getTranslations("panels.partner.layout", locale);
   const navLabels = t<{ dashboard: string; withdraw: string; profile: string }>("navItems");
   const navigation: AdminNavigationItem[] = [
     { title: navLabels.dashboard, href: "/mitra/affiliates", icon: "barChart3" },
@@ -59,9 +59,6 @@ export default async function MitraLayout({ children }: { children: ReactNode })
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
-          <div className="rounded-md bg-muted/40 px-3 py-2 text-xs leading-tight text-muted-foreground">
-            {t("signedInAs").replace("{id}", session.sub)}
-          </div>
           <form action={signOut} className="grid gap-2">
             <div className="rounded-md bg-muted/40 px-3 py-2 text-xs leading-tight text-muted-foreground">
               Masuk sebagai <span className="font-medium text-foreground">Mitra #{session.sub}</span>

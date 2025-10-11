@@ -34,9 +34,9 @@ export default async function MitraWithdrawPage({
   const userId = Number(user.sub);
   const page = toNumber(resolved.page, 1);
 
-  const locale = getLocaleFromRequest();
+  const locale = await getLocaleFromRequest();
   const intlLocale = locale === "en" ? "en-US" : "id-ID";
-  const t = getTranslations("panels.partner.withdraw", locale);
+  const t = await getTranslations("panels.partner.withdraw", locale);
   const [balance, withdraws] = await Promise.all([
     getMitraBalance(userId),
     getMitraWithdraws({ userId, page, perPage: 10 }),

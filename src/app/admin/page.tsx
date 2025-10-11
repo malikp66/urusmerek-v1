@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 export default async function AdminDashboardPage() {
   await requireAdmin();
   const stats = await getAdminDashboardStats();
-  const locale = getLocaleFromRequest();
+  const locale = await getLocaleFromRequest();
   const intlLocale = locale === 'en' ? 'en-US' : 'id-ID';
-  const t = getTranslations('panels.admin.dashboard', locale);
+  const t = await getTranslations('panels.admin.dashboard', locale);
   const cards = t<{
     totalPartners: string;
     activeLinks: string;

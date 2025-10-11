@@ -69,9 +69,9 @@ function WithdrawTimeline({
   );
 }
 
-export function WithdrawTable({ result, query, locale }: Props) {
+export async function WithdrawTable({ result, query, locale }: Props) {
   const intlLocale = locale === "en" ? "en-US" : "id-ID";
-  const t = getTranslations("panels.partner.withdrawTable", locale);
+  const t = await getTranslations("panels.partner.withdrawTable", locale);
   const headers = t<{
     id: string;
     amount: string;

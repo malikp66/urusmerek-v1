@@ -50,9 +50,9 @@ export default async function AdminWithdrawPage({
 }) {
   await requireAdmin();
   const resolved = await searchParams;
-  const locale = getLocaleFromRequest();
+  const locale = await getLocaleFromRequest();
   const intlLocale = locale === 'en' ? 'en-US' : 'id-ID';
-  const t = getTranslations('panels.admin.withdraw', locale);
+  const t = await getTranslations('panels.admin.withdraw', locale);
   const headers = t<{
     id: string;
     partner: string;

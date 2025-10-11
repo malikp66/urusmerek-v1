@@ -4,8 +4,8 @@ import { getLocaleFromRequest, getTranslations } from '@/lib/i18n/server';
 
 export default async function AdminFeaturesPlaceholderPage() {
   await requireAdmin();
-  const locale = getLocaleFromRequest();
-  const t = getTranslations('panels.admin.features', locale);
+  const locale = await getLocaleFromRequest();
+  const t = await getTranslations('panels.admin.features', locale);
   const items = t<string[]>('items');
 
   return (

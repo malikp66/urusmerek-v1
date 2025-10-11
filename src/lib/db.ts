@@ -26,11 +26,10 @@ const pool =
 
 if (!globalForDb.postgresPool) {
   globalForDb.postgresPool = pool;
+  pool.on('error', (error) => {
+    logger.error('Postgres pool error', error);
+  });
 }
-
-pool.on('error', (error) => {
-  logger.error('Postgres pool error', error);
-});
 
 const globalForDrizzle = globalThis as unknown as {
   drizzleDb?: NodePgDatabase<typeof schema>;

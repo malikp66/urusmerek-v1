@@ -48,9 +48,9 @@ export default async function AdminMitraPage({
 }) {
   await requireAdmin();
   const resolved = await searchParams;
-  const locale = getLocaleFromRequest();
+  const locale = await getLocaleFromRequest();
   const intlLocale = locale === 'en' ? 'en-US' : 'id-ID';
-  const t = getTranslations('panels.admin.partners', locale);
+  const t = await getTranslations('panels.admin.partners', locale);
   const headers = t<{
     partner: string;
     links: string;

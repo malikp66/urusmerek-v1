@@ -16,10 +16,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { signOut } from "@/lib/actions/signout";
 import { updateMitraProfile } from "./actions";
 import { getLocaleFromRequest, getTranslations } from "@/lib/i18n/server";
-import { signOut } from "@/lib/actions/sign-out";
+import { signOut } from "@/lib/actions/signout";
 import { CreateBankAccountDialog } from "./_components/CreateBankAccountDialog";
 
 export const revalidate = 0;
@@ -31,8 +30,8 @@ export default async function MitraProfilePage() {
   }
 
   const userId = Number(user.sub);
-  const locale = getLocaleFromRequest();
-  const t = getTranslations("panels.partner.profile", locale);
+  const locale = await getLocaleFromRequest();
+  const t = await getTranslations("panels.partner.profile", locale);
 
   const profile = await db.query.partnerProfiles.findFirst({
     where: eq(partnerProfiles.userId, userId),

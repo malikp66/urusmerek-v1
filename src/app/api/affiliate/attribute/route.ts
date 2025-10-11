@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const referralCode = cookieStore.get(AFFILIATE_COOKIE_NAME)?.value;
 
   if (!referralCode) {

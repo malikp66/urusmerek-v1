@@ -7,8 +7,8 @@ import { DefaultCommissionForm } from './_components/DefaultCommissionForm';
 export default async function AdminCommissionSettingsPage() {
   await requireAdmin();
   const setting = await getDefaultCommissionSetting();
-  const locale = getLocaleFromRequest();
-  const t = getTranslations('panels.admin.commissionSettings', locale);
+  const locale = await getLocaleFromRequest();
+  const t = await getTranslations('panels.admin.commissionSettings', locale);
   const notes = t<string[]>('notes');
 
   return (

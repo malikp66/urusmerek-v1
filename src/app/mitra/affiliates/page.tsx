@@ -77,14 +77,14 @@ async function ReferralsTable({ userId, search, status, refPage, linkPage }: Par
   return <RefTable result={referrals} query={query} />;
 }
 
-function PerformanceSection({
+async function PerformanceSection({
   dashboard,
   locale,
 }: {
   dashboard: MitraDashboardData;
   locale: "id" | "en";
 }) {
-  const t = getTranslations("panels.partner.dashboard", locale);
+  const t = await getTranslations("panels.partner.dashboard", locale);
   return (
     <Card className="col-span-full">
       <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -111,7 +111,7 @@ function PerformanceSection({
   );
 }
 
-function DashboardStats({
+async function DashboardStats({
   dashboard,
   balance,
   locale,
@@ -121,7 +121,7 @@ function DashboardStats({
   locale: "id" | "en";
 }) {
   const intlLocale = locale === "en" ? "en-US" : "id-ID";
-  const t = getTranslations("panels.partner.dashboard", locale);
+  const t = await getTranslations("panels.partner.dashboard", locale);
   const { stats } = dashboard;
   const totalLeads =
     stats.referralsPending +
@@ -208,9 +208,9 @@ export default async function MitraDashboardPage({
     redirect("/");
   }
 
-  const locale = getLocaleFromRequest();
+  const locale = await getLocaleFromRequest();
   const intlLocale = locale === "en" ? "en-US" : "id-ID";
-  const t = getTranslations("panels.partner.dashboard", locale);
+  const t = await getTranslations("panels.partner.dashboard", locale);
   const userId = Number(user.sub);
   const search = toStringValue(resolved.search);
   const status = toStringValue(resolved.status);
