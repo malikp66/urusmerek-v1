@@ -126,24 +126,40 @@
     "tagline": "Trusted by leading brands"
   },
   "servicesShowcase": {
-    "heading": "Handle every trademark need sooner",
-    "description": "From filing and renewal to opposition letters, each service is designed to keep the process lean and secure.",
-    "cta": "Explore all services",
+    "eyebrow": "Process & Workflow",
+    "heading": "Protect your brand through a fast, transparent, and well-monitored process",
+    "description": "Every step at UrusMerek.id is designed to make trademark protection simple and efficient — from consultation to official certification.",
+    "cta": "Explore the full process",
     "tabs": [
       {
-        "title": "Trademark Filing",
-        "description": "Full assistance that covers clearance research, Nice class selection, document preparation, official DJKI submission, and status monitoring.",
-        "image": "/service-1.png"
+        "title": "1. Initial Consultation",
+        "description": "The process begins with a consultation with our Trademark Expert to analyze name availability, Nice class selection, and similarity risks.",
+        "image": "/proses/proses-1.png"
       },
       {
-        "title": "Trademark Renewal",
-        "description": "Renew on time with data validation, formal submission, and deadline reminders so your protection extends for another ten years.",
-        "image": "/service-2.png"
+        "title": "2. Search & Document Preparation",
+        "description": "Our team conducts a comprehensive similarity check and prepares the registration documents to ensure compliance with DJKI requirements.",
+        "image": "/proses/proses-2.png"
       },
       {
-        "title": "Opposition Letter",
-        "description": "Develop a strong legal basis to challenge imitators. The structure is methodical, swift, and laser focused.",
-        "image": "/service-3.png"
+        "title": "3. Official Filing to DJKI",
+        "description": "Once documents are complete, the application is officially submitted to DJKI (Ministry of Law & Human Rights). The applicant receives proof of submission the same day.",
+        "image": "/proses/proses-3.png"
+      },
+      {
+        "title": "4. Monitoring & Assistance",
+        "description": "UrusMerek monitors the entire process during formal and substantive examinations, providing support for any objection or refusal issues.",
+        "image": "/proses/proses-4.png"
+      },
+      {
+        "title": "5. Certification & Delivery",
+        "description": "After approval, the trademark certificate is issued and delivered directly to the client’s address, granting 10-year official legal protection.",
+        "image": "/proses/proses-5.png"
+      },
+      {
+        "title": "6. Post-Registration Services",
+        "description": "UrusMerek continues to support you after registration — including renewals, data updates, ownership transfers, and trademark licensing agreements.",
+        "image": "/proses/proses-6.png"
       }
     ]
   },
@@ -157,28 +173,28 @@
         "id": "registration",
         "name": "Trademark Filing",
         "subtitle": "Guidance from concept to formal application",
-        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "image": "/fitur/pendaftaran-merek.png",
         "link": "/layanan/pendaftaran-merek"
       },
       {
         "id": "renewal",
         "name": "Ten Year Renewal",
         "subtitle": "Stay ahead of deadlines with zero downtime",
-        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "image": "/fitur/perpanjangan-merek.png",
         "link": "/layanan/perpanjangan-merek"
       },
       {
         "id": "objection",
         "name": "Opposition Letter",
         "subtitle": "Block imitations with structured arguments",
-        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "image": "/fitur/surat-keberatan.png",
         "link": "/layanan/surat-keberatan"
       },
       {
         "id": "search",
         "name": "Name Availability Search",
         "subtitle": "Confirm viability before you invest in a mark",
-        "image": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA",
+        "image": "/fitur/pendaftaran-merek-penelusuran.png",
         "link": "/layanan/pendaftaran-merek#penelusuran"
       }
     ],
@@ -321,6 +337,7 @@
     ]
   },
   "industryTemplates": {
+    "eyebrow": "Packages and Pricing",
     "heading": "Service Pricing",
     "description": "Select the service you need to view the details, benefits, and investment.",
     "seeAll": "View all",
@@ -546,7 +563,7 @@
     "primaryCta": "Start a Consultation",
     "secondaryCta": "See Packages and Pricing",
     "imageAlt": "UrusMerek.id dashboard for managing trademark filing and renewal.",
-    "imageSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
+    "imageSrc": "/finalCta.png"
   },
   "footer": {
     "trustBadges": [

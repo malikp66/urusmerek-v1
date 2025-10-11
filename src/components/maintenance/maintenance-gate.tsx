@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import Image from "next/image";
+
+import { SafeImage } from "@/components/ui/safe-image";
 
 export default function MaintenanceGate() {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -58,7 +59,7 @@ export default function MaintenanceGate() {
             ref={cardRef}
             className="group relative w-full cursor-pointer overflow-hidden rounded-3xl border border-slate-200/70 bg-white/0 backdrop-blur-xl transition-all"
           >
-            <Image
+            <SafeImage
               src="/banner.png"
               alt="UrusMerek.id — Mitra Terpercaya Pengurusan Merek Anda"
               width={1280}
@@ -66,6 +67,7 @@ export default function MaintenanceGate() {
               priority
               sizes="(min-width: 1280px) 1120px, (min-width: 1024px) 88vw, (min-width: 768px) 90vw, 100vw"
               className="h-auto w-full rounded-3xl select-none"
+              skeletonClassName="rounded-3xl"
               draggable={false}
             />
 
@@ -86,7 +88,7 @@ export default function MaintenanceGate() {
         {/* MOBILE (tanpa animasi) */}
         <div className="relative w-full md:hidden">
           <div className="relative overflow-hidden rounded-[32px] border border-slate-200/70 bg-white/0 backdrop-blur-xl">
-            <Image
+            <SafeImage
               src="/banner-mobile.png"
               alt="UrusMerek.id — Mitra Terpercaya Pengurusan Merek Anda"
               width={1024}
@@ -94,6 +96,7 @@ export default function MaintenanceGate() {
               priority
               sizes="(max-width: 767px) 92vw, 100vw"
               className="h-auto w-full rounded-[32px]"
+              skeletonClassName="rounded-[32px]"
             />
             <span
               aria-hidden

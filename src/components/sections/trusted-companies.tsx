@@ -1,9 +1,8 @@
 "use client"
 
-import Image from 'next/image';
 import React from 'react';
 import { useTranslations } from "@/lib/i18n/context";
-import { MediaSkeleton } from "@/components/ui/media-skeleton";
+import { SafeImage } from "@/components/ui/safe-image";
 
 // Per instruction to adapt for an Indonesian audience, this component uses the provided logos
 // with a translated title. The original site's logos are used as no Indonesian assets were supplied.
@@ -26,8 +25,7 @@ const LogoItem = ({ logo, priority }: { logo: { name: string; src: string }; pri
 
   return (
     <div className="group relative flex h-8 w-[140px] items-center justify-center">
-      <MediaSkeleton isVisible={!isLoaded} className="rounded-sm" />
-      <Image
+      <SafeImage
         src={logo.src}
         alt={`${logo.name} Logo`}
         width={140}
@@ -39,6 +37,8 @@ const LogoItem = ({ logo, priority }: { logo: { name: string; src: string }; pri
           ${isLoaded ? "opacity-70 grayscale" : "opacity-0"}
           group-hover:opacity-100 group-hover:grayscale-0
         `}
+        skeletonClassName="rounded-sm"
+        containerClassName="h-8 w-[140px] flex items-center justify-center"
       />
     </div>
   );

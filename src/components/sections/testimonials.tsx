@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import {
   BadgeCheck,
@@ -14,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { useTranslations } from "@/lib/i18n/context";
+import { SafeImage } from "@/components/ui/safe-image";
 
 type Variant = {
   id: string;
@@ -144,7 +144,15 @@ const PricingSelectorSection = () => {
         <div className="mt-10 rounded-2xl border bg-card p-6 shadow-sm">
           <div className="flex flex-col gap-6 lg:flex-row">
             <div className="relative h-56 w-full overflow-hidden rounded-xl lg:h-72 lg:w-1/2">
-              <Image src={service.image.src} alt={service.image.alt} fill className="object-cover" />
+              <SafeImage
+                key={service.image.src}
+                src={service.image.src}
+                alt={service.image.alt}
+                fill
+                className="object-cover"
+                skeletonClassName="rounded-xl"
+                containerClassName="h-full w-full"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 text-white">
                 <div className="text-sm opacity-90">{panel.selectedLabel}</div>

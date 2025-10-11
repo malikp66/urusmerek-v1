@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useCallback, type MouseEvent } from "react";
 import Link from "next/link";
 import { useTranslations } from "@/lib/i18n/context";
 import { Button } from "../ui/button";
-import { MediaSkeleton } from "@/components/ui/media-skeleton";
+import { SafeImage } from "@/components/ui/safe-image";
+import { smoothScrollToHash } from "@/lib/smooth-scroll";
 
 const FinalCta = () => {
   const t = useTranslations("finalCta");
@@ -19,7 +19,10 @@ const FinalCta = () => {
   const imageSrc = t<string>("imageSrc");
   const imageAlt = t<string>("imageAlt");
 
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const handlePricingClick = useCallback((event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    smoothScrollToHash("#harga", { duration: 1600 });
+  }, []);
 
   return (
     <section className="relative overflow-hidden bg-white">
@@ -62,7 +65,7 @@ const FinalCta = () => {
               </Button>
 
               <Button variant="outline" asChild size="lg" className="btn-outline-brand hover:-translate-y-px">
-                <Link href="#harga">
+                <Link href="#harga" onClick={handlePricingClick}>
                   {secondaryCta}
                 </Link>
               </Button>
@@ -72,17 +75,14 @@ const FinalCta = () => {
           {/* Visual */}
           <div className="mt-12 lg:mt-0">
             <div className="relative mx-auto w-full overflow-hidden rounded-xl shadow-2xl">
-              <MediaSkeleton isVisible={!isImageLoaded} className="rounded-xl" />
-              <Image
+              <SafeImage
                 src={imageSrc}
                 alt={imageAlt}
                 width={1200}
                 height={760}
                 priority
-                onLoad={() => setIsImageLoaded(true)}
-                className={`rounded-xl w-full h-auto transition-opacity duration-500 ease-out ${
-                  isImageLoaded ? "opacity-100" : "opacity-0"
-                }`}
+                className="rounded-xl w-full h-auto"
+                skeletonClassName="rounded-xl"
               />
             </div>
           </div>

@@ -104,6 +104,19 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer base {
   :root {
     --background: var(--color-background);
     --foreground: var(--color-foreground);
@@ -212,11 +225,8 @@
   }
 
   .container {
+    @apply px-[10px] lg:pl-[20px] lg:pr-[20px] mx-auto;
     max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 20px;
-    padding-right: 20px;
   }
 }
 

@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { type ReactNode } from 'react';
 import { requireAdmin } from '@/lib/auth-guards';
+import { signOut } from '@/lib/actions/signout';
 import { LangSwitcher } from '@/components/lang/LangSwitcher';
 import { Button } from '@/components/ui/button';
 import {
@@ -60,9 +61,14 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
-          <div className="rounded-md bg-muted/40 px-3 py-2 text-xs leading-tight text-muted-foreground">
-            Masuk sebagai <span className="font-medium text-foreground">Admin #{session?.sub}</span>
-          </div>
+          <form action={signOut} className="grid gap-2">
+            <div className="rounded-md bg-muted/40 px-3 py-2 text-xs leading-tight text-muted-foreground">
+              Masuk sebagai <span className="font-medium text-foreground">Admin #{session?.sub}</span>
+            </div>
+            <Button type="submit" variant="outline" className="h-8 justify-start text-xs">
+              Sign out
+            </Button>
+          </form>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset className="bg-muted/30">

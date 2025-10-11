@@ -179,9 +179,9 @@ export default function HeroSection() {
 
       {/* 🔧 Konten ditaruh di atas */}
       <div className="relative z-10 container px-4 md:px-6">
-        <div className="mx-auto grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div className="mx-auto grid gap-12 lg:grid-cols-[1fr_1.35fr] lg:items-stretch">
           {/* LEFT */}
-          <div ref={leftRef} className="max-w-xl space-y-6">
+          <div ref={leftRef} className="max-w-[44rem] lg:max-w-[40rem] space-y-6">            
             <div ref={badgeRef} className="inline-flex items-center gap-2.5 rounded-full bg-[#DC2626]/10 px-4 py-2 text-sm font-semibold text-[#DC2626] border border-[#DC2626]/30">
               <span className="h-2.5 w-2.5 rounded-full bg-[#DC2626] animate-pulse" />
               {badgeText}
@@ -222,8 +222,8 @@ export default function HeroSection() {
           </div>
 
           {/* RIGHT */}
-          <div ref={rightRef} className="relative">
-            <div ref={cardRef} className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border/70 shadow-xl bg-black/5">
+          <div ref={rightRef} className="relative min-w-0 h-full flex items-stretch">
+            <div ref={cardRef} className="relative w-full h-full overflow-hidden rounded-2xl border border-border/70 shadow-xl bg-black/5">
               <MediaSkeleton isVisible={!isVideoLoaded} className="rounded-2xl" />
               <video
                 src={VIDEO_SRC}
@@ -266,7 +266,7 @@ export default function HeroSection() {
               </div>
 
             </div>
-            <div className="absolute left-6 right-6 bottom-4 rounded-2xl h-1 bg-[#DC2626]">
+            <div className="absolute inset-x-6 bottom-4 rounded-2xl h-1 bg-[#DC2626]">
               <div
                 key={currentServiceIndex}
                 className="h-full bg-white/20"

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/
 import { AuthModal } from "@/components/auth/AuthModal";
 import { LangSwitcher } from "@/components/lang/LangSwitcher";
 import { useTranslations } from "@/lib/i18n/context";
+import { smoothScrollToHash } from "@/lib/smooth-scroll";
 
 const layananItems = [
   { title: "Pendaftaran Merek", href: "/layanan/pendaftaran-merek", description: "Amankan identitas brand Anda dengan pendaftaran merek resmi." },
@@ -88,6 +89,7 @@ export default function NavigationHeader() {
   const [authOpen, setAuthOpen] = React.useState(false); // ⬅️ state modal
   const [hasSession, setHasSession] = React.useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const tNav = useTranslations("navigation");
   const brand = tNav<{ primary: string; secondary: string; fallbackPrimary: string; fallbackSecondary: string }>("brand");
   const menu = tNav<{ home: string; services: string; pricing: string; company: string; faq: string; contact: string; partner: string }>("menu");
@@ -104,6 +106,47 @@ export default function NavigationHeader() {
   );
   const layananActive = React.useMemo(() => services.some(i => isActive(i.href)), [isActive, services]);
   const toolsActive = React.useMemo(() => toolsItems.some(i => isActive(i.href)), [isActive]);
+  const handleAnchorNavigation = React.useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      const href = event.currentTarget.getAttribute("href");
+
+      if (!href || !href.startsWith("#")) {
+        return;
+      }
+
+      if (pathname !== "/") {
+        event.preventDefault();
+        router.push(`/#${href.slice(1)}`);
+        return;
+      }
+
+      event.preventDefault();
+      smoothScrollToHash(href, { duration: 1600 });
+    },
+    [pathname, router]
+  );
+
+  React.useEffect(() => {
+    if (pathname !== "/" || typeof window === "undefined") {
+      return;
+    }
+
+    const { hash } = window.location;
+    if (!hash || !hash.startsWith("#")) {
+      return;
+    }
+
+    const target = document.getElementById(hash.slice(1));
+    if (!target) {
+      return;
+    }
+
+    const raf = requestAnimationFrame(() => {
+      smoothScrollToHash(hash, { duration: 1600, updateHash: false });
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [pathname]);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -164,10 +207,10 @@ export default function NavigationHeader() {
   return (
     <>
       <div className="fixed top-0 h-1 z-50 w-full shadow-[0_18px_40px_-32px_rgba(220,38,38,.6)]"></div>
-      <header className="fixed top-0 z-40 w-full border-t border-primary/10 bg-transparent">
+      <header data-site-header className="fixed top-0 z-40 w-full border-t border-primary/10 bg-transparent">
         <div className="container flex h-20 items-center justify-between gap-4">
           {/* Logo */}
-          <div className={cn("rounded-full border border-primary/10 bg-white px-5 py-2 shadow-[0_16px_32px_-28px_rgba(220,38,38,.55)]", "h-12 flex items-center")}>
+          <div className={cn("rounded-full border border-primary/10 bg-white px-5 py-2 shadow-[0_16px_32px_-28px_rgba(220,38,38,.55)]", "h-12 flex items-center")} style={{ boxShadow: '0 4px 6px 0 rgba(67, 46, 134, .04)'}}>
             <Link href="/" className="flex items-center gap-0">
               <span className="text-xl font-bold text-primary">{brand.primary}</span>
               <span className="text-xl font-bold text-foreground">{brand.secondary}</span>
@@ -175,7 +218,7 @@ export default function NavigationHeader() {
           </div>
 
           {/* Nav */}
-          <div className={cn("hidden lg:flex h-12 items-center", navShellClass)}>
+          <div className={cn("hidden xl:flex h-12 items-center", navShellClass)} style={{ boxShadow: '0 4px 6px 0 rgba(67, 46, 134, .04)'}}>
             <NavigationMenu>
               <NavigationMenuList className="flex items-center gap-1">
                 <NavigationMenuItem>
@@ -210,8 +253,8 @@ export default function NavigationHeader() {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href="/harga" aria-current={isActive("/harga") ? "page" : undefined}>
-                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("/harga") ? linkActive : "")}>
+                  <Link href="#harga" onClick={handleAnchorNavigation} aria-current={isActive("#harga") ? "page" : undefined}>
+                    <NavigationMenuLink className={cn(linkBase, linkHover, isActive("#harga") ? linkActive : "")}>
                       {menu.pricing}
                     </NavigationMenuLink>
                   </Link>
@@ -251,12 +294,12 @@ export default function NavigationHeader() {
             </NavigationMenu>
           </div>
 
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             {/* Lang Switcher */}
             <LangSwitcher className={cn(capsuleClass, "h-12 px-2")} />
 
             {/* CTA kanan */}
-            <div className={cn("items-center flex h-12", capsuleClass, "px-2")}>
+            <div className={cn("items-center flex h-12", capsuleClass, "px-2")} style={{ boxShadow: '0 4px 6px 0 rgba(67, 46, 134, .04)'}}>
               <CtaSegmented
                 panelLabel={panelCtaLabel}
                 panelHref={mitraPanelPath}
@@ -269,7 +312,16 @@ export default function NavigationHeader() {
 
 
           {/* Mobile */}
-          <div className="lg:hidden">
+          <div className="xl:hidden flex items-center gap-2">
+            <div className={cn("items-center flex h-12", capsuleClass, "px-2")} style={{ boxShadow: '0 4px 6px 0 rgba(67, 46, 134, .04)'}}>
+              <CtaSegmented
+                panelLabel={panelCtaLabel}
+                panelHref={mitraPanelPath}
+                consultLabel={consultLabel}
+                hasSession={hasSession}
+                onRequireAuth={() => setAuthOpen(true)}
+              />
+            </div>
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
@@ -303,7 +355,14 @@ export default function NavigationHeader() {
                       items={services}
                     />
 
-                    <Link href="/harga" onClick={() => setIsMobileMenuOpen(false)} className={cn(isActive("/harga") ? "text-primary font-semibold" : "text-foreground", "transition")}>
+                    <Link
+                      href="#harga"
+                      onClick={(event) => {
+                        setIsMobileMenuOpen(false);
+                        handleAnchorNavigation(event);
+                      }}
+                      className={cn(isActive("#harga") ? "text-primary font-semibold" : "text-foreground", "transition")}
+                    >
                       {menu.pricing}
                     </Link>
 

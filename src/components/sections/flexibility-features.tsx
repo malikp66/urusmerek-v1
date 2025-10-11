@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import { Search, FileText, FolderKanban } from "lucide-react";
 
 import { useTranslations } from "@/lib/i18n/context";
+import { SafeImage } from "@/components/ui/safe-image";
 
 type ToggleItem = {
   id: string;
@@ -99,12 +99,13 @@ const FlexibilityFeatures = () => {
               <p className="mt-2 text-base text-gray-600">{card.description}</p>
               {card.image ? (
                 <div className="mt-8">
-                  <Image
+                  <SafeImage
                     src={card.image.src}
                     alt={card.image.alt}
                     width={508}
                     height={287}
                     className="w-full rounded-lg object-cover"
+                    skeletonClassName="rounded-lg"
                   />
                 </div>
               ) : null}

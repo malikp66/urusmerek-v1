@@ -7,12 +7,19 @@ import { z } from "zod";
 import { partnerBankAccounts, partnerProfiles } from "@/db/schema";
 import { db } from "@/lib/db";
 import { requireMitra } from "@/lib/auth-guards";
+import { findBankByCode } from "@/lib/constants/banks";
 
 const profileSchema = z.object({
   phone: z.string().max(32).optional().nullable(),
   address: z.string().max(500).optional().nullable(),
   taxNumber: z.string().max(64).optional().nullable(),
   defaultBankId: z.coerce.number().int().positive().optional().nullable(),
+});
+
+const bankAccountSchema = z.object({
+  bankCode: z.string().min(2, "Pilih bank tujuan"),
+  accountName: z.string().min(3, "Nama pemilik wajib diisi").max(100),
+  accountNumber: z.string().min(4, "Nomor rekening tidak valid").max(32),
 });
 
 export async function updateMitraProfile(formData: FormData) {
@@ -76,4 +83,61 @@ export async function updateMitraProfile(formData: FormData) {
   }
 
   revalidatePath("/mitra/profile");
+}
+
+export async function createBankAccount(formData: FormData) {
+  const session = await requireMitra();
+  const parsed = bankAccountSchema.safeParse({
+    bankCode: formData.get("bankCode"),
+    accountName: formData.get("accountName"),
+    accountNumber: formData.get("accountNumber"),
+  });
+
+  if (!parsed.success) {
+    const [issue] = parsed.error.issues;
+    throw new Error(issue?.message ?? "Data rekening tidak valid");
+  }
+
+  const bank = findBankByCode(parsed.data.bankCode);
+  if (!bank) {
+    throw new Error("Kode bank tidak dikenali");
+  }
+
+  const userId = Number(session.sub);
+
+  const existingAccount = await db.query.partnerBankAccounts.findFirst({
+    where: and(
+      eq(partnerBankAccounts.userId, userId),
+      eq(partnerBankAccounts.bankCode, bank.code),
+      eq(partnerBankAccounts.accountNumber, parsed.data.accountNumber)
+    ),
+  });
+
+  if (existingAccount) {
+    await db
+      .update(partnerBankAccounts)
+      .set({
+        accountName: parsed.data.accountName,
+        bankName: bank.name,
+        updatedAt: new Date(),
+      })
+      .where(eq(partnerBankAccounts.id, existingAccount.id));
+    revalidatePath("/mitra/profile");
+    return { id: existingAccount.id, updated: true };
+  }
+
+  const [inserted] = await db
+    .insert(partnerBankAccounts)
+    .values({
+      userId,
+      bankCode: bank.code,
+      bankName: bank.name,
+      accountName: parsed.data.accountName,
+      accountNumber: parsed.data.accountNumber,
+      isDefault: false,
+    })
+    .returning({ id: partnerBankAccounts.id });
+
+  revalidatePath("/mitra/profile");
+  return { id: inserted.id, created: true };
 }

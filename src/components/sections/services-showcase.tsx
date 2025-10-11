@@ -1,28 +1,30 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "@/lib/i18n/context";
 import { Button } from "../ui/button";
-import { MediaSkeleton } from "@/components/ui/media-skeleton";
+import { SafeImage } from "@/components/ui/safe-image";
+import { gsap } from "gsap";
 
 type TabProps = {
   title: string;
   description: string;
   isActive: boolean;
   onClick: () => void;
+  onHover: () => void;
 };
 
-const ServiceTab = ({ title, description, isActive, onClick }: TabProps) => (
+const ServiceTab = ({ title, description, isActive, onClick, onHover }: TabProps) => (
   <button
     onClick={onClick}
+    onMouseEnter={onHover}
     className={cn(
       "w-full text-left p-6 transition-all duration-300 ease-in-out relative border-l-4",
       isActive ? "border-primary bg-light-red/50" : "border-gray-200 hover:bg-gray-50"
     )}
+    data-service-step
     style={{
       backgroundColor: isActive ? "rgba(247, 245, 255, 0)" : "",
     }}
@@ -40,108 +42,167 @@ const ServiceTab = ({ title, description, isActive, onClick }: TabProps) => (
 );
 
 const AUTO_MS = 3000;
+const VISIBLE_COUNT = 3;
+const PAUSE_MS = 3000; // berhenti 3 detik saat klik / hover
 
 const ServicesShowcase = () => {
   const t = useTranslations("servicesShowcase");
   const heading = t<string>("heading");
+  const eyebrow = t<string>("eyebrow");
   const description = t<string>("description");
   const cta = t<string>("cta");
   const tabs = t<{ title: string; description: string; image: string }[]>("tabs");
   const tabItems = tabs ?? [];
-  const [activeTab, setActiveTab] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
-  const total = tabItems.length;
-  const hoverAreaRef = useRef<HTMLDivElement | null>(null);
 
-  // Auto-rotate logic (pause-aware)
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [windowStart, setWindowStart] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const total = tabItems.length;
+  const visibleCount = Math.min(VISIBLE_COUNT, total || 0);
+  const maxStart = Math.max(total - visibleCount, 0);
+
+  const listRef = useRef<HTMLDivElement | null>(null);
+  const imageWrapperRef = useRef<HTMLDivElement | null>(null);
+  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Auto rotate tapi berhenti sementara saat paused = true
   useEffect(() => {
-    if (paused || total === 0) return;
+    if (paused || total <= visibleCount) return;
     const id = setInterval(() => {
-      setActiveTab((prev) => (prev + 1) % total);
+      setWindowStart((prev) => (prev >= maxStart ? 0 : prev + 1));
     }, AUTO_MS);
     return () => clearInterval(id);
-  }, [paused, total]);
+  }, [paused, total, visibleCount, maxStart]);
 
-  // Optional: reset ke tab pertama bila jumlah data berubah (defensif)
+  // Reset windowStart jika keluar range
   useEffect(() => {
-    if (activeTab >= total) setActiveTab(0);
-  }, [total, activeTab]);
+    if (windowStart > maxStart) setWindowStart(0);
+  }, [maxStart, windowStart]);
+
+  // Pastikan activeIndex tetap di dalam window
+  useEffect(() => {
+    if (visibleCount === 0) return;
+    if (activeIndex < windowStart || activeIndex >= windowStart + visibleCount) {
+      setActiveIndex(windowStart);
+    }
+  }, [activeIndex, windowStart, visibleCount]);
+
+  // GSAP animasi fade untuk daftar tab
+  useEffect(() => {
+    if (!listRef.current) return;
+    const items = listRef.current.querySelectorAll("[data-service-step]");
+    if (!items.length) return;
+    gsap.killTweensOf(items);
+    gsap.fromTo(
+      items,
+      { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", stagger: 0.08 }
+    );
+  }, [windowStart, visibleCount, total]);
+
+  // Animasi fade untuk gambar
+  useEffect(() => {
+    if (!imageWrapperRef.current) return;
+    gsap.killTweensOf(imageWrapperRef.current);
+    gsap.fromTo(
+      imageWrapperRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.6, ease: "power2.out" }
+    );
+  }, [activeIndex]);
+
+  const handlePause = () => {
+    setPaused(true);
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    pauseTimeoutRef.current = setTimeout(() => {
+      setPaused(false);
+    }, PAUSE_MS);
+  };
+
+  const visibleTabs =
+    visibleCount > 0 ? tabItems.slice(windowStart, windowStart + visibleCount) : [];
+  const activeItem = tabItems[activeIndex];
 
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-          <h2 className="font-bold text-4xl md:text-5xl leading-tight text-foreground tracking-tight">{heading}</h2>
+          <span className="text-base eyebrow font-semibold text-primary">{eyebrow}</span>
+          <h2 className="font-bold text-4xl md:text-5xl leading-tight text-foreground tracking-tight">
+            {heading}
+          </h2>
           <p className="mt-4 text-lg text-muted-foreground">{description}</p>
           <Button asChild variant="secondary" size="lg" className="btn-secondary mt-6 hover:-translate-y-px">
-            <Link
-              href="/layanan"
-            >
+            <Link href="/layanan">
               <span>{cta}</span>
             </Link>
           </Button>
         </div>
 
-        {/* Hovering area pauses auto-rotate */}
-        <div
-          ref={hoverAreaRef}
-          className="grid grid-cols-1 lg:grid-cols-2 lg:gap-24 items-start"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-          <div className="flex flex-col mb-12 lg:mb-0">
-            {tabItems.map((tab, index) => (
-              <ServiceTab
-                key={index}
-                title={tab.title}
-                description={tab.description}
-                isActive={activeTab === index}
-                onClick={() => {
-                  setActiveTab(index);
-                  // jeda sejenak agar user bisa baca setelah klik manual (opsional)
-                  setPaused(true);
-                  setTimeout(() => setPaused(false), 1200);
-                }}
-              />
-            ))}
-          </div>
+        <div className="grid relative grid-cols-1 lg:grid-cols-[1fr_1.35fr] lg:gap-24 items-stretch">
+          <div ref={listRef} className="flex flex-col mb-12 lg:mb-0">
+            {visibleTabs.map((tab, index) => {
+              const globalIndex = windowStart + index;
+              const isLastInWindow = index === visibleCount - 1;
 
-          <div className="relative w-full aspect-[640/423] overflow-hidden">
-            {tabItems.map((tab, index) => {
-              const isLoaded = loadedImages[index];
-              const isActive = activeTab === index;
+              const handleClick = () => {
+                handlePause(); // stop 3 detik
+                setActiveIndex(globalIndex);
+                if (isLastInWindow && windowStart < maxStart) {
+                  setWindowStart((prev) => Math.min(prev + 1, maxStart));
+                }
+              };
+
+              const handleHover = () => {
+                handlePause(); // stop 3 detik
+                setActiveIndex(globalIndex);
+              };
 
               return (
-                <div
-                  key={index}
-                  className={cn(
-                    "absolute inset-0 transition-opacity duration-500 ease-in-out",
-                    isActive ? "opacity-100" : "opacity-0 pointer-events-none"
-                  )}
-                >
-                  <MediaSkeleton isVisible={!isLoaded && isActive} className="rounded-xl" />
-                  <Image
-                    src={tab.image}
-                    alt={tab.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                    priority={index === 0}
-                    onLoad={() =>
-                      setLoadedImages((prev) => (prev[index] ? prev : { ...prev, [index]: true }))
-                    }
-                    className={cn(
-                      "rounded-xl shadow-2xl object-cover absolute inset-0 transition-opacity duration-500 ease-in-out",
-                      isLoaded ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </div>
+                <ServiceTab
+                  key={globalIndex}
+                  title={tab.title}
+                  description={tab.description}
+                  isActive={activeIndex === globalIndex}
+                  onClick={handleClick}
+                  onHover={handleHover}
+                />
               );
             })}
-
-            {/* Soft gradient overlay for smoother fade (opsional, feel free to remove) */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/0 via-black/0 to-black/0 transition-opacity" />
+            {total === 0 && (
+              <div className="p-6 border-l-4 border-gray-200">
+                <p className="text-muted-foreground">Data layanan belum tersedia.</p>
+              </div>
+            )}
           </div>
+
+          <div
+            ref={imageWrapperRef}
+            className="relative w-full aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[420px] overflow-hidden rounded-xl flex items-center justify-center"
+          >
+            {activeItem ? (
+              <div className="relative">
+                <SafeImage
+                  key={activeItem.image}
+                  src={activeItem.image}
+                  alt={activeItem.title}
+                  width={400}
+                  height={200}
+                  className="object-contain rounded-xl"
+                  containerClassName="flex items-center justify-center"
+                />
+              </div>
+            ) : (
+              <div className="w-full h-full rounded-xl bg-muted" />
+            )}
+
+            <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-tr from-black/0 via-black/0 to-black/0" />
+          </div>
+
+          <div className="absolute top-10 right-4/4 h-96 w-96 rounded-full bg-[#DC2626]/15 blur-3xl animate-pulse-slow" style={{ animationDelay: "1s" }} />
+            
+          <div className="absolute bottom-6 left-4/4 h-96 w-96 rounded-full bg-[#DC2626]/15 blur-3xl animate-pulse-slow" style={{ animationDelay: "1s" }} />
         </div>
       </div>
     </section>

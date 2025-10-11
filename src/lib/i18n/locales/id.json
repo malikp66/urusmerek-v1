@@ -125,25 +125,41 @@
   "trustedCompanies": {
     "tagline": "Dipercaya oleh beragam perusahaan ternama"
   },
-  "servicesShowcase": {
-    "heading": "Selesaikan kebutuhan merek Anda lebih cepat",
-    "description": "Dari pendaftaran, perpanjangan, hingga surat keberatan semuanya dipersiapkan agar proses lebih ringkas dan aman.",
-    "cta": "Lihat semua layanan",
+ "servicesShowcase": {
+    "eyebrow": "Proses & Alur Kerja",
+    "heading": "Lindungi merek Anda melalui proses cepat, transparan, dan terpantau",
+    "description": "Setiap langkah di UrusMerek.id dirancang agar pemilik bisnis bisa mendapatkan perlindungan hukum tanpa repot — mulai dari konsultasi hingga sertifikat resmi.",
+    "cta": "Pelajari seluruh proses",
     "tabs": [
       {
-        "title": "Pendaftaran Merek",
-        "description": "Pendampingan menyeluruh mulai dari penelusuran, pemilihan kelas Nice, penyiapan dokumen, pengajuan resmi ke DJKI, sampai pemantauan status.",
-        "image": "/service-1.png"
+        "title": "1. Konsultasi Awal",
+        "description": "Langkah pertama dimulai dengan konsultasi bersama Ahli Merek untuk menganalisis ketersediaan nama, kelas Nice, dan potensi kemiripan merek.",
+        "image": "/proses/proses-1.png"
       },
       {
-        "title": "Perpanjangan Merek",
-        "description": "Perpanjangan tepat waktu dengan validasi data, pengajuan formal, dan notifikasi tenggat agar perlindungan berlanjut sepuluh tahun ke depan.",
-        "image": "/service-2.png"
+        "title": "2. Penelusuran & Persiapan Dokumen",
+        "description": "Tim kami melakukan pencarian menyeluruh terhadap merek serupa dan menyiapkan dokumen pendaftaran agar data lengkap serta sesuai ketentuan DJKI.",
+        "image": "/proses/proses-2.png"
       },
       {
-        "title": "Surat Keberatan",
-        "description": "Susun keberatan dengan dasar hukum yang kuat untuk menghadang merek tiruan. Struktur surat sistematis, cepat, dan tepat sasaran.",
-        "image": "/service-3.png"
+        "title": "3. Pengajuan Resmi ke DJKI",
+        "description": "Setelah dokumen lengkap, pengajuan permohonan dilakukan secara resmi ke DJKI Kemenkumham. Bukti permohonan resmi dikirim di hari yang sama.",
+        "image": "/proses/proses-3.png"
+      },
+      {
+        "title": "4. Pemantauan & Pendampingan",
+        "description": "Tim UrusMerek memantau setiap tahap pemeriksaan formalitas dan substantif, serta memberikan pendampingan jika terjadi usul penolakan atau keberatan.",
+        "image": "/proses/proses-4.png"
+      },
+      {
+        "title": "5. Sertifikasi & Pengiriman Dokumen",
+        "description": "Setelah disetujui, sertifikat merek diterbitkan dan dikirim langsung ke alamat pemohon. Pemilik merek kini memiliki bukti kepemilikan sah dan perlindungan hukum 10 tahun.",
+        "image": "/proses/proses-5.png"
+      },
+      {
+        "title": "6. Layanan Pasca-Pendaftaran",
+        "description": "UrusMerek tetap mendampingi setelah merek terdaftar — termasuk perpanjangan 10 tahun berikutnya, perubahan data, pengalihan hak, hingga perjanjian lisensi merek.",
+        "image": "/proses/proses-6.png"
       }
     ]
   },
@@ -321,6 +337,7 @@
     ]
   },
   "industryTemplates": {
+    "eyebrow": "Paket dan harga",
     "heading": "Harga Layanan",
     "description": "Pilih layanan yang Anda perlukan. Rincian manfaat dan harga akan tampil di panel.",
     "seeAll": "Lihat semua",

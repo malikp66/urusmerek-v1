@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   Search, FileText, RefreshCw, BarChart3, ShieldAlert, Lock, CalendarClock,
@@ -12,8 +11,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "@/lib/i18n/context";
 import { Button } from "@/components/ui/button";
-import { MediaSkeleton } from "@/components/ui/media-skeleton";
-import { cn } from "@/lib/utils";
+import { SafeImage } from "@/components/ui/safe-image";
 
 type PrimaryFeature = {
   id: string;
@@ -87,8 +85,6 @@ const SmallCard = ({ feature }: { feature?: SmallFeature }) => {
 };
 
 const LargeCard = ({ feature }: { feature: PrimaryFeature }) => {
-  const [isLoaded, setIsLoaded] = React.useState(false);
-
   return (
     <Link
       href={feature.link}
@@ -99,18 +95,15 @@ const LargeCard = ({ feature }: { feature: PrimaryFeature }) => {
     >
       <div className="p-0 flex-1">
         <div className="relative h-full w-full overflow-hidden rounded-lg">
-          <MediaSkeleton isVisible={!isLoaded} className="rounded-lg" />
-          <Image
+          <SafeImage
             src={feature.image}
             alt={feature.name}
             width={1000}
             height={700}
             priority
-            onLoad={() => setIsLoaded(true)}
-            className={cn(
-              "h-full w-full object-cover transition-opacity duration-500 ease-out",
-              isLoaded ? "opacity-100" : "opacity-0"
-            )}
+            className="h-full w-full object-cover"
+            skeletonClassName="rounded-lg"
+            containerClassName="h-full w-full"
           />
         </div>
       </div>

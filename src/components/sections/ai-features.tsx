@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { SafeImage } from "@/components/ui/safe-image";
 import { useTranslations } from "@/lib/i18n/context";
 
 type FeatureButton = {
@@ -62,12 +62,13 @@ const AiFeatures = () => {
                 <div
                   className={`${isReversed ? "md:order-last" : ""} flex justify-center`}
                 >
-                  <Image
+                  <SafeImage
                     src={feature.image.src}
                     alt={feature.image.alt}
                     width={550}
                     height={450}
                     className="rounded-lg shadow-lg object-cover w-full h-auto"
+                    skeletonClassName="rounded-lg"
                   />
                 </div>
                 <div className={isReversed ? "md:order-first" : ""}>

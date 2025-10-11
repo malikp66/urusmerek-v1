@@ -1,19 +1,18 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   HelpCircle,
   CalendarDays,
   ShieldCheck,
   Zap,
-  Linkedin,
-  Facebook,
   Instagram,
   MessageCircle,
+  Mail,
 } from "lucide-react";
 import { useTranslations } from "@/lib/i18n/context";
+import { SafeImage } from "@/components/ui/safe-image";
 
 const iconMap = {
   HelpCircle,
@@ -21,9 +20,8 @@ const iconMap = {
   ShieldCheck,
   Zap,
   MessageCircle,
-  Linkedin,
-  Facebook,
   Instagram,
+  Mail,
 };
 
 const FooterLinkColumn = ({
@@ -54,29 +52,48 @@ const FooterLinkColumn = ({
 
 const Footer = () => {
   const t = useTranslations("footer");
+
   const trustBadges = t<{ icon: string; text: string }[]>("trustBadges") ?? [];
   const trustItems = trustBadges.map((badge) => ({
     text: badge.text,
     Icon: iconMap[badge.icon as keyof typeof iconMap] ?? HelpCircle,
   }));
+
   const brand = t<{ description: string; logoAlt: string }>("brand");
   const licenses = t<{
     title: string;
     items: { name: string; href: string; imgSrc: string }[];
     disclaimer: string;
   }>("licenses");
+
   const columns = t<{
     servicesTitle: string;
     learnTitle: string;
     connectTitle: string;
     services: { name: string; href: string }[];
     learn: { name: string; href: string }[];
-    social: { name: string; href: string; icon: string }[];
+    // columns.social dari i18n diabaikan, karena kita pakai mapping manual sesuai permintaan
   }>("columns");
-  const socialItems = columns.social.map((item) => ({
-    ...item,
-    Icon: iconMap[item.icon as keyof typeof iconMap] ?? MessageCircle,
-  }));
+
+  // ⬇️ Sosial khusus sesuai instruksi
+  const socialItems = [
+    {
+      name: "Email",
+      href: "mailto:yessikurniawan@urusmerek.id",
+      Icon: Mail,
+    },
+    {
+      name: "Instagram",
+      href: "https://instagram.com/urusmerek.id",
+      Icon: Instagram,
+    },
+    {
+      name: "WhatsApp",
+      href: "https://wa.me/628112119718",
+      Icon: MessageCircle,
+    },
+  ];
+
   const bottom = t<{ security: string; privacy: string; terms: string }>("bottom");
 
   return (
@@ -100,14 +117,20 @@ const Footer = () => {
             {/* Brand */}
             <div className="col-span-2">
               <Link href="/" className="flex items-center gap-2 mb-3">
-                <Image src="/logo.png" alt={brand.logoAlt} width={62} height={62} />
+                <SafeImage
+                  src="/logo.png"
+                  alt={brand.logoAlt}
+                  width={62}
+                  height={62}
+                  className="rounded"
+                  skeletonClassName="rounded"
+                />
                 <span className="font-semibold text-lg">UrusMerek.id</span>
               </Link>
               <p className="text-sm text-muted-foreground">{brand.description}</p>
             </div>
 
-            <div className="">
-            </div>
+            <div className=""></div>
 
             {/* Lisensi & referensi */}
             <div className="col-span-2">
@@ -124,12 +147,13 @@ const Footer = () => {
                     className="inline-flex items-center gap-3"
                     title={l.name}
                   >
-                    <Image
-                      src={l.imgSrc} // gunakan /public/logo.png; ganti ke URL PNG resmi jika ada
+                    <SafeImage
+                      src={l.imgSrc}
                       alt={l.name}
                       width={40}
                       height={40}
                       className="h-10 w-10 object-contain rounded"
+                      skeletonClassName="rounded"
                     />
                     <span className="text-sm text-muted-foreground hover:text-foreground">
                       {l.name}
@@ -159,6 +183,8 @@ const Footer = () => {
                       key={s.name}
                       href={s.href}
                       aria-label={s.name}
+                      target={s.href.startsWith("http") ? "_blank" : undefined}
+                      rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       className="bg-gray-200 p-2 rounded-md text-foreground hover:bg-gray-300 transition-colors"
                     >
                       <s.Icon className="w-5 h-5" />

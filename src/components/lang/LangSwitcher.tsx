@@ -46,6 +46,7 @@ export function LangSwitcher({
       )}
       role="group"
       aria-label={label}
+      style={{ boxShadow: '0 4px 6px 0 rgba(67, 46, 134, .04)'}}
     >
       <button
         type="button"

@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/i18n/context";
-import { MediaSkeleton } from "@/components/ui/media-skeleton";
+import { SafeImage } from "@/components/ui/safe-image";
 
 /* Lucide icons */
 import {
@@ -56,7 +55,8 @@ const serviceIconMap: Record<string, React.ComponentType<any>> = {
 /* ===== Component ===== */
 export default function IndustryTemplates() {
   const t = useTranslations("industryTemplates");
-  const heading = t<string>("heading");
+  const heading = t<string>("heading");  
+  const eyebrow = t<string>("eyebrow");
   const description = t<string>("description");
   const seeAll = t<string>("seeAll");
   const close = t<string>("close");
@@ -76,7 +76,6 @@ export default function IndustryTemplates() {
   const [activeId, setActiveId] = useState<string>(servicesCopy[0]?.id ?? "");
   const [expanded, setExpanded] = useState(false);
   const [pickedVariantByService, setPickedVariantByService] = useState<Record<string, string>>({});
-  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (!services.some((service) => service.id === activeId)) {
@@ -89,18 +88,17 @@ export default function IndustryTemplates() {
 
   const currentVariantId = active ? pickedVariantByService[active.id] ?? active.prices[0]?.id : undefined;
   const currentVariant = active?.prices.find((p) => p.id === currentVariantId) ?? active?.prices[0];
-  const activeImageId = active?.id;
-  const activeImageLoaded = activeImageId ? loadedImages[activeImageId] ?? false : false;
 
   if (!active) {
     return null;
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section id="harga" className="py-20 bg-white">
       <div className="container">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-base eyebrow font-semibold text-primary">{eyebrow}</span>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">{heading}</h2>
           <p className="mt-4 text-lg text-muted-foreground">{description}</p>
         </div>
@@ -168,22 +166,14 @@ export default function IndustryTemplates() {
 
               <div className="mt-8 overflow-hidden rounded-xl">
                 <div className="relative h-48 w-full">
-                  <MediaSkeleton isVisible={!activeImageLoaded} className="rounded-xl" />
-                  <Image
+                  <SafeImage
+                    key={active.image}
                     src={active.image}
                     alt={active.title}
                     fill
-                    onLoad={() =>
-                      activeImageId
-                        ? setLoadedImages((prev) =>
-                            prev[activeImageId] ? prev : { ...prev, [activeImageId]: true }
-                          )
-                        : undefined
-                    }
-                    className={cn(
-                      "object-cover rounded-xl transition-opacity duration-500 ease-out",
-                      activeImageLoaded ? "opacity-100" : "opacity-0"
-                    )}
+                    className="object-cover rounded-xl"
+                    skeletonClassName="rounded-xl"
+                    containerClassName="h-full w-full"
                   />
                 </div>
               </div>
