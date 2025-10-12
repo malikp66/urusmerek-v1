@@ -125,7 +125,7 @@ const Footer = () => {
                   className="rounded"
                   skeletonClassName="rounded"
                 />
-                <span className="font-semibold text-lg">UrusMerek.id</span>
+                <span className="font-semibold text-lg">urusmerek.id</span>
               </Link>
               <p className="text-sm text-muted-foreground">{brand.description}</p>
             </div>
@@ -198,7 +198,7 @@ const Footer = () => {
           {/* Bottom bar */}
           <div className="mt-16 pt-8 border-t border-border flex flex-col-reverse sm:flex-row items-center justify-between gap-y-6">
             <div className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} UrusMerek.id
+              &copy; {new Date().getFullYear()} urusmerek.id
             </div>
             <div className="flex gap-x-4 text-sm">
               <Link href="/legal/keamanan" className="hover:text-primary transition-colors">{bottom.security}</Link>

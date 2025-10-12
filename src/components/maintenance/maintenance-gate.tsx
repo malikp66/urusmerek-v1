@@ -61,7 +61,7 @@ export default function MaintenanceGate() {
           >
             <SafeImage
               src="/banner.png"
-              alt="UrusMerek.id — Mitra Terpercaya Pengurusan Merek Anda"
+              alt="urusmerek.id — Mitra Terpercaya Pengurusan Merek Anda"
               width={1280}
               height={720}
               priority
@@ -90,7 +90,7 @@ export default function MaintenanceGate() {
           <div className="relative overflow-hidden rounded-[32px] border border-slate-200/70 bg-white/0 backdrop-blur-xl">
             <SafeImage
               src="/banner-mobile.png"
-              alt="UrusMerek.id — Mitra Terpercaya Pengurusan Merek Anda"
+              alt="urusmerek.id — Mitra Terpercaya Pengurusan Merek Anda"
               width={1024}
               height={1280}
               priority

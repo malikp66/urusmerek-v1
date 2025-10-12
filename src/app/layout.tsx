@@ -10,7 +10,7 @@ import { getLocaleFromRequest } from "@/lib/i18n/server";
 const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 
 export const metadata: Metadata = {
-  title: "UrusMerek.id - Mitra Terpercaya untuk Perlindungan Merek",
+  title: "urusmerek.id - Mitra Terpercaya untuk Perlindungan Merek",
   description:
     "Jasa pendaftaran, perpanjangan, dan perlindungan merek resmi di Indonesia.",
   icons: {

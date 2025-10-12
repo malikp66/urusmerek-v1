@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 import { z } from "zod";
 
 import { db } from "@/db/client";
-import { consultations } from "@/db/schema";
+import { consultations, affiliateReferrals } from "@/db/schema";
+import {
+  AFFILIATE_COOKIE_NAME,
+  computeCommission,
+  getLinkByCode,
+} from "@/lib/affiliate";
 
 const BodySchema = z.object({
   email: z.string().email(),
@@ -63,7 +68,7 @@ function renderConsultationEmail(params: {
                     <td align="left" style="font-family:Inter,Arial,Helvetica,sans-serif;">
                       <div style="display:inline-block;padding:8px 0 0 0;">
                         <div style="font-weight:800;font-size:22px;line-height:1;color:${red};letter-spacing:0.5px;">UMJ</div>
-                        <div style="font-size:12px;color:${gray600};margin-top:2px;">URUSMEREK.ID</div>
+                        <div style="font-size:12px;color:${gray600};margin-top:2px;">urusmerek.id</div>
                       </div>
                     </td>
                     <td align="right" style="font-family:Inter,Arial,Helvetica,sans-serif;color:${gray600};font-size:12px;">
@@ -89,7 +94,7 @@ function renderConsultationEmail(params: {
             <tr>
               <td style="padding:0 32px 8px 32px;">
                 <p style="margin:0 0 12px 0;font-family:Inter,Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:${gray900}">
-                  Ada konsultasi merek baru masuk dari landing page UrusMerek.id. Detail singkat tertera di bawah ini. Tim dapat langsung menindaklanjuti dan menghubungi pemohon melalui alamat email yang tercantum.
+                  Ada konsultasi merek baru masuk dari landing page urusmerek.id. Detail singkat tertera di bawah ini. Tim dapat langsung menindaklanjuti dan menghubungi pemohon melalui alamat email yang tercantum.
                 </p>
               </td>
             </tr>
@@ -163,7 +168,7 @@ function renderConsultationEmail(params: {
 
           <!-- tiny legal -->
           <div style="font-family:Inter,Arial,Helvetica,sans-serif;font-size:11px;color:${gray600};margin-top:12px;max-width:640px;">
-            Email ini otomatis dari sistem UrusMerek.id. Mohon balas langsung untuk menindaklanjuti pemohon.
+            Email ini otomatis dari sistem urusmerek.id. Mohon balas langsung untuk menindaklanjuti pemohon.
           </div>
         </td>
       </tr>
@@ -220,6 +225,33 @@ export async function POST(req: NextRequest) {
         userAgent,
       })
       .returning({ id: consultations.id, createdAt: consultations.createdAt });
+
+    // attribute consultation to affiliate link when referral cookie exists
+    try {
+      const referralCode = (await cookies()).get(AFFILIATE_COOKIE_NAME)?.value?.trim();
+      if (referralCode) {
+        const link = await getLinkByCode(referralCode);
+        if (link) {
+          const amount = 0;
+          const commission = computeCommission(amount);
+          await db.insert(affiliateReferrals).values({
+            linkId: link.id,
+            orderId: row.id,
+            amount: amount.toFixed(2),
+            commission: commission.toFixed(2),
+            status: "pending",
+            meta: {
+              source: "consultation",
+              consultationId: row.id,
+              email: data.email,
+              service: data.service,
+            },
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Failed to attribute consultation referral", error);
+    }
 
     let emailSent = true;
     const createdAtValue =

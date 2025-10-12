@@ -121,7 +121,7 @@ export default function Loading() {
         </h1>
         <p className="max-w-xl text-sm text-[#9f1239] sm:text-base">
           Mohon tunggu sebentar. Kami sedang mengatur dashboard, menyinkronkan data,
-          dan memastikan semua layanan UrusMerek.id siap dipakai.
+          dan memastikan semua layanan urusmerek.id siap dipakai.
         </p>
       </div>
     </div>

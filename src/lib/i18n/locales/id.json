@@ -128,7 +128,7 @@
  "servicesShowcase": {
     "eyebrow": "Proses & Alur Kerja",
     "heading": "Lindungi merek Anda melalui proses cepat, transparan, dan terpantau",
-    "description": "Setiap langkah di UrusMerek.id dirancang agar pemilik bisnis bisa mendapatkan perlindungan hukum tanpa repot — mulai dari konsultasi hingga sertifikat resmi.",
+    "description": "Setiap langkah di urusmerek.id dirancang agar pemilik bisnis bisa mendapatkan perlindungan hukum tanpa repot — mulai dari konsultasi hingga sertifikat resmi.",
     "cta": "Pelajari seluruh proses",
     "tabs": [
       {
@@ -555,14 +555,14 @@
     ]
   },
   "finalCta": {
-    "eyebrow": "UrusMerek.id",
+    "eyebrow": "urusmerek.id",
     "heading": "Lindungi merek Anda mulai hari ini",
     "subheading": "Jangan tunggu nama Anda dipakai orang lain.",
     "body": "Kami bantu pendaftaran dan perpanjangan merek secara resmi di DJKI, mulai dari penelusuran, pengajuan, sampai sertifikat terbit. Kami juga menangani keberatan atau oposisi, tanggapan usul atau tolak, perubahan data, pengalihan hak, lisensi, dan cetak sertifikat.",
     "note": "Resmi DJKI Kemenkumham. Harga tetap dan transparan. Pembaruan progres berkala.",
     "primaryCta": "Konsultasi Sekarang",
     "secondaryCta": "Lihat Paket dan Harga",
-    "imageAlt": "Dasbor pengurusan merek UrusMerek.id untuk pendaftaran dan perpanjangan.",
+    "imageAlt": "Dasbor pengurusan merek urusmerek.id untuk pendaftaran dan perpanjangan.",
     "imageSrc": "/finalCta.png"
   },
   "footer": {
@@ -586,7 +586,7 @@
     ],
     "brand": {
       "description": "Mitra tepercaya untuk pendaftaran, perpanjangan, dan perlindungan merek di Indonesia.",
-      "logoAlt": "UrusMerek.id"
+      "logoAlt": "urusmerek.id"
     },
     "licenses": {
       "title": "Lisensi dan Referensi",
@@ -607,7 +607,7 @@
           "imgSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
         }
       ],
-      "disclaimer": "Logo instansi pemerintah ditampilkan sebagai referensi otoritas pendaftaran merek. UrusMerek.id adalah konsultan independen."
+      "disclaimer": "Logo instansi pemerintah ditampilkan sebagai referensi otoritas pendaftaran merek. urusmerek.id adalah konsultan independen."
     },
     "columns": {
       "servicesTitle": "Layanan",
@@ -764,7 +764,7 @@
     ],
     "cta": {
       "title": "Jangan menunggu merekmu dipakai orang lain",
-      "description": "Lindungi identitas usaha bersama konsultan profesional UrusMerek.id.",
+      "description": "Lindungi identitas usaha bersama konsultan profesional urusmerek.id.",
       "button": {
         "label": "Konsultasi sekarang",
         "href": "/konsultasi"
@@ -782,7 +782,7 @@
     },
     "solution": {
       "title": "Kami membuatnya sederhana",
-      "description": "UrusMerek.id menyatukan penelusuran, pengajuan, pemantauan status, perpanjangan, dan surat keberatan dalam satu alur kerja yang tertata.",
+      "description": "urusmerek.id menyatukan penelusuran, pengajuan, pemantauan status, perpanjangan, dan surat keberatan dalam satu alur kerja yang tertata.",
       "video": {
         "src": "https://videos.ctfassets.net/w8fc6tgspyjz/6vm22aRpEdepqdDHlhP1rQ/a0b6722cb15efcdfcb028ff92a4fd153/CONVERGENCE_08_GIF_DARKMODE_1mbps_V01.mp4",
         "poster": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"

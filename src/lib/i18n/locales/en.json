@@ -128,7 +128,7 @@
   "servicesShowcase": {
     "eyebrow": "Process & Workflow",
     "heading": "Protect your brand through a fast, transparent, and well-monitored process",
-    "description": "Every step at UrusMerek.id is designed to make trademark protection simple and efficient — from consultation to official certification.",
+    "description": "Every step at urusmerek.id is designed to make trademark protection simple and efficient — from consultation to official certification.",
     "cta": "Explore the full process",
     "tabs": [
       {
@@ -555,14 +555,14 @@
     ]
   },
   "finalCta": {
-    "eyebrow": "UrusMerek.id",
+    "eyebrow": "urusmerek.id",
     "heading": "Protect your trademark today",
     "subheading": "Do not wait until someone else uses your name.",
     "body": "We manage trademark filing and renewal at DJKI, from clearance and submission through to certificate issuance. We also cover opposition letters, office action responses, data changes, assignments, licences, and certificate printing.",
     "note": "Official DJKI partner. Transparent flat pricing. Regular progress updates.",
     "primaryCta": "Start a Consultation",
     "secondaryCta": "See Packages and Pricing",
-    "imageAlt": "UrusMerek.id dashboard for managing trademark filing and renewal.",
+    "imageAlt": "urusmerek.id dashboard for managing trademark filing and renewal.",
     "imageSrc": "/finalCta.png"
   },
   "footer": {
@@ -586,7 +586,7 @@
     ],
     "brand": {
       "description": "Your trusted partner for trademark filing, renewal, and protection in Indonesia.",
-      "logoAlt": "UrusMerek.id"
+      "logoAlt": "urusmerek.id"
     },
     "licenses": {
       "title": "Licences and References",
@@ -607,7 +607,7 @@
           "imgSrc": "https://lh5.googleusercontent.com/proxy/dtt_ej0n7UbyaYB79wXc50BCIsJUCzIW4t1tcNJ-hELcutQNK6shtTgy75_6XKzRIiPuMehEu-BSkT7_bAt5nBT-F0XULjkfezbFUoCOI02PP_YT93L1zmbZN2-CWPyayB2QTIA"
         }
       ],
-      "disclaimer": "Government logos are shown as references to the official trademark authority. UrusMerek.id operates as an independent consultant."
+      "disclaimer": "Government logos are shown as references to the official trademark authority. urusmerek.id operates as an independent consultant."
     },
     "columns": {
       "servicesTitle": "Services",
@@ -764,7 +764,7 @@
     ],
     "cta": {
       "title": "Do not wait until someone else claims your brand",
-      "description": "Protect your identity with the support of UrusMerek.id consultants.",
+      "description": "Protect your identity with the support of urusmerek.id consultants.",
       "button": {
         "label": "Book a consultation",
         "href": "/konsultasi"
@@ -782,7 +782,7 @@
     },
     "solution": {
       "title": "We make it simple",
-      "description": "UrusMerek.id unifies search, filing, status tracking, renewals, and objection letters in one organised workflow.",
+      "description": "urusmerek.id unifies search, filing, status tracking, renewals, and objection letters in one organised workflow.",
       "video": {
         "src": "https://videos.ctfassets.net/w8fc6tgspyjz/6vm22aRpEdepqdDHlhP1rQ/a0b6722cb15efcdfcb028ff92a4fd153/CONVERGENCE_08_GIF_DARKMODE_1mbps_V01.mp4",
         "poster": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"

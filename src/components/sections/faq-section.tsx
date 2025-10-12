@@ -39,16 +39,16 @@ const faqCategories: FaqCategory[] = [
     id: "pendaftaran",
     title: "Kategori 1 - Pendaftaran Merek",
     summary:
-      "Kenali dasar-dasar layanan pendaftaran merek resmi di Urusmerek.id.",
+      "Kenali dasar-dasar layanan pendaftaran merek resmi di urusmerek.id.",
     icon: ShieldQuestion,
     accent: "from-rose-100/70 via-red-50/60 to-transparent",
     items: [
       {
         value: "pendaftaran-1",
-        question: "Apa itu Urusmerek.id?",
+        question: "Apa itu urusmerek.id?",
         answer: (
           <p>
-            Urusmerek.id adalah biro jasa kekayaan intelektual berbasis
+            urusmerek.id adalah biro jasa kekayaan intelektual berbasis
             teknologi yang membantu pemilik bisnis di Indonesia untuk
             mendaftarkan, memperpanjang, dan melindungi merek mereka. Semua
             proses dilakukan secara resmi melalui DJKI Kemenkumham dan
@@ -59,10 +59,10 @@ const faqCategories: FaqCategory[] = [
       {
         value: "pendaftaran-2",
         question:
-          "Apakah pendaftaran melalui Urusmerek.id resmi tercatat di Kemenkumham?",
+          "Apakah pendaftaran melalui urusmerek.id resmi tercatat di Kemenkumham?",
         answer: (
           <p>
-            Tentu saja. Urusmerek.id mengajukan permohonan Anda langsung ke DJKI
+            Tentu saja. urusmerek.id mengajukan permohonan Anda langsung ke DJKI
             Kemenkumham setelah semua dokumen lengkap. Bukti resmi permohonan
             dikirimkan pada hari yang sama sehingga Anda dapat memantau setiap
             langkahnya.
@@ -72,7 +72,7 @@ const faqCategories: FaqCategory[] = [
       {
         value: "pendaftaran-3",
         question:
-          "Berapa biaya jasa pendaftaran merek di Urusmerek.id dan apa saja yang termasuk?",
+          "Berapa biaya jasa pendaftaran merek di urusmerek.id dan apa saja yang termasuk?",
         answer: (
           <div className="space-y-3">
             <p>
@@ -103,7 +103,7 @@ const faqCategories: FaqCategory[] = [
       {
         value: "pendaftaran-4",
         question:
-          "Apakah Urusmerek.id melayani pelanggan dari seluruh Indonesia?",
+          "Apakah urusmerek.id melayani pelanggan dari seluruh Indonesia?",
         answer: (
           <p>
             Ya. Karena seluruh sistem berbasis digital, Anda dapat
@@ -118,7 +118,7 @@ const faqCategories: FaqCategory[] = [
         answer: (
           <p>
             Bisa, terutama bila tidak dilakukan analisis nama dan kelas merek
-            terlebih dahulu. Urusmerek.id menyediakan konsultasi pra-daftar
+            terlebih dahulu. urusmerek.id menyediakan konsultasi pra-daftar
             gratis dan strategi Anti-Tolak dari Ahli Merek profesional untuk
             meningkatkan peluang merek Anda lolos.
           </p>
@@ -139,7 +139,7 @@ const faqCategories: FaqCategory[] = [
         question: "Berapa lama proses pendaftaran merek berlangsung?",
         answer: (
           <p>
-            Setelah dokumen lengkap, Urusmerek.id memproses pengajuan dalam
+            Setelah dokumen lengkap, urusmerek.id memproses pengajuan dalam
             waktu satu hari kerja hingga bukti permohonan resmi terbit dari
             Kemenkumham. Tahapan pemeriksaan substantif selanjutnya mengikuti
             ketentuan DJKI.
@@ -148,7 +148,7 @@ const faqCategories: FaqCategory[] = [
       },
       {
         value: "layanan-proses-2",
-        question: "Apa saja layanan yang tersedia di Urusmerek.id?",
+        question: "Apa saja layanan yang tersedia di urusmerek.id?",
         answer: (
           <div className="space-y-3">
             <p>Kami siap membantu berbagai kebutuhan perlindungan merek:</p>
@@ -173,7 +173,7 @@ const faqCategories: FaqCategory[] = [
       },
       {
         value: "layanan-proses-3",
-        question: "Apakah Urusmerek.id membantu setelah merek terdaftar?",
+        question: "Apakah urusmerek.id membantu setelah merek terdaftar?",
         answer: (
           <p>
             Ya. Kami menyediakan layanan pasca-pendaftaran seperti perpanjangan,
@@ -199,7 +199,7 @@ const faqCategories: FaqCategory[] = [
         answer: (
           <p>
             Anda menerima pembaruan berkala melalui email dan WhatsApp dari tim
-            Urusmerek.id, mulai dari pengajuan hingga sertifikat terbit. Semua
+            urusmerek.id, mulai dari pengajuan hingga sertifikat terbit. Semua
             status juga dipantau melalui dashboard internal kami.
           </p>
         ),
@@ -229,7 +229,7 @@ const faqCategories: FaqCategory[] = [
         question: "Apakah ada potongan harga atau promo?",
         answer: (
           <p>
-            Ada. Mitra Program Urusmerek.id memperoleh diskon Rp100.000 untuk
+            Ada. Mitra Program urusmerek.id memperoleh diskon Rp100.000 untuk
             setiap pendaftaran merek. Promo musiman juga diumumkan secara
             berkala di halaman utama.
           </p>
@@ -241,7 +241,7 @@ const faqCategories: FaqCategory[] = [
         answer: (
           <p>
             Pembayaran dapat dilakukan melalui transfer bank, virtual account,
-            atau e-wallet resmi Urusmerek.id. Semua transaksi dicatat aman dan
+            atau e-wallet resmi urusmerek.id. Semua transaksi dicatat aman dan
             transparan.
           </p>
         ),
@@ -252,7 +252,7 @@ const faqCategories: FaqCategory[] = [
         answer: (
           <p>
             Jika permohonan tidak dapat diproses karena alasan administratif,
-            misalnya dokumen tidak memenuhi syarat DJKI, Urusmerek.id
+            misalnya dokumen tidak memenuhi syarat DJKI, urusmerek.id
             menawarkan pengembalian sebagian biaya sesuai ketentuan layanan.
           </p>
         ),
@@ -263,17 +263,17 @@ const faqCategories: FaqCategory[] = [
     id: "program-mitra",
     title: "Kategori 4 - Program Mitra & Referral",
     summary:
-      "Informasi kolaborasi bisnis dan keuntungan menjadi mitra Urusmerek.id.",
+      "Informasi kolaborasi bisnis dan keuntungan menjadi mitra urusmerek.id.",
     icon: Users2,
     accent: "from-purple-100/60 via-violet-50/60 to-transparent",
     items: [
       {
         value: "program-mitra-1",
-        question: "Apa itu Program Mitra Urusmerek.id?",
+        question: "Apa itu Program Mitra urusmerek.id?",
         answer: (
           <p>
             Program Mitra adalah program referral untuk individu atau komunitas
-            yang merekomendasikan layanan Urusmerek.id dan memperoleh komisi dari
+            yang merekomendasikan layanan urusmerek.id dan memperoleh komisi dari
             setiap transaksi yang berhasil.
           </p>
         ),
@@ -310,7 +310,7 @@ const faqCategories: FaqCategory[] = [
               {[
                 "Komisi menarik dibayarkan setiap tanggal 20 untuk transaksi terverifikasi.",
                 "Diskon Rp100.000 bagi klien yang direferensikan.",
-                "Dukungan langsung dari Ahli Merek Urusmerek.id.",
+                "Dukungan langsung dari Ahli Merek urusmerek.id.",
               ].map((benefit) => (
                 <li key={benefit} className="flex items-start gap-2">
                   <span className="mt-1 size-2 rounded-full bg-primary" />
@@ -328,7 +328,7 @@ const faqCategories: FaqCategory[] = [
           <p>
             Hubungi Ahli Merek kami melalui{" "}
             <Link
-              href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+bergabung+sebagai+Mitra+Urusmerek.id.&type=phone_number&app_absent=0"
+              href="https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+bergabung+sebagai+Mitra+urusmerek.id.&type=phone_number&app_absent=0"
               className="font-medium text-primary underline underline-offset-4"
             >
               tautan WhatsApp ini
@@ -349,7 +349,7 @@ const faqCategories: FaqCategory[] = [
     items: [
       {
         value: "legalitas-keamanan-1",
-        question: "Apakah data saya aman di Urusmerek.id?",
+        question: "Apakah data saya aman di urusmerek.id?",
         answer: (
           <p>
             Sangat aman. Kami menggunakan sistem terenkripsi untuk melindungi
@@ -369,7 +369,7 @@ const faqCategories: FaqCategory[] = [
       },
       {
         value: "legalitas-keamanan-3",
-        question: "Apakah Urusmerek.id bekerja sama dengan Kemenkumham?",
+        question: "Apakah urusmerek.id bekerja sama dengan Kemenkumham?",
         answer: (
           <p>
             Kami bukan lembaga pemerintah, tetapi seluruh pengajuan dilakukan
@@ -417,7 +417,7 @@ const FaqSection = () => {
         <div className="grid gap-6 text-center">
           <div className="flex items-center justify-center gap-2 text-primary">
             <Badge className="rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[.25em] text-primary">
-              FAQ Urusmerek.id
+              FAQ urusmerek.id
             </Badge>
           </div>
           <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-5xl">
