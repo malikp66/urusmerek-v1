@@ -3,7 +3,7 @@
     "brand": {
       "primary": "urusmerek",
       "secondary": ".id",
-      "fallbackPrimary": "UrusMerek",
+      "fallbackPrimary": "urusmerek",
       "fallbackSecondary": ".id"
     },
     "menu": {
@@ -148,7 +148,7 @@
       },
       {
         "title": "4. Monitoring & Assistance",
-        "description": "UrusMerek monitors the entire process during formal and substantive examinations, providing support for any objection or refusal issues.",
+        "description": "urusmerek monitors the entire process during formal and substantive examinations, providing support for any objection or refusal issues.",
         "image": "/proses/proses-4.png"
       },
       {
@@ -158,13 +158,13 @@
       },
       {
         "title": "6. Post-Registration Services",
-        "description": "UrusMerek continues to support you after registration — including renewals, data updates, ownership transfers, and trademark licensing agreements.",
+        "description": "urusmerek continues to support you after registration — including renewals, data updates, ownership transfers, and trademark licensing agreements.",
         "image": "/proses/proses-6.png"
       }
     ]
   },
   "featuresGrid": {
-    "eyebrow": "UrusMerek Services",
+    "eyebrow": "urusmerek Services",
     "heading": "A complete suite for filing, renewal, and trademark protection",
     "description": "Every workflow is handled by experienced consultants with tidy forms and rapid responses.",
     "cta": "Start a Consultation",
@@ -370,7 +370,7 @@
             "price": 4500000
           }
         ],
-        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+would+like+to+file+a+trademark+with+UrusMerek."
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hello%2C+I+would+like+to+file+a+trademark+with+urusmerek."
       },
       {
         "id": "perpanjangan",
@@ -691,7 +691,7 @@
     }
   },
   "aiFeatures": {
-    "eyebrow": "UrusMerek AI",
+    "eyebrow": "urusmerek AI",
     "title": "Smart tools to manage your trademark faster",
     "description": "Check name availability, prepare documents, and monitor filings with dedicated consultants.",
     "items": [
@@ -846,7 +846,7 @@
       "description": "Tap an option to show the highlights.",
       "button": {
         "label": "Chat with us",
-        "href": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+memesan+layanan+UrusMerek.",
+        "href": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+memesan+layanan+urusmerek.",
         "aria": "Chat with our consultants on WhatsApp"
       }
     },
@@ -1016,7 +1016,7 @@
   "panels": {
     "admin": {
       "layout": {
-        "brandPrimary": "UrusMerek",
+        "brandPrimary": "urusmerek",
         "brandSecondary": "Admin Panel",
         "navGroupLabel": "Main",
         "signedInAs": "Signed in as Admin #{id}",
@@ -1183,7 +1183,7 @@
     "partner": {
       "layout": {
         "brandPrimary": "Partner Panel",
-        "brandSecondary": "UrusMerek",
+        "brandSecondary": "urusmerek",
         "navGroupLabel": "Navigation",
         "signedInAs": "Signed in as Partner #{id}",
         "headerTitle": "Partner Panel",

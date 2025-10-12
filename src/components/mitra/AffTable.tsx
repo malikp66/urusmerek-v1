@@ -1,21 +1,13 @@
 "use client";
 
-import {
-  type FormEvent,
-  useEffect,
-  useMemo,
-  useOptimistic,
-  useState,
-  useTransition,
-} from "react";
+import { useEffect, useMemo, useOptimistic, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Copy, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { Copy, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import {
   deleteAffiliateLink,
   toggleAffiliateLink,
-  updateAffiliateLink,
 } from "@/app/mitra/affiliates/actions";
 import { MitraLinkRow, PaginatedResult } from "@/app/mitra/affiliates/queries";
 import {
@@ -30,22 +22,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Pagination,
   PaginationContent,
@@ -62,7 +38,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Textarea } from "@/components/ui/textarea";
 import { useTranslations, useLocale } from "@/lib/i18n/context";
 
 function createQueryString(
@@ -86,7 +61,6 @@ type Props = {
 
 type OptimisticAction =
   | { type: "toggle"; id: number; isActive: boolean }
-  | { type: "update"; id: number; targetUrl: string; description: string | null }
   | { type: "delete"; id: number }
   | { type: "reset"; data: MitraLinkRow[] };
 
@@ -111,16 +85,6 @@ export function AffTable({ result, query }: Props) {
         case "toggle":
           return state.map((item) =>
             item.id === action.id ? { ...item, isActive: action.isActive } : item
-          );
-        case "update":
-          return state.map((item) =>
-            item.id === action.id
-              ? {
-                  ...item,
-                  targetUrl: action.targetUrl,
-                  description: action.description,
-                }
-              : item
           );
         case "delete":
           return state.filter((item) => item.id !== action.id);
@@ -168,31 +132,6 @@ export function AffTable({ result, query }: Props) {
     });
   };
 
-  const handleUpdate = async (
-    id: number,
-    payload: { targetUrl: string; description: string }
-  ) => {
-    const targetUrl = payload.targetUrl.trim();
-    const descriptionRaw = payload.description.trim();
-    const description = descriptionRaw ? descriptionRaw : null;
-
-    setOptimisticLinks({ type: "update", id, targetUrl, description });
-
-    try {
-      await updateAffiliateLink({
-        linkId: id,
-        targetUrl,
-        description: description ?? undefined,
-      });
-      toast.success(t("updateSuccess"));
-      router.refresh();
-    } catch (error) {
-      toast.error(t("updateError"));
-      setOptimisticLinks({ type: "reset", data: result.data });
-      throw error;
-    }
-  };
-
   const handleDelete = async (id: number) => {
     setOptimisticLinks({ type: "delete", id });
 
@@ -231,11 +170,10 @@ export function AffTable({ result, query }: Props) {
               </TableRow>
             ) : (
               optimisticLinks.map((link) => (
-                <AffiliateLinkRow
+                  <AffiliateLinkRow
                   key={link.id}
                   link={link}
                   onToggle={handleToggle}
-                  onEdit={handleUpdate}
                   onDelete={handleDelete}
                   isPendingToggle={isPendingToggle}
                 />
@@ -290,7 +228,6 @@ type AffiliateLinkRowProps = {
   link: MitraLinkRow;
   isPendingToggle: boolean;
   onToggle: (id: number, isActive: boolean) => void;
-  onEdit: (id: number, payload: { targetUrl: string; description: string }) => Promise<void>;
   onDelete: (id: number) => Promise<void>;
 };
 
@@ -298,23 +235,13 @@ function AffiliateLinkRow({
   link,
   isPendingToggle,
   onToggle,
-  onEdit,
   onDelete,
 }: AffiliateLinkRowProps) {
   const { locale } = useLocale();
   const intlLocale = locale === "en" ? "en-US" : "id-ID";
   const t = useTranslations("panels.partner.affTable");
-  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [targetUrl, setTargetUrl] = useState(link.targetUrl);
-  const [description, setDescription] = useState(link.description ?? "");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    setTargetUrl(link.targetUrl);
-    setDescription(link.description ?? "");
-  }, [link.targetUrl, link.description]);
 
   const handleCopy = async () => {
     try {
@@ -322,22 +249,6 @@ function AffiliateLinkRow({
       toast.success(t("copySuccess"));
     } catch {
       toast.error(t("copyError"));
-    }
-  };
-
-  const handleEditSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (isSubmitting) {
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      await onEdit(link.id, { targetUrl, description });
-      setIsEditOpen(false);
-    } catch {
-      // Notifikasi kegagalan sudah ditangani di level atas
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -418,77 +329,18 @@ function AffiliateLinkRow({
           ) : null}
         </TableCell>
         <TableCell className="text-right">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button type="button" variant="ghost" size="icon" className="h-8 w-8">
-                <MoreHorizontal className="h-4 w-4" />
-                <span className="sr-only">{t("menuLabel")}</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-              <DropdownMenuItem
-                onSelect={(event) => {
-                  event.preventDefault();
-                  setIsEditOpen(true);
-                }}
-              >
-                <Pencil className="mr-2 h-4 w-4" />
-                {t("edit")}
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onSelect={(event) => {
-                  event.preventDefault();
-                  setIsDeleteOpen(true);
-                }}
-                className="text-destructive focus:text-destructive"
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                {t("delete")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-destructive hover:text-destructive"
+            onClick={() => setIsDeleteOpen(true)}
+          >
+            <Trash2 className="h-4 w-4" />
+            <span className="sr-only">{t("delete")}</span>
+          </Button>
         </TableCell>
       </TableRow>
-
-      <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("editTitle")}</DialogTitle>
-            <DialogDescription>{t("editDescription")}</DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleEditSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor={`target-url-${link.id}`}>{t("targetLabel")}</Label>
-              <Input
-                id={`target-url-${link.id}`}
-                type="url"
-                required
-                value={targetUrl}
-                onChange={(event) => setTargetUrl(event.target.value)}
-                placeholder={t("targetPlaceholder")}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor={`description-${link.id}`}>{t("descriptionLabel")}</Label>
-              <Textarea
-                id={`description-${link.id}`}
-                rows={3}
-                value={description}
-                onChange={(event) => setDescription(event.target.value)}
-                placeholder={t("descriptionPlaceholder")}
-              />
-              <p className="text-xs text-muted-foreground">
-                {t("descriptionHelp")}
-              </p>
-            </div>
-            <DialogFooter>
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? t("saving") : t("save")}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
 
       <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
         <AlertDialogContent>

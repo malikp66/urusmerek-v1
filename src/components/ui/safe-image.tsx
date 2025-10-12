@@ -20,6 +20,7 @@ const SafeImage = React.forwardRef<HTMLImageElement, SafeImageProps>(
       fallback,
       onLoad,
       onError,
+      alt = "",
       ...imageProps
     } = props;
     const [isLoaded, setIsLoaded] = React.useState(false);
@@ -58,6 +59,7 @@ const SafeImage = React.forwardRef<HTMLImageElement, SafeImageProps>(
         {!hasError ? (
           <Image
             ref={ref}
+            alt={alt}
             {...imageProps}
             onLoad={handleLoadingComplete}
             onError={handleError}

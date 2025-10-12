@@ -151,7 +151,7 @@ export function AuthModal({
         tone: "success",
         title: "Login berhasil",
         description:
-          result.message ?? "Selamat datang kembali di portal Mitra UrusMerek.",
+          result.message ?? "Selamat datang kembali di portal Mitra urusmerek.",
       });
       handlePostAuthSuccess();
     } catch (error) {
@@ -215,7 +215,7 @@ export function AuthModal({
               <ShieldCheck className="h-5 w-5 text-white" strokeWidth={2.5} />
             </div>
             <div>
-              <p className="text-lg font-bold text-gray-900 leading-tight">Mitra UrusMerek</p>
+              <p className="text-lg font-bold text-gray-900 leading-tight">Mitra urusmerek</p>
               <p className="text-xs text-gray-500">Portal Mitra Resmi</p>
             </div>
           </div>

@@ -202,7 +202,7 @@ export async function POST(req: NextRequest) {
       {
         ok: false,
         message:
-          "Layanan konsultasi belum siap karena konfigurasi email belum diaktifkan. Mohon hubungi tim UrusMerek.",
+          "Layanan konsultasi belum siap karena konfigurasi email belum diaktifkan. Mohon hubungi tim urusmerek.",
       },
       { status: 500 },
     );
@@ -282,7 +282,7 @@ export async function POST(req: NextRequest) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "UrusMerek <admin@urusmerek.id>",
+          from: "urusmerek <admin@urusmerek.id>",
           to: [emailTo],
           reply_to: data.email,
           subject: "Konsultasi Merek Baru",

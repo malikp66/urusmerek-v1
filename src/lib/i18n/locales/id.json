@@ -3,7 +3,7 @@
     "brand": {
       "primary": "urusmerek",
       "secondary": ".id",
-      "fallbackPrimary": "UrusMerek",
+      "fallbackPrimary": "urusmerek",
       "fallbackSecondary": ".id"
     },
     "menu": {
@@ -148,7 +148,7 @@
       },
       {
         "title": "4. Pemantauan & Pendampingan",
-        "description": "Tim UrusMerek memantau setiap tahap pemeriksaan formalitas dan substantif, serta memberikan pendampingan jika terjadi usul penolakan atau keberatan.",
+        "description": "Tim urusmerek memantau setiap tahap pemeriksaan formalitas dan substantif, serta memberikan pendampingan jika terjadi usul penolakan atau keberatan.",
         "image": "/proses/proses-4.png"
       },
       {
@@ -158,7 +158,7 @@
       },
       {
         "title": "6. Layanan Pasca-Pendaftaran",
-        "description": "UrusMerek tetap mendampingi setelah merek terdaftar — termasuk perpanjangan 10 tahun berikutnya, perubahan data, pengalihan hak, hingga perjanjian lisensi merek.",
+        "description": "urusmerek tetap mendampingi setelah merek terdaftar — termasuk perpanjangan 10 tahun berikutnya, perubahan data, pengalihan hak, hingga perjanjian lisensi merek.",
         "image": "/proses/proses-6.png"
       }
     ]
@@ -370,7 +370,7 @@
             "price": 4500000
           }
         ],
-        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+daftar+merek+di+UrusMerek."
+        "ctaLink": "https://api.whatsapp.com/send/?phone=6282267890152&text=Halo%2C+saya+ingin+daftar+merek+di+urusmerek."
       },
       {
         "id": "perpanjangan",
@@ -691,7 +691,7 @@
     }
   },
   "aiFeatures": {
-    "eyebrow": "UrusMerek AI",
+    "eyebrow": "urusmerek AI",
     "title": "Alat pintar untuk urus merek cepat dan tepat",
     "description": "Cek nama merek, siapkan dokumen, dan awasi proses bersama konsultan yang siap membantu.",
     "items": [
@@ -846,7 +846,7 @@
       "description": "Sentuh salah satu opsi untuk menampilkan ringkasan.",
       "button": {
         "label": "Konsultasi",
-        "href": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+memesan+layanan+UrusMerek.",
+        "href": "https://api.whatsapp.com/send/?phone=6282267890152&text=Hi%2C+saya+ingin+memesan+layanan+urusmerek.",
         "aria": "Hubungi konsultan melalui WhatsApp"
       }
     },
@@ -1016,7 +1016,7 @@
   "panels": {
     "admin": {
       "layout": {
-        "brandPrimary": "UrusMerek",
+        "brandPrimary": "urusmerek",
         "brandSecondary": "Admin Panel",
         "navGroupLabel": "Utama",
         "signedInAs": "Masuk sebagai Admin #{id}",
@@ -1183,7 +1183,7 @@
     "partner": {
       "layout": {
         "brandPrimary": "Mitra Panel",
-        "brandSecondary": "UrusMerek",
+        "brandSecondary": "urusmerek",
         "navGroupLabel": "Navigasi",
         "signedInAs": "Masuk sebagai Mitra #{id}",
         "headerTitle": "Panel Mitra",
