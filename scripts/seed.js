@@ -17,7 +17,7 @@ const users = pgTable('users', {
 
 async function main() {
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:AnzkJvBIWyvJwZWtvQMjTUeqXFgmMRnv@shuttle.proxy.rlwy.net:50889/railway?sslmode=require',
   });
 
   const db = drizzle(pool);
@@ -27,10 +27,7 @@ async function main() {
   const adminPassword = process.env.ADMIN_PASSWORD || 'changeme123';
 
   try {
-    if (!process.env.DATABASE_URL) {
-      throw new Error('DATABASE_URL environment variable is not set.');
-    }
-
+    await pool.connect();
     const existingUser = await db
       .select({ id: users.id })
       .from(users)
