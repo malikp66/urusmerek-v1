@@ -504,13 +504,17 @@
    1. **Sitemap & Robots**
       - Tambahkan `app/sitemap.ts` otomatis yang menggabungkan seluruh halaman di atas + konten blog.
       - Konfigurasi `robots.txt` melalui `next-sitemap` atau custom handler: izinkan semua user-agent, blokir route admin.
-   2. **Domain & Canonical**
+   2. **Metadata Global**
+      - Set `metadataBase` pada `app/layout.tsx` ke `https://www.urusmerek.id` agar semua canonical otomatis konsisten.
+      - Gunakan `title` template global (`%s | Urus Merek`) serta default Open Graph & Twitter Card untuk fallback halaman baru.
+      - Aktifkan directive `robots` default (`index, follow`) dan daftarkan gambar OG standar (`/og-cover.png`).
+   3. **Domain & Canonical**
       - Pastikan `next.config.js` berisi `images.domains` untuk CDN dan `i18n` jika menambah bahasa.
       - Set `metadataBase` di `app/layout.tsx` untuk canonical domain tunggal.
-   3. **Caching & ISR**
+   4. **Caching & ISR**
       - Gunakan `revalidate` berbeda per halaman (beranda 1 jam, halaman informasional 24 jam).
       - Simpan data testimoni di database & revalidate ketika ada perubahan.
-   4. **Testing Metadata**
+   5. **Testing Metadata**
       - Buat tes Jest untuk memeriksa `metadata` object (snapshot) dan Playwright untuk mengecek `<head>`.
       - Gunakan `@testing-library/react` untuk memastikan internal link muncul.
 
@@ -521,3 +525,5 @@
    - Konversi form konsultasi (submit per 100 sesi organik) dan permintaan demo monitoring.
    - Jumlah dokumen DHA yang di-generate per minggu dari traffic organik.
    - Growth daftar email yang bersumber dari CTA beranda & halaman edukasi.
+   - Event tracking GA4/Segment untuk `consultation_submit`, `dha_generated`, dan `demo_requested` yang di-tag sumber organik.
+   - Dashboard gabungan Search Console + CRM untuk memantau pipeline nilai deal dari prospek organik.

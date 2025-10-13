@@ -6,60 +6,139 @@ const INDONESIAN_SUMMARY =
 const ENGLISH_SUMMARY =
   "An AI-powered trademark search platform that delivers real-time filing success estimates and a comprehensive Analysis Result Document (DHA).";
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Berapa lama proses cek merek AI?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Hasil awal muncul kurang dari 5 menit dengan ringkasan risiko.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Apakah data cek merek resmi?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Kami mensinkronkan basis data DJKI dan menambahkan analisis fonetik serta visual.",
+      },
+    },
+  ],
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Cek Merek Dagang Berbasis AI",
+  provider: {
+    "@type": "Organization",
+    name: "Urus Merek",
+    url: "https://www.urusmerek.id/cek-merek",
+  },
+  serviceOutput: "Dokumen Hasil Analisis (DHA)",
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "IDR",
+    price: "350000",
+    availability: "https://schema.org/InStock",
+  },
+};
+
 export const metadata: Metadata = {
-  title: "Cek Merek | Urus Merek",
-  description: INDONESIAN_SUMMARY,
+  title: "Cek Merek Dagang Online Berbasis AI | Urus Merek",
+  description:
+    "Analisis konflik merek dengan AI, dapatkan estimasi peluang lolos DJKI dan Dokumen Hasil Analisis lengkap.",
+  keywords: [
+    "cek merek dagang",
+    "pencarian merek djki",
+    "cek merek online",
+    "analisis konflik merek",
+    "dokumen hasil analisis merek",
+  ],
+  alternates: {
+    canonical: "https://www.urusmerek.id/cek-merek",
+  },
+  openGraph: {
+    title: "Cek Merek Dagang Online dengan Analisis AI",
+    description:
+      "Prediksi peluang lolos DJKI dan dapatkan Dokumen Hasil Analisis (DHA).",
+    url: "https://www.urusmerek.id/cek-merek",
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cek Merek Dagang Online",
+    description:
+      "Analisis konflik merek otomatis plus rekomendasi langkah selanjutnya.",
+  },
 };
 
 export default function CekMerekPage() {
   return (
-    <section className="relative py-24">
-      <div className="container mx-auto px-6 lg:px-10">
-        <header className="mb-12 max-w-3xl">
-          <h1 className="text-4xl font-semibold text-foreground sm:text-5xl">Cek Merek</h1>
-          <p className="mt-4 text-lg text-muted-foreground">
-            {INDONESIAN_SUMMARY}
-          </p>
-        </header>
-
-        <div className="grid gap-12 lg:grid-cols-2">
-          <article className="space-y-6">
-            <h2 className="text-2xl font-semibold text-foreground">Bahasa Indonesia</h2>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              Manfaatkan kecerdasan buatan Urus Merek untuk menelusuri merek yang telah terdaftar dan mengukur peluang keberhasilan pendaftaran merek Anda secara akurat. Sistem kami menganalisis ribuan basis data, menilai kedekatan fonetik maupun visual, dan menyajikan rekomendasi tindak lanjut yang mudah dipahami.
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceJsonLd),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqJsonLd),
+        }}
+      />
+      <section className="relative py-24">
+        <div className="container mx-auto px-6 lg:px-10">
+          <header className="mb-12 max-w-3xl">
+            <h1 className="text-4xl font-semibold text-foreground sm:text-5xl">Cek Merek</h1>
+            <p className="mt-4 text-lg text-muted-foreground">
+              {INDONESIAN_SUMMARY}
             </p>
+          </header>
 
-            <ul className="list-disc space-y-2 pl-6 text-base leading-relaxed text-muted-foreground">
-              <li>Info estimasi persentase keberhasilan berdasarkan parameter hukum dan tren pasar terkini.</li>
-              <li>Laporan analisis terperinci yang memuat ringkasan risiko, dasar hukum, dan rekomendasi strategi.</li>
-              <li>Tips untuk meningkatkan keberhasilan, termasuk rekomendasi variasi nama dan perbaikan elemen merek.</li>
-              <li>Daftar nama merek yang mirip agar Anda dapat menilai potensi konflik sejak dini.</li>
-            </ul>
+          <div className="grid gap-12 lg:grid-cols-2">
+            <article className="space-y-6">
+              <h2 className="text-2xl font-semibold text-foreground">Bahasa Indonesia</h2>
+              <p className="text-base leading-relaxed text-muted-foreground">
+                Manfaatkan kecerdasan buatan Urus Merek untuk menelusuri merek yang telah terdaftar dan mengukur peluang keberhasilan pendaftaran merek Anda secara akurat. Sistem kami menganalisis ribuan basis data, menilai kedekatan fonetik maupun visual, dan menyajikan rekomendasi tindak lanjut yang mudah dipahami.
+              </p>
 
-            <p className="text-base leading-relaxed text-muted-foreground">
-              Setiap pencarian menghasilkan Dokumen Hasil Analisis (DHA) lengkap yang siap dibagikan kepada tim legal atau manajemen. Anda dapat menindaklanjuti hasil analisis dengan menghubungi konsultan Urus Merek langsung dari dashboard.
-            </p>
-          </article>
+              <ul className="list-disc space-y-2 pl-6 text-base leading-relaxed text-muted-foreground">
+                <li>Info estimasi persentase keberhasilan berdasarkan parameter hukum dan tren pasar terkini.</li>
+                <li>Laporan analisis terperinci yang memuat ringkasan risiko, dasar hukum, dan rekomendasi strategi.</li>
+                <li>Tips untuk meningkatkan keberhasilan, termasuk rekomendasi variasi nama dan perbaikan elemen merek.</li>
+                <li>Daftar nama merek yang mirip agar Anda dapat menilai potensi konflik sejak dini.</li>
+              </ul>
 
-          <article className="space-y-6">
-            <h2 className="text-2xl font-semibold text-foreground">English</h2>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              Leverage Urus Merek artificial intelligence to scan the trademark registry and forecast your filing success with confidence. Our engine reviews thousands of records, evaluates phonetic and visual similarities, and surfaces actionable next steps tailored to your brand.
-            </p>
+              <p className="text-base leading-relaxed text-muted-foreground">
+                Setiap pencarian menghasilkan Dokumen Hasil Analisis (DHA) lengkap yang siap dibagikan kepada tim legal atau manajemen. Anda dapat menindaklanjuti hasil analisis dengan menghubungi konsultan Urus Merek langsung dari dashboard.
+              </p>
+            </article>
 
-            <ul className="list-disc space-y-2 pl-6 text-base leading-relaxed text-muted-foreground">
-              <li>Success probability insights built on legal parameters and the latest market trends.</li>
-              <li>Detailed analysis reports covering risk summaries, legal grounds, and strategy recommendations.</li>
-              <li>Guidance to improve your odds, including suggested name variations and brand refinements.</li>
-              <li>A curated list of similar trademarks so you can assess conflicts before filing.</li>
-            </ul>
+            <article className="space-y-6">
+              <h2 className="text-2xl font-semibold text-foreground">English</h2>
+              <p className="text-base leading-relaxed text-muted-foreground">
+                Leverage Urus Merek artificial intelligence to scan the trademark registry and forecast your filing success with confidence. Our engine reviews thousands of records, evaluates phonetic and visual similarities, and surfaces actionable next steps tailored to your brand.
+              </p>
 
-            <p className="text-base leading-relaxed text-muted-foreground">
-              Every search produces a comprehensive Analysis Result Document (DHA) that you can share with legal teams or stakeholders. Continue the journey by contacting an Urus Merek consultant directly from your dashboard.
-            </p>
-          </article>
+              <ul className="list-disc space-y-2 pl-6 text-base leading-relaxed text-muted-foreground">
+                <li>Success probability insights built on legal parameters and the latest market trends.</li>
+                <li>Detailed analysis reports covering risk summaries, legal grounds, and strategy recommendations.</li>
+                <li>Guidance to improve your odds, including suggested name variations and brand refinements.</li>
+                <li>A curated list of similar trademarks so you can assess conflicts before filing.</li>
+              </ul>
+
+              <p className="text-base leading-relaxed text-muted-foreground">
+                Every search produces a comprehensive Analysis Result Document (DHA) that you can share with legal teams or stakeholders. Continue the journey by contacting an Urus Merek consultant directly from your dashboard.
+              </p>
+            </article>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

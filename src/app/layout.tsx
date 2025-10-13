@@ -10,11 +10,35 @@ import { getLocaleFromRequest } from "@/lib/i18n/server";
 const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 
 export const metadata: Metadata = {
-  title: "urusmerek.id - Mitra Terpercaya untuk Perlindungan Merek",
+  metadataBase: new URL("https://www.urusmerek.id"),
+  title: {
+    default: "Jasa Pengurusan Merek Cepat & Terpercaya | Urus Merek",
+    template: "%s | Urus Merek",
+  },
   description:
-    "Jasa pendaftaran, perpanjangan, dan perlindungan merek resmi di Indonesia.",
+    "Daftarkan merek usaha dengan tim ahli Urus Merek. Cek merek, pilih kelas, dan ajukan ke DJKI lebih cepat.",
   icons: {
     icon: "/logo.png",
+  },
+  openGraph: {
+    title: "Jasa Pengurusan Merek Dagang Terintegrasi",
+    description:
+      "Solusi cek merek, penyusunan dokumen, dan pendaftaran DJKI dalam satu platform.",
+    url: "https://www.urusmerek.id/",
+    siteName: "Urus Merek",
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jasa Pengurusan Merek Cepat",
+    description:
+      "Platform terpadu untuk cek merek, pilih kelas, dan daftar ke DJKI.",
+    images: ["https://www.urusmerek.id/og-cover.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
