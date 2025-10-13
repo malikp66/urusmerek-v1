@@ -22,12 +22,16 @@ async function main() {
 
   const db = drizzle(pool);
 
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@urusmerek.com';
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@urusmerek.id';
   const adminName = process.env.ADMIN_NAME || 'Admin UrusMerek';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'changeme123';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'Soho19soho19';
 
   try {
-    await pool.connect();
+    // Acquire and immediately release a client so the pool is ready,
+    // but ensure we don't hold it open and block process shutdown.
+    const testClient = await pool.connect();
+    testClient.release();
+
     const existingUser = await db
       .select({ id: users.id })
       .from(users)

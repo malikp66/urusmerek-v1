@@ -3,6 +3,7 @@ import 'server-only';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 
 import { argon2idAsync } from '@noble/hashes/argon2';
+import bcrypt from 'bcrypt';
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
@@ -131,6 +132,15 @@ export async function hashPassword(password: string): Promise<string> {
 }
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
+  if (hash.startsWith('$2')) {
+    // Support legacy bcrypt hashes produced by older seed scripts
+    try {
+      return await bcrypt.compare(password, hash);
+    } catch {
+      return false;
+    }
+  }
+
   const segments = hash.split('$');
 
   if (segments.length !== 6 || segments[0] !== 'argon2id') {

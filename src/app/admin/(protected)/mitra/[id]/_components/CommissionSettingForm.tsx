@@ -2,12 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { useGlobalAlert } from '@/components/global-alert/GlobalAlertProvider';
 
 type Props = {
   partnerId: number;
@@ -22,13 +22,18 @@ export function CommissionSettingForm({ partnerId, defaultRate, customRates }: P
   );
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const { showAlert } = useGlobalAlert();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const asNumber = Number(percent);
     if (!Number.isFinite(asNumber) || asNumber <= 0) {
-      toast.error('Persentase komisi harus lebih dari 0');
+      showAlert({
+        tone: 'error',
+        title: 'Persentase tidak valid',
+        description: 'Persentase komisi harus lebih dari 0.',
+      });
       return;
     }
 
@@ -37,7 +42,11 @@ export function CommissionSettingForm({ partnerId, defaultRate, customRates }: P
       try {
         parsedCustomRates = JSON.parse(customRatesText);
       } catch (error) {
-        toast.error('Format JSON custom rates tidak valid');
+        showAlert({
+          tone: 'error',
+          title: 'Format custom rates salah',
+          description: 'Pastikan JSON valid sebelum menyimpan.',
+        });
         console.error(error);
         return;
       }
@@ -49,20 +58,36 @@ export function CommissionSettingForm({ partnerId, defaultRate, customRates }: P
     };
 
     startTransition(async () => {
-      const response = await fetch(`/api/admin/mitra/${partnerId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      try {
+        const response = await fetch(`/api/admin/mitra/${partnerId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
 
-      if (!response.ok) {
-        const data = await response.json().catch(() => null);
-        toast.error(data?.message ?? 'Gagal menyimpan pengaturan komisi');
-        return;
+        if (!response.ok) {
+          const data = await response.json().catch(() => null);
+          showAlert({
+            tone: 'error',
+            title: 'Gagal menyimpan pengaturan komisi',
+            description: data?.message ?? 'Silakan coba lagi.',
+          });
+          return;
+        }
+
+        showAlert({
+          tone: 'success',
+          title: 'Pengaturan komisi berhasil disimpan',
+        });
+        router.refresh();
+      } catch (error) {
+        console.error(error);
+        showAlert({
+          tone: 'error',
+          title: 'Terjadi kesalahan',
+          description: 'Silakan coba lagi nanti.',
+        });
       }
-
-      toast.success('Pengaturan komisi berhasil disimpan');
-      router.refresh();
     });
   };
 

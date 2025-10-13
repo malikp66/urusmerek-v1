@@ -56,7 +56,7 @@ const FinalCta = () => {
             <p className="mt-3 text-sm text-muted-foreground">{note}</p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="hover:-translate-y-px">
+              <Button asChild size="lg" className="hover:-translate-y-px w-full justify-center sm:w-auto">
                 <Link
                   href="/konsultasi"
                 >
@@ -64,7 +64,7 @@ const FinalCta = () => {
                 </Link>
               </Button>
 
-              <Button variant="outline" asChild size="lg" className="btn-outline-brand hover:-translate-y-px">
+              <Button variant="outline" asChild size="lg" className="btn-outline-brand hover:-translate-y-px w-full justify-center sm:w-auto">
                 <Link href="#harga" onClick={handlePricingClick}>
                   {secondaryCta}
                 </Link>

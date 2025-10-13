@@ -1,0 +1,32 @@
+<svg width="480" height="480" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-bg" x1="40" y1="32" x2="420" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FB7185" />
+      <stop offset="0.45" stop-color="#EF4444" />
+      <stop offset="1" stop-color="#B91C1C" />
+    </linearGradient>
+    <radialGradient id="grad-glow" cx="0" cy="0" r="1" gradientTransform="translate(240 160) rotate(90) scale(200)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55" />
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="grad-line" x1="120" y1="360" x2="360" y2="160" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FECACA" stop-opacity="0.7" />
+      <stop offset="1" stop-color="#F87171" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect x="40" y="32" width="400" height="416" rx="48" fill="url(#grad-bg)" />
+  <rect x="88" y="80" width="304" height="320" rx="32" fill="url(#grad-glow)" />
+  <path d="M160 168H320" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.65" />
+  <path d="M160 208H320" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.45" />
+  <path d="M160 248H272" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.35" />
+  <path d="M160 288H272" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.25" />
+  <path d="M200 336H320" stroke="url(#grad-line)" stroke-width="10" stroke-linecap="round" opacity="0.9" />
+  <circle cx="240" cy="248" r="104" fill="none" stroke="#FEF2F2" stroke-width="6" opacity="0.35" />
+  <path d="M240 152C266.51 152 288 173.49 288 200C288 242.67 240 296 240 296C240 296 192 242.67 192 200C192 173.49 213.49 152 240 152Z" fill="#FFF5F5" fill-opacity="0.9" />
+  <circle cx="240" cy="204" r="28" fill="url(#grad-bg)" />
+  <path d="M224 228C230 235 236 238.5 240 238.5C244 238.5 250 235 256 228" stroke="#B91C1C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.75" />
+  <circle cx="172" cy="132" r="12" fill="#FEE2E2" opacity="0.8" />
+  <circle cx="308" cy="120" r="8" fill="#FECACA" opacity="0.6" />
+  <circle cx="332" cy="344" r="14" fill="#FEE2E2" opacity="0.75" />
+  <circle cx="156" cy="360" r="10" fill="#FECACA" opacity="0.55" />
+</svg>

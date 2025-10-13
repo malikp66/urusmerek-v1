@@ -2,12 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useTranslations } from '@/lib/i18n/context';
+import { useGlobalAlert } from '@/components/global-alert/GlobalAlertProvider';
 
 type Props = {
   defaultRate: number;
@@ -18,31 +18,51 @@ export function DefaultCommissionForm({ defaultRate }: Props) {
   const [percent, setPercent] = useState(() => Math.round(defaultRate * 1000) / 10);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const { showAlert } = useGlobalAlert();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const numeric = Number(percent);
     if (!Number.isFinite(numeric) || numeric <= 0) {
-      toast.error(t('invalid'));
+      showAlert({
+        tone: 'error',
+        title: t('invalid'),
+      });
       return;
     }
 
     startTransition(async () => {
-      const response = await fetch('/api/admin/settings/commission', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ defaultRate: numeric / 100 }),
-      });
+      try {
+        const response = await fetch('/api/admin/settings/commission', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ defaultRate: numeric / 100 }),
+        });
 
-      if (!response.ok) {
-        const data = await response.json().catch(() => null);
-        toast.error(data?.message ?? t('error'));
-        return;
+        if (!response.ok) {
+          const data = await response.json().catch(() => null);
+          showAlert({
+            tone: 'error',
+            title: t('error'),
+            description: data?.message,
+          });
+          return;
+        }
+
+        showAlert({
+          tone: 'success',
+          title: t('success'),
+        });
+        router.refresh();
+      } catch (error) {
+        console.error(error);
+        showAlert({
+          tone: 'error',
+          title: t('error'),
+          description: 'Silakan coba lagi nanti.',
+        });
       }
-
-      toast.success(t('success'));
-      router.refresh();
     });
   };
 

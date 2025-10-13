@@ -43,7 +43,7 @@ export async function GET(
   response.cookies.set({
     name: AFFILIATE_COOKIE_NAME,
     value: link.code,
-    httpOnly: false,
+    httpOnly: true,
     sameSite: 'lax',
     secure: env.NODE_ENV === 'production',
     maxAge: AFFILIATE_COOKIE_MAX_AGE_SECONDS,

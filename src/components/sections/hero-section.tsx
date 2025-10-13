@@ -199,11 +199,11 @@ export default function HeroSection() {
             <p className="text-lg text-muted-foreground leading-relaxed">{descriptionText}</p>
 
             {/* CTA buttons */}
-            <div className="flex gap-3 pt-2">
+            <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
               {/* Primary */}
-              <Button asChild size="lg" className="btn-brand hover:-translate-y-px">
+              <Button asChild size="lg" className="btn-brand hover:-translate-y-px w-full justify-center sm:w-auto">
                 <Link
-                  className="group inline-flex items-center gap-2"
+                  className="group inline-flex items-center justify-center gap-2"
                   href="/konsultasi"
                   aria-label={cta.primaryLabel}
                 >
@@ -213,8 +213,13 @@ export default function HeroSection() {
               </Button>
 
               {/* Secondary */}
-              <Button asChild size="lg" variant="outline" className="btn-outline-brand hover:-translate-y-px">
-                <Link className="group inline-flex items-center gap-2" href="#layanan">
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="btn-outline-brand hover:-translate-y-px w-full justify-center sm:w-auto"
+              >
+                <Link className="group inline-flex items-center justify-center gap-2" href="#layanan">
                   {cta.secondary}
                 </Link>
               </Button>
@@ -243,7 +248,7 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 
               {/* Overlay Info */}
-              <div className="absolute left-6 bottom-8 bg-white/90 backdrop-blur-md border border-white/20 rounded-xl p-5 shadow-2xl max-w-sm">
+              <div className="absolute inset-x-4 bottom-6 w-auto max-w-full bg-white/90 backdrop-blur-md border border-white/20 rounded-xl p-5 shadow-2xl sm:inset-auto sm:left-6 sm:bottom-8 sm:max-w-sm">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-[#DC2626]/10 text-[#DC2626] flex-shrink-0">
                     <ActiveIcon className="h-5 w-5" />
@@ -266,7 +271,7 @@ export default function HeroSection() {
               </div>
 
             </div>
-            <div className="absolute inset-x-6 bottom-4 rounded-2xl h-1 bg-[#DC2626]">
+            <div className="absolute inset-x-4 bottom-4 rounded-2xl h-1 bg-[#DC2626] sm:inset-x-6">
               <div
                 key={currentServiceIndex}
                 className="h-full bg-white/20"

@@ -115,6 +115,7 @@ export default function IndustryTemplates() {
                   key={s.id}
                   onClick={() => setActiveId(s.id)}
                   size="lg"
+                  className="flex w-full items-center justify-center gap-2 sm:w-auto"
                 >
                   <Icon className="w-4 h-4" />
                   <span>{s.label}</span>
@@ -129,7 +130,7 @@ export default function IndustryTemplates() {
               variant="outline"
               size="lg"
               onClick={() => setExpanded(true)}
-              className="flex items-center"
+              className="mt-3 flex w-full items-center justify-center gap-2 sm:mt-0 sm:w-auto"
             >
               <LayoutGrid className="w-4 h-4" />
               <span>{seeAll}</span>
@@ -140,7 +141,7 @@ export default function IndustryTemplates() {
               variant="outline"
               onClick={() => setExpanded(false)}
               aria-label={close}
-              className="flex items-center justify-center h-10 w-10 "
+              className="mt-3 flex h-10 w-10 items-center justify-center sm:mt-0"
             >
               <ArrowLeft className="w-4 h-4" />
             </Button>
@@ -149,7 +150,7 @@ export default function IndustryTemplates() {
 
         {/* Details panel */}
         <div className="bg-card p-6 sm:p-8 md:p-12 rounded-2xl shadow-lg max-w-6xl mx-auto transition-all duration-300">
-          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
+          <div className="grid gap-8 md:gap-10 lg:grid-cols-5 lg:gap-12">
             {/* Left: copy + features */}
             <div className="lg:col-span-3">
               <h3 className="text-2xl md:text-3xl font-semibold">{active.title}</h3>
@@ -165,7 +166,7 @@ export default function IndustryTemplates() {
               </ul>
 
               <div className="mt-8 overflow-hidden rounded-xl">
-                <div className="relative h-48 w-full">
+                <div className="relative h-48 w-full sm:h-56 md:h-64">
                   <SafeImage
                     key={active.image}
                     src={active.image}
@@ -227,7 +228,7 @@ export default function IndustryTemplates() {
                 <p className="mt-4 text-xs text-muted-foreground">{priceDisclaimer}</p>
               </div>
 
-              <Button asChild size="lg" className="mt-6">
+              <Button asChild size="lg" className="mt-6 w-full justify-center sm:w-auto">
                 <Link href={active.ctaLink ?? "#"} target="_blank" rel="noopener noreferrer">
                   {cta}
                   <ArrowRight className="ml-2 h-4 w-4" />

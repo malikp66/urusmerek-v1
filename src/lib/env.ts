@@ -24,6 +24,7 @@ const rawEnv = {
     process.env.IP_HASH_SALT ??
     process.env.JWT_SECRET ??
     (isBuildPhase ? fallbacks.JWT_SECRET : undefined),
+  AFFILIATE_ATTRIBUTE_SECRET: process.env.AFFILIATE_ATTRIBUTE_SECRET,
 } as const;
 
 const envSchema = z
@@ -40,6 +41,7 @@ const envSchema = z
       .optional()
       .default('info'),
     IP_HASH_SALT: z.string().min(16).optional(),
+    AFFILIATE_ATTRIBUTE_SECRET: z.string().min(32).optional(),
   })
   .transform((value) => ({
     ...value,

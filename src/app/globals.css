@@ -164,6 +164,8 @@
     color: var(--foreground);
     font-family: var(--font-primary);
     line-height: 1.5;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
     @apply antialiased;
   }
 
@@ -225,7 +227,11 @@
   }
 
   .container {
-    @apply px-[10px] lg:pl-[20px] lg:pr-[20px] mx-auto;
+    @apply pl-[10px] pr-[10px] lg:pl-[20px] lg:pr-[20px];
+    margin-inline: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: min(100%, 1200px);
     max-width: 1200px;
   }
 }

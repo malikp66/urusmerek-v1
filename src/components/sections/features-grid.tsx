@@ -12,6 +12,7 @@ import {
 import { useTranslations } from "@/lib/i18n/context";
 import { Button } from "@/components/ui/button";
 import { SafeImage } from "@/components/ui/safe-image";
+import { cn } from "@/lib/utils";
 
 type PrimaryFeature = {
   id: string;
@@ -60,19 +61,26 @@ const smallIconMap: Record<string, React.ElementType> = {
 
 
 /* === Cards === */
-const SmallCard = ({ feature }: { feature?: SmallFeature }) => {
+const SmallCard = ({ feature, className }: { feature?: SmallFeature; className?: string }) => {
   if (!feature) {
-    return <div className="h-full w-full rounded-xl border border-dashed border-smooth bg-white/60" />;
+    return (
+      <div
+        className={cn(
+          "h-full w-full rounded-xl border border-dashed border-smooth bg-white/60",
+          className
+        )}
+      />
+    );
   }
 
   const Icon = feature.Icon;
   return (
     <Link
       href={feature.link}
-      className="group h-full w-full rounded-xl border border-smooth bg-white/90 backdrop-blur-sm
-                shadow-sm transition-all duration-300
-                hover:-translate-y-[1px] hover:border-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.35)]
-                flex items-center justify-center text-center p-3"
+      className={cn(
+        "group flex h-full w-full items-center justify-center rounded-xl border border-smooth bg-white/90 p-3 text-center shadow-sm transition-all duration-300 hover:-translate-y-[1px] hover:border-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.35)] backdrop-blur-sm",
+        className
+      )}
     >
       <div className="flex flex-col items-center gap-1.5">
         <Icon className="h-5 w-5 text-gray-600 group-hover-stroke-primary" />
@@ -84,14 +92,14 @@ const SmallCard = ({ feature }: { feature?: SmallFeature }) => {
   );
 };
 
-const LargeCard = ({ feature }: { feature: PrimaryFeature }) => {
+const LargeCard = ({ feature, className }: { feature: PrimaryFeature; className?: string }) => {
   return (
     <Link
       href={feature.link}
-      className="group h-full w-full overflow-hidden rounded-xl border border-smooth bg-white
-                shadow-sm shadow-glow-red transition-all duration-300
-                hover:-translate-y-[1px] hover:border-primary-strong hover:shadow-red-strong
-                flex flex-col"
+      className={cn(
+        "group flex h-full w-full flex-col overflow-hidden rounded-xl border border-smooth bg-white shadow-sm shadow-glow-red transition-all duration-300 hover:-translate-y-[1px] hover:border-primary-strong hover:shadow-red-strong",
+        className
+      )}
     >
       <div className="p-0 flex-1">
         <div className="relative h-full w-full overflow-hidden rounded-lg">
@@ -129,15 +137,109 @@ export default function FeaturesGrid() {
     [smallFeaturesCopy]
   );
 
-  const getSmall = (i: number) => (smallItems.length > 0 ? smallItems[i % smallItems.length] : undefined);
+  const getSmall = React.useCallback(
+    (i: number) => (smallItems.length > 0 ? smallItems[i % smallItems.length] : undefined),
+    [smallItems]
+  );
   const firstPrimary = primaryFeatures[0];
   const secondPrimary = primaryFeatures[1];
   const thirdPrimary = primaryFeatures[2];
   const fourthPrimary = primaryFeatures[3];
 
+  const renderGridCells = React.useCallback(
+    ({
+      smallCardClassName,
+      largeCardClassName,
+    }: {
+      smallCardClassName?: string;
+      largeCardClassName?: string;
+    }) => {
+      const renderSmall = (index: number, key: string) => (
+        <div key={key} className="col-span-1">
+          <SmallCard feature={getSmall(index)} className={smallCardClassName} />
+        </div>
+      );
+
+      return (
+        <>
+          {Array.from({ length: 8 }).map((_, i) => renderSmall(i, `r1c${i}`))}
+
+          {renderSmall(8, "r2c1")}
+          {renderSmall(9, "r2c2")}
+
+          {firstPrimary && (
+            <div className="col-span-2 row-span-2">
+              <LargeCard feature={firstPrimary} className={largeCardClassName} />
+            </div>
+          )}
+          {secondPrimary && (
+            <div className="col-span-2 row-span-2">
+              <LargeCard feature={secondPrimary} className={largeCardClassName} />
+            </div>
+          )}
+
+          {renderSmall(10, "r2c5")}
+          {renderSmall(11, "r2c6")}
+
+          {renderSmall(12, "r3c1")}
+          {renderSmall(13, "r3c2")}
+          {renderSmall(14, "r3c5")}
+          {renderSmall(15, "r3c6")}
+
+          {renderSmall(16, "r4c1")}
+          {renderSmall(17, "r4c2")}
+
+          {thirdPrimary && (
+            <div className="col-span-2 row-span-2">
+              <LargeCard feature={thirdPrimary} className={largeCardClassName} />
+            </div>
+          )}
+          {fourthPrimary && (
+            <div className="col-span-2 row-span-2">
+              <LargeCard feature={fourthPrimary} className={largeCardClassName} />
+            </div>
+          )}
+
+          {renderSmall(18, "r4c5")}
+          {renderSmall(19, "r4c6")}
+
+          {renderSmall(20, "r5c1")}
+          {renderSmall(21, "r5c2")}
+          {renderSmall(22, "r5c5")}
+          {renderSmall(23, "r5c6")}
+
+          {Array.from({ length: 8 }).map((_, i) => renderSmall(24 + i, `r6c${i}`))}
+        </>
+      );
+    },
+    [getSmall, firstPrimary, secondPrimary, thirdPrimary, fourthPrimary]
+  );
+
+  const renderGrid = React.useCallback(
+    ({
+      className,
+      autoRows,
+      smallCardClassName,
+      largeCardClassName,
+    }: {
+      className?: string;
+      autoRows?: string;
+      smallCardClassName?: string;
+      largeCardClassName?: string;
+    }) => (
+      <div
+        className={cn("grid grid-cols-8 gap-3", className)}
+        style={autoRows ? { gridAutoRows: autoRows } : undefined}
+      >
+        {renderGridCells({ smallCardClassName, largeCardClassName })}
+      </div>
+    ),
+    [renderGridCells]
+  );
+
   return (
     <section
-      className="relative isolate overflow-hidden py-20 bg-gradient-to-b from-rose-50/70 via-white to-white section-edge-mask-vars"
+      className="relative isolate overflow-x-hidden overflow-y-visible py-20 bg-gradient-to-b from-rose-50/70 via-white to-white section-edge-mask-vars"
       style={{ ['--sx1' as any]:'1%', ['--sy1' as any]:'1.5%' }}
     >
       <div className="container mx-auto px-5">
@@ -156,67 +258,23 @@ export default function FeaturesGrid() {
         </div>
 
         {/* Grid */}
-        <div
-          className="relative mx-auto mt-16 max-w-[1510px] grid-edge-mask"
-        >
-          {/* overlay gradasi halus */}
-          {/* <div aria-hidden className="pointer-events-none absolute inset-0 z-10 grid-soft-vignette" /> */}
-          <div className="relative z-0 grid grid-cols-8 gap-3 grid-row-lg">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={`r1c${i}`} className="col-span-1">
-                <SmallCard feature={getSmall(i)} />
+        <div className="relative mx-auto mt-16 max-w-[1510px] grid-edge-mask">
+          {/* Mobile & tablet layout */}
+          <div className="-mx-5 lg:hidden">
+            <div className="overflow-x-auto px-5 pb-6">
+              <div className="mx-auto min-w-[1080px] max-w-[1510px]">
+                {renderGrid({
+                  autoRows: "118px",
+                  smallCardClassName: "min-h-[118px]",
+                  largeCardClassName: "min-h-[236px]",
+                })}
               </div>
-            ))}
+            </div>
+          </div>
 
-            <div className="col-span-1"><SmallCard feature={getSmall(8)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(9)} /></div>
-
-            {firstPrimary && (
-              <div className="col-span-2 row-span-2">
-                <LargeCard feature={firstPrimary} />
-              </div>
-            )}
-            {secondPrimary && (
-              <div className="col-span-2 row-span-2">
-                <LargeCard feature={secondPrimary} />
-              </div>
-            )}
-
-            <div className="col-span-1"><SmallCard feature={getSmall(10)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(11)} /></div>
-
-            <div className="col-span-1"><SmallCard feature={getSmall(12)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(13)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(14)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(15)} /></div>
-
-            <div className="col-span-1"><SmallCard feature={getSmall(16)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(17)} /></div>
-
-            {thirdPrimary && (
-              <div className="col-span-2 row-span-2">
-                <LargeCard feature={thirdPrimary} />
-              </div>
-            )}
-            {fourthPrimary && (
-              <div className="col-span-2 row-span-2">
-                <LargeCard feature={fourthPrimary} />
-              </div>
-            )}
-
-            <div className="col-span-1"><SmallCard feature={getSmall(18)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(19)} /></div>
-
-            <div className="col-span-1"><SmallCard feature={getSmall(20)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(21)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(22)} /></div>
-            <div className="col-span-1"><SmallCard feature={getSmall(23)} /></div>
-
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={`r6c${i}`} className="col-span-1">
-                <SmallCard feature={getSmall(24 + i)} />
-              </div>
-            ))}
+          {/* Desktop layout */}
+          <div className="relative z-0 hidden lg:block">
+            {renderGrid({ className: "grid-row-lg" })}
           </div>
         </div>
       </div>

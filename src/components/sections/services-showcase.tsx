@@ -21,7 +21,7 @@ const ServiceTab = ({ title, description, isActive, onClick, onHover }: TabProps
     onClick={onClick}
     onMouseEnter={onHover}
     className={cn(
-      "w-full text-left p-6 transition-all duration-300 ease-in-out relative border-l-4",
+      "w-full text-left rounded-xl border-l-4 p-4 transition-all duration-300 ease-in-out sm:p-6",
       isActive ? "border-primary bg-light-red/50" : "border-gray-200 hover:bg-gray-50"
     )}
     data-service-step
@@ -125,23 +125,28 @@ const ServicesShowcase = () => {
   const activeItem = tabItems[activeIndex];
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="overflow-hidden bg-white py-16 md:py-24">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
           <span className="text-base eyebrow font-semibold text-primary">{eyebrow}</span>
           <h2 className="font-bold text-4xl md:text-5xl leading-tight text-foreground tracking-tight">
             {heading}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">{description}</p>
-          <Button asChild variant="secondary" size="lg" className="btn-secondary mt-6 hover:-translate-y-px">
+          <Button
+            asChild
+            variant="secondary"
+            size="lg"
+            className="btn-secondary mt-6 w-full justify-center hover:-translate-y-px sm:w-auto"
+          >
             <Link href="/layanan">
               <span>{cta}</span>
             </Link>
           </Button>
         </div>
 
-        <div className="grid relative grid-cols-1 lg:grid-cols-[1fr_1.35fr] lg:gap-24 items-stretch">
-          <div ref={listRef} className="flex flex-col mb-12 lg:mb-0">
+        <div className="relative grid grid-cols-1 items-stretch gap-10 lg:grid-cols-[1fr_1.35fr] lg:gap-24">
+          <div ref={listRef} className="mb-12 flex flex-col gap-4 lg:mb-0">
             {visibleTabs.map((tab, index) => {
               const globalIndex = windowStart + index;
               const isLastInWindow = index === visibleCount - 1;
@@ -200,9 +205,15 @@ const ServicesShowcase = () => {
             <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-tr from-black/0 via-black/0 to-black/0" />
           </div>
 
-          <div className="absolute top-10 right-4/4 h-96 w-96 rounded-full bg-[#DC2626]/15 blur-3xl animate-pulse-slow" style={{ animationDelay: "1s" }} />
-            
-          <div className="absolute bottom-6 left-4/4 h-96 w-96 rounded-full bg-[#DC2626]/15 blur-3xl animate-pulse-slow" style={{ animationDelay: "1s" }} />
+          <div
+            className="animate-pulse-slow absolute -right-32 top-10 hidden h-96 w-96 rounded-full bg-[#DC2626]/15 blur-3xl lg:block"
+            style={{ animationDelay: "1s" }}
+          />
+
+          <div
+            className="animate-pulse-slow absolute -left-32 bottom-6 hidden h-96 w-96 rounded-full bg-[#DC2626]/15 blur-3xl lg:block"
+            style={{ animationDelay: "1s" }}
+          />
         </div>
       </div>
     </section>
