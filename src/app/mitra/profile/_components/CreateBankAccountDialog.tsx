@@ -2,9 +2,9 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 
 import { createBankAccount } from '@/app/mitra/profile/actions';
+import { useGlobalAlert } from '@/components/global-alert/GlobalAlertProvider';
 import { INDONESIAN_BANKS } from '@/lib/constants/banks';
 import { Button } from '@/components/ui/button';
 import {
@@ -28,6 +28,7 @@ import {
 
 export function CreateBankAccountDialog() {
   const router = useRouter();
+  const { showAlert } = useGlobalAlert();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [bankCode, setBankCode] = useState('BCA');
@@ -40,13 +41,21 @@ export function CreateBankAccountDialog() {
     startTransition(async () => {
       try {
         await createBankAccount(formData);
-        toast.success('Rekening berhasil disimpan');
+        showAlert({
+          tone: 'success',
+          title: 'Rekening berhasil disimpan',
+        });
         router.refresh();
         form.reset();
         setBankCode('BCA');
         setOpen(false);
       } catch (error) {
-        toast.error((error as Error).message || 'Gagal menyimpan rekening');
+        const message = error instanceof Error ? error.message : undefined;
+        showAlert({
+          tone: 'error',
+          title: 'Gagal menyimpan rekening',
+          description: message && message !== 'Gagal menyimpan rekening' ? message : undefined,
+        });
         console.error(error);
       }
     });

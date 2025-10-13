@@ -32,6 +32,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   const navigation: AdminNavigationItem[] = [
     { title: tNav('dashboard'), href: '/admin', icon: 'barChart3' },
     { title: tNav('partners'), href: '/admin/mitra', icon: 'users' },
+    { title: tNav('referrals'), href: '/admin/referrals', icon: 'briefcase' },
     { title: tNav('consultations'), href: '/admin/konsultasi', icon: 'fileText' },
     { title: tNav('withdraw'), href: '/admin/withdraw', icon: 'circleDollarSign' },
     {

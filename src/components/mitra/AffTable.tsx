@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useOptimistic, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Copy, Trash2 } from "lucide-react";
-import { toast } from "sonner";
 
 import {
   deleteAffiliateLink,
@@ -38,6 +37,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useGlobalAlert } from "@/components/global-alert/GlobalAlertProvider";
 import { useTranslations, useLocale } from "@/lib/i18n/context";
 
 function createQueryString(
@@ -69,6 +69,7 @@ export function AffTable({ result, query }: Props) {
   const { locale } = useLocale();
   const intlLocale = locale === "en" ? "en-US" : "id-ID";
   const t = useTranslations("panels.partner.affTable");
+  const { showAlert } = useGlobalAlert();
   const headers = t<{
     link: string;
     target: string;
@@ -123,11 +124,20 @@ export function AffTable({ result, query }: Props) {
     startToggleTransition(async () => {
       try {
         await toggleAffiliateLink({ linkId: id, isActive });
-        toast.success(t("toggleSuccess"));
+        showAlert({
+          tone: "success",
+          title: t("toggleSuccess"),
+        });
         router.refresh();
       } catch (error) {
-        toast.error(t("toggleError"));
+        const message = error instanceof Error ? error.message : undefined;
+        showAlert({
+          tone: "error",
+          title: t("toggleError"),
+          description: message && message !== t("toggleError") ? message : undefined,
+        });
         setOptimisticLinks({ type: "reset", data: result.data });
+        console.error(error);
       }
     });
   };
@@ -137,11 +147,20 @@ export function AffTable({ result, query }: Props) {
 
     try {
       await deleteAffiliateLink({ linkId: id });
-      toast.success(t("deleteSuccess"));
+      showAlert({
+        tone: "success",
+        title: t("deleteSuccess"),
+      });
       router.refresh();
     } catch (error) {
-      toast.error(t("deleteError"));
+      const message = error instanceof Error ? error.message : undefined;
+      showAlert({
+        tone: "error",
+        title: t("deleteError"),
+        description: message && message !== t("deleteError") ? message : undefined,
+      });
       setOptimisticLinks({ type: "reset", data: result.data });
+      console.error(error);
       throw error;
     }
   };
@@ -240,15 +259,25 @@ function AffiliateLinkRow({
   const { locale } = useLocale();
   const intlLocale = locale === "en" ? "en-US" : "id-ID";
   const t = useTranslations("panels.partner.affTable");
+  const { showAlert } = useGlobalAlert();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(link.shareUrl);
-      toast.success(t("copySuccess"));
-    } catch {
-      toast.error(t("copyError"));
+      showAlert({
+        tone: "success",
+        title: t("copySuccess"),
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : undefined;
+      showAlert({
+        tone: "error",
+        title: t("copyError"),
+        description: message && message !== t("copyError") ? message : undefined,
+      });
+      console.error(error);
     }
   };
 

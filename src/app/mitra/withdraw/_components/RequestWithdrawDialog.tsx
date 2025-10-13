@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { toast } from 'sonner';
 
 import { createWithdrawRequest } from '@/app/mitra/withdraw/actions';
+import { useGlobalAlert } from '@/components/global-alert/GlobalAlertProvider';
 import { INDONESIAN_BANKS } from '@/lib/constants/banks';
 import { Button } from '@/components/ui/button';
 import {
@@ -37,6 +37,7 @@ export function RequestWithdrawDialog({ availableAmount, locale }: Props) {
   const { locale: contextLocale } = useLocale();
   const effectiveLocale = locale ?? contextLocale;
   const intlLocale = effectiveLocale === 'en' ? 'en-US' : 'id-ID';
+  const { showAlert } = useGlobalAlert();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [bankCode, setBankCode] = useState('BCA');
@@ -49,12 +50,20 @@ export function RequestWithdrawDialog({ availableAmount, locale }: Props) {
     startTransition(async () => {
       try {
         await createWithdrawRequest(formData);
-        toast.success(t('success'));
+        showAlert({
+          tone: 'success',
+          title: t('success'),
+        });
         setOpen(false);
         form.reset();
         setBankCode('BCA');
       } catch (error) {
-        toast.error((error as Error).message || t('error'));
+        const message = error instanceof Error ? error.message : undefined;
+        showAlert({
+          tone: 'error',
+          title: t('error'),
+          description: message && message !== t('error') ? message : undefined,
+        });
         console.error(error);
       }
     });
