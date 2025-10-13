@@ -193,7 +193,9 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   affiliateLinks: many(affiliateLinks),
   bankAccounts: many(partnerBankAccounts),
   withdrawRequests: many(partnerWithdrawRequests),
-  commissionSetting: one(partnerCommissionSettings),
+  commissionSetting: one(partnerCommissionSettings, {
+    relationName: 'commissionOwner',
+  }),
   profile: one(partnerProfiles),
 }));
 
@@ -274,10 +276,12 @@ export const partnerCommissionSettingsRelations = relations(
     user: one(users, {
       fields: [partnerCommissionSettings.userId],
       references: [users.id],
+      relationName: 'commissionOwner',
     }),
     creator: one(users, {
       fields: [partnerCommissionSettings.createdBy],
       references: [users.id],
+      relationName: 'commissionCreator',
     }),
   }),
 );

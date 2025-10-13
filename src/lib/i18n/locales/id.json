@@ -1114,6 +1114,64 @@
           "cancelled": "Dibatalkan"
         }
       },
+      "referrals": {
+        "title": "Riwayat Referral",
+        "description": "Kelola status referral dan pantau komisi mitra.",
+        "searchPlaceholder": "Cari order/kode referral atau mitra",
+        "statusLabel": "Status",
+        "statusOptions": {
+          "all": "Semua Status",
+          "pending": "Menunggu",
+          "approved": "Disetujui",
+          "rejected": "Ditolak",
+          "paid": "Dibayar"
+        },
+        "apply": "Terapkan",
+        "reset": "Reset",
+        "tableHeaders": {
+          "id": "ID",
+          "order": "ID Pesanan",
+          "partner": "Mitra",
+          "amount": "Nominal",
+          "commission": "Komisi",
+          "status": "Status",
+          "created": "Dibuat",
+          "actions": "Aksi"
+        },
+        "empty": "Belum ada referral dengan filter saat ini.",
+        "manage": "Kelola",
+        "summary": "Menampilkan {displayed} dari {total} referral",
+        "pagination": "Halaman {page} dari {total}",
+        "codeLabel": "Kode: {code}",
+        "statusBadge": {
+          "pending": "Menunggu",
+          "approved": "Disetujui",
+          "rejected": "Ditolak",
+          "paid": "Dibayar"
+        },
+        "detail": {
+          "title": "Detail Referral",
+          "subtitle": "Referral #{id}",
+          "codeLabel": "Kode: {code}",
+          "createdAt": "Dibuat",
+          "paidAt": "Dibayar",
+          "detailCard": {
+            "title": "Informasi Referral",
+            "order": "ID Pesanan",
+            "partner": "Mitra",
+            "amount": "Nominal Pesanan",
+            "commission": "Komisi",
+            "payout": "Status Pencairan",
+            "payoutValue": "Terhubung dengan withdraw #{id}",
+            "payoutEmpty": "Belum diajukan withdraw",
+            "linkId": "ID Link",
+            "metaTitle": "Metadata Tambahan"
+          },
+          "statusCard": {
+            "title": "Perbarui Status"
+          }
+        }
+      },
       "withdraw": {
         "title": "Permintaan Withdraw",
         "description": "Approve dan pantau status pencairan komisi mitra.",

@@ -1027,6 +1027,7 @@
       "navigation": {
         "dashboard": "Dashboard",
         "partners": "Partners",
+        "referrals": "Referrals",
         "consultations": "Consultations",
         "withdraw": "Withdraw",
         "commissionSettings": "Commission Settings",
@@ -1111,6 +1112,64 @@
           "contacted": "Contacted",
           "completed": "Completed",
           "cancelled": "Cancelled"
+        }
+      },
+      "referrals": {
+        "title": "Referral History",
+        "description": "Manage referral statuses and monitor partner commissions.",
+        "searchPlaceholder": "Search order/referral code or partner",
+        "statusLabel": "Status",
+        "statusOptions": {
+          "all": "All Statuses",
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected",
+          "paid": "Paid"
+        },
+        "apply": "Apply",
+        "reset": "Reset",
+        "tableHeaders": {
+          "id": "ID",
+          "order": "Order ID",
+          "partner": "Partner",
+          "amount": "Order Amount",
+          "commission": "Commission",
+          "status": "Status",
+          "created": "Created",
+          "actions": "Actions"
+        },
+        "empty": "No referrals match the current filters.",
+        "manage": "Manage",
+        "summary": "Showing {displayed} of {total} referrals",
+        "pagination": "Page {page} of {total}",
+        "codeLabel": "Code: {code}",
+        "statusBadge": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected",
+          "paid": "Paid"
+        },
+        "detail": {
+          "title": "Referral Detail",
+          "subtitle": "Referral #{id}",
+          "codeLabel": "Code: {code}",
+          "createdAt": "Created",
+          "paidAt": "Paid",
+          "detailCard": {
+            "title": "Referral Information",
+            "order": "Order ID",
+            "partner": "Partner",
+            "amount": "Order Amount",
+            "commission": "Commission",
+            "payout": "Payout Status",
+            "payoutValue": "Linked to withdraw #{id}",
+            "payoutEmpty": "No withdraw request yet",
+            "linkId": "Link ID",
+            "metaTitle": "Additional Metadata"
+          },
+          "statusCard": {
+            "title": "Update Status"
+          }
         }
       },
       "withdraw": {

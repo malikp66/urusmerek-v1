@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { referralStatusEnum } from "@/db/schema";
 import { requireAdmin } from "@/lib/auth-guards";
 import { getAdminReferrals } from "@/lib/services/admin/referrals";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getLocaleFromRequest, getTranslations } from "@/lib/i18n/server";
+import { REFERRAL_STATUSES } from "@/lib/constants/referrals";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -41,7 +41,7 @@ function toNumber(value: string | null, fallback: number) {
   return parsed;
 }
 
-const STATUS_OPTIONS = ["all", ...referralStatusEnum.enumValues] as const;
+const STATUS_OPTIONS = ["all", ...REFERRAL_STATUSES] as const;
 
 export default async function AdminReferralsPage({
   searchParams,

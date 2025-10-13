@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
-import { referralStatusEnum } from '@/db/schema';
 import { useGlobalAlert } from '@/components/global-alert/GlobalAlertProvider';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -14,8 +13,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { REFERRAL_STATUSES } from '@/lib/constants/referrals';
 
-const STATUS_OPTIONS = referralStatusEnum.enumValues;
+const STATUS_OPTIONS = REFERRAL_STATUSES;
 
 type Props = {
   referralId: number;
