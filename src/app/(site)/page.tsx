@@ -104,7 +104,7 @@ export default function Page() {
         {/* <TestimonialsSection /> */}
         {/* <FlexibilityFeatures /> */}
         <IndustryTemplates />
-        {/* <FaqSection /> */}
+        <FaqSection />
         <FinalCta />
       </div>
     </>

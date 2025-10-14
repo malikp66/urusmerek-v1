@@ -82,7 +82,7 @@ export default function KonsultasiPage() {
           __html: JSON.stringify(breadcrumbJsonLd),
         }}
       />
-      <section className="bg-white py-16">
+      <section className="bg-white pt-16">
         <div className="container mx-auto px-6 lg:px-10">
           <header className="mx-auto mb-10 max-w-3xl text-center">
             <h1 className="text-4xl font-semibold text-foreground sm:text-5xl">

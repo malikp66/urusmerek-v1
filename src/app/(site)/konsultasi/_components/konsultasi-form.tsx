@@ -15,6 +15,7 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import FaqSection from "@/components/sections/faq-section";
 
 import {
   Card,
@@ -43,6 +44,7 @@ import {
 } from "@/components/ui/form";
 import { useGlobalAlert } from "@/components/global-alert/GlobalAlertProvider";
 import { cn } from "@/lib/utils";
+import IndustryTemplates from "@/components/sections/industry-templates";
 
 const services = [
   "Pendaftaran Merek",
@@ -142,15 +144,6 @@ export function KonsultasiForm() {
 
   return (
     <div className={cn("relative min-h-[78vh] w-full overflow-hidden")}>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:24px_24px]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-32 top-24 h-64 w-64 rounded-full bg-[#DC2626]/20 blur-3xl"
-      />
-
       <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
         <div className="mx-auto mb-8 flex w-full max-w-3xl items-center justify-center gap-2 rounded-full border border-red-100 bg-white/80 px-4 py-2 text-sm shadow-sm backdrop-blur">
           <Sparkles className="size-4 text-[#DC2626]" />
@@ -483,6 +476,9 @@ export function KonsultasiForm() {
           </div>
         )}
       </div>
+
+      <IndustryTemplates />
+      <FaqSection/>
     </div>
   );
 }
