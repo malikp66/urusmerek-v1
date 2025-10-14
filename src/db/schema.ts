@@ -192,11 +192,24 @@ export const affiliateReferrals = pgTable(
 export const usersRelations = relations(users, ({ many, one }) => ({
   affiliateLinks: many(affiliateLinks),
   bankAccounts: many(partnerBankAccounts),
-  withdrawRequests: many(partnerWithdrawRequests),
+  withdrawRequests: many(partnerWithdrawRequests, {
+    relationName: 'withdrawOwner',
+  }),
+  processedWithdrawRequests: many(partnerWithdrawRequests, {
+    relationName: 'withdrawProcessor',
+  }),
   commissionSetting: one(partnerCommissionSettings, {
     relationName: 'commissionOwner',
+    fields: [users.id],
+    references: [partnerCommissionSettings.userId],
   }),
-  profile: one(partnerProfiles),
+  createdCommissionSettings: many(partnerCommissionSettings, {
+    relationName: 'commissionCreator',
+  }),
+  profile: one(partnerProfiles, {
+    fields: [users.id],
+    references: [partnerProfiles.userId],
+  }),
 }));
 
 export const affiliateLinksRelations = relations(affiliateLinks, ({ one, many }) => ({
@@ -246,10 +259,12 @@ export const partnerWithdrawRequestsRelations = relations(
     user: one(users, {
       fields: [partnerWithdrawRequests.userId],
       references: [users.id],
+      relationName: 'withdrawOwner',
     }),
     processedByUser: one(users, {
       fields: [partnerWithdrawRequests.processedBy],
       references: [users.id],
+      relationName: 'withdrawProcessor',
     }),
     referrals: many(affiliateReferrals),
   }),
