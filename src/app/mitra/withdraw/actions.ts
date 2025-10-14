@@ -7,11 +7,13 @@ import { z } from "zod";
 import {
   partnerBankAccounts,
   partnerWithdrawRequests,
+  users,
 } from "@/db/schema";
 import { db } from "@/lib/db";
 import { requireMitra } from "@/lib/auth-guards";
 import { getMitraBalance } from "@/app/mitra/affiliates/queries";
 import { findBankByCode } from "@/lib/constants/banks";
+import { notifyWithdrawRequest } from "@/lib/notifications";
 
 const withdrawSchema = z.object({
   amount: z.coerce.number().positive("Nominal harus lebih dari 0"),
@@ -46,6 +48,18 @@ export async function createWithdrawRequest(input: FormData) {
 
   const userId = Number(session.sub);
   const balance = await getMitraBalance(userId);
+  const user = await db.query.users.findFirst({
+    columns: {
+      name: true,
+      email: true,
+    },
+    where: eq(users.id, userId),
+  });
+
+  if (!user) {
+    throw new Error("Data mitra tidak ditemukan");
+  }
+
   if (parsed.data.amount < 100_000) {
     throw new Error("Minimal withdraw adalah Rp 100.000");
   }
@@ -106,17 +120,42 @@ export async function createWithdrawRequest(input: FormData) {
       .where(eq(partnerBankAccounts.id, bankAccountId));
   }
 
-  await db.insert(partnerWithdrawRequests).values({
-    userId,
+  const [withdraw] = await db
+    .insert(partnerWithdrawRequests)
+    .values({
+      userId,
+      amount: parsed.data.amount,
+      status: "pending",
+      bankSnapshot: {
+        bankCode: bank.code,
+        bankName: bank.name,
+        accountName: parsed.data.accountName,
+        accountNumber: parsed.data.accountNumber,
+      },
+      notes: null,
+    })
+    .returning({
+      id: partnerWithdrawRequests.id,
+      createdAt: partnerWithdrawRequests.createdAt,
+    });
+
+  notifyWithdrawRequest({
+    withdrawId: withdraw.id,
     amount: parsed.data.amount,
-    status: "pending",
-    bankSnapshot: {
+    partnerName: user.name,
+    partnerEmail: user.email,
+    bank: {
       bankCode: bank.code,
       bankName: bank.name,
       accountName: parsed.data.accountName,
       accountNumber: parsed.data.accountNumber,
     },
-    notes: null,
+    createdAt: withdraw.createdAt,
+  }).catch((error) => {
+    console.error(
+      "[withdraw] Failed to dispatch withdraw request notification",
+      error
+    );
   });
 
   revalidatePath("/mitra/withdraw");

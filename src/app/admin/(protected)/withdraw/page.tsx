@@ -96,12 +96,15 @@ export default async function AdminWithdrawPage({
 
       <Card>
         <CardContent className="grid gap-4 pt-6 md:grid-cols-4">
-          <form className="grid gap-3 md:col-span-3 md:grid-cols-3" action="/admin/withdraw">
+          <form
+            className="grid gap-3 md:col-span-3 md:grid-cols-3"
+            action="/admin/withdraw"
+          >
             <Input
               name="search"
               placeholder={t('searchPlaceholder')}
               defaultValue={search}
-              className="md:col-span-2"
+              className="w-full md:col-span-2"
             />
             <div>
               <label htmlFor="status" className="sr-only">
@@ -121,8 +124,10 @@ export default async function AdminWithdrawPage({
               </select>
             </div>
             <div className="flex items-center gap-2 md:col-span-3">
-              <Button type="submit">{t('apply')}</Button>
-              <Button variant="ghost" asChild>
+              <Button type="submit" className="w-full sm:w-auto">
+                {t('apply')}
+              </Button>
+              <Button variant="ghost" asChild className="w-full sm:w-auto">
                 <Link href="/admin/withdraw">{t('reset')}</Link>
               </Button>
             </div>
@@ -130,58 +135,56 @@ export default async function AdminWithdrawPage({
         </CardContent>
       </Card>
 
-      <div className="overflow-hidden rounded-xl border">
-        <Table>
-          <TableHeader>
+      <Table containerClassName="rounded-xl border" className="min-w-[780px]">
+        <TableHeader>
+          <TableRow>
+            <TableHead>{headers.id}</TableHead>
+            <TableHead>{headers.partner}</TableHead>
+            <TableHead>{headers.amount}</TableHead>
+            <TableHead>{headers.status}</TableHead>
+            <TableHead>{headers.created}</TableHead>
+            <TableHead className="text-right">{headers.actions}</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {result.data.length === 0 ? (
             <TableRow>
-              <TableHead>{headers.id}</TableHead>
-              <TableHead>{headers.partner}</TableHead>
-              <TableHead>{headers.amount}</TableHead>
-              <TableHead>{headers.status}</TableHead>
-              <TableHead>{headers.created}</TableHead>
-              <TableHead className="text-right">{headers.actions}</TableHead>
+              <TableCell colSpan={6} className="text-center text-muted-foreground">
+                {t('empty')}
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {result.data.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground">
-                  {t('empty')}
+          ) : (
+            result.data.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell>#{item.id}</TableCell>
+                <TableCell className="whitespace-normal">
+                  <div className="flex flex-col">
+                    <span className="font-medium">{item.userName}</span>
+                    <span className="text-xs text-muted-foreground">{item.userEmail}</span>
+                  </div>
+                </TableCell>
+                <TableCell>Rp {item.amount.toLocaleString(intlLocale)}</TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="capitalize">
+                    {statusBadgeLabels[item.status as keyof typeof statusBadgeLabels] ?? item.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  {new Date(item.createdAt).toLocaleString(intlLocale, {
+                    dateStyle: 'medium',
+                    timeStyle: 'short',
+                  })}
+                </TableCell>
+                <TableCell className="text-right">
+                  <Button asChild size="sm" variant="outline">
+                    <Link href={`/admin/withdraw/${item.id}`}>{t('manage')}</Link>
+                  </Button>
                 </TableCell>
               </TableRow>
-            ) : (
-              result.data.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>#{item.id}</TableCell>
-                  <TableCell>
-                    <div className="flex flex-col">
-                      <span className="font-medium">{item.userName}</span>
-                      <span className="text-xs text-muted-foreground">{item.userEmail}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>Rp {item.amount.toLocaleString(intlLocale)}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className="capitalize">
-                      {statusBadgeLabels[item.status as keyof typeof statusBadgeLabels] ?? item.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    {new Date(item.createdAt).toLocaleString(intlLocale, {
-                      dateStyle: 'medium',
-                      timeStyle: 'short',
-                    })}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button asChild size="sm" variant="outline">
-                      <Link href={`/admin/withdraw/${item.id}`}>{t('manage')}</Link>
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </div>
+            ))
+          )}
+        </TableBody>
+      </Table>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">

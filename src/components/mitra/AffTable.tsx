@@ -167,8 +167,7 @@ export function AffTable({ result, query }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border">
-        <Table>
+      <Table containerClassName="rounded-xl border" className="min-w-[960px]">
           <TableHeader>
             <TableRow>
               <TableHead>{headers.link}</TableHead>
@@ -200,7 +199,6 @@ export function AffTable({ result, query }: Props) {
             )}
           </TableBody>
         </Table>
-      </div>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">{paginationMessage}</p>
         <Pagination>

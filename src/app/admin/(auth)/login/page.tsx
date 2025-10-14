@@ -61,12 +61,12 @@ export default async function AdminLoginPage() {
           </div>
           <div className="leading-tight">
             <p className="text-sm uppercase tracking-widest text-white/75">urusmerek.id</p>
-            <p className="text-2xl font-semibold">Portal Admin</p>
+            <p className="text-2xl font-semibold text-white">Portal Admin</p>
           </div>
         </div>
         <div className="relative z-10 max-w-md space-y-6">
           <div>
-            <h1 className="text-4xl font-bold leading-tight md:text-5xl">Kelola Operasional dengan Percaya Diri</h1>
+            <h1 className="text-4xl font-bold leading-tight md:text-5xl text-white">Kelola Operasional dengan Percaya Diri</h1>
             <p className="mt-4 text-base text-white/80">
               Semua modul kemitraan, konsultasi, dan keuangan terintegrasi dalam satu panel yang cepat dan aman.
             </p>

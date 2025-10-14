@@ -72,7 +72,9 @@ export function RequestWithdrawDialog({ availableAmount, locale }: Props) {
   return (
     <Dialog open={open} onOpenChange={(value) => !isPending && setOpen(value)}>
       <DialogTrigger asChild>
-        <Button disabled={availableAmount <= 0}>{t('trigger')}</Button>
+        <Button disabled={availableAmount <= 0} className="w-full sm:w-auto">
+          {t('trigger')}
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-lg">
         <DialogHeader>

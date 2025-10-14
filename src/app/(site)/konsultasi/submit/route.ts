@@ -5,6 +5,7 @@ import { z } from "zod";
 import { db } from "@/db/client";
 import { consultations, affiliateReferrals } from "@/db/schema";
 import {
+  AFFILIATE_COMMISSION_RATE,
   AFFILIATE_COOKIE_NAME,
   computeCommission,
   getLinkByCode,
@@ -17,6 +18,17 @@ const BodySchema = z.object({
   service: z.string().min(1),
   company_website: z.string().optional(),
 });
+
+const SERVICE_PRICING: Record<string, number> = {
+  "Pendaftaran Merek": 4_500_000,
+  "Perpanjangan Merek": 3_500_000,
+  "Cetak Sertifikat Merek": 1_000_000,
+  "Perubahan Nama/Alamat": 3_500_000,
+  "Pengalihan Hak Merek": 6_000_000,
+  "Tanggapan Usul Tolak": 2_500_000,
+  "Surat Keberatan": 2_500_000,
+  "Perjanjian Lisensi": 3_500_000,
+};
 
 const escapeHtml = (value: string) =>
   value
@@ -232,7 +244,7 @@ export async function POST(req: NextRequest) {
       if (referralCode) {
         const link = await getLinkByCode(referralCode);
         if (link) {
-          const amount = 0;
+          const amount = SERVICE_PRICING[data.service] ?? 0;
           const commission = computeCommission(amount);
           await db.insert(affiliateReferrals).values({
             linkId: link.id,
@@ -245,6 +257,8 @@ export async function POST(req: NextRequest) {
               consultationId: row.id,
               email: data.email,
               service: data.service,
+              servicePrice: amount,
+              commissionRate: AFFILIATE_COMMISSION_RATE,
             },
           });
         }

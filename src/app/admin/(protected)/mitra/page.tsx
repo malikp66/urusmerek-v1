@@ -85,23 +85,29 @@ export default async function AdminMitraPage({
 
       <Card>
         <CardContent className="pt-6">
-          <form className="flex flex-col gap-3 md:flex-row md:items-center" action="/admin/mitra">
+          <form
+            className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
+            action="/admin/mitra"
+          >
             <Input
               name="search"
               placeholder={t('searchPlaceholder')}
               defaultValue={search}
-              className="md:max-w-xs"
+              className="w-full md:max-w-xs"
             />
-            <Button type="submit">{t('searchButton')}</Button>
-            <Button variant="ghost" type="reset" asChild>
-              <Link href="/admin/mitra">{t('reset')}</Link>
-            </Button>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Button type="submit" className="w-full sm:w-auto">
+                {t('searchButton')}
+              </Button>
+              <Button variant="ghost" type="reset" asChild className="w-full sm:w-auto">
+                <Link href="/admin/mitra">{t('reset')}</Link>
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>
 
-      <div className="overflow-hidden rounded-xl border">
-        <Table>
+      <Table containerClassName="rounded-xl border" className="min-w-[720px]">
           <TableHeader>
             <TableRow>
               <TableHead>{headers.partner}</TableHead>
@@ -122,13 +128,13 @@ export default async function AdminMitraPage({
             ) : (
               result.data.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>
+                  <TableCell className="whitespace-normal">
                     <div className="flex flex-col">
                       <span className="font-medium">{item.name}</span>
                       <span className="text-xs text-muted-foreground">{item.email}</span>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal">
                     <div className="flex flex-col">
                       <span className="font-medium">{item.activeLinks}</span>
                       <span className="text-xs text-muted-foreground">
@@ -152,7 +158,6 @@ export default async function AdminMitraPage({
             )}
           </TableBody>
         </Table>
-      </div>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">

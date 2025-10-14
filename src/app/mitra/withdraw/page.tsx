@@ -74,12 +74,14 @@ export default async function MitraWithdrawPage({
 
   return (
     <div className="space-y-8 py-6">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between md:items-center">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
           <p className="text-sm text-muted-foreground">{t("description")}</p>
         </div>
-        <RequestWithdrawDialog availableAmount={balance.available} locale={locale} />
+        <div className="w-full sm:w-auto">
+          <RequestWithdrawDialog availableAmount={balance.available} locale={locale} />
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

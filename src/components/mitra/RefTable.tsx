@@ -70,8 +70,7 @@ export function RefTable({ result, query }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border">
-        <Table>
+      <Table containerClassName="rounded-xl border" className="min-w-[880px]">
           <TableHeader>
             <TableRow>
               <TableHead>{headers.order}</TableHead>
@@ -95,7 +94,7 @@ export function RefTable({ result, query }: Props) {
                 const createdAt = new Date(item.createdAt);
                 return (
                   <TableRow key={item.id}>
-                    <TableCell>
+                    <TableCell className="whitespace-normal">
                       <div className="flex flex-col">
                         <span className="font-medium">{item.orderId}</span>
                         <span className="text-xs text-muted-foreground">
@@ -103,7 +102,7 @@ export function RefTable({ result, query }: Props) {
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell>{item.code}</TableCell>
+                    <TableCell className="whitespace-normal">{item.code}</TableCell>
                     <TableCell className="text-right font-medium">
                       {`Rp ${item.amount.toLocaleString(intlLocale)}`}
                     </TableCell>
@@ -142,7 +141,6 @@ export function RefTable({ result, query }: Props) {
             )}
           </TableBody>
         </Table>
-      </div>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">{paginationMessage}</p>
         <Pagination>

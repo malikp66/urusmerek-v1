@@ -235,14 +235,14 @@ export default async function MitraDashboardPage({
 
   return (
     <div className="space-y-10 py-6">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between md:items-center">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
           <p className="text-sm text-muted-foreground">{t("description")}</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <CreateLinkDialog />
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild className="w-full sm:w-auto">
             <a href="/mitra/withdraw">{t("manageWithdraw")}</a>
           </Button>
         </div>
@@ -262,7 +262,10 @@ export default async function MitraDashboardPage({
       <section className="space-y-6">
         <Card>
           <CardContent className="grid gap-4 pt-6 md:grid-cols-4">
-            <form className="grid gap-3 md:col-span-3 md:grid-cols-4" action="/mitra/affiliates">
+            <form
+              className="grid gap-3 md:col-span-3 md:grid-cols-4"
+              action="/mitra/affiliates"
+            >
               <input type="hidden" name="linkPage" value="1" />
               <input type="hidden" name="refPage" value="1" />
               <div className="md:col-span-2">
@@ -274,18 +277,19 @@ export default async function MitraDashboardPage({
                   name="search"
                   defaultValue={search ?? ""}
                   placeholder={t("filters.searchPlaceholder")}
+                  className="w-full"
                 />
               </div>
               <div>
                 <label className="mb-2 block text-sm font-medium" htmlFor="status">
                   {t("filters.statusLabel")}
                 </label>
-                <select
-                  id="status"
-                  name="status"
-                  defaultValue={status ?? ""}
-                  className="border-input bg-background text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] dark:bg-input/30 dark:hover:bg-input/50 h-9 w-full rounded-md border px-3 text-sm shadow-xs transition-[color,box-shadow]"
-                >
+                  <select
+                    id="status"
+                    name="status"
+                    defaultValue={status ?? ""}
+                    className="border-input bg-background text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] dark:bg-input/30 dark:hover:bg-input/50 h-9 w-full rounded-md border px-3 text-sm shadow-xs transition-[color,box-shadow]"
+                  >
                   {Object.entries(t<Record<string, string>>("filters.statusOptions")).map(
                     ([value, label]) => (
                       <option key={value} value={value}>
@@ -293,11 +297,13 @@ export default async function MitraDashboardPage({
                       </option>
                     )
                   )}
-                </select>
+                    </select>
               </div>
-              <div className="flex items-end gap-2 md:col-span-2">
-                <Button type="submit">{t("filters.apply")}</Button>
-                <Button variant="ghost" type="reset" asChild>
+              <div className="flex flex-col gap-2 md:col-span-2 md:flex-row md:items-end">
+                <Button type="submit" className="w-full md:w-auto">
+                  {t("filters.apply")}
+                </Button>
+                <Button variant="ghost" type="reset" asChild className="w-full md:w-auto">
                   <a href="/mitra/affiliates">{t("filters.reset")}</a>
                 </Button>
               </div>

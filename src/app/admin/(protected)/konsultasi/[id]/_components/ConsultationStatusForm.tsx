@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
-import { consultationStatusEnum } from '@/db/schema';
+import { CONSULTATION_STATUS_OPTIONS, type ConsultationStatusOption } from '@/constants/consultation-status';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
@@ -16,16 +16,16 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useGlobalAlert } from '@/components/global-alert/GlobalAlertProvider';
 
-const STATUS_OPTIONS = consultationStatusEnum.enumValues;
+const STATUS_OPTIONS = CONSULTATION_STATUS_OPTIONS;
 
 type Props = {
   consultationId: string;
-  currentStatus: (typeof STATUS_OPTIONS)[number];
+  currentStatus: ConsultationStatusOption;
   currentNotes: string;
 };
 
 export function ConsultationStatusForm({ consultationId, currentStatus, currentNotes }: Props) {
-  const [status, setStatus] = useState<(typeof STATUS_OPTIONS)[number]>(currentStatus);
+  const [status, setStatus] = useState<ConsultationStatusOption>(currentStatus);
   const [notes, setNotes] = useState(currentNotes);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();

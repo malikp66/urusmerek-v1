@@ -6,6 +6,7 @@ import {
   updateWithdrawStatus,
   type WithdrawStatus,
 } from '@/lib/services/admin/withdraw';
+import { notifyWithdrawStatusChange } from '@/lib/notifications';
 
 export async function GET(
   _request: Request,
@@ -44,6 +45,11 @@ export async function PATCH(
     return NextResponse.json({ ok: false, message: 'ID tidak valid' }, { status: 400 });
   }
 
+  const existing = await getWithdrawRequestById(id);
+  if (!existing) {
+    return NextResponse.json({ ok: false, message: 'Data tidak ditemukan' }, { status: 404 });
+  }
+
   let payload: unknown;
   try {
     payload = await request.json();
@@ -70,6 +76,35 @@ export async function PATCH(
       notes: body.notes ?? null,
       processedBy: Number(admin.sub),
     });
+
+    const updated = await getWithdrawRequestById(id);
+    if (updated) {
+      const snapshot = (updated.bankSnapshot ?? {}) as Record<string, unknown>;
+      notifyWithdrawStatusChange({
+        withdrawId: updated.id,
+        amount: updated.amount,
+        partnerName: updated.userName,
+        partnerEmail: updated.userEmail,
+        bank: {
+          bankName: typeof snapshot.bankName === 'string' ? snapshot.bankName : undefined,
+          bankCode: typeof snapshot.bankCode === 'string' ? snapshot.bankCode : undefined,
+          accountName: typeof snapshot.accountName === 'string' ? snapshot.accountName : undefined,
+          accountNumber:
+            typeof snapshot.accountNumber === 'string' ? snapshot.accountNumber : undefined,
+        },
+        previousStatus: existing.status,
+        currentStatus: updated.status,
+        notes: body.notes ?? updated.notes ?? null,
+        updatedAt: updated.updatedAt,
+        processedBy: Number(admin.sub),
+      }).catch((error) => {
+        console.error(
+          '[notifications] Failed sending withdraw status change notification',
+          error,
+        );
+      });
+    }
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error('Failed to update withdraw status', error);

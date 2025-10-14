@@ -96,12 +96,15 @@ export default async function AdminConsultationsPage({
 
       <Card>
         <CardContent className="grid gap-4 pt-6 md:grid-cols-4">
-          <form className="grid gap-3 md:col-span-3 md:grid-cols-3" action="/admin/konsultasi">
+          <form
+            className="grid gap-3 md:col-span-3 md:grid-cols-3"
+            action="/admin/konsultasi"
+          >
             <Input
               name="search"
               placeholder={t('searchPlaceholder')}
               defaultValue={search}
-              className="md:col-span-2"
+              className="w-full md:col-span-2"
             />
             <div>
               <label htmlFor="status" className="sr-only">
@@ -121,8 +124,10 @@ export default async function AdminConsultationsPage({
               </select>
             </div>
             <div className="flex items-center gap-2 md:col-span-3">
-              <Button type="submit">{t('apply')}</Button>
-              <Button variant="ghost" asChild>
+              <Button type="submit" className="w-full sm:w-auto">
+                {t('apply')}
+              </Button>
+              <Button variant="ghost" asChild className="w-full sm:w-auto">
                 <Link href="/admin/konsultasi">{t('reset')}</Link>
               </Button>
             </div>
@@ -130,8 +135,7 @@ export default async function AdminConsultationsPage({
         </CardContent>
       </Card>
 
-      <div className="overflow-hidden rounded-xl border">
-        <Table>
+      <Table containerClassName="rounded-xl border" className="min-w-[760px]">
           <TableHeader>
             <TableRow>
               <TableHead>{headers.brand}</TableHead>
@@ -152,13 +156,13 @@ export default async function AdminConsultationsPage({
             ) : (
               result.data.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>
+                  <TableCell className="whitespace-normal">
                     <div className="flex flex-col">
                       <span className="font-medium">{item.brandName}</span>
                       <span className="text-xs text-muted-foreground">#{item.id}</span>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal">
                     <div className="flex flex-col">
                       <span className="text-sm">{item.applicantName}</span>
                       <span className="text-xs text-muted-foreground">{item.email}</span>
@@ -186,7 +190,6 @@ export default async function AdminConsultationsPage({
             )}
           </TableBody>
         </Table>
-      </div>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">

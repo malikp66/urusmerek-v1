@@ -101,12 +101,15 @@ export default async function AdminReferralsPage({
 
       <Card>
         <CardContent className="grid gap-4 pt-6 md:grid-cols-4">
-          <form className="grid gap-3 md:col-span-3 md:grid-cols-3" action="/admin/referrals">
+          <form
+            className="grid gap-3 md:col-span-3 md:grid-cols-3"
+            action="/admin/referrals"
+          >
             <Input
               name="search"
               placeholder={t("searchPlaceholder")}
               defaultValue={search}
-              className="md:col-span-2"
+              className="w-full md:col-span-2"
             />
             <div>
               <label htmlFor="status" className="sr-only">
@@ -132,8 +135,10 @@ export default async function AdminReferralsPage({
               </select>
             </div>
             <div className="flex items-center gap-2 md:col-span-3">
-              <Button type="submit">{t("apply")}</Button>
-              <Button variant="ghost" asChild>
+              <Button type="submit" className="w-full sm:w-auto">
+                {t("apply")}
+              </Button>
+              <Button variant="ghost" asChild className="w-full sm:w-auto">
                 <Link href="/admin/referrals">{t("reset")}</Link>
               </Button>
             </div>
@@ -141,8 +146,7 @@ export default async function AdminReferralsPage({
         </CardContent>
       </Card>
 
-      <div className="overflow-hidden rounded-xl border">
-        <Table>
+      <Table containerClassName="rounded-xl border" className="min-w-[900px]">
           <TableHeader>
             <TableRow>
               <TableHead>{headers.id}</TableHead>
@@ -166,7 +170,7 @@ export default async function AdminReferralsPage({
               result.data.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>#{item.id}</TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal">
                     <div className="flex flex-col">
                       <span className="font-medium">{item.orderId || "-"}</span>
                       <span className="text-xs text-muted-foreground">
@@ -174,7 +178,7 @@ export default async function AdminReferralsPage({
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal">
                     <div className="flex flex-col">
                       <span className="font-medium">{item.userName}</span>
                       <span className="text-xs text-muted-foreground">{item.userEmail}</span>
@@ -204,7 +208,6 @@ export default async function AdminReferralsPage({
             )}
           </TableBody>
         </Table>
-      </div>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">

@@ -15,11 +15,13 @@ function formatCurrency(value: number, locale: "id-ID" | "en-US") {
 export default async function AdminReferralDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
+
   await requireAdmin();
 
-  const referralId = Number.parseInt(params.id, 10);
+  const referralId = Number.parseInt(id, 10);
   if (!Number.isFinite(referralId)) {
     notFound();
   }

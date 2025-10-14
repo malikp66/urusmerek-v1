@@ -103,8 +103,7 @@ export async function WithdrawTable({ result, query, locale }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="overflow-hidden rounded-xl border">
-        <Table>
+      <Table containerClassName="rounded-xl border" className="min-w-[900px]">
           <TableHeader>
             <TableRow>
               <TableHead>{headers.id}</TableHead>
@@ -185,7 +184,6 @@ export async function WithdrawTable({ result, query, locale }: Props) {
             )}
           </TableBody>
         </Table>
-      </div>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">{paginationMessage}</p>
