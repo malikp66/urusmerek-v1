@@ -17,17 +17,13 @@ import {
   uuid,
 } from 'drizzle-orm/pg-core';
 
+import { WITHDRAW_STATUS_OPTIONS } from '@/constants/withdraw-status';
+
 import { env } from '../lib/env';
 
 export const userRoleEnum = pgEnum('user_role', ['mitra', 'admin']);
 export const referralStatusEnum = pgEnum('referral_status', ['pending', 'approved', 'rejected', 'paid']);
-export const withdrawStatusEnum = pgEnum('withdraw_status', [
-  'pending',
-  'approved',
-  'processing',
-  'paid',
-  'rejected',
-]);
+export const withdrawStatusEnum = pgEnum('withdraw_status', WITHDRAW_STATUS_OPTIONS);
 export const consultationStatusEnum = pgEnum('consultation_status', [
   'new',
   'in_review',

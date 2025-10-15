@@ -21,13 +21,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { LangSwitcher } from "@/components/lang/LangSwitcher";
 import { useTranslations } from "@/lib/i18n/context";
 import { smoothScrollToHash } from "@/lib/smooth-scroll";
-
-const layananItems = [
-  { title: "Pendaftaran Merek", href: "/layanan/pendaftaran-merek", description: "Amankan identitas brand Anda dengan pendaftaran merek resmi." },
-  { title: "Perpanjangan Merek", href: "/layanan/perpanjangan-merek", description: "Jaga keberlangsungan proteksi merek Anda yang akan berakhir." },
-  { title: "Pengalihan Hak Merek", href: "/layanan/pengalihan-hak", description: "Proses legal untuk memindahkan kepemilikan merek Anda." },
-  { title: "Konsultasi HKI", href: "/layanan/konsultasi-hki", description: "Dapatkan panduan ahli mengenai strategi Hak Kekayaan Intelektual." },
-];
+import { servicePages } from "@/constants/service-pages";
 
 const toolsItems = [
   {
@@ -93,7 +87,7 @@ export default function NavigationHeader() {
   const tNav = useTranslations("navigation");
   const brand = tNav<{ primary: string; secondary: string; fallbackPrimary: string; fallbackSecondary: string }>("brand");
   const menu = tNav<{ home: string; services: string; pricing: string; company: string; faq: string; contact: string; partner: string }>("menu");
-  const services = tNav<{ title: string; description: string; href: string }[]>("services");
+  const servicesTranslation = tNav<{ title: string; description: string; href: string }[]>("services");
   const aria = tNav<{ openMenu: string }>("aria");
   const mobile = tNav<{ seeAll: string; close: string }>("mobile");
   const consultLabel = tNav<string>("cta.consult");
@@ -104,7 +98,46 @@ export default function NavigationHeader() {
     (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")),
     [pathname]
   );
-  const layananActive = React.useMemo(() => services.some(i => isActive(i.href)), [isActive, services]);
+  const layananItems = React.useMemo(() => {
+    const translationItems = Array.isArray(servicesTranslation) ? servicesTranslation : [];
+    const translationMap = new Map<string, { title: string; description: string; href: string }>();
+    const extraItems: { title: string; description: string; href: string }[] = [];
+
+    translationItems.forEach((item) => {
+      if (!item?.href) return;
+      const slug = item.href.startsWith("/layanan/")
+        ? item.href.replace("/layanan/", "")
+        : item.href.replace(/^\/+/, "");
+      if (servicePages.some((service) => service.slug === slug)) {
+        translationMap.set(slug, {
+          title: item.title,
+          description: item.description,
+          href: item.href || `/layanan/${slug}`,
+        });
+      } else {
+        extraItems.push(item);
+      }
+    });
+
+    const baseItems = servicePages.map((service) => {
+      const translated = translationMap.get(service.slug);
+      if (translated) {
+        return {
+          ...translated,
+          href: translated.href || `/layanan/${service.slug}`,
+        };
+      }
+      return {
+        title: service.nav.title,
+        description: service.nav.description,
+        href: `/layanan/${service.slug}`,
+      };
+    });
+
+    return [...baseItems, ...extraItems];
+  }, [servicesTranslation]);
+
+  const layananActive = React.useMemo(() => layananItems.some((item) => isActive(item.href)), [isActive, layananItems]);
   const toolsActive = React.useMemo(() => toolsItems.some(i => isActive(i.href)), [isActive]);
   const handleAnchorNavigation = React.useCallback(
     (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -243,7 +276,7 @@ export default function NavigationHeader() {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className={cn(menuPanelClass)}>
                     <ul className="grid w-[420px] gap-4 md:w-[560px] md:grid-cols-2 lg:w-[680px]">
-                      {services.map((item) => (
+                      {layananItems.map((item) => (
                         <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
                           {item.description}
                         </ListItem>
@@ -352,7 +385,7 @@ export default function NavigationHeader() {
                       onLinkClick={() => setIsMobileMenuOpen(false)}
                       currentPath={pathname}
                       label={menu.services}
-                      items={services}
+                      items={layananItems}
                     />
 
                     <Link

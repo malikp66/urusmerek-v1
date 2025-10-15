@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
-import { withdrawStatusEnum } from '@/db/schema';
+import { WITHDRAW_STATUS_OPTIONS } from '@/constants/withdraw-status';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
@@ -16,7 +16,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useGlobalAlert } from '@/components/global-alert/GlobalAlertProvider';
 
-const STATUS_OPTIONS = withdrawStatusEnum.enumValues;
+const STATUS_OPTIONS = WITHDRAW_STATUS_OPTIONS;
 
 type Props = {
   withdrawId: number;

@@ -316,7 +316,11 @@ export async function POST(req: NextRequest) {
       console.error("Resend email error", error);
     }
 
-    return NextResponse.json({ ok: true, emailSent });
+    const response = NextResponse.json({ ok: true, emailSent });
+
+    response.cookies.delete(AFFILIATE_COOKIE_NAME);
+
+    return response;
   } catch (error) {
     console.error("Failed to store consultation", error);
     return NextResponse.json(
