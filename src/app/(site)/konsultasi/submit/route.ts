@@ -10,6 +10,12 @@ import {
   computeCommission,
   getLinkByCode,
 } from "@/lib/affiliate";
+import {
+  appendConsultationToCookie,
+  CONSULTATION_TRACKING_COOKIE,
+} from "@/lib/consultation-tracking";
+import { renderAdminNotificationEmail } from "@/lib/email-templates";
+import { appUrl } from "@/lib/email";
 
 const BodySchema = z.object({
   email: z.string().email(),
@@ -188,6 +194,122 @@ function renderConsultationEmail(params: {
   </div>`;
 }
 
+const CONSULTATION_STATUS_LABELS: Record<string, string> = {
+  new: "Permintaan baru",
+  in_review: "Sedang ditinjau",
+  contacted: "Sudah dihubungi",
+  completed: "Selesai",
+  cancelled: "Dibatalkan",
+};
+
+function renderConsultationClientEmail(params: {
+  email: string;
+  brandName: string;
+  applicantName: string;
+  service: string;
+  id: string;
+  createdAt: string;
+  dashboardUrl: string;
+  status?: string;
+}) {
+  const {
+    email,
+    brandName,
+    applicantName,
+    service,
+    id,
+    createdAt,
+    dashboardUrl,
+    status = "new",
+  } = params;
+
+  const createdAtLabel = new Date(createdAt).toLocaleString("id-ID", {
+    dateStyle: "long",
+    timeStyle: "short",
+  });
+  const greeting =
+    applicantName && applicantName.trim().length > 0
+      ? `Halo ${escapeHtml(applicantName)},`
+      : "Halo,";
+  const statusLabel = CONSULTATION_STATUS_LABELS[status] ?? status;
+  const idMarkup = `<strong style="font-family:'JetBrains Mono','Fira Code',Consolas,monospace;letter-spacing:0.02em;">${escapeHtml(
+    id,
+  )}</strong>`;
+  const dashboardLink = dashboardUrl.endsWith("/")
+    ? dashboardUrl.slice(0, -1)
+    : dashboardUrl;
+
+  return renderAdminNotificationEmail({
+    badgeLabel: "Konsultasi Merek",
+    title: "Permintaan konsultasi kamu sudah kami terima",
+    greeting,
+    body: [
+      "Terima kasih sudah menghubungi tim Urus Merek. Kami sudah menerima detail konsultasimu dan sedang menjadwalkan tindak lanjut.",
+      `Catat ID konsultasi berikut: ${idMarkup}. ID ini berguna untuk memantau progres dan mencatat interaksi bersama konsultan kami.`,
+      "Dashboard konsultasi menampilkan status terbaru, catatan konsultan, serta langkah lanjutan yang kami rekomendasikan.",
+    ],
+    details: [
+      { label: "ID Konsultasi", value: idMarkup },
+      { label: "Nama merek", value: escapeHtml(brandName) || "-" },
+      { label: "Pemohon", value: escapeHtml(applicantName) || "-" },
+      { label: "Layanan", value: escapeHtml(service) || "-" },
+      { label: "Status awal", value: escapeHtml(statusLabel) },
+    ],
+    cta: {
+      label: "Buka dashboard konsultasi",
+      href: dashboardLink,
+      description: `Masukkan ID ${escapeHtml(id)} bila diminta untuk menampilkan data.`,
+    },
+    footer: [
+      "Simpan email ini agar ID konsultasi tetap mudah ditemukan ketika ingin memantau progres di kemudian hari.",
+      "Jika kamu membutuhkan bantuan cepat, balas email ini atau hubungi kami melalui WhatsApp di 0812-3456-7890.",
+    ],
+    meta: [
+      { label: "Email", value: email },
+      { label: "Diterima", value: createdAtLabel },
+    ],
+  });
+}
+
+async function sendResendEmail(
+  apiKey: string,
+  payload: {
+    to: string | string[];
+    subject: string;
+    html: string;
+    replyTo?: string | string[];
+  },
+) {
+  const { to, subject, html, replyTo } = payload;
+
+  const recipients = Array.isArray(to) ? to : [to];
+  if (recipients.length === 0) {
+    throw new Error("Missing email recipients");
+  }
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: process.env.EMAIL_FROM ?? "urusmerek <admin@urusmerek.id>",
+      to: recipients,
+      subject,
+      html,
+      ...(replyTo ? { reply_to: replyTo } : {}),
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(
+      `Resend API responded with ${response.status}: ${errorText || response.statusText}`,
+    );
+  }
+}
+
 export async function POST(req: NextRequest) {
   const raw = await req.text();
   let data: z.infer<typeof BodySchema>;
@@ -221,6 +343,7 @@ export async function POST(req: NextRequest) {
   }
 
   const headerList = await headers();
+  const cookieStore = await cookies();
   const forwardedFor = headerList.get("x-forwarded-for") ?? "";
   const ip = forwardedFor.split(",").map((item) => item.trim())[0] ?? "";
   const userAgent = headerList.get("user-agent") ?? "";
@@ -240,7 +363,7 @@ export async function POST(req: NextRequest) {
 
     // attribute consultation to affiliate link when referral cookie exists
     try {
-      const referralCode = (await cookies()).get(AFFILIATE_COOKIE_NAME)?.value?.trim();
+      const referralCode = cookieStore.get(AFFILIATE_COOKIE_NAME)?.value?.trim();
       if (referralCode) {
         const link = await getLinkByCode(referralCode);
         if (link) {
@@ -277,46 +400,82 @@ export async function POST(req: NextRequest) {
     const ipValue = ip || "-";
     const userAgentValue = userAgent || "-";
 
-    try {
-      const emailHtml = renderConsultationEmail({
-        email: data.email,
-        brandName: data.brandName,
-        applicantName: data.applicantName,
-        service: data.service,
-        id: row.id,
-        createdAt: createdAtValue,
-        ip: ipValue,
-        userAgent: userAgentValue,
-      });
+    const normalizedAppUrl = appUrl.endsWith("/")
+      ? appUrl.slice(0, -1)
+      : appUrl;
+    const dashboardUrl = `${normalizedAppUrl}/konsultasi/dashboard`;
 
-      const emailResponse = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendApiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "urusmerek <admin@urusmerek.id>",
-          to: [emailTo],
-          reply_to: data.email,
-          subject: "Konsultasi Merek Baru",
-          html: emailHtml,
-        }),
-      });
+    const adminEmailHtml = renderConsultationEmail({
+      email: data.email,
+      brandName: data.brandName,
+      applicantName: data.applicantName,
+      service: data.service,
+      id: row.id,
+      createdAt: createdAtValue,
+      ip: ipValue,
+      userAgent: userAgentValue,
+    });
 
+    const clientEmailHtml = renderConsultationClientEmail({
+      email: data.email,
+      brandName: data.brandName,
+      applicantName: data.applicantName,
+      service: data.service,
+      id: row.id,
+      createdAt: createdAtValue,
+      dashboardUrl,
+      status: "new",
+    });
 
-      if (!emailResponse.ok) {
-        const errorText = await emailResponse.text();
-        throw new Error(
-          `Resend API responded with ${emailResponse.status}: ${errorText || emailResponse.statusText}`,
-        );
+    const emailPayloads = [
+      {
+        to: emailTo,
+        subject: "Konsultasi Merek Baru",
+        html: adminEmailHtml,
+        replyTo: data.email,
+      },
+      {
+        to: data.email,
+        subject: "Ringkasan konsultasi merek kamu",
+        html: clientEmailHtml,
+        replyTo: emailTo,
+      },
+    ] as const;
+
+    const emailResults = await Promise.allSettled(
+      emailPayloads.map((payload) => sendResendEmail(resendApiKey, payload)),
+    );
+
+    for (const result of emailResults) {
+      if (result.status === "rejected") {
+        emailSent = false;
+        console.error("Resend email error", result.reason);
       }
-    } catch (error) {
-      emailSent = false;
-      console.error("Resend email error", error);
     }
 
-    const response = NextResponse.json({ ok: true, emailSent });
+    const trackingCookie = appendConsultationToCookie(
+      cookieStore.get(CONSULTATION_TRACKING_COOKIE)?.value,
+      row.id,
+    );
+
+    const response = NextResponse.json({
+      ok: true,
+      emailSent,
+      consultationId: row.id,
+      trackedIds: [row.id],
+    });
+
+    if (trackingCookie.value) {
+      response.cookies.set({
+        name: CONSULTATION_TRACKING_COOKIE,
+        value: trackingCookie.value,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: true,
+        path: "/",
+        maxAge: 60 * 60 * 24 * 180,
+      });
+    }
 
     response.cookies.delete(AFFILIATE_COOKIE_NAME);
 

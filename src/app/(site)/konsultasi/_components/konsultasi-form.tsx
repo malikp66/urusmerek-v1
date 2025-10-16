@@ -11,6 +11,7 @@ import {
   Share2,
   ArrowRight,
   Mail,
+  ClipboardCopy,
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -78,6 +79,7 @@ type FormValues = z.infer<typeof FormSchema>;
 
 export function KonsultasiForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [lastConsultationId, setLastConsultationId] = useState<string | null>(null);
   const { showAlert } = useGlobalAlert();
 
   const form = useForm<FormValues>({
@@ -112,6 +114,7 @@ export function KonsultasiForm() {
 
       form.reset();
       setSubmitted(true);
+      setLastConsultationId(payload?.consultationId ?? null);
 
       showAlert({
         tone: "success",
@@ -170,6 +173,58 @@ export function KonsultasiForm() {
               </CardHeader>
 
               <CardContent className="space-y-8">
+                {lastConsultationId ? (
+                  <div className="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-[0_24px_80px_-60px_rgba(220,38,38,0.55)]">
+                    <p className="text-base font-semibold text-slate-900">Simak langkah selanjutnya</p>
+                    <p className="mt-2 text-sm text-slate-600">
+                      Gunakan ID konsultasi ini untuk membuka dashboard monitoring atau membagikannya ke tim Anda.
+                    </p>
+                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                      <span className="inline-flex items-center rounded-xl bg-slate-100 px-4 py-2 font-mono text-xs text-slate-700">
+                        {lastConsultationId}
+                      </span>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="rounded-full border-slate-200"
+                        onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(lastConsultationId);
+                            showAlert({
+                              tone: "success",
+                              title: "ID disalin",
+                              description: "Tempelkan ID ini saat membuka dashboard di perangkat lain.",
+                            });
+                          } catch (error) {
+                            showAlert({
+                              tone: "error",
+                              title: "Clipboard tidak tersedia",
+                              description: error instanceof Error ? error.message : "Silakan salin manual.",
+                            });
+                          }
+                        }}
+                      >
+                        Salin ID
+                        <ClipboardCopy className="ml-2 size-4" />
+                      </Button>
+                    </div>
+                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                      <Button variant="brand" className="rounded-full px-5" asChild>
+                        <a href="/konsultasi/dashboard" className="inline-flex items-center gap-2">
+                          Buka dashboard konsultasi
+                          <ArrowRight className="size-4" />
+                        </a>
+                      </Button>
+                      <Button variant="secondary" className="rounded-full border-slate-300" asChild>
+                        <a href="mailto:hello@urusmerek.id" className="inline-flex items-center gap-2">
+                          Tanya tim konsultan
+                          <Mail className="size-4" />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                ) : null}
+
                 <div className="relative mx-auto max-w-2xl">
                   <img
                     src="/assets/illus/um-success-mail.png"
