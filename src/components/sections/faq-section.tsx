@@ -595,10 +595,10 @@ const FaqSection = ({
         aria-hidden="true"
         className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/40 to-white"
       />
-      <div
+      {/* <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-28 right-[-6rem] h-[26rem] w-[26rem] rounded-full bg-rose-200/30 blur-3xl"
-      />
+      /> */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-32 left-1/2 h-[22rem] w-[22rem] -translate-x-1/2 rounded-full bg-rose-100/40 blur-3xl"
@@ -619,11 +619,11 @@ const FaqSection = ({
         <div className="grid gap-10">
           {categories.map((category, categoryIndex) => {
             const Icon = category.icon;
-
+// [0_22px_60px_-45px_rgba(225,29,72,0.65)]
             return (
               <div
                 key={category.id}
-                className="group relative overflow-hidden rounded-[32px] border border-white/70 bg-white/70 shadow-[0_22px_60px_-45px_rgba(225,29,72,0.65)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:bg-white/85 hover:shadow-[0_40px_90px_-48px_rgba(225,29,72,0.55)]"
+                className="group relative overflow-hidden rounded-[32px] border border-white/70 bg-white/70 shadow-xl backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:bg-white/85 hover:shadow-[0_40px_90px_-48px_rgba(225,29,72,0.55)]"
               >
                 <div
                   className={cn(
@@ -749,13 +749,6 @@ const FaqSection = ({
                   ))}
                 </div>
               </div>
-              <Button
-                asChild
-                size="lg"
-                className="w-full shrink-0 bg-primary text-primary-foreground transition hover:-translate-y-0.5 hover:bg-primary/90 lg:w-auto"
-              >
-                <Link href="/konsultasi">Konsultasi Sekarang</Link>
-              </Button>
             </div>
           </div>
         ) : null}

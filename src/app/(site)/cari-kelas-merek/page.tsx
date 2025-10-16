@@ -1,35 +1,24 @@
 import type { Metadata } from "next";
+import { ClassSearchClient } from "./class-search-client";
+import { Badge } from "@/components/ui/badge";
 
 const INDONESIAN_SUMMARY =
-  "Portal pencarian kelas merek terlengkap, mencakup kelas barang (1-35) hingga kelas jasa (36-45), dengan sistem filter lanjutan untuk hasil pencarian yang lebih akurat.";
+  "Pilih kelas Nice 1–45 berdasarkan data resmi DJKI. Kami mengambil langsung dari Sistem Klasifikasi Merek (SKM), sehingga contoh barang dan jasa selalu mutakhir.";
 
 const ENGLISH_SUMMARY =
-  "A comprehensive trademark class search portal covering goods classes 1-35 and service classes 36-45, equipped with advanced filtering for precise results.";
+  "Explore Nice classes 1–45 backed by the official DJKI dataset. Every entry is proxied from the Indonesian Classification portal to ensure accuracy.";
 
 const serviceJsonLd = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Pencarian Kelas Merek",
+  name: "Pencarian Klasifikasi Nice Resmi DJKI",
   provider: {
     "@type": "Organization",
     name: "Urus Merek",
     url: "https://www.urusmerek.id/cari-kelas-merek",
   },
-  serviceType: "Trademark Class Search",
+  serviceType: "Trademark class search",
   areaServed: "ID",
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Paket Konsultasi Kelas Merek",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Review kelas merek oleh konsultan",
-        },
-      },
-    ],
-  },
 };
 
 const breadcrumbJsonLd = {
@@ -52,15 +41,15 @@ const breadcrumbJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: "Cari Kelas Merek Dagang Nice Classification | Urus Merek",
+  title: "Cari Kelas Merek Nice DJKI | Urus Merek",
   description:
-    "Temukan kelas merek barang dan jasa dengan database resmi. Hindari penolakan DJKI dengan panduan Urus Merek.",
+    "Telusuri klasifikasi Nice resmi Indonesia berdasarkan data SKM DJKI. Filter ribuan contoh barang dan jasa agar tidak salah pilih kelas.",
   keywords: [
-    "cari kelas merek",
-    "kelas merek dagang",
+    "kelas merek nice",
+    "klasifikasi merek djki",
+    "cek kelas merek resmi",
     "nice classification indonesia",
-    "panduan kelas merek umkm",
-    "cek kelas merek barang dan jasa",
+    "pemetaan kelas merek",
   ],
   alternates: {
     canonical: "https://www.urusmerek.id/cari-kelas-merek",
@@ -68,17 +57,35 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://www.urusmerek.id/cari-kelas-merek",
-    title: "Cari Kelas Merek Dagang Resmi Nice Classification",
+    title: "Cari Kelas Merek Nice DJKI",
     description:
-      "Filter kelas barang dan jasa dengan data resmi DJKI dan rekomendasi otomatis.",
+      "Integrasi langsung dengan Sistem Klasifikasi Merek DJKI. Pilih kelas 1–45 dengan contoh nyata barang dan jasa.",
   },
   twitter: {
-    card: "summary",
-    title: "Cari Kelas Merek Dagang",
+    card: "summary_large_image",
+    title: "Cari Kelas Merek Nice DJKI",
     description:
-      "Gunakan database Urus Merek untuk memilih kelas barang/jasa secara akurat.",
+      "Pemetaan kelas barang dan jasa berbasis data resmi Sistem Klasifikasi Merek DJKI.",
   },
 };
+
+const highlights = [
+  {
+    title: "Selalu sinkron",
+    description:
+      "Data diambil langsung dari skm.dgip.go.id pada saat Anda melakukan pencarian, sehingga mencerminkan pembaruan terbaru DJKI.",
+  },
+  {
+    title: "Filter kata kunci",
+    description:
+      "Saring ribuan entri per kelas berdasarkan kata kunci (misal: kosmetik, layanan konsultasi) untuk mempermudah seleksi.",
+  },
+  {
+    title: "Dual bahasa",
+    description:
+      "Setiap entri merek disajikan dalam Bahasa Indonesia dan Bahasa Inggris sesuai standar Nice Classification.",
+  },
+];
 
 export default function CariKelasMerekPage() {
   return (
@@ -95,51 +102,43 @@ export default function CariKelasMerekPage() {
           __html: JSON.stringify(breadcrumbJsonLd),
         }}
       />
-      <section className="relative py-24">
-        <div className="container mx-auto px-6 lg:px-10">
-          <header className="mb-12 max-w-3xl">
-            <h1 className="text-4xl font-semibold text-foreground sm:text-5xl">Cari Kelas Merek</h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              {INDONESIAN_SUMMARY}
-            </p>
+
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-white to-rose-50 py-24 text-foreground">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(254,226,226,0.6),_transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(250,232,255,0.45),_transparent_60%)]" />
+
+        <div className="container relative mx-auto flex flex-col gap-16 px-6 lg:px-10">
+          <header className="flex flex-col gap-5 text-center sm:text-left">
+            <Badge className="mx-auto w-fit bg-[#FEE2E2] px-4 py-1 text-[#B91C1C] sm:mx-0">
+              Data resmi Sistem Klasifikasi Merek
+            </Badge>
+            <div className="flex flex-col gap-3">
+              <h1 className="text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
+                Cari kelas merek yang tepat sebelum Anda mendaftar ke DJKI.
+              </h1>
+              <p className="mx-auto max-w-2xl text-base text-slate-600 sm:mx-0 sm:text-lg">
+                {INDONESIAN_SUMMARY}
+              </p>
+              <p className="text-sm text-slate-500">{ENGLISH_SUMMARY}</p>
+            </div>
           </header>
 
-          <div className="grid gap-12 lg:grid-cols-2">
-            <article className="space-y-6">
-              <h2 className="text-2xl font-semibold text-foreground">Bahasa Indonesia</h2>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                Temukan kelas merek yang tepat sebelum mengajukan permohonan. Basis data Urus Merek merangkum seluruh klasifikasi Nice Classification untuk barang (kelas 1-35) dan jasa (kelas 36-45) berikut penjelasan rinci tiap subkelas.
-              </p>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                Sistem Advance Filter kami membantu Anda memetakan kategori bisnis secara cepat. Saring hasil berdasarkan kata kunci, jenis produk atau layanan, bahkan status pendaftaran kompetitor untuk menilai peluang keberhasilan.
-              </p>
-              <ul className="list-disc space-y-2 pl-6 text-base leading-relaxed text-muted-foreground">
-                <li>Visualisasi hirarki kelas untuk mempermudah eksplorasi kategori terkait.</li>
-                <li>Contoh produk atau jasa populer di setiap kelas sebagai referensi pengisian formulir.</li>
-                <li>Rekomendasi kelas tambahan yang relevan dengan model bisnis Anda.</li>
-              </ul>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                Dengan pemetaan kelas yang akurat, Anda dapat meminimalkan risiko penolakan karena salah klasifikasi dan mempercepat proses administrasi.
-              </p>
-            </article>
+          <ClassSearchClient />
 
-            <article className="space-y-6">
-              <h2 className="text-2xl font-semibold text-foreground">English</h2>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                Identify the right trademark classes before filing your application. Urus Merek consolidates the entire Nice Classification for goods (classes 1-35) and services (classes 36-45), complete with detailed explanations for every subclass.
-              </p>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                Our Advance Filter System maps your business category in seconds. Narrow the list by keywords, product or service types, and even competitor registrations to gauge your filing strategy.
-              </p>
-              <ul className="list-disc space-y-2 pl-6 text-base leading-relaxed text-muted-foreground">
-                <li>Hierarchy visuals that make it easy to explore adjacent classes.</li>
-                <li>Example goods and services for each class to guide your application wording.</li>
-                <li>Suggested complementary classes aligned with your business model.</li>
-              </ul>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                Accurate class mapping minimizes refusal risk due to misclassification and accelerates your administrative process.
-              </p>
-            </article>
+          <div className="grid gap-6 sm:grid-cols-3">
+            {highlights.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-3xl border border-[#FECACA] bg-white/90 p-6 shadow-sm shadow-[#FECACA]/60"
+              >
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  {item.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

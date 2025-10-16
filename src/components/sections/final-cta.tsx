@@ -19,10 +19,10 @@ const FinalCta = () => {
   const imageSrc = t<string>("imageSrc");
   const imageAlt = t<string>("imageAlt");
 
-  const handlePricingClick = useCallback((event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    smoothScrollToHash("#harga", { duration: 1600 });
-  }, []);
+  // const handlePricingClick = useCallback((event: MouseEvent<HTMLAnchorElement>) => {
+  //   event.preventDefault();
+  //   smoothScrollToHash("#harga", { duration: 1600 });
+  // }, []);
 
   return (
     <section className="relative overflow-hidden bg-white">
@@ -63,12 +63,12 @@ const FinalCta = () => {
                   {primaryCta}
                 </Link>
               </Button>
-
+{/* 
               <Button variant="outline" asChild size="lg" className="btn-outline-brand hover:-translate-y-px w-full justify-center sm:w-auto">
                 <Link href="#harga" onClick={handlePricingClick}>
                   {secondaryCta}
                 </Link>
-              </Button>
+              </Button> */}
             </div>
           </div> {/* ✅ TUTUP div Copy */}
 

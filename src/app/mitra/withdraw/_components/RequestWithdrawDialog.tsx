@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { createWithdrawRequest } from '@/app/mitra/withdraw/actions';
 import { useGlobalAlert } from '@/components/global-alert/GlobalAlertProvider';
@@ -37,6 +38,7 @@ export function RequestWithdrawDialog({ availableAmount, locale }: Props) {
   const { locale: contextLocale } = useLocale();
   const effectiveLocale = locale ?? contextLocale;
   const intlLocale = effectiveLocale === 'en' ? 'en-US' : 'id-ID';
+  const router = useRouter();
   const { showAlert } = useGlobalAlert();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -54,6 +56,7 @@ export function RequestWithdrawDialog({ availableAmount, locale }: Props) {
           tone: 'success',
           title: t('success'),
         });
+        router.refresh();
         setOpen(false);
         form.reset();
         setBankCode('BCA');

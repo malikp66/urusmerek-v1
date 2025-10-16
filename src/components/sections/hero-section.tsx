@@ -219,7 +219,7 @@ export default function HeroSection() {
                 variant="outline"
                 className="btn-outline-brand hover:-translate-y-px w-full justify-center sm:w-auto"
               >
-                <Link className="group inline-flex items-center justify-center gap-2" href="#layanan">
+                <Link className="group inline-flex items-center justify-center gap-2" href="/layanan">
                   {cta.secondary}
                 </Link>
               </Button>
