@@ -61,7 +61,6 @@
         "clsx": "^2.1.1",
         "cmdk": "^1.1.1",
         "cobe": "^0.6.4",
-        "cheerio": "^1.0.0-rc.12",
         "date-fns": "^4.1.0",
         "dotted-map": "^2.2.3",
         "drizzle-kit": "^0.31.4",
