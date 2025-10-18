@@ -21,7 +21,7 @@ export default function LayananPage() {
   return (
     <>
       <div className="flex flex-col">
-      <section className="relative isolate overflow-hidden bg-[#111827] py-20 md:py-28">
+      <section className="relative isolate overflow-hidden bg-[#111827] pb-20 md:pb-28">
         <div
           className="absolute inset-0 -z-20 bg-cover bg-center opacity-80"
           style={{ backgroundImage: "url(/web-banner-bg.png)" }}

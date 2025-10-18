@@ -227,7 +227,7 @@
   }
 
   .container {
-    @apply pl-[10px] pr-[10px] lg:pl-[20px] lg:pr-[20px];
+    @apply pl-[10px] pr-[10px] xl:pl-[20px] xl:pr-[20px];
     margin-inline: auto !important;
     margin-left: auto !important;
     margin-right: auto !important;

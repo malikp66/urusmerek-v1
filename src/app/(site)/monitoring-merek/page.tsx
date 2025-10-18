@@ -134,7 +134,7 @@ export const metadata: Metadata = {
 };
 
 export default async function MonitoringMerekPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const trackedCookie = cookieStore.get(CONSULTATION_TRACKING_COOKIE)?.value;
   const trackedIds = extractValidConsultationIds(trackedCookie);
   const dashboardData = await getConsultationsByIds(trackedIds);
@@ -156,7 +156,7 @@ export default async function MonitoringMerekPage() {
       />
 
       <main className="bg-white text-slate-900">
-        <section className="relative overflow-hidden bg-gradient-to-b from-rose-50 via-white to-white py-20">
+        <section className="relative overflow-hidden bg-gradient-to-b from-rose-50 via-white to-white pb-20">
           <div className="absolute inset-0">
             <div className="absolute left-1/2 top-0 size-[480px] -translate-x-1/2 -translate-y-1/3 rounded-full bg-rose-200/40 blur-3xl" />
             <div className="absolute bottom-0 right-0 size-[360px] translate-x-1/4 translate-y-1/2 rounded-full bg-amber-200/30 blur-3xl" />
