@@ -149,7 +149,7 @@ export default function IndustryTemplates() {
         </div>
 
         {/* Details panel */}
-        <div className="bg-card p-6 sm:p-8 md:p-12 rounded-2xl shadow-lg max-w-6xl mx-auto transition-all duration-300">
+        <div className="bg-card p-6 sm:p-8 md:p-12 rounded-2xl shadow-lg max-w-7xl mx-auto transition-all duration-300">
           <div className="grid gap-8 md:gap-10 lg:grid-cols-5 lg:gap-12">
             {/* Left: copy + features */}
             <div className="lg:col-span-3">

@@ -277,7 +277,7 @@ export default function NavigationHeader() {
                   <NavigationMenuContent className={cn(menuPanelClass)}>
                     <ul className="grid w-[420px] gap-4 md:w-[560px] md:grid-cols-2 lg:w-[680px]">
                       {layananItems.map((item) => (
-                        <ListItem key={item.title} title={item.title} href={item.href} active={isActive(item.href)}>
+                        <ListItem key={item.title} className="rounded-[28px]" title={item.title} href={item.href} active={isActive(item.href)}>
                           {item.description}
                         </ListItem>
                       ))}
@@ -622,7 +622,7 @@ const ListItem = React.memo(React.forwardRef<
           ref={ref}
           className={cn(
             glassCard,
-            "bg-white/95",
+            "bg-white/95 rounded-[28px] p-5",
             active
               ? "border-primary/40 shadow-[0_24px_48px_-30px_rgba(220,38,38,.55)]"
               : "hover:border-primary/20",

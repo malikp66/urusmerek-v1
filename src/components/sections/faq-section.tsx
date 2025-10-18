@@ -164,14 +164,14 @@ const FaqSection = ({
     <section
       id={id}
       className={cn(
-        "relative overflow-hidden py-24 sm:py-28",
+        "relative overflow-hidden container py-24 sm:py-28",
         "before:absolute before:left-1/2 before:top-0 before:-z-10 before:size-[520px] before:-translate-x-1/2 before:bg-[radial-gradient(circle,_rgba(248,208,215,0.28),_transparent_65%)]",
         "after:absolute after:bottom-[-30%] after:left-[10%] after:-z-10 after:size-[480px] after:bg-[radial-gradient(circle,_rgba(253,230,138,0.16),_transparent_70%)]",
         className,
       )}
     >
-      <div className="container mx-auto max-w-6xl px-6 sm:px-8 lg:px-10">
-        <div className="rounded-[32px] border border-white/60 bg-white/85 p-8 shadow-[0_28px_60px_-42px_rgba(220,38,38,0.45)] backdrop-blur-xl sm:p-12">
+      <div className="max-w-7xl mx-auto">
+        <div className="rounded-[32px] border border-white/60 bg-white/85 p-8 shadow-xl backdrop-blur-xl sm:p-12">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end">
             <div className="flex-1 space-y-4">
               {eyebrow ? (
@@ -311,7 +311,7 @@ const FaqSection = ({
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.18),transparent_55%)]"
               />
-              <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+              <div className="relative flex flex-col gap-8 lg:justify-between">
                 <div className="flex flex-col gap-6 lg:flex-1">
                   <div className="flex items-start gap-4">
                     <span className="flex size-14 items-center justify-center rounded-3xl bg-primary/10 text-primary">
