@@ -101,14 +101,16 @@ export default function Page() {
         <ConsentGate
           needed="analytics"
           fallback={
-            <div className="mx-auto max-w-3xl rounded-2xl border border-dashed border-muted bg-muted/30 p-4 text-sm text-muted-foreground">
-              Aktivitas analitik dinonaktifkan sampai Anda memberikan izin cookie analitik.
-            </div>
+            // <div className="mx-auto max-w-3xl rounded-2xl border text-center border-dashed border-muted bg-muted/30 p-4 text-sm text-muted-foreground">
+            //   Aktivitas analitik dinonaktifkan sampai Anda memberikan izin cookie analitik.
+            // </div>
+            <></>
           }
         >
-          <div className="mx-auto max-w-3xl rounded-2xl border border-primary/40 bg-primary/10 p-4 text-sm text-primary">
+          {/* <div className="mx-auto max-w-3xl rounded-2xl border border-primary/40 bg-primary/10 p-4 text-sm text-primary">
             Terima kasih! Cookie analitik diaktifkan dan event performa dapat dikirim.
-          </div>
+          </div> */}
+          <></>
         </ConsentGate>
         <section className="">
           <HeroSection />

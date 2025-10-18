@@ -1,10 +1,9 @@
-import { cookies } from "next/headers";
+// src/components/cookie-consent/consent-utils.ts
+// ❌ remove: import { cookies } from "next/headers";
 
-// Cookie name used across the application.
 export const CONSENT_COOKIE_NAME = "um_consent";
 const CONSENT_MAX_AGE = 60 * 60 * 24 * 180; // 180 days
 
-// Types ----------------------------------------------------------------------
 export type ConsentCategories = {
   essential: true;
   analytics: boolean;
@@ -39,10 +38,15 @@ const isValidConsent = (value: unknown): value is ConsentCategories => {
   return analytics && marketing && functional;
 };
 
-// Server utilities -----------------------------------------------------------
-export const getServerConsent = (): ConsentCategories | null => {
+// ------- Server utilities (safe to import from client files) -------
+export const getServerConsent = async (): Promise<ConsentCategories | null> => {
+  // If somehow called on the client, just bail.
+  if (typeof window !== "undefined") return null;
+
+  // ✅ Defer server-only import so the client bundle never sees it.
+  const { cookies } = await import("next/headers");
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const raw = cookieStore.get(CONSENT_COOKIE_NAME)?.value;
     if (!raw) return null;
     const parsed = JSON.parse(decodeURIComponent(raw));
@@ -52,14 +56,13 @@ export const getServerConsent = (): ConsentCategories | null => {
   }
 };
 
-// Client utilities -----------------------------------------------------------
+// ------- Client utilities -------
 export const getClientConsent = (): ConsentCategories | null => {
   if (typeof document === "undefined") return null;
-  const cookieString = document.cookie || "";
-  const match = cookieString
+  const match = document.cookie
     .split(";")
-    .map((entry) => entry.trim())
-    .find((entry) => entry.startsWith(`${CONSENT_COOKIE_NAME}=`));
+    .map((s) => s.trim())
+    .find((s) => s.startsWith(`${CONSENT_COOKIE_NAME}=`));
   if (!match) return null;
   const raw = match.split("=")[1];
   try {
@@ -83,8 +86,4 @@ export const hasConsent = (): boolean => getClientConsent() !== null;
 export const mergeConsent = (
   consent: ConsentCategories,
   updates: Partial<ConsentCategories>
-): ConsentCategories =>
-  ensureEssential({
-    ...consent,
-    ...updates,
-  });
+): ConsentCategories => ensureEssential({ ...consent, ...updates });
