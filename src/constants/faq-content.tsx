@@ -59,16 +59,8 @@ const withKeywords = (
     keywords: item.keywords ?? [],
   }));
 
-export const homepageFaqContent: FaqContent = {
-  eyebrow: "FAQ urusmerek.id",
-  title: "Lebih paham layanan Urus Merek sebelum mulai",
-  description:
-    "Rangkum semua pertanyaan yang paling sering kami terima, mulai dari alur pendaftaran, biaya, sampai bagaimana teknologi kami bekerja. Gunakan pencarian jika ingin menemukan jawaban dengan cepat.",
-  cta: {
-    label: "Jadwalkan konsultasi gratis",
-    href: "https://wa.me/628112119718",
-  },
-  'perpanjangan-merek': {
+const serviceFaqSections: Record<string, FaqContent> = {
+  "perpanjangan-merek": {
     eyebrow: "FAQ layanan perpanjangan",
     title: "Perpanjangan merek agar perlindungan tidak terputus",
     description:
@@ -1259,6 +1251,17 @@ export const homepageFaqContent: FaqContent = {
         ]),
       },
     ],
+  },
+};
+
+export const homepageFaqContent: FaqContent = {
+  eyebrow: "FAQ urusmerek.id",
+  title: "Lebih paham layanan Urus Merek sebelum mulai",
+  description:
+    "Rangkum semua pertanyaan yang paling sering kami terima, mulai dari alur pendaftaran, biaya, sampai bagaimana teknologi kami bekerja. Gunakan pencarian jika ingin menemukan jawaban dengan cepat.",
+  cta: {
+    label: "Jadwalkan konsultasi gratis",
+    href: "https://wa.me/628112119718",
   },
   search: {
     placeholder: "Cari topik: biaya, waktu proses, monitoring...",
@@ -2763,6 +2766,8 @@ export const serviceFaqContent: Record<string, FaqContent> = {
       },
     ],
   },
+  ...serviceFaqSections,
+
   "mitra-program": {
     eyebrow: "FAQ program mitra",
     title: "Kolaborasi sebagai mitra Urus Merek",
