@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ClassSearchClient } from "./class-search-client";
 import { Badge } from "@/components/ui/badge";
+import FaqSection from "@/components/sections/faq-section";
+import { cariKelasFaqContent } from "@/constants/faq-content";
 
 const INDONESIAN_SUMMARY =
   "Pilih kelas Nice 1–45 berdasarkan data resmi DJKI. Kami mengambil langsung dari Sistem Klasifikasi Merek (SKM), sehingga contoh barang dan jasa selalu mutakhir.";
@@ -142,6 +144,7 @@ export default function CariKelasMerekPage() {
           </div>
         </div>
       </section>
+      <FaqSection {...cariKelasFaqContent} />
     </>
   );
 }

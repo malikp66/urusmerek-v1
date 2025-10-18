@@ -62,7 +62,7 @@ const STATUS_META: Record<
 > = {
   new: {
     label: "Permintaan Baru",
-    description: "Menunggu penjadwalan konsultasi",
+    description: "Menunggu penjadwalan sesi awal",
     barColor: "#fb923c",
     badgeClass: "border-orange-200 bg-orange-50 text-orange-700",
     indicatorClass: "bg-orange-500",
@@ -83,14 +83,14 @@ const STATUS_META: Record<
   },
   completed: {
     label: "Selesai",
-    description: "Konsultasi tuntas dengan rekomendasi",
+    description: "Pendampingan selesai dengan rekomendasi",
     barColor: "#22c55e",
     badgeClass: "border-emerald-200 bg-emerald-50 text-emerald-700",
     indicatorClass: "bg-emerald-500",
   },
   cancelled: {
     label: "Dibatalkan",
-    description: "Konsultasi dihentikan atau duplikat",
+    description: "Pendampingan dihentikan atau duplikat",
     barColor: "#94a3b8",
     badgeClass: "border-slate-200 bg-slate-100 text-slate-700",
     indicatorClass: "bg-slate-500",
@@ -105,7 +105,7 @@ function formatDate(value: string) {
   return format(date, "d MMMM yyyy, HH.mm", { locale: localeId });
 }
 
-export function ConsultationDashboardClient({
+export function MonitoringDashboardClient({
   initialData,
   trackedIds,
   hasTrackingCookie,
@@ -164,7 +164,7 @@ export function ConsultationDashboardClient({
       showAlert({
         tone: "warning",
         title: "Lengkapi form pencarian",
-        description: "Masukkan email dan ID konsultasi yang valid.",
+        description: "Masukkan email dan ID Monitoring yang valid.",
       });
       return;
     }
@@ -183,7 +183,7 @@ export function ConsultationDashboardClient({
       if (!response.ok || !payload?.ok) {
         throw new Error(
           payload?.message ??
-            "Data konsultasi tidak ditemukan. Periksa kembali email dan ID.",
+            "Data monitoring merek tidak ditemukan. Periksa kembali email dan ID.",
         );
       }
 
@@ -195,7 +195,7 @@ export function ConsultationDashboardClient({
         tone: "success",
         title: "Dashboard diperbarui",
         description:
-          "Kami menambahkan konsultasi yang cocok ke dashboard Anda. Simpan halaman ini untuk akses cepat.",
+          "Kami menambahkan permohonan merek yang cocok ke dashboard Anda. Simpan halaman ini untuk akses cepat.",
       });
     } catch (error) {
       const message =
@@ -262,14 +262,14 @@ export function ConsultationDashboardClient({
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-sm text-white/80 backdrop-blur">
               <Sparkles className="size-4 text-[#FACC15]" />
-              Dashboard Monitoring Konsultasi
+              Dashboard Monitoring Merek
             </div>
             <h1 className="mt-6 text-4xl font-semibold text-white sm:text-5xl">
-              Lacak progres konsultasi merek Anda secara real-time
+              Pantau status permohonan dan perpanjangan merek Anda secara real-time
             </h1>
             <p className="mt-4 text-base text-white/70">
-              Dashboard ini menampilkan status setiap konsultasi, catatan tindak lanjut, dan
-              rangkuman layanan yang dibutuhkan. Tidak perlu login — cukup masukkan email dan ID konsultasi.
+              Dashboard ini menampilkan status setiap permohonan, catatan konsultan, dan
+              rangkuman layanan yang dibutuhkan. Tidak perlu login — cukup masukkan email dan ID Monitoring.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               {trackedConsultationIds.length > 0 ? (
@@ -287,7 +287,7 @@ export function ConsultationDashboardClient({
                 ))
               ) : (
                 <span className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/70">
-                  Belum ada ID konsultasi yang tersimpan
+                  Belum ada ID Monitoring yang tersimpan
                 </span>
               )}
             </div>
@@ -302,10 +302,10 @@ export function ConsultationDashboardClient({
               <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <CardTitle className="text-xl font-semibold text-slate-900">
-                    Temukan konsultasi Anda
+                    Temukan permohonan Anda
                   </CardTitle>
                   <p className="text-sm text-slate-600">
-                    Masukkan email dan ID konsultasi (tersedia di email konfirmasi) untuk menambahkan data ke dashboard ini.
+                    Masukkan email dan ID Monitoring (tersedia di email konfirmasi) untuk menambahkan data ke dashboard ini.
                   </p>
                 </div>
               </CardHeader>
@@ -331,7 +331,7 @@ export function ConsultationDashboardClient({
                   </div>
                   <div className="space-y-1.5">
                     <label htmlFor="lookup-id" className="text-sm font-medium text-slate-700">
-                      ID Konsultasi
+                      ID Monitoring
                     </label>
                     <Input
                       id="lookup-id"
@@ -374,7 +374,7 @@ export function ConsultationDashboardClient({
               </CardHeader>
               <CardContent className="space-y-3 text-sm text-slate-600">
                 <p>
-                  Setelah pengisian form konsultasi, sistem otomatis menyimpan ID di perangkat Anda selama 6 bulan.
+                  Setelah mengisi form monitoring atau konsultasi, sistem otomatis menyimpan ID di perangkat Anda selama 6 bulan.
                 </p>
                 <p>
                   Simpan halaman ini atau bagikan ID ke tim Anda. Anda dapat memasukkan beberapa ID sekaligus untuk kolaborasi.
@@ -403,7 +403,7 @@ export function ConsultationDashboardClient({
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <SummaryCard
                 icon={LineChart}
-                label="Total Konsultasi"
+                label="Total Permohonan"
                 value={totalTracked}
                 highlight
               />
@@ -432,7 +432,7 @@ export function ConsultationDashboardClient({
               <CardContent className="space-y-4">
                 {topServices.length === 0 ? (
                   <p className="text-sm text-slate-500">
-                    Data layanan akan muncul setelah konsultasi pertama tersimpan.
+                    Data layanan akan muncul setelah permohonan pertama tersimpan.
                   </p>
                 ) : (
                   topServices.map((service) => (
@@ -440,7 +440,7 @@ export function ConsultationDashboardClient({
                       <div className="flex items-center justify-between gap-2 text-sm font-medium text-slate-700">
                         <span>{service.service}</span>
                         <span className="font-semibold text-slate-900">
-                          {service.count} konsultasi
+                          {service.count} permohonan
                         </span>
                       </div>
                       <Progress
@@ -506,10 +506,10 @@ export function ConsultationDashboardClient({
               <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <CardTitle className="text-base font-semibold text-slate-900">
-                    Distribusi status konsultasi
+                    Distribusi status permohonan
                   </CardTitle>
                   <p className="text-sm text-slate-600">
-                    Klik status di atas untuk memfokuskan daftar konsultasi.
+                    Klik status di atas untuk memfokuskan daftar permohonan.
                   </p>
                 </div>
               </CardHeader>
@@ -517,7 +517,7 @@ export function ConsultationDashboardClient({
                 <ChartContainer
                   config={{
                     value: {
-                      label: "Jumlah konsultasi",
+                      label: "Jumlah permohonan",
                       color: "hsl(0 72% 51%)",
                     },
                   }}
@@ -555,7 +555,7 @@ export function ConsultationDashboardClient({
                 <ul className="space-y-4">
                   {data.summary.recentUpdates.length === 0 ? (
                     <li className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-6 text-sm text-slate-500">
-                      Riwayat perubahan status akan muncul setelah konsultasi diproses oleh tim.
+                      Riwayat perubahan status akan muncul setelah permohonan diproses oleh tim.
                     </li>
                   ) : (
                     data.summary.recentUpdates.map((update) => {
@@ -602,7 +602,7 @@ export function ConsultationDashboardClient({
           <Card className="mt-10 border-slate-200/80">
             <CardHeader>
               <CardTitle className="text-base font-semibold text-slate-900">
-                Detail setiap konsultasi
+                Detail setiap permohonan
               </CardTitle>
             </CardHeader>
             <CardContent className="overflow-x-auto">
@@ -611,16 +611,16 @@ export function ConsultationDashboardClient({
                   <ShieldCheck className="size-12 text-[#DC2626]" />
                   <div className="space-y-2">
                     <p className="text-lg font-semibold text-slate-900">
-                      Belum ada data konsultasi
+                      Belum ada data monitoring
                     </p>
                     <p className="text-sm text-slate-600">
-                      Isi form konsultasi terlebih dahulu atau masukkan kombinasi email dan ID pada formulir di atas.
+                      Isi form konsultasi/monitoring terlebih dahulu atau masukkan kombinasi email dan ID pada formulir di atas.
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Button variant="outline" className="rounded-full border-slate-300">
                       <a href="/konsultasi" className="inline-flex items-center gap-2">
-                        Mulai konsultasi baru
+                        Ajukan konsultasi baru
                         <ArrowRight className="size-4" />
                       </a>
                     </Button>
@@ -638,7 +638,7 @@ export function ConsultationDashboardClient({
                     <TableHeader className="bg-slate-50/70">
                       <TableRow>
                         <TableHead className="min-w-[220px] text-slate-600">
-                          Konsultasi
+                          Permohonan
                         </TableHead>
                         <TableHead className="min-w-[200px] text-slate-600">
                           Layanan
@@ -718,7 +718,7 @@ export function ConsultationDashboardClient({
 
                   {filteredConsultations.length === 0 ? (
                     <div className="border-t border-slate-100 p-6 text-center text-sm text-slate-500">
-                      Tidak ada konsultasi yang cocok dengan filter saat ini.
+                      Tidak ada permohonan yang cocok dengan filter saat ini.
                     </div>
                   ) : null}
                 </div>
@@ -765,3 +765,7 @@ function SummaryCard({ icon: Icon, label, value, highlight }: SummaryCardProps) 
     </Card>
   );
 }
+
+
+
+

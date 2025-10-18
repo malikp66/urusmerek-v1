@@ -16,7 +16,6 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FaqSection from "@/components/sections/faq-section";
 
 import {
   Card,
@@ -533,7 +532,6 @@ export function KonsultasiForm() {
       </div>
 
       <IndustryTemplates />
-      <FaqSection/>
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { KonsultasiForm } from "./_components/konsultasi-form";
+import FaqSection from "@/components/sections/faq-section";
+import { konsultasiFaqContent } from "@/constants/faq-content";
 
 const PAGE_DESCRIPTION =
   "Isi form konsultasi merek dan dapatkan pendampingan konsultan berlisensi untuk proses pendaftaran DJKI.";
@@ -93,6 +95,7 @@ export default function KonsultasiPage() {
         </div>
       </section>
       <KonsultasiForm />
+      <FaqSection {...konsultasiFaqContent} />
     </>
   );
 }

@@ -11,6 +11,7 @@ import FlexibilityFeatures from "@/components/sections/flexibility-features";
 import IndustryTemplates from "@/components/sections/industry-templates";
 import FinalCta from "@/components/sections/final-cta";
 import FaqSection from "@/components/sections/faq-section";
+import { homepageFaqContent } from "@/constants/faq-content";
 import RedDiagonalBackground from "@/components/RedDiagonalBackground";
 
 const HOME_DESCRIPTION =
@@ -104,7 +105,7 @@ export default function Page() {
         {/* <TestimonialsSection /> */}
         {/* <FlexibilityFeatures /> */}
         <IndustryTemplates />
-        <FaqSection />
+        <FaqSection {...homepageFaqContent} />
         <FinalCta />
       </div>
     </>

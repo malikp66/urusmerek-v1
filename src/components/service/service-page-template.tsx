@@ -4,6 +4,8 @@ import { Check, ArrowUpRight } from "lucide-react";
 import type { ServicePageContent } from "@/constants/service-pages";
 import { Button } from "@/components/ui/button";
 import { SafeImage } from "@/components/ui/safe-image";
+import FaqSection from "@/components/sections/faq-section";
+import { serviceFaqContent } from "@/constants/faq-content";
 
 type ServicePageTemplateProps = {
   content: ServicePageContent;
@@ -11,6 +13,7 @@ type ServicePageTemplateProps = {
 
 export function ServicePageTemplate({ content }: ServicePageTemplateProps) {
   const { hero, overview, benefits, pricing } = content;
+  const faqConfig = serviceFaqContent[content.slug];
 
   return (
     <div className="flex flex-col">
@@ -296,6 +299,7 @@ export function ServicePageTemplate({ content }: ServicePageTemplateProps) {
           </div>
         </section>
       )}
+      {faqConfig ? <FaqSection {...faqConfig} /> : null}
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import FaqSection from "@/components/sections/faq-section";
+import { tentangKamiFaqContent } from "@/constants/faq-content";
 
 const INDONESIAN_DESCRIPTION =
   "Urus Merek adalah platform digital untuk penelusuran dan perlindungan merek usaha. Kami menyediakan fitur cek merek real-time berbasis AI, pencarian kelas barang/jasa, serta monitoring status merek dengan notifikasi otomatis. Tujuan kami adalah memastikan pendaftaran merek Anda berjalan lancar sehingga merek usaha Anda terlindungi.";
@@ -360,6 +362,7 @@ export default function TentangKamiPage() {
           </div>
         </div>
       </section>
+      <FaqSection {...tentangKamiFaqContent} />
     </>
   );
 }

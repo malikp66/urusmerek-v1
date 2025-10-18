@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { TrademarkSearchClient } from "./trademark-search-client";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import FaqSection from "@/components/sections/faq-section";
+import { cekMerekFaqContent } from "@/constants/faq-content";
 
 const INDONESIAN_SUMMARY =
   "Telusuri status merek secara resmi langsung ke basis data DJKI. Layanan kami menambahkan tanda tangan PDKI Signature dan merapikan hasil agar mudah dianalisis bersama tim legal.";
@@ -243,6 +245,7 @@ export default function CekMerekPage() {
           </div>
         </div>
       </section>
+      <FaqSection {...cekMerekFaqContent} />
     </>
   );
 }

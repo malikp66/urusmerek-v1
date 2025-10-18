@@ -4,6 +4,8 @@ import { ArrowUpRight } from "lucide-react";
 
 import { servicePages } from "@/constants/service-pages";
 import { Button } from "@/components/ui/button";
+import FaqSection from "@/components/sections/faq-section";
+import { layananFaqContent } from "@/constants/faq-content";
 import { SafeImage } from "@/components/ui/safe-image";
 
 export const metadata: Metadata = {
@@ -17,7 +19,8 @@ export const metadata: Metadata = {
 
 export default function LayananPage() {
   return (
-    <div className="flex flex-col">
+    <>
+      <div className="flex flex-col">
       <section className="relative isolate overflow-hidden bg-[#111827] py-20 md:py-28">
         <div
           className="absolute inset-0 -z-20 bg-cover bg-center opacity-80"
@@ -98,6 +101,8 @@ export default function LayananPage() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+      <FaqSection {...layananFaqContent} />
+    </>
   );
 }
