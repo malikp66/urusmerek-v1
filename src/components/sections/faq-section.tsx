@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useMemo,
-  useState,
-  type ComponentType,
-  type ReactNode,
-  type SVGProps,
-} from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
   Accordion,
@@ -16,8 +10,15 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MessageSquareText, Search } from "lucide-react";
+import {
+  HelpCircle,
+  MessageSquareText,
+  Search,
+  icons,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+
+type IconName = keyof typeof icons;
 
 type FaqItem = {
   value: string;
@@ -30,7 +31,7 @@ type FaqCategory = {
   id: string;
   title: string;
   summary?: string;
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  icon: IconName;
   accent?: {
     gradient?: string;
     icon?: string;
@@ -231,7 +232,7 @@ const FaqSection = ({
                 return null;
               }
 
-              const Icon = category.icon;
+              const Icon = icons[category.icon] ?? HelpCircle;
               const gradient = category.accent?.gradient ?? defaultAccent.gradient;
               const iconAccent = category.accent?.icon ?? defaultAccent.icon;
 

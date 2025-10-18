@@ -1,36 +1,3 @@
-import {
-  BadgeCheck,
-  BellRing,
-  ClipboardCheck,
-  ClipboardList,
-  FileCheck2,
-  FileSearch,
-  FileText,
-  Fingerprint,
-  Flag,
-  Handshake,
-  Gavel,
-  Globe2,
-  Layers,
-  Lightbulb,
-  LineChart,
-  Mail,
-  NotebookPen,
-  PieChart,
-  Receipt,
-  RefreshCcw,
-  Rocket,
-  Scale,
-  Search,
-  ShieldCheck,
-  ShieldQuestion,
-  Sparkles,
-  Timer,
-  Users2,
-  Workflow,
-  Wallet2
-} from "lucide-react";
-
 import type {
   FaqCategory,
   FaqItem,
@@ -70,7 +37,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "persiapan",
         title: "Persiapan dokumen",
         summary: "Periksa kembali kelengkapan sebelum mengajukan perpanjangan.",
-        icon: ClipboardCheck,
+        icon: "ClipboardCheck",
         accent: {
           gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
           icon: "bg-sky-100/80 text-sky-500",
@@ -120,7 +87,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Biaya & timeline",
         summary:
           "Memahami komponen PNBP dan alur waktu perpanjangan resmi.",
-        icon: Receipt,
+        icon: "Receipt",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -169,7 +136,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Setelah perpanjangan disetujui",
         summary:
           "Langkah lanjutan agar perlindungan merek tetap terjaga.",
-        icon: ShieldCheck,
+        icon: "ShieldCheck",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
@@ -226,7 +193,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "validasi",
         title: "Validasi sertifikat",
         summary: "Memastikan file asli dari DJKI valid sebelum dicetak.",
-        icon: FileCheck2,
+        icon: "FileCheck2",
         accent: {
           gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
           icon: "bg-sky-100/80 text-sky-500",
@@ -274,7 +241,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Opsi pencetakan",
         summary:
           "Pilih material dan finishing yang sesuai kebutuhan presentasi.",
-        icon: FileText,
+        icon: "FileText",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -320,7 +287,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "pengiriman",
         title: "Pengiriman & arsip",
         summary: "Menjaga sertifikat tetap aman sampai tiba di tangan Anda.",
-        icon: Mail,
+        icon: "Mail",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
@@ -375,7 +342,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "jenis",
         title: "Jenis perubahan",
         summary: "Variasi perubahan data yang dapat kami bantu proses.",
-        icon: RefreshCcw,
+        icon: "RefreshCcw",
         accent: {
           gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
           icon: "bg-sky-100/80 text-sky-500",
@@ -424,7 +391,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Dokumen pendukung",
         summary:
           "Persyaratan administrasi untuk memastikan perubahan diterima.",
-        icon: ClipboardList,
+        icon: "ClipboardList",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -471,7 +438,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "proses",
         title: "Proses DJKI & hasil",
         summary: "Mengetahui durasi dan bukti resmi setelah data diperbarui.",
-        icon: Workflow,
+        icon: "Workflow",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
@@ -525,7 +492,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Persiapan transfer",
         summary:
           "Langkah awal memastikan pihak penerima siap menerima hak merek.",
-        icon: Handshake,
+        icon: "Handshake",
         accent: {
           gradient: "from-rose-100/70 via-rose-50/60 to-transparent",
           icon: "bg-rose-100/80 text-rose-500",
@@ -573,7 +540,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Dokumen legal",
         summary:
           "Perjanjian dan lampiran yang wajib ada dalam proses pengalihan.",
-        icon: Gavel,
+        icon: "Gavel",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -622,7 +589,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Setelah hak berpindah",
         summary:
           "Apa yang dilakukan setelah DJKI menyetujui pengalihan.",
-        icon: ShieldCheck,
+        icon: "ShieldCheck",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
@@ -679,7 +646,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Analisis kasus",
         summary:
           "Langkah pertama memahami alasan penolakan dari pemeriksa DJKI.",
-        icon: FileSearch,
+        icon: "FileSearch",
         accent: {
           gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
           icon: "bg-sky-100/80 text-sky-500",
@@ -726,7 +693,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "strategi",
         title: "Strategi tanggapan",
         summary: "Merancang argumen dan bukti pendukung yang kuat.",
-        icon: Lightbulb,
+        icon: "Lightbulb",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -773,7 +740,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Timeline & tindak lanjut",
         summary:
           "Menjaga tanggapan terkirim tepat waktu dan memantau hasilnya.",
-        icon: Timer,
+        icon: "Timer",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
@@ -828,7 +795,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Dasar keberatan",
         summary:
           "Menilai apakah suatu permohonan patut diajukan keberatan.",
-        icon: Flag,
+        icon: "Flag",
         accent: {
           gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
           icon: "bg-sky-100/80 text-sky-500",
@@ -876,7 +843,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Penyusunan argumentasi",
         summary:
           "Membangun argumen hukum dan bukti pendukung yang kuat.",
-        icon: NotebookPen,
+        icon: "NotebookPen",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -921,7 +888,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "pasca",
         title: "Setelah keberatan diajukan",
         summary: "Memantau respon DJKI dan strategi lanjutan.",
-        icon: BellRing,
+        icon: "BellRing",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
@@ -974,7 +941,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "perencanaan",
         title: "Perencanaan kemitraan",
         summary: "Menentukan model lisensi yang ideal untuk bisnis Anda.",
-        icon: Handshake,
+        icon: "Handshake",
         accent: {
           gradient: "from-rose-100/70 via-rose-50/60 to-transparent",
           icon: "bg-rose-100/80 text-rose-500",
@@ -1019,7 +986,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "struktur",
         title: "Struktur kontrak",
         summary: "Elemen utama yang harus ada dalam perjanjian lisensi.",
-        icon: FileText,
+        icon: "FileText",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -1065,7 +1032,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "monitoring",
         title: "Monitoring pelaksanaan",
         summary: "Memastikan lisensi berjalan sesuai kesepakatan.",
-        icon: LineChart,
+        icon: "LineChart",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
@@ -1118,7 +1085,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "ruang-lingkup",
         title: "Ruang lingkup",
         summary: "Bahasan apa saja yang bisa masuk ke dalam konsultasi HKI.",
-        icon: Sparkles,
+        icon: "Sparkles",
         accent: {
           gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
           icon: "bg-sky-100/80 text-sky-500",
@@ -1163,7 +1130,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         id: "output",
         title: "Deliverables",
         summary: "Output tertulis yang Anda terima setelah sesi selesai.",
-        icon: ClipboardCheck,
+        icon: "ClipboardCheck",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -1209,7 +1176,7 @@ const serviceFaqSections: Record<string, FaqContent> = {
         title: "Implementasi lanjutan",
         summary:
           "Cara melanjutkan rekomendasi ke eksekusi layanan Urus Merek.",
-        icon: Workflow,
+        icon: "Workflow",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
@@ -1272,7 +1239,7 @@ export const homepageFaqContent: FaqContent = {
       title: "Mulai dengan Urus Merek",
       summary:
         "Gambaran singkat bagaimana kami mendampingi pendaftaran merek dari nol.",
-      icon: ShieldQuestion,
+      icon: "ShieldQuestion",
       accent: {
         gradient: "from-rose-100/70 via-rose-50/60 to-transparent",
         icon: "bg-rose-100/70 text-rose-500",
@@ -1348,7 +1315,7 @@ export const homepageFaqContent: FaqContent = {
       title: "Biaya & Paket Layanan",
       summary:
         "Penjelasan struktur biaya, opsi paket, dan cara pembayaran yang tersedia.",
-      icon: Receipt,
+      icon: "Receipt",
       accent: {
         gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
         icon: "bg-amber-100/80 text-amber-500",
@@ -1418,7 +1385,7 @@ export const homepageFaqContent: FaqContent = {
       title: "Teknologi & Keamanan",
       summary:
         "Ketahui bagaimana sistem kami menjaga data dan terhubung dengan DJKI.",
-      icon: Fingerprint,
+      icon: "Fingerprint",
       accent: {
         gradient: "from-sky-100/70 via-cyan-50/60 to-transparent",
         icon: "bg-sky-100/70 text-sky-500",
@@ -1481,7 +1448,7 @@ export const homepageFaqContent: FaqContent = {
       title: "Tahap Setelah Pengajuan",
       summary:
         "Langkah-langkah yang kami lakukan begitu merek Anda resmi diajukan.",
-      icon: Workflow,
+      icon: "Workflow",
       accent: {
         gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
         icon: "bg-emerald-100/80 text-emerald-500",
@@ -1551,7 +1518,7 @@ export const cekMerekFaqContent: FaqContent = {
       title: "Dasar pencarian resmi",
       summary:
         "Hal-hal fundamental mengenai sumber data dan akurasi hasil pencarian.",
-      icon: FileSearch,
+      icon: "FileSearch",
       accent: {
         gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
         icon: "bg-sky-100/80 text-sky-500",
@@ -1603,7 +1570,7 @@ export const cekMerekFaqContent: FaqContent = {
       title: "Cara membaca hasil",
       summary:
         "Gunakan struktur kartu dan filter untuk menilai potensi konflik merek.",
-      icon: Layers,
+      icon: "Layers",
       accent: {
         gradient: "from-emerald-100/70 via-emerald-50/50 to-transparent",
         icon: "bg-emerald-100/80 text-emerald-500",
@@ -1654,7 +1621,7 @@ export const cekMerekFaqContent: FaqContent = {
       title: "Langkah lanjutan",
       summary:
         "Rekomendasi aktivitas setelah penelusuran awal Anda selesai.",
-      icon: Lightbulb,
+      icon: "Lightbulb",
       accent: {
         gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
         icon: "bg-amber-100/80 text-amber-500",
@@ -1715,7 +1682,7 @@ export const cariKelasFaqContent: FaqContent = {
       title: "Dasar klasifikasi",
       summary:
         "Penjelasan ringkas mengenai Nice Classification dan penerapannya di Indonesia.",
-      icon: Layers,
+      icon: "Layers",
       accent: {
         gradient: "from-purple-100/70 via-purple-50/60 to-transparent",
         icon: "bg-purple-100/80 text-purple-500",
@@ -1766,7 +1733,7 @@ export const cariKelasFaqContent: FaqContent = {
       title: "Cara menggunakan fitur",
       summary:
         "Tips praktis saat melakukan pencarian dan menyusun daftar kelas.",
-      icon: Search,
+      icon: "Search",
       accent: {
         gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
         icon: "bg-sky-100/80 text-sky-500",
@@ -1816,7 +1783,7 @@ export const cariKelasFaqContent: FaqContent = {
       title: "Kolaborasi & tindak lanjut",
       summary:
         "Cara mengevaluasi kelas bersama tim dan melanjutkan ke proses pengajuan.",
-      icon: ClipboardCheck,
+      icon: "ClipboardCheck",
       accent: {
         gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
         icon: "bg-emerald-100/80 text-emerald-500",
@@ -1874,7 +1841,7 @@ export const konsultasiFaqContent: FaqContent = {
       id: "alur",
       title: "Alur konsultasi",
       summary: "Memahami tahapan sebelum, selama, dan setelah sesi konsultasi.",
-      icon: NotebookPen,
+      icon: "NotebookPen",
       accent: {
         gradient: "from-rose-100/70 via-rose-50/60 to-transparent",
         icon: "bg-rose-100/70 text-rose-500",
@@ -1922,7 +1889,7 @@ export const konsultasiFaqContent: FaqContent = {
       id: "persiapan",
       title: "Persiapan & dokumen",
       summary: "Siapkan informasi yang membantu konsultan menganalisis kasus Anda.",
-      icon: ClipboardList,
+      icon: "ClipboardList",
       accent: {
         gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
         icon: "bg-amber-100/80 text-amber-500",
@@ -1971,7 +1938,7 @@ export const konsultasiFaqContent: FaqContent = {
       title: "Biaya & hasil konsultasi",
       summary:
         "Informasi mengenai tarif, metode pembayaran, dan output yang Anda terima.",
-      icon: Wallet2,
+      icon: "Wallet2",
       accent: {
         gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
         icon: "bg-emerald-100/80 text-emerald-500",
@@ -2028,7 +1995,7 @@ export const monitoringFaqContent: FaqContent = {
       id: "konfigurasi",
       title: "Konfigurasi & sumber data",
       summary: "Pelajari bagaimana sistem memantau permohonan Anda.",
-      icon: Globe2,
+      icon: "Globe2",
       accent: {
         gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
         icon: "bg-sky-100/80 text-sky-500",
@@ -2078,7 +2045,7 @@ export const monitoringFaqContent: FaqContent = {
       title: "Notifikasi & respons cepat",
       summary:
         "Pastikan tidak ada perubahan status penting yang terlewat.",
-      icon: BellRing,
+      icon: "BellRing",
       accent: {
         gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
         icon: "bg-amber-100/80 text-amber-500",
@@ -2130,7 +2097,7 @@ export const monitoringFaqContent: FaqContent = {
       title: "Laporan & kolaborasi",
       summary:
         "Gunakan data monitoring untuk audit internal dan koordinasi tim.",
-      icon: PieChart,
+      icon: "PieChart",
       accent: {
         gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
         icon: "bg-emerald-100/80 text-emerald-500",
@@ -2189,7 +2156,7 @@ export const layananFaqContent: FaqContent = {
       title: "Menentukan layanan yang tepat",
       summary:
         "Gunakan panduan ini untuk memilih paket pendaftaran, perpanjangan, maupun dokumen hukum lain.",
-      icon: Rocket,
+      icon: "Rocket",
       accent: {
         gradient: "from-rose-100/70 via-rose-50/60 to-transparent",
         icon: "bg-rose-100/80 text-rose-500",
@@ -2244,7 +2211,7 @@ export const layananFaqContent: FaqContent = {
       title: "Proses & timeline",
       summary:
         "Ketahui estimasi waktu, SLA internal, dan dokumen yang kami butuhkan.",
-      icon: Timer,
+      icon: "Timer",
       accent: {
         gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
         icon: "bg-amber-100/80 text-amber-500",
@@ -2298,7 +2265,7 @@ export const layananFaqContent: FaqContent = {
       title: "Kolaborasi & dukungan",
       summary:
         "Pelajari bagaimana tim kami bekerja sama dengan perusahaan atau konsultan internal Anda.",
-      icon: Users2,
+      icon: "Users2",
       accent: {
         gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
         icon: "bg-emerald-100/80 text-emerald-500",
@@ -2347,7 +2314,7 @@ export const layananFaqContent: FaqContent = {
       title: "Legal & kepastian dokumen",
       summary:
         "Memastikan setiap dokumen sah secara hukum dan sesuai regulasi terbaru.",
-      icon: Scale,
+      icon: "Scale",
       accent: {
         gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
         icon: "bg-sky-100/80 text-sky-500",
@@ -2407,7 +2374,7 @@ export const tentangKamiFaqContent: FaqContent = {
       title: "Profil perusahaan",
       summary:
         "Siapa kami, apa misi kami, dan bagaimana perjalanan Urus Merek berkembang.",
-      icon: Flag,
+      icon: "Flag",
       accent: {
         gradient: "from-rose-100/70 via-rose-50/60 to-transparent",
         icon: "bg-rose-100/80 text-rose-500",
@@ -2457,7 +2424,7 @@ export const tentangKamiFaqContent: FaqContent = {
       title: "Tim & kompetensi",
       summary:
         "Pelajari latar belakang tim konsultan dan bagaimana kami menjaga kualitas layanan.",
-      icon: Users2,
+      icon: "Users2",
       accent: {
         gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
         icon: "bg-emerald-100/80 text-emerald-500",
@@ -2507,7 +2474,7 @@ export const tentangKamiFaqContent: FaqContent = {
       title: "Cara kerja & transparansi",
       summary:
         "Nilai yang kami pegang ketika berkolaborasi dengan klien maupun mitra.",
-      icon: Sparkles,
+      icon: "Sparkles",
       accent: {
         gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
         icon: "bg-amber-100/80 text-amber-500",
@@ -2558,7 +2525,7 @@ export const tentangKamiFaqContent: FaqContent = {
       title: "Kemitraan & kepercayaan",
       summary:
         "Komitmen kami terhadap kolaborasi jangka panjang dan keberlanjutan layanan.",
-      icon: BadgeCheck,
+      icon: "BadgeCheck",
       accent: {
         gradient: "from-sky-100/70 via-sky-50/60 to-transparent",
         icon: "bg-sky-100/80 text-sky-500",
@@ -2619,7 +2586,7 @@ export const serviceFaqContent: Record<string, FaqContent> = {
         title: "Pra-pendaftaran",
         summary:
           "Hal-hal yang kami selesaikan sebelum permohonan Anda diunggah.",
-        icon: ShieldQuestion,
+        icon: "ShieldQuestion",
         accent: {
           gradient: "from-rose-100/70 via-rose-50/60 to-transparent",
           icon: "bg-rose-100/80 text-rose-500",
@@ -2669,7 +2636,7 @@ export const serviceFaqContent: Record<string, FaqContent> = {
         title: "Proses pengajuan",
         summary:
           "Detail operasional saat permohonan dikirimkan ke DJKI Kemenkumham.",
-        icon: Workflow,
+        icon: "Workflow",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -2719,7 +2686,7 @@ export const serviceFaqContent: Record<string, FaqContent> = {
         title: "Pendampingan pasca pengajuan",
         summary:
           "Aktivitas yang kami lakukan setelah permohonan dicatat di DJKI.",
-        icon: BellRing,
+        icon: "BellRing",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
@@ -2778,7 +2745,7 @@ export const serviceFaqContent: Record<string, FaqContent> = {
         id: "pendaftaran",
         title: "Pendaftaran & kualifikasi",
         summary: "Langkah awal menjadi mitra resmi Urus Merek.",
-        icon: Rocket,
+        icon: "Rocket",
         accent: {
           gradient: "from-rose-100/70 via-rose-50/60 to-transparent",
           icon: "bg-rose-100/80 text-rose-500",
@@ -2823,7 +2790,7 @@ export const serviceFaqContent: Record<string, FaqContent> = {
         id: "komisi",
         title: "Skema komisi",
         summary: "Memahami cara perhitungan dan pencairan komisi.",
-        icon: Receipt,
+        icon: "Receipt",
         accent: {
           gradient: "from-amber-100/70 via-amber-50/60 to-transparent",
           icon: "bg-amber-100/80 text-amber-500",
@@ -2868,7 +2835,7 @@ export const serviceFaqContent: Record<string, FaqContent> = {
         id: "dukungan",
         title: "Dukungan pemasaran",
         summary: "Materi promosi dan bantuan yang kami sediakan untuk mitra.",
-        icon: Sparkles,
+        icon: "Sparkles",
         accent: {
           gradient: "from-emerald-100/70 via-emerald-50/60 to-transparent",
           icon: "bg-emerald-100/80 text-emerald-500",
