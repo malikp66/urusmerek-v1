@@ -13,6 +13,9 @@ import FinalCta from "@/components/sections/final-cta";
 import FaqSection from "@/components/sections/faq-section";
 import { homepageFaqContent } from "@/constants/faq-content";
 import RedDiagonalBackground from "@/components/RedDiagonalBackground";
+import AnalyticsGate from "@/lib/scripts/AnalyticsGate";
+import MarketingGate from "@/lib/scripts/MarketingGate";
+import ConsentGate from "@/components/cookie-consent/ConsentGate";
 
 const HOME_DESCRIPTION =
   "Daftarkan merek usaha dengan tim ahli Urus Merek. Cek merek, pilih kelas, dan ajukan ke DJKI lebih cepat.";
@@ -80,6 +83,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
+      <AnalyticsGate gaId={process.env.NEXT_PUBLIC_GA_ID ?? ""} />
+      <MarketingGate pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -93,6 +98,18 @@ export default function Page() {
         }}
       />
       <div className="">
+        <ConsentGate
+          needed="analytics"
+          fallback={
+            <div className="mx-auto max-w-3xl rounded-2xl border border-dashed border-muted bg-muted/30 p-4 text-sm text-muted-foreground">
+              Aktivitas analitik dinonaktifkan sampai Anda memberikan izin cookie analitik.
+            </div>
+          }
+        >
+          <div className="mx-auto max-w-3xl rounded-2xl border border-primary/40 bg-primary/10 p-4 text-sm text-primary">
+            Terima kasih! Cookie analitik diaktifkan dan event performa dapat dikirim.
+          </div>
+        </ConsentGate>
         <section className="">
           <HeroSection />
           {/* <RedDiagonalBackground intensity={1} /> */}

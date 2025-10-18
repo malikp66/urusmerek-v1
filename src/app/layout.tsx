@@ -6,6 +6,10 @@ import Script from "next/script";
 import MaintenanceGate from "@/components/maintenance/maintenance-gate";
 import Providers from "@/components/Providers";
 import { getLocaleFromRequest } from "@/lib/i18n/server";
+import CookieConsentProvider from "@/components/cookie-consent/CookieConsentProvider";
+import CookieBanner from "@/components/cookie-consent/CookieBanner";
+import CookiePreferencesDialog from "@/components/cookie-consent/CookiePreferencesDialog";
+import ManageConsentButton from "@/components/cookie-consent/ManageConsentButton";
 
 const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 
@@ -62,19 +66,29 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className="antialiased">
         <Providers initialLocale={locale}>
-          <ErrorReporter />
-          <Script
-            src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
-            strategy="afterInteractive"
-            data-target-origin="*"
-            data-message-type="ROUTE_CHANGE"
-            data-include-search-params="true"
-            data-only-in-iframe="true"
-            data-debug="true"
-            data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
-          />
-          {children}
-          <VisualEditsMessenger />
+          <CookieConsentProvider>
+            <ErrorReporter />
+            <Script
+              src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
+              strategy="afterInteractive"
+              data-target-origin="*"
+              data-message-type="ROUTE_CHANGE"
+              data-include-search-params="true"
+              data-only-in-iframe="true"
+              data-debug="true"
+              data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
+            />
+            <div className="flex min-h-screen flex-col">
+              <main className="flex-1">{children}</main>
+              <footer className="border-t border-border bg-background/80 px-4 py-6 text-center text-sm text-muted-foreground">
+                <span className="sr-only">Kelola preferensi cookie</span>
+                <ManageConsentButton label="Kelola Cookie" variant="ghost" size="sm" />
+              </footer>
+            </div>
+            <CookieBanner />
+            <CookiePreferencesDialog />
+            <VisualEditsMessenger />
+          </CookieConsentProvider>
         </Providers>
       </body>
     </html>
