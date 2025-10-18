@@ -87,38 +87,38 @@ export const homepageFaqContent: FaqContent = {
           {
             value: "persiapan-1",
             question: "Kapan waktu ideal memulai perpanjangan?",
-            answer: `
+            answer: (
               <p>
                 Kami sarankan memulai 12-6 bulan sebelum masa berlaku berakhir.
                 Ini memberi ruang untuk melengkapi dokumen dan menghindari denda
                 keterlambatan.
               </p>
-            `,
+            ),
             keywords: ["waktu ideal", "12 bulan", "denda"],
           },
           {
             value: "persiapan-2",
             question: "Dokumen apa yang wajib disiapkan?",
-            answer: `
+            answer: (
               <p>
                 Sertifikat merek lama, KTP atau akta perusahaan terbaru, serta
                 surat pernyataan penggunaan merek. Jika sertifikat hilang, kami
                 bantu membuat berita acara kehilangan.
               </p>
-            `,
+            ),
             keywords: ["sertifikat lama", "surat pernyataan", "kehilangan"],
           },
           {
             value: "persiapan-3",
             question:
               "Apakah bisa memperbarui data pemilik sekaligus saat perpanjangan?",
-            answer: `
+            answer: (
               <p>
                 Bisa. Kami akan menggabungkan proses perpanjangan dengan layanan
                 perubahan data sehingga data baru tercatat pada sertifikat hasil
                 perpanjangan.
               </p>
-            `,
+            ),
             keywords: ["perubahan data", "gabung layanan"],
           },
         ]),
@@ -137,37 +137,37 @@ export const homepageFaqContent: FaqContent = {
           {
             value: "biaya-timeline-1",
             question: "Berapa biaya resmi perpanjangan merek?",
-            answer: `
+            answer: (
               <p>
                 Tarif PNBP per kelas mengikuti Peraturan Pemerintah terbaru. Kami
                 menambahkan jasa pengurusan dan opsi cetak sertifikat sehingga
                 Anda menerima satu invoice terperinci.
               </p>
-            `,
+            ),
             keywords: ["pnbp", "biaya per kelas", "invoice"],
           },
           {
             value: "biaya-timeline-2",
             question: "Berapa lama proses perpanjangan hingga status aktif?",
-            answer: `
+            answer: (
               <p>
                 Setelah dokumen lengkap, kami kirim permohonan dalam 2 hari kerja.
                 DJKI biasanya menerbitkan keputusan dalam 1-2 bulan tergantung
                 antrian. Progresnya bisa dipantau di dashboard.
               </p>
-            `,
+            ),
             keywords: ["durasi", "1-2 bulan", "dashboard"],
           },
           {
             value: "biaya-timeline-3",
             question: "Apakah ada opsi percepatan?",
-            answer: `
+            answer: (
               <p>
                 Kami mengoptimalkan jadwal internal dan memastikan dokumen
                 memenuhi ketentuan sehingga tidak ada koreksi ulang. Namun
                 keputusan akhir tetap mengikuti SLA DJKI.
               </p>
-            `,
+            ),
             keywords: ["percepatan", "sla djki"],
           },
         ]),
@@ -187,44 +187,44 @@ export const homepageFaqContent: FaqContent = {
             value: "pasca-perpanjangan-1",
             question:
               "Apa bukti resmi yang saya terima setelah perpanjangan selesai?",
-            answer: `
+            answer: (
               <p>
                 Anda akan menerima bukti rekam DJKI, sertifikat terbaru, dan
                 ringkasan masa berlaku baru. Dokumen kami arsipkan dalam format
                 digital dan fisik sesuai permintaan.
               </p>
-            `,
+            ),
             keywords: ["bukti rekam", "sertifikat baru", "arsip"],
           },
           {
             value: "pasca-perpanjangan-2",
             question:
               "Apakah data merek di database DJKI langsung diperbarui?",
-            answer: `
+            answer: (
               <p>
                 Ya. Kami memantau hingga status berubah menjadi &quot;Diperpanjang&quot;
                 dan mengirim tangkapan layar sebagai bukti. Jika ada keterlambatan
                 pembaruan, tim kami melakukan follow-up.
               </p>
-            `,
+            ),
             keywords: ["database djki", "status diperpanjang"],
           },
           {
             value: "pasca-perpanjangan-3",
             question: "Apakah layanan monitoring termasuk setelah perpanjangan?",
-            answer: `
+            answer: (
               <p>
                 Setiap paket perpanjangan mencakup monitoring 6 bulan untuk
                 memastikan tidak ada sengketa yang muncul setelah pembaruan.
               </p>
-            `,
+            ),
             keywords: ["monitoring", "6 bulan"],
           },
         ]),
       },
     ],
   },
-  'cetak-sertifikat-merek': {
+  "cetak-sertifikat-merek": {
     eyebrow: "FAQ cetak sertifikat",
     title: "Cetak sertifikat merek yang siap legalisir",
     description:
@@ -243,36 +243,36 @@ export const homepageFaqContent: FaqContent = {
           {
             value: "validasi-1",
             question: "Bagaimana kami memverifikasi sertifikat digital?",
-            answer: `
+            answer: (
               <p>
                 Kami mengecek QR code dan tanda tangan elektronik resmi DJKI,
                 serta memastikan nomor permohonan sesuai data Anda. Sertifikat
                 hanya dicetak setelah verifikasi lulus.
               </p>
-            `,
+            ),
             keywords: ["verifikasi", "qr code", "tanda tangan elektronik"],
           },
           {
             value: "validasi-2",
             question:
               "Apakah bisa mencetak sertifikat untuk beberapa kelas sekaligus?",
-            answer: `
+            answer: (
               <p>
                 Bisa. Kami menggabungkan sertifikat per kelas dalam satu paket
                 pencetakan dan memberi penanda warna agar mudah dibedakan.
               </p>
-            `,
+            ),
             keywords: ["multi kelas", "penanda warna"],
           },
           {
             value: "validasi-3",
             question: "Bisakah kami mencetak ulang jika file asli kurang jelas?",
-            answer: `
+            answer: (
               <p>
                 Kami melakukan enhancement kualitas sebelum cetak. Jika file asli
                 kurang jelas, kami meminta re-issue dari DJKI atas nama Anda.
               </p>
-            `,
+            ),
             keywords: ["re-issue", "kualitas", "enhancement"],
           },
         ]),
@@ -291,35 +291,35 @@ export const homepageFaqContent: FaqContent = {
           {
             value: "opsi-1",
             question: "Material apa yang digunakan untuk cetak premium?",
-            answer: `
+            answer: (
               <p>
                 Kami menggunakan kertas art carton 260gsm dengan laminasi doff
                 dan finishing emboss pada elemen penting. Hologram keamanan
                 tersedia sebagai opsi tambahan.
               </p>
-            `,
+            ),
             keywords: ["material", "laminasi doff", "hologram"],
           },
           {
             value: "opsi-2",
             question: "Berapa lama pengerjaan cetak setelah file valid?",
-            answer: `
+            answer: (
               <p>
                 Proses standar membutuhkan 3 hari kerja termasuk quality control.
                 Untuk kebutuhan mendesak, kami menyediakan opsi ekspres 1 hari.
               </p>
-            `,
+            ),
             keywords: ["3 hari", "ekspres", "quality control"],
           },
           {
             value: "opsi-3",
             question: "Apakah disediakan file digital versi siap presentasi?",
-            answer: `
+            answer: (
               <p>
                 Ya. Selain cetak fisik, kami menyiapkan versi digital beresolusi
                 tinggi dengan bingkai branding agar mudah dipresentasikan.
               </p>
-            `,
+            ),
             keywords: ["file digital", "presentasi", "branding"],
           },
         ]),
@@ -337,36 +337,36 @@ export const homepageFaqContent: FaqContent = {
           {
             value: "pengiriman-1",
             question: "Bagaimana mekanisme pengiriman ke luar kota?",
-            answer: `
+            answer: (
               <p>
                 Kami menggunakan pengiriman ekspedisi dengan asuransi dan
                 packaging rigid box kedap air. Nomor resi dan estimasi tiba
                 dibagikan otomatis.
               </p>
-            `,
+            ),
             keywords: ["pengiriman", "asuransi", "rigid box"],
           },
           {
             value: "pengiriman-2",
             question:
               "Apakah Urus Merek menyimpan salinan cadangan sertifikat?",
-            answer: `
+            answer: (
               <p>
                 Ya. Softcopy terenkripsi disimpan di data center kami sehingga
                 Anda dapat meminta salinan kapan saja saat dibutuhkan.
               </p>
-            `,
+            ),
             keywords: ["arsip", "softcopy", "cadangan"],
           },
           {
             value: "pengiriman-3",
             question: "Bagaimana jika sertifikat rusak saat pengiriman?",
-            answer: `
+            answer: (
               <p>
                 Segera hubungi kami. Kami akan mengajukan klaim asuransi dan
                 menjadwalkan pencetakan ulang tanpa biaya tambahan.
               </p>
-            `,
+            ),
             keywords: ["rusak", "klaim", "pencetakan ulang"],
           },
         ]),
@@ -392,37 +392,37 @@ export const homepageFaqContent: FaqContent = {
           {
             value: "jenis-1",
             question: "Data apa saja yang bisa diubah di DJKI?",
-            answer: `
+            answer: (
               <p>
                 Kami dapat memperbarui nama pemilik, alamat, bentuk badan hukum,
                 dan detail korespondensi. Perubahan logo memerlukan proses
                 pendaftaran baru.
               </p>
-            `,
+            ),
             keywords: ["nama pemilik", "alamat", "badan hukum"],
           },
           {
             value: "jenis-2",
             question: "Bisakah melakukan beberapa perubahan sekaligus?",
-            answer: `
+            answer: (
               <p>
                 Bisa. Kami menggabungkan perubahan dalam satu permohonan jika
                 regulasi memungkinkan, sehingga biaya dan waktu lebih efisien.
               </p>
-            `,
+            ),
             keywords: ["perubahan ganda", "gabungan", "efisiensi"],
           },
           {
             value: "jenis-3",
             question:
               "Apakah perubahan kepemilikan penuh termasuk layanan ini?",
-            answer: `
+            answer: (
               <p>
                 Perubahan kepemilikan memerlukan proses pengalihan hak. Kami akan
                 merekomendasikan paket yang tepat jika kebutuhan Anda sudah masuk
                 kategori transfer kepemilikan.
               </p>
-            `,
+            ),
             keywords: ["kepemilikan", "pengalihan hak", "rekomendasi"],
           },
         ]),
@@ -441,36 +441,36 @@ export const homepageFaqContent: FaqContent = {
           {
             value: "dokumen-1",
             question: "Dokumen apa yang perlu disiapkan?",
-            answer: `
+            answer: (
               <p>
                 Kami biasanya membutuhkan akta perubahan, NPWP terbaru, surat
                 kuasa, dan bukti legalitas lain yang relevan. Semua dokumen akan
                 kami cek kelengkapannya sebelum diajukan.
               </p>
-            `,
+            ),
             keywords: ["akta perubahan", "npwp", "surat kuasa"],
           },
           {
             value: "dokumen-2",
             question: "Apakah dokumen perlu diterjemahkan?",
-            answer: `
+            answer: (
               <p>
                 Jika dokumen berbahasa asing, kami bekerja sama dengan penerjemah
                 tersumpah untuk memastikan format sesuai standar DJKI.
               </p>
-            `,
+            ),
             keywords: ["terjemahan", "penerjemah tersumpah"],
           },
           {
             value: "dokumen-3",
             question:
               "Apakah saya perlu menyiapkan surat kuasa terpisah untuk setiap merek?",
-            answer: `
+            answer: (
               <p>
                 Tidak. Satu surat kuasa dapat mencakup beberapa merek selama
                 tercantum jelas di dokumen. Kami sediakan templatenya.
               </p>
-            `,
+            ),
             keywords: ["surat kuasa", "beberapa merek"],
           },
         ]),
@@ -488,34 +488,34 @@ export const homepageFaqContent: FaqContent = {
           {
             value: "proses-1",
             question: "Berapa lama DJKI memproses perubahan data?",
-            answer: `
+            answer: (
               <p>
                 Rata-rata 3-6 minggu tergantung antrian. Kami memantau status dan
                 melakukan follow-up jika melewati SLA tersebut.
               </p>
-            `,
+            ),
             keywords: ["3-6 minggu", "sla", "follow-up"],
           },
           {
             value: "proses-2",
             question: "Apakah merek tetap sah selama menunggu update?",
-            answer: `
+            answer: (
               <p>
                 Ya. Status perlindungan tidak terputus karena perubahan hanya
                 menyentuh data administratif.
               </p>
-            `,
+            ),
             keywords: ["status sah", "perlindungan"],
           },
           {
             value: "proses-3",
             question: "Apa bukti resmi setelah perubahan disetujui?",
-            answer: `
+            answer: (
               <p>
                 Kami memberikan kutipan resmi DJKI yang memuat data terbaru dan
                 menyimpannya dalam arsip digital Anda.
               </p>
-            `,
+            ),
             keywords: ["kutipan djki", "arsip digital"],
           },
         ]),
@@ -2883,23 +2883,23 @@ export const serviceFaqContent: Record<string, FaqContent> = {
           {
             value: "dukungan-2",
             question: "Apakah mitra mendapat support dari tim Urus Merek?",
-            answer: `
+            answer: (
               <p>
                 Tentu. Tim channel partner siap membantu Q&A, demo produk, hingga
                 pendampingan saat menutup deal strategis.
               </p>
-            `,
+            ),
             keywords: ["support", "demo", "deal"],
           },
           {
             value: "dukungan-3",
             question: "Apakah klien mitra mendapat benefit khusus?",
-            answer: `
+            answer: (
               <p>
                 Ya. Klien yang direferensikan mendapatkan potongan biaya Rp100.000
                 untuk layanan pendaftaran merek.
               </p>
-            `,
+            ),
             keywords: ["potongan", "rp100000", "klien referal"],
           },
         ]),
